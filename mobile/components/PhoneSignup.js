@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, SafeAreaView } from 'react-native';
+import { StyleSheet, SafeAreaView, KeyboardAvoidingView } from 'react-native';
 import { View, Text, TextInput } from 'react-native-ui-lib';
 import { LinearGradient } from 'expo';
 
@@ -29,17 +29,19 @@ export default class PhoneSignup extends React.Component {
       >
         <SafeAreaView style={{ flex: 1 }}>
           <View flex bottom style={styles.container}>
-            <Text text30 white>
+            <Text text30 white style={{ fontWeight: 'bold' }}>
               Take Action
             </Text>
             <Text text80 white>
               Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eveniet
               veritatis consectetur
             </Text>
-            <PhoneInputComp
-              number={this.state.number}
-              changedNumber={this.handleNumberCHange}
-            />
+            <KeyboardAvoidingView behavior="height">
+              <PhoneInputComp
+                number={this.state.number}
+                changedNumber={this.handleNumberCHange}
+              />
+            </KeyboardAvoidingView>
           </View>
         </SafeAreaView>
       </LinearGradient>
