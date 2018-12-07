@@ -1,6 +1,11 @@
 import React from 'react';
-import { StyleSheet, SafeAreaView } from 'react-native';
-import { View, Text, TextInput } from 'react-native-ui-lib';
+import {
+  StyleSheet,
+  SafeAreaView,
+  KeyboardAvoidingView,
+  View,
+  Text,
+} from 'react-native';
 import { LinearGradient } from 'expo';
 
 import PhoneInputComp from './PhoneInputComp';
@@ -28,18 +33,25 @@ export default class PhoneSignup extends React.Component {
         style={styles.linearGradient}
       >
         <SafeAreaView style={{ flex: 1 }}>
-          <View flex bottom style={styles.container}>
-            <Text text30 white>
-              Take Action
-            </Text>
-            <Text text80 white>
+          <View
+            flex
+            bottom
+            style={[
+              styles.container,
+              { justifyContent: 'flex-end', alignItems: 'flex-start' },
+            ]}
+          >
+            <Text style={styles.title}>Take Action</Text>
+            <Text style={styles.promo}>
               Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eveniet
               veritatis consectetur
             </Text>
-            <PhoneInputComp
-              number={this.state.number}
-              changedNumber={this.handleNumberCHange}
-            />
+            <KeyboardAvoidingView behavior="height">
+              <PhoneInputComp
+                number={this.state.number}
+                changedNumber={this.handleNumberCHange}
+              />
+            </KeyboardAvoidingView>
           </View>
         </SafeAreaView>
       </LinearGradient>
@@ -50,13 +62,17 @@ export default class PhoneSignup extends React.Component {
 const styles = StyleSheet.create({
   container: {
     paddingLeft: 30,
-    paddingBottom: 30,
+    paddingBottom: 60,
     paddingRight: 130,
   },
   linearGradient: {
     flex: 1,
   },
-  heading: {
-    color: 'red',
+  title: {
+    fontSize: 30,
+    color: '#ffffff',
+    fontWeight: 'bold',
+    paddingBottom: 10,
   },
+  promo: { fontSize: 16, color: '#ffffff', paddingBottom: 10 },
 });
