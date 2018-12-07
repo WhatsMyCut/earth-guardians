@@ -3,7 +3,6 @@ import {
   StyleSheet,
   View,
   TextInput,
-  Button,
   KeyboardAvoidingView,
 } from 'react-native';
 import { Dropdown } from 'react-native-material-dropdown';
@@ -11,7 +10,6 @@ import { countries } from './country_codes.json'; // data from local file
 
 export default class PhoneInputComp extends React.Component {
   state = {
-    valid: false,
     country_and_dial_code: 'US +1',
     country_code: 'US',
     dial_code: '+1',
@@ -41,15 +39,18 @@ export default class PhoneInputComp extends React.Component {
   };
   updateStoreWithPhoneDetails = () => {
     // TODO: only do this if phone is valide, properly
+    // TODO: use the app state valid
     if (this.state.phone_number.length === 10) {
       // create a phone object
       const new_phone = {
         number: this.state.phone_number,
         country_dial_code: this.state.dial_code,
       };
+      this.props.validate_phone(true);
       this.props.updatePhone(new_phone);
     }
   };
+
   render() {
     return (
       <KeyboardAvoidingView
@@ -88,7 +89,7 @@ export default class PhoneInputComp extends React.Component {
             onChangeText={this.handlePhoneInputChange}
             onBlur={this.updateStoreWithPhoneDetails}
             value={this.state.phone_number}
-            maxLength={14}
+            maxLength={14} // allows for brackets and spaces if needed in the future
             placeholderTextColor="#fff"
           />
         </View>
