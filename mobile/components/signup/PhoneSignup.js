@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import { LinearGradient } from 'expo';
 
-import PhoneInputComp from './PhoneInputComp';
+import PhoneInputComp from '../shared/phone/PhoneInputComp';
 export default class PhoneSignup extends React.Component {
   state = {
     areaCode: {
