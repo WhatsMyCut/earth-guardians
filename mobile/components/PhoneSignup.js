@@ -62,7 +62,7 @@ export default class PhoneSignup extends React.Component {
 const styles = StyleSheet.create({
   container: {
     paddingLeft: 30,
-    paddingBottom: 60,
+    paddingBottom: 20,
     paddingRight: 130,
   },
   linearGradient: {
@@ -74,5 +74,5 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     paddingBottom: 10,
   },
-  promo: { fontSize: 16, color: '#ffffff', paddingBottom: 10 },
+  promo: { fontSize: 16, color: '#ffffff' },
 });
