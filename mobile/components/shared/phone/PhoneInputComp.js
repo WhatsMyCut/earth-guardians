@@ -1,5 +1,11 @@
 import React from 'react';
-import { StyleSheet, View, TextInput } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  TextInput,
+  Button,
+  KeyboardAvoidingView,
+} from 'react-native';
 import { Dropdown } from 'react-native-material-dropdown';
 import { countries } from './country_codes.json'; // data from local file
 
@@ -21,12 +27,10 @@ export default class PhoneInputComp extends React.Component {
 
   // load the country codes
   componentDidMount() {
-    this.setState({
-      countries,
-    });
+    this.setState({ countries });
   }
-  updateInfo = v => {
-    console.log(v);
+  handlePhoneInputChange = phone_number => {
+    this.setState({ phone_number });
   };
   handleSelectedCode = (dial_code, index, data) => {
     this.setState({
@@ -35,37 +39,60 @@ export default class PhoneInputComp extends React.Component {
       country_code: data[index].country_code,
     });
   };
+  updateStoreWithPhoneDetails = () => {
+    // TODO: only do this if phone is valide, properly
+    if (this.state.phone_number.length === 10) {
+      // create a phone object
+      const new_phone = {
+        number: this.state.phone_number,
+        country_dial_code: this.state.dial_code,
+      };
+      this.props.updatePhone(new_phone);
+    }
+  };
   render() {
-    console.log(this.state.country_and_dial_code);
     return (
-      <View style={styles.container}>
-        <Dropdown
-          dropdownOffset={{ top: 0, bottom: 0, left: 1 }}
-          data={this.state.countries}
-          valueExtractor={({ dial_code }) => dial_code}
-          labelExtractor={({ country_code }, index) => {
-            const display = `${country_code} ${
-              this.state.countries[index].dial_code
-            }`;
-            //TODO : if dial_code is undefined, skip it
-            return display;
-          }}
-          containerStyle={styles.countryCode}
-          value={this.state.country_and_dial_code}
-          inputContainerStyle={styles.countryCodeInput}
-          textColor="#fff"
-          baseColor="#fff"
-          selectedItemColor="rgba(0, 0, 0, .87)"
-          fontSize={12}
-          onChangeText={this.handleSelectedCode}
-        />
-        <TextInput
-          style={styles.number}
-          placeholder={'Phone number'}
-          onChangeText={phone_number => this.setState({ phone_number })}
-          value={this.state.phone_number}
-        />
-      </View>
+      <KeyboardAvoidingView
+        behavior="padding"
+        style={[styles.container, { paddingBottom: 30 }]}
+        enabled
+      >
+        <View style={styles.container}>
+          <Dropdown
+            dropdownOffset={{ top: 0, bottom: 0, left: 1 }}
+            data={this.state.countries}
+            valueExtractor={({ dial_code }) => dial_code}
+            labelExtractor={({ country_code }, index) => {
+              const display = `${country_code} ${
+                this.state.countries[index].dial_code
+              }`;
+              //TODO : if dial_code is undefined, skip it
+              return display;
+            }}
+            containerStyle={styles.countryCode}
+            value={this.state.country_and_dial_code}
+            inputContainerStyle={styles.countryCodeInput}
+            textColor="#fff"
+            baseColor="#fff"
+            selectedItemColor="rgba(0, 0, 0, .87)"
+            fontSize={12}
+            onChangeText={this.handleSelectedCode}
+          />
+          <TextInput
+            placeholder="(999) 999-9999"
+            style={styles.number}
+            keyboardType="number-pad"
+            name="phone_number"
+            type="number"
+            returnKeyType="done"
+            onChangeText={this.handlePhoneInputChange}
+            onBlur={this.updateStoreWithPhoneDetails}
+            value={this.state.phone_number}
+            maxLength={14}
+            placeholderTextColor="#fff"
+          />
+        </View>
+      </KeyboardAvoidingView>
     );
   }
 }
@@ -91,7 +118,9 @@ const styles = StyleSheet.create({
     paddingBottom: 0,
   },
   number: {
-    height: 40,
-    borderWidth: 1,
+    borderWidth: 0,
+    width: '100%',
+    paddingBottom: 15,
+    color: '#fff',
   },
 });

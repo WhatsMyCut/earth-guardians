@@ -2,29 +2,14 @@ import React from 'react';
 import {
   StyleSheet,
   SafeAreaView,
-  KeyboardAvoidingView,
   View,
   Text,
+  KeyboardAvoidingView,
 } from 'react-native';
 import { LinearGradient } from 'expo';
 
 import PhoneInputComp from '../shared/phone/PhoneInputComp';
 export default class PhoneSignup extends React.Component {
-  state = {
-    areaCode: {
-      US: '+1',
-    },
-    number: '',
-    info: 'This contains extra infomation',
-    displayInfo: false,
-    validPhone: false,
-  };
-
-  handleNumberCHange = number => {
-    this.setState({
-      number,
-    });
-  };
   render() {
     return (
       <LinearGradient
@@ -46,12 +31,8 @@ export default class PhoneSignup extends React.Component {
               Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eveniet
               veritatis consectetur
             </Text>
-            <KeyboardAvoidingView behavior="height">
-              <PhoneInputComp
-                number={this.state.number}
-                changedNumber={this.handleNumberCHange}
-              />
-            </KeyboardAvoidingView>
+
+            <PhoneInputComp updatePhone={this.props.updatePhone} />
           </View>
         </SafeAreaView>
       </LinearGradient>
