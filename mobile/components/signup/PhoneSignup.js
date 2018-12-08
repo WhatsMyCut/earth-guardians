@@ -1,29 +1,22 @@
 import React from 'react';
-import {
-  StyleSheet,
-  SafeAreaView,
-  KeyboardAvoidingView,
-  View,
-  Text,
-} from 'react-native';
+import { StyleSheet, SafeAreaView, View, Text, Button } from 'react-native';
 import { LinearGradient } from 'expo';
 
-import PhoneInputComp from './PhoneInputComp';
+import PhoneInputComp from '../shared/phone/PhoneInputComp';
 export default class PhoneSignup extends React.Component {
   state = {
-    areaCode: {
-      US: '+1',
-    },
-    number: '',
-    info: 'This contains extra infomation',
-    displayInfo: false,
-    validPhone: false,
+    valid_phone: false,
   };
 
-  handleNumberCHange = number => {
+  is_phone_valid = valid => {
     this.setState({
-      number,
+      valid_phone: valid,
     });
+  };
+  phone_signup = () => {
+    if (this.state.valid_phone) {
+      this.props.authenticate();
+    }
   };
   render() {
     return (
@@ -46,13 +39,19 @@ export default class PhoneSignup extends React.Component {
               Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eveniet
               veritatis consectetur
             </Text>
-            <KeyboardAvoidingView behavior="height">
-              <PhoneInputComp
-                number={this.state.number}
-                changedNumber={this.handleNumberCHange}
-              />
-            </KeyboardAvoidingView>
+
+            <PhoneInputComp
+              updatePhone={this.props.updatePhone}
+              validate_phone={this.is_phone_valid}
+            />
           </View>
+          {this.state.valid_phone ? (
+            <Button
+              onPress={this.phone_signup}
+              style={{ color: '#fff', alignSelf: 'center', paddingBottom: 10 }}
+              title="Login In " //TODO: replace with a downward point arrow
+            />
+          ) : null}
         </SafeAreaView>
       </LinearGradient>
     );
@@ -62,7 +61,7 @@ export default class PhoneSignup extends React.Component {
 const styles = StyleSheet.create({
   container: {
     paddingLeft: 30,
-    paddingBottom: 60,
+    paddingBottom: 20,
     paddingRight: 130,
   },
   linearGradient: {
@@ -74,5 +73,5 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     paddingBottom: 10,
   },
-  promo: { fontSize: 16, color: '#ffffff', paddingBottom: 10 },
+  promo: { fontSize: 16, color: '#ffffff' },
 });
