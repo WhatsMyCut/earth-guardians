@@ -1,8 +1,17 @@
 import React from 'react';
-import { StyleSheet, SafeAreaView, View, Text, Button } from 'react-native';
+import {
+  StyleSheet,
+  SafeAreaView,
+  View,
+  Text,
+  Button,
+  ImageBackground,
+} from 'react-native';
 import { LinearGradient } from 'expo';
 
 import PhoneInputComp from '../shared/phone/PhoneInputComp';
+import BG_Image from '../../assets/bg.png';
+
 export default class PhoneSignup extends React.Component {
   state = {
     valid_phone: false,
@@ -15,7 +24,7 @@ export default class PhoneSignup extends React.Component {
   };
   phone_signup = () => {
     if (this.state.valid_phone) {
-      this.props.authenticate();
+      this.props.authenticate(this.props.navigation);
     }
   };
   render() {
@@ -26,6 +35,10 @@ export default class PhoneSignup extends React.Component {
         style={styles.linearGradient}
       >
         <SafeAreaView style={{ flex: 1 }}>
+          <ImageBackground
+            source={BG_Image}
+            style={{ flex: 1, width: null, height: 700 }}
+          />
           <View
             flex
             bottom

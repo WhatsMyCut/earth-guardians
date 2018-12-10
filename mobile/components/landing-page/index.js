@@ -4,17 +4,12 @@ import Home from './Home';
 import PhoneSignup from '../signup/PhoneSignup';
 
 export default class LandingPage extends React.Component {
+  componentDidMount() {
+    if (this.props.store.authenticated) {
+      this.props.navigation.navigate('Home');
+    }
+  }
   render() {
-    return (
-      <StoreConsumer>
-        {value =>
-          value.store.authenticated ? (
-            <Home {...value} />
-          ) : (
-            <PhoneSignup {...value} />
-          )
-        }
-      </StoreConsumer>
-    );
+    return <PhoneSignup {...this.props} />;
   }
 }
