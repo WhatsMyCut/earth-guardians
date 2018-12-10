@@ -15,7 +15,7 @@ export default class PhoneSignup extends React.Component {
   };
   phone_signup = () => {
     if (this.state.valid_phone) {
-      this.props.authenticate();
+      this.props.authenticate(this.props.navigation);
     }
   };
   render() {

@@ -16,10 +16,11 @@ export class StoreProvider extends React.Component {
     this.setState({ isLoading: false });
   };
 
-  authenticate = () => {
+  authenticate = navigation => {
     //TODO: make it rigourous
     // for now, turn autheticate to true
     this.setState({ authenticated: true });
+    navigation.navigate('Home');
   };
 
   updatePhone = phone => {
