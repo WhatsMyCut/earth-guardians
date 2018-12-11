@@ -17,7 +17,7 @@ import {
   CardButton,
   CardImage,
 } from 'react-native-material-cards';
-export default class MyActionsScreen extends React.Component {
+export default class MyActionsStackScreen extends React.Component {
   static navigationOptions = {
     header: null,
   };
