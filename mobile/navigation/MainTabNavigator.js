@@ -8,6 +8,13 @@ import CommunityStackScreen from '../screens/CommunityStackScreen';
 import BasicsStackScreen from '../screens/BasicsStackScreen';
 import TransportationStackScreen from '../screens/TransportationStackScreen';
 import FashionStackScreen from '../screens/FashionStackScreen';
+import SportsStackScreen from '../screens/SportsStackScreen';
+import ArtsStackScreen from '../screens/ArtsStackScreen';
+import ShoppingStackScreen from '../screens/ShoppingStackScreen';
+import OceansStackScreen from '../screens/OceansStackScreen';
+import LandStackScreen from '../screens/LandStackScreen';
+import PoliticsStackScreen from '../screens/ShoppingStackScreen';
+import FinanceStackScreen from '../screens/FinanceStackScreen';
 
 const MyActionsStack = createStackNavigator({
   MyActions: MyActionsStackScreen,
@@ -48,6 +55,62 @@ const FashionStack = createStackNavigator({
 FashionStack.navigationOptions = {
   tabBarLabel: 'Fashion',
 };
+
+const SportsStack = createStackNavigator({
+  SportsStack: SportsStackScreen,
+});
+
+SportsStack.navigationOptions = {
+  tabBarLabel: 'Sports',
+};
+
+const ArtsStack = createStackNavigator({
+  ArtsStack: ArtsStackScreen,
+});
+
+ArtsStack.navigationOptions = {
+  tabBarLabel: 'Arts',
+};
+
+const ShoppingStack = createStackNavigator({
+  ShoppingStack: ShoppingStackScreen,
+});
+
+ShoppingStack.navigationOptions = {
+  tabBarLabel: 'Shopping',
+};
+
+const OceansStack = createStackNavigator({
+  OceansStack: OceansStackScreen,
+});
+
+OceansStack.navigationOptions = {
+  tabBarLabel: 'Oceans',
+};
+
+const LandStack = createStackNavigator({
+  LandStack: LandStackScreen,
+});
+
+LandStack.navigationOptions = {
+  tabBarLabel: 'Land',
+};
+
+const PoliticsStack = createStackNavigator({
+  PoliticsStack: PoliticsStackScreen,
+});
+
+PoliticsStack.navigationOptions = {
+  tabBarLabel: 'Politics',
+};
+
+const FinanceStack = createStackNavigator({
+  FinanceStack: FinanceStackScreen,
+});
+
+FinanceStack.navigationOptions = {
+  tabBarLabel: 'Finance',
+};
 export default createMaterialTopTabNavigator(
   {
     MyActionsStack,
@@ -55,6 +118,13 @@ export default createMaterialTopTabNavigator(
     BasicsStack,
     TransportationStack,
     FashionStack,
+    SportsStack,
+    ArtsStack,
+    ShoppingStack,
+    OceansStack,
+    LandStack,
+    PoliticsStack,
+    FinanceStack,
   },
   {
     swipeEnabled: true,
