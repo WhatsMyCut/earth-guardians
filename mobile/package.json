@@ -11,6 +11,7 @@
     "prop-types": "^15.6.2",
     "react": "16.5.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-31.0.0.tar.gz",
+    "react-native-material-cards": "^1.0.9",
     "react-native-material-dropdown": "git+https://github.com/harshitjee/react-native-material-dropdown.git",
     "react-native-material-ui": "^1.30.1",
     "react-native-paper": "^2.2.8",
