@@ -92,6 +92,7 @@ EssentialsStack.navigationOptions = {
   ),
 };
 
+
 export default createMaterialTopTabNavigator({
   HomeStack,
   MyActionsStack,
@@ -101,7 +102,7 @@ export default createMaterialTopTabNavigator({
   TwoStack,
   ThreeStack
 }, {
-  swipeEnabled: true,
+  swipeEnabled : true,
   tabBarPosition:'bottom',
   animationEnabled: true,
   tabBarOptions:{
