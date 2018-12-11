@@ -2,7 +2,7 @@ import React from 'react';
 import { Platform } from 'react-native';
 import {
   createStackNavigator,
-  createBottomTabNavigator,
+  createMaterialTopTabNavigator,
 } from 'react-navigation';
 
 import TabBarIcon from '../components/shared/icons/TabBarIcon';
@@ -68,6 +68,15 @@ CommunityStack.navigationOptions = {
 const EssentialsStack = createStackNavigator({
   EssentialsStack: EssentialsStackScreen,
 });
+const OneStack = createStackNavigator({
+  One: EssentialsStackScreen,
+});
+const TwoStack = createStackNavigator({
+  Two: EssentialsStackScreen,
+});
+const ThreeStack = createStackNavigator({
+  Three: EssentialsStackScreen,
+});
 
 EssentialsStack.navigationOptions = {
   tabBarLabel: 'EssentialsStack',
@@ -83,9 +92,27 @@ EssentialsStack.navigationOptions = {
   ),
 };
 
-export default createBottomTabNavigator({
+export default createMaterialTopTabNavigator({
   HomeStack,
   MyActionsStack,
   CommunityStack,
   EssentialsStack,
+  OneStack,
+  TwoStack,
+  ThreeStack
+}, {
+  swipeEnabled: true,
+  tabBarPosition:'bottom',
+  animationEnabled: true,
+  tabBarOptions:{
+    scrollEnabled:true,
+    tabStyle: {
+      width: 100
+    },
+    indicatorStyle: {
+      width: 0
+    }
+  },
+  lazy:true,
+  initialRouteName:'HomeStack'
 });
