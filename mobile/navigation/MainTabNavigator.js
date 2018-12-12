@@ -22,6 +22,7 @@ const MyActionsStack = createStackNavigator({
 
 MyActionsStack.navigationOptions = {
   tabBarLabel: 'My Actions',
+  title: 'My Actions',
 };
 
 const CommunityStack = createStackNavigator({

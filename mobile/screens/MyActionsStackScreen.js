@@ -10,19 +10,13 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {
-  Card,
-  CardTitle,
-  CardContent,
-  CardAction,
-  CardButton,
-  CardImage,
-} from 'react-native-material-cards';
+import Styles from '../constants/Styles';
 
 import { data } from './actions.json';
 export default class MyActionsStackScreen extends React.Component {
   static navigationOptions = {
-    header: null,
+    //header: null,
+    title: 'Actions',
   };
   state = {
     photos: [],
@@ -30,8 +24,15 @@ export default class MyActionsStackScreen extends React.Component {
   };
 
   componentDidMount() {
+    // these methods are just for the dummy data
     const actions = [];
-    data.forEach(item => actions.push(...item.actions));
+    data.forEach(item => {
+      // make random keys and push them as objects
+      item.actions.forEach(action => {
+        const key = Math.random() * Math.random() * 10000000000;
+        actions.push({ key, action });
+      });
+    });
     this.setState({ actions: actions });
   }
   render() {
@@ -42,29 +43,31 @@ export default class MyActionsStackScreen extends React.Component {
             numColumns={2}
             data={this.state.actions}
             renderItem={({ item, index }) => (
-              <View style={styles.item}>
-                <Image
-                  source={{ uri: 'https://picsum.photos/200/300/?random' }}
-                  style={{
-                    flex: 1,
-                    width: null,
-                    height: null,
-                    borderRadius: 10,
-                  }}
-                />
-                <Text
-                  style={{
-                    position: 'absolute',
-                    bottom: 10,
-                    left: 10,
-                    fontWeight: 'bold',
-                    color: '#fff',
-                    fontSize: 18,
-                  }}
-                >
-                  {item.substring(0, 50)}
-                </Text>
-              </View>
+              <TouchableOpacity style={{ flex: 1 }}>
+                <View style={styles.item}>
+                  <Image
+                    source={{ uri: 'https://picsum.photos/200/300/?random' }}
+                    style={{
+                      flex: 1,
+                      width: null,
+                      height: null,
+                      borderRadius: Styles.borderRadius,
+                    }}
+                  />
+                  <Text
+                    style={{
+                      position: 'absolute',
+                      bottom: 10,
+                      left: 10,
+                      fontWeight: 'bold',
+                      color: '#fff',
+                      fontSize: 18,
+                    }}
+                  >
+                    {item.action.substring(0, 50)}
+                  </Text>
+                </View>
+              </TouchableOpacity>
             )}
           />
         </View>
@@ -91,6 +94,6 @@ const styles = StyleSheet.create({
     maxHeight: 230,
     borderColor: 'gray',
     borderWidth: 1,
-    borderRadius: 10,
+    borderRadius: Styles.borderRadius,
   },
 });
