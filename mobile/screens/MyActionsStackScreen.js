@@ -19,23 +19,28 @@ import {
   CardImage,
 } from 'react-native-material-cards';
 
-import { actions } from './dummyData.json';
+import { data } from './actions.json';
 export default class MyActionsStackScreen extends React.Component {
   static navigationOptions = {
     header: null,
   };
   state = {
     photos: [],
+    actions: [],
   };
 
+  componentDidMount() {
+    const actions = [];
+    data.forEach(item => actions.push(...item.actions));
+    this.setState({ actions: actions });
+  }
   render() {
-    console.log(actions);
     return (
       <SafeAreaView style={{ flex: 1 }}>
         <View style={styles.container}>
           <FlatList
             numColumns={2}
-            data={actions}
+            data={this.state.actions}
             renderItem={({ item, index }) => (
               <View style={styles.item}>
                 <Image
@@ -57,7 +62,7 @@ export default class MyActionsStackScreen extends React.Component {
                     fontSize: 18,
                   }}
                 >
-                  {item.action.substring(0, 50)}
+                  {item.substring(0, 50)}
                 </Text>
               </View>
             )}
