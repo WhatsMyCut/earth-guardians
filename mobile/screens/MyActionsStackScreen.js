@@ -40,6 +40,7 @@ export default class MyActionsStackScreen extends React.Component {
       <SafeAreaView style={{ flex: 1 }}>
         <View style={styles.container}>
           <FlatList
+            style={{ backgroundColor: '#D3D3D3' }}
             numColumns={2}
             data={this.state.actions}
             renderItem={({ item, index }) => (
@@ -79,7 +80,6 @@ export default class MyActionsStackScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 10,
   },
   item: {
     flex: 1,
