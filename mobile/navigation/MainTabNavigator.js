@@ -1,50 +1,27 @@
-import React from 'react';
-import { Platform } from 'react-native';
 import {
   createStackNavigator,
   createMaterialTopTabNavigator,
 } from 'react-navigation';
 
-import TabBarIcon from '../components/shared/icons/TabBarIcon';
-import HomeStackScreen from '../screens/HomeStackScreen';
 import MyActionsStackScreen from '../screens/MyActionsStackScreen';
 import CommunityStackScreen from '../screens/CommunityStackScreen';
-import EssentialsStackScreen from '../screens/EssentialsStackScreen';
-
-HomeStack = createStackNavigator({
-  Home: HomeStackScreen,
-});
-
-HomeStack.navigationOptions = {
-  tabBarLabel: 'Home',
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon
-      focused={focused}
-      name={
-        Platform.OS === 'ios'
-          ? `md-information-circle${focused ? '' : '-outline'}`
-          : 'md-information-circle'
-      }
-    />
-  ),
-};
+import BasicsStackScreen from '../screens/BasicsStackScreen';
+import TransportationStackScreen from '../screens/TransportationStackScreen';
+import FashionStackScreen from '../screens/FashionStackScreen';
+import SportsStackScreen from '../screens/SportsStackScreen';
+import ArtsStackScreen from '../screens/ArtsStackScreen';
+import ShoppingStackScreen from '../screens/ShoppingStackScreen';
+import OceansStackScreen from '../screens/OceansStackScreen';
+import LandStackScreen from '../screens/LandStackScreen';
+import PoliticsStackScreen from '../screens/ShoppingStackScreen';
+import FinanceStackScreen from '../screens/FinanceStackScreen';
 
 const MyActionsStack = createStackNavigator({
   MyActions: MyActionsStackScreen,
 });
 
 MyActionsStack.navigationOptions = {
-  tabBarLabel: 'MyActions',
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon
-      focused={focused}
-      name={
-        Platform.OS === 'ios'
-          ? `ios-checkmark-circle${focused ? '' : '-outline'}`
-          : 'md-checkmark-circle'
-      }
-    />
-  ),
+  tabBarLabel: 'My Actions',
 };
 
 const CommunityStack = createStackNavigator({
@@ -52,44 +29,47 @@ const CommunityStack = createStackNavigator({
 });
 
 CommunityStack.navigationOptions = {
-  tabBarLabel: 'CommunityStack',
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon
-      focused={focused}
-      name={
-        Platform.OS === 'ios'
-          ? `ios-information-circle${focused ? '' : '-outline'}`
-          : 'md-information-circle'
-      }
-    />
-  ),
+  tabBarLabel: 'Community',
 };
 
-const EssentialsStack = createStackNavigator({
-  EssentialsStack: EssentialsStackScreen,
-});
-const OneStack = createStackNavigator({
-  One: EssentialsStackScreen,
-});
-const TwoStack = createStackNavigator({
-  Two: EssentialsStackScreen,
-});
-const ThreeStack = createStackNavigator({
-  Three: EssentialsStackScreen,
+const BasicsStack = createStackNavigator({
+  BasicsStack: BasicsStackScreen,
 });
 
-EssentialsStack.navigationOptions = {
-  tabBarLabel: 'EssentialsStack',
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon
-      focused={focused}
-      name={
-        Platform.OS === 'ios'
-          ? `ios-information-circle${focused ? '' : '-outline'}`
-          : 'md-information-circle'
-      }
-    />
-  ),
+BasicsStack.navigationOptions = {
+  tabBarLabel: 'Basics',
+};
+
+const TransportationStack = createStackNavigator({
+  TransportationStack: TransportationStackScreen,
+});
+
+TransportationStack.navigationOptions = {
+  tabBarLabel: 'Transportation',
+};
+
+const FashionStack = createStackNavigator({
+  FashionStack: FashionStackScreen,
+});
+
+FashionStack.navigationOptions = {
+  tabBarLabel: 'Fashion',
+};
+
+const SportsStack = createStackNavigator({
+  SportsStack: SportsStackScreen,
+});
+
+SportsStack.navigationOptions = {
+  tabBarLabel: 'Sports',
+};
+
+const ArtsStack = createStackNavigator({
+  ArtsStack: ArtsStackScreen,
+});
+
+ArtsStack.navigationOptions = {
+  tabBarLabel: 'Arts',
 };
 
 
@@ -117,3 +97,75 @@ export default createMaterialTopTabNavigator({
   lazy:true,
   initialRouteName:'HomeStack'
 });
+
+const ShoppingStack = createStackNavigator({
+  ShoppingStack: ShoppingStackScreen
+});
+
+ShoppingStack.navigationOptions = {
+  tabBarLabel: 'Shopping',
+};
+
+const OceansStack = createStackNavigator({
+  OceansStack: OceansStackScreen,
+});
+
+OceansStack.navigationOptions = {
+  tabBarLabel: 'Oceans',
+};
+
+const LandStack = createStackNavigator({
+  LandStack: LandStackScreen,
+});
+
+LandStack.navigationOptions = {
+  tabBarLabel: 'Land',
+};
+
+const PoliticsStack = createStackNavigator({
+  PoliticsStack: PoliticsStackScreen,
+});
+
+PoliticsStack.navigationOptions = {
+  tabBarLabel: 'Politics',
+};
+
+const FinanceStack = createStackNavigator({
+  FinanceStack: FinanceStackScreen,
+});
+
+FinanceStack.navigationOptions = {
+  tabBarLabel: 'Finance',
+};
+export default createMaterialTopTabNavigator(
+  {
+    MyActionsStack,
+    CommunityStack,
+    BasicsStack,
+    TransportationStack,
+    FashionStack,
+    SportsStack,
+    ArtsStack,
+    ShoppingStack,
+    OceansStack,
+    LandStack,
+    PoliticsStack,
+    FinanceStack,
+  },
+  {
+    swipeEnabled: true,
+    tabBarPosition: 'bottom',
+    animationEnabled: true,
+    tabBarOptions: {
+      scrollEnabled: true,
+      tabStyle: {
+        maxWidth: 150,
+      },
+      indicatorStyle: {
+        width: 0,
+      },
+    },
+    lazy: true,
+    initialRouteName: 'MyActionsStack',
+  }
+);

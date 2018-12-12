@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, SafeAreaView, View } from 'react-native';
 
-export default class CommunityStackScreen extends React.Component {
+export default class ArtsStackScreen extends React.Component {
   static navigationOptions = {
     header: null,
   };
@@ -12,7 +12,7 @@ export default class CommunityStackScreen extends React.Component {
         <View
           style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
         >
-          <Text style={{ fontSize: 30 }}>Community</Text>
+          <Text style={{ fontSize: 30 }}>Politics</Text>
         </View>
       </SafeAreaView>
     );

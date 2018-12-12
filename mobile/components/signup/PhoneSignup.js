@@ -6,11 +6,13 @@ import {
   Text,
   Button,
   ImageBackground,
+  TouchableOpacity,
+  Platform,
 } from 'react-native';
-import { LinearGradient } from 'expo';
+import { LinearGradient, Ionicons } from 'expo';
 
 import PhoneInputComp from '../shared/phone/PhoneInputComp';
-import BG_Image from '../../assets/bg.png';
+import TabBarIcon from '../shared/icons/TabBarIcon';
 
 export default class PhoneSignup extends React.Component {
   state = {
@@ -24,7 +26,7 @@ export default class PhoneSignup extends React.Component {
   };
   phone_signup = () => {
     if (this.state.valid_phone) {
-      this.props.authenticate(this.props.navigation);
+      this.props.authenticate();
     }
   };
   render() {
@@ -36,7 +38,7 @@ export default class PhoneSignup extends React.Component {
       >
         <SafeAreaView style={{ flex: 1 }}>
           <ImageBackground
-            source={BG_Image}
+            source={require('../../assets/bg.png')}
             style={{ flex: 1, width: null, height: 700 }}
           />
           <View
@@ -59,11 +61,16 @@ export default class PhoneSignup extends React.Component {
             />
           </View>
           {this.state.valid_phone ? (
-            <Button
+            <TouchableOpacity
               onPress={this.phone_signup}
               style={{ color: '#fff', alignSelf: 'center', paddingBottom: 10 }}
-              title="Login In " //TODO: replace with a downward point arrow
-            />
+            >
+              <TabBarIcon
+                name={
+                  Platform.OS === 'ios' ? `ios-arrow-down` : 'md-arrow-down'
+                }
+              />
+            </TouchableOpacity>
           ) : null}
         </SafeAreaView>
       </LinearGradient>

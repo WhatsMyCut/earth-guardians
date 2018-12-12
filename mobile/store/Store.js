@@ -1,4 +1,5 @@
 import React from 'react';
+import navigationService from '../navigation/navigationService';
 
 // a store to hold the react context api
 const Store = React.createContext();
@@ -8,7 +9,7 @@ const Store = React.createContext();
 export class StoreProvider extends React.Component {
   state = {
     isLoading: true,
-    authenticated: false,
+    authenticated: true,
     user: { number: '', country_dial_code: '' },
   };
 
@@ -16,11 +17,11 @@ export class StoreProvider extends React.Component {
     this.setState({ isLoading: false });
   };
 
-  authenticate = navigation => {
+  authenticate = () => {
     //TODO: make it rigourous
     // for now, turn autheticate to true
     this.setState({ authenticated: true });
-    navigation.navigate('Home');
+    navigationService.navigate('MyActions', {});
   };
 
   updatePhone = phone => {
