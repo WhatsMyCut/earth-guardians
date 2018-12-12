@@ -22,6 +22,7 @@ const MyActionsStack = createStackNavigator({
 
 MyActionsStack.navigationOptions = {
   tabBarLabel: 'My Actions',
+  title: 'My Actions',
 };
 
 const CommunityStack = createStackNavigator({
@@ -157,6 +158,13 @@ export default createMaterialTopTabNavigator(
     tabBarPosition: 'bottom',
     animationEnabled: true,
     tabBarOptions: {
+      labelStyle: {
+        fontWeight: 'bold',
+        fontSize: 13,
+      },
+      style: {
+        backgroundColor: '#000',
+      },
       scrollEnabled: true,
       tabStyle: {
         maxWidth: 150,

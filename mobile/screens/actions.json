@@ -1,26 +1,107 @@
 {
-  "category": "climate change",
-  "description": "Combating climate change, or figuring out a solution to global warming, is a daunting task that many feel they don't have the means or ways to accomplish. Fortunately each of us has within ourselves the ability to make some smaller (yet significant) changes in our lives that can help make a difference. Instead of becoming overwhelmed at the obstacles which may be presenting themselves, we need to take back control of our own destinies by doing what we can. We have the power within ourselves, if we so choose, to make our immediate environment a better place. As long as each of us made the decision to make a few biofriendly changes, to live life a little greener, or to commit to reducing our carbon footprint, we would likely see the ripple effect of our actions in very little time.",
-  "actions": [
-    "Get outside more often. Spending time out in nature every day can have positive health and other benefits. While you are there, be sure to really look at the environment around you so you can spot aspects you approve of and those you'd like to change. This is a good way to get and keep you inspired.",
-    "Don't keep yourself cooped up indoors all day. Indoor air pollution can be a lot more harmful and potent than the air quality outdoors. You can also improve the quality of the air in your home or office by opening windows periodically.",
-    "Get one or more plants for inside your home. Certain plants are known for improving indoor air quality. Plants can also help brighten a space and enhance a person's mood.",
-    "Eat less meat. Opt for more fresh and cooked vegetables, particularly. Tasty, and easy to prepare, vegetarian and vegan options do exist.",
-    "Choose locally-sourced, organic food. The use of fewer toxins and chemicals, along with a shorter travel distance, means not as much of an impact on the environment.",
-    "Grow your own. Whether you have a brown thumb or bright green one, growing your own herbs and vegetables means you know what you are putting into your body.",
-    "Unplug all appliances, electronics and other devices when not in use. Even when a device is turned off, it is still continuing your use energy. Unplugging will prevent this from happening.",
-    "Don't forget to unplug yourself daily too. Nobody needs to stay connected&#8221; 24/7. We all need down time. Disconnecting from your devices can help you reconnect with your family, friends and local community.",
-    "Lower vehicle emissions.  Start out by carpooling once a week, then move onto using public transportation a few times a month, biking or walking to local destinations, and utilizing a proven liquid fuel catalyst. The more people who do this, the greater the effects on air quality. Just take a look at a recent study which showed .",
-    "Take care of your vehicle. Conducting routine maintenance, checking for proper tire pressure, doing regular oil changes, not pushing your vehicle too hard, avoiding excessive acceleration or braking, and minimizing idle time can do a lot to improve fuel efficiency and save gas money.",
-    "Make your own eco-friendly cleaning solutions to use around your house. Vinegar, baking soda, lemons, and a variety of other natural products can do a fantastic job at getting rid of grease and grime. Even a little vinegar and baking soda in your laundry can freshen up towels and sheets you considered beyond hope.",
-    "Use your dishwasher and washing machine only when you have a full load. Doing otherwise is a waste of money, energy and water.",
-    "Clean the lint out of your dryer prior to each use. It will cost more to dry your clothes if lint is allowed to accumulate. NOTE: If you can dry your clothes naturally outdoors, this is a much better option (although not always feasible in winter).",
-    "Turn off the faucet in between washing dishes, brushing teeth and taking a shower. If you aren't using the water at that moment, turn it off and then back on when you need it. This one action alone can .",
-    "Program your thermostat to no higher than 68 degrees Fahrenheit during the winter when you are home, lower when you are asleep or away. Set your thermostat no lower than 78 degrees Fahrenheit during the summer months.",
-    "Stop drinking water from a plastic bottle. Drink tap water or buy a filter, if you are worried about water quality.",
-    "Choose reusable products and materials. Despite the convenience, do what you can to shy away from single use items including: paper plates and cups, disposable knifes and forks, razors, coffee pods, and plastic bags.",
-    "Recycle whenever possible. Instead of automatically tossing items in the trash, sort your garbage into those items which can be recycled and those which can't. You may want to go further and sort out items that can be put in your compost pile. No reason to add to the already outrageous landfills we currently have on this planet.",
-    "Before you decide to throw away clothes, goods or materials, take the time to figure out if such can be recycled or reused. My guess is many of these can be put to use in some other form.",
-    "Commit to reducing your consumption. Most of us don't really need many of the items we have in our homes. So, instead of just buying stuff to have stuff, figure out if it is a want or a true necessity."
+  "data": [{
+      "category": ["socializing", "creating", "learning", "art", "exercise"],
+      "actions": [
+        "Replace screen time with socializing, creating, learning, art, and exercise.",
+        "Go to local event",
+        "Donate to an environmentally healthy cause Volunteer at community center / non - profit / school ",
+        "Avoid  using  the  clothes  dryer,  hang  your  cloths  out  to  dry whenever possible.",
+        "Turn  down  the  temperature  on  your  water  heater  (130 degrees is hot enough).",
+        "When you leave, turn all lights off and unplug electronics",
+        "In winter, turn your thermostat down to 68 degrees or below.Consider wearing warmer clothes",
+        "In summer, turn your thermostat to 78 or above.Consider using an evaporative cooler instead",
+        "Random act of kindness",
+        "Remember to turn off your lights whenever not needed, especially during the day.",
+        "Put stereos and electronics on power strips and turn off when not in use.",
+        "Replace your light bulbs with LEDs, which use a lot less energy.",
+        "Use rechargeable batteries instead of disposable batteries for portable devices.",
+        "Minimize printing documents from the computer, go paperless!",
+        "Decide what you want before you open the refrigerator, don’ t leave the door open.",
+        "Use a pressure cooker, especially for beans and grains.",
+        "Cut your shower time by 20^% or take one fewer showers per week.",
+        "Turn of the water while shampooing or washing your body.",
+        "Turn off the water while you are brushing your teeth or shaving",
+        "The cooler the water the better, turn it down a few degrees.",
+        "Use rags and hand - towels instead of paper towels or napkins.“Reduce, Reuse, Recycle”– in that order!"
+      ]
+    },
+    {
+      "category": [
+
+      ],
+      "actions": [
+        "Organize clothing swaps and trade days with your friends / community ",
+        "Buy Organic",
+        "Buy Local",
+        "Plant a garden",
+        "Compost",
+        "Chooose: sign up",
+        "Eat Vegetarian - or better yet: VEGAN!",
+        "If you buy a living Christmas tree, plant it somewhere after the Christmas season.",
+        "Plant trees in your community.",
+        "Adopt a street or trail, and keep it clean.",
+        "Organize a cleanup at a beach, lake, river, or creek.",
+        "Start by NOT buying something you’ll wind up recycling. If you buy it REUSE it before recycling it.",
+        "Print off the “recyclables” list for the facility in your area. Post it on your fridge and refer to it when you’ re not sure.",
+        "Get outside every day. Get into the habit of regularly spending time in nature."
+      ]
+    },
+    {
+      "category": [
+
+      ],
+      "actions": [
+        "Do some research- get good at distinguishing between greenwashing and legit sustainability standards.",
+        "Go to local event",
+        "Carry reusable water bottle.",
+        "Bring your own bag.",
+        "Buy second - hand",
+        "Pack your own snacks instead of buying packaged foods",
+        "Use reusable coffee cup",
+        "Buy food in bulk! Plan ahead and bring reusable bags and containers to the market or store.",
+        "Avoid supporting fastfood restuarnats and chains, eat at local commuity oriented restuarnats.",
+        "Use non - toxic, environmentally friendly products for cleaning.",
+        "Keep an extra reusable bag in your purse / backpack / bike / car.",
+        "Buy carrots, onions, potatoes, and other produce loose | no need to use a plastic bag. | Buy products made from or packaged in recycled materials.",
+        "DIY!Do it yourself! | Recycle old cell phones, mobile devices and batteries | Donate to the thrift organizations| Use and re - use cloth napkins instead of paper | Use all reusable plates, silverware, napkins, tupperware, etc.(Including when you get food - to - go!)."
+      ]
+    },
+    {
+      "category": [],
+      "actions": [
+
+
+        "Walk, rollerblade, skateboard, unicycle, or ride a bike",
+        "Carpool and ride - share whenever possible.",
+        "Use alternative transportation: bike / walk / cartwheel / carpool",
+        "If you buy a car, consider buying electric or hybrid",
+        "Use public transportation (bus, subway, train) instead of a personal car ",
+        "Drive a fuel efficient, hybrid, or electric car.",
+        "If you own a car, avoid using the air conditioning.",
+        "Be an eco-driver (slow acceleration, gradual deceleration, smart parking, etc..)",
+        "Keep your trunk clean, extra weight decreases gas mileage.",
+        "Make sure the tires on your car are properly inflated and balanced. | Keep your car tuned up. | Pick up litter when you walk; participate in (or start) litter pick-up | days in your neighborhood  | Start litter pick - up days in your neighborhood"
+
+      ]
+    },
+    {
+      "category": [],
+      "actions": [
+
+        "Put a brick or rocks in your toilet tank to conserve water each time you flush",
+        "Minimize toilet flushing  | if it's yellow let it mellow",
+        "Say no to plastic straws(tally straws denied!)",
+        "AMBIGUOUS: Cut water use"
+      ]
+    },
+    {
+      "category": [],
+      "actions": [
+        "Buy from small businesses",
+        "Vote with your dollar",
+        "Organize a protest",
+        "Educate yourself about issues that affect your community"
+      ]
+    }
   ]
 }
