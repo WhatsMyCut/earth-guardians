@@ -16,7 +16,7 @@ import { data } from './actions.json';
 export default class MyActionsStackScreen extends React.Component {
   static navigationOptions = {
     //header: null,
-    title: 'Actions',
+    //title: 'Actions',
   };
   state = {
     photos: [],
