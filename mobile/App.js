@@ -15,7 +15,7 @@ import { HttpLink } from 'apollo-link-http';
 import { onError } from 'apollo-link-error';
 
 const httpLink = new HttpLink({
-  uri: 'https://api.graph.cool/simple/v1/swapi'
+  uri: `https://us1.prisma.sh/daniel-ashcraft-a99d55/earth_guardians/dev?headers={"Authorization":"Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1NDQ4MDY3MTYsIm5iZiI6MTU0NDcyMDMxNn0.gbuXTavijNiDgW_A9U5grNMdqzUlpfS8qzCWQm1naKI"}`
 });
 
 
