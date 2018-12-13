@@ -17,6 +17,7 @@ export default class MyActionsStackScreen extends React.Component {
   static navigationOptions = {
     //header: null,
     title: 'Actions',
+    header:null
   };
   state = {
     photos: [],
@@ -47,7 +48,7 @@ export default class MyActionsStackScreen extends React.Component {
               <TouchableOpacity style={{ flex: 1 }}>
                 <View style={styles.item}>
                   <Image
-                    source={{ uri: 'https://picsum.photos/200/300/?random' }}
+                    source={{ uri: item.action.image }}
                     style={{
                       flex: 1,
                       width: null,
@@ -64,8 +65,8 @@ export default class MyActionsStackScreen extends React.Component {
                       color: '#fff',
                       fontSize: 18,
                     }}
-                  >
-                    {item.action.substring(0, 50)}
+                  > {console.log(item)}
+                    {item.action.text.substring(0, 50)}
                   </Text>
                 </View>
               </TouchableOpacity>

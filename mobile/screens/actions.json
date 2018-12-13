@@ -2,106 +2,14 @@
   "data": [{
       "category": ["socializing", "creating", "learning", "art", "exercise"],
       "actions": [
-        "Replace screen time with socializing, creating, learning, art, and exercise.",
-        "Go to local event",
-        "Donate to an environmentally healthy cause Volunteer at community center / non - profit / school ",
-        "Avoid  using  the  clothes  dryer,  hang  your  cloths  out  to  dry whenever possible.",
-        "Turn  down  the  temperature  on  your  water  heater  (130 degrees is hot enough).",
-        "When you leave, turn all lights off and unplug electronics",
-        "In winter, turn your thermostat down to 68 degrees or below.Consider wearing warmer clothes",
-        "In summer, turn your thermostat to 78 or above.Consider using an evaporative cooler instead",
-        "Random act of kindness",
-        "Remember to turn off your lights whenever not needed, especially during the day.",
-        "Put stereos and electronics on power strips and turn off when not in use.",
-        "Replace your light bulbs with LEDs, which use a lot less energy.",
-        "Use rechargeable batteries instead of disposable batteries for portable devices.",
-        "Minimize printing documents from the computer, go paperless!",
-        "Decide what you want before you open the refrigerator, don’ t leave the door open.",
-        "Use a pressure cooker, especially for beans and grains.",
-        "Cut your shower time by 20^% or take one fewer showers per week.",
-        "Turn of the water while shampooing or washing your body.",
-        "Turn off the water while you are brushing your teeth or shaving",
-        "The cooler the water the better, turn it down a few degrees.",
-        "Use rags and hand - towels instead of paper towels or napkins.“Reduce, Reuse, Recycle”– in that order!"
+        {"text": "Replace screen time with socializing, creating, learning, art, and exercise.", "image":"https://images.pexels.com/photos/1374448/pexels-photo-1374448.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"},
+        {"text":"Go to local event", "image":"https://img-aws.ehowcdn.com/350x235p/photos.demandstudios.com/getty/article/211/17/181530805.jpg"},
+        {"text":"Donate to an environmentally healthy cause Volunteer at community center / non - profit / school ", "image":"https://img-aws.ehowcdn.com/350x235p/photos.demandstudios.com/getty/article/211/17/181530805.jpg"},
+        {"text":"Avoid  using  the  clothes  dryer,  hang  your  cloths  out  to  dry whenever possible.", "image":"https://images.unsplash.com/photo-1534152294282-c9a7a6895d6c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80"},
+        {"text":"Turn  down  the  temperature  on  your  water  heater  (130 degrees is hot enough).", "image":"https://images.pexels.com/photos/534/animal-countryside-agriculture-farm.jpg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"},
+        {"text":"When you leave, turn all lights off and unplug electronics", "image":"https://img-aws.ehowcdn.com/350x235p/photos.demandstudios.com/getty/article/211/17/181530805.jpg"},
+        {"text":"In winter, turn your thermostat down to 68 degrees or below.Consider wearing warmer clothes", "image":"https://images.pexels.com/photos/534/animal-countryside-agriculture-farm.jpg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"}
       ]
-    },
-    {
-      "category": [
-
-      ],
-      "actions": [
-        "Organize clothing swaps and trade days with your friends / community ",
-        "Buy Organic",
-        "Buy Local",
-        "Plant a garden",
-        "Compost",
-        "Chooose: sign up",
-        "Eat Vegetarian - or better yet: VEGAN!",
-        "If you buy a living Christmas tree, plant it somewhere after the Christmas season.",
-        "Plant trees in your community.",
-        "Adopt a street or trail, and keep it clean.",
-        "Organize a cleanup at a beach, lake, river, or creek.",
-        "Start by NOT buying something you’ll wind up recycling. If you buy it REUSE it before recycling it.",
-        "Print off the “recyclables” list for the facility in your area. Post it on your fridge and refer to it when you’ re not sure.",
-        "Get outside every day. Get into the habit of regularly spending time in nature."
-      ]
-    },
-    {
-      "category": [
-
-      ],
-      "actions": [
-        "Do some research- get good at distinguishing between greenwashing and legit sustainability standards.",
-        "Go to local event",
-        "Carry reusable water bottle.",
-        "Bring your own bag.",
-        "Buy second - hand",
-        "Pack your own snacks instead of buying packaged foods",
-        "Use reusable coffee cup",
-        "Buy food in bulk! Plan ahead and bring reusable bags and containers to the market or store.",
-        "Avoid supporting fastfood restuarnats and chains, eat at local commuity oriented restuarnats.",
-        "Use non - toxic, environmentally friendly products for cleaning.",
-        "Keep an extra reusable bag in your purse / backpack / bike / car.",
-        "Buy carrots, onions, potatoes, and other produce loose | no need to use a plastic bag. | Buy products made from or packaged in recycled materials.",
-        "DIY!Do it yourself! | Recycle old cell phones, mobile devices and batteries | Donate to the thrift organizations| Use and re - use cloth napkins instead of paper | Use all reusable plates, silverware, napkins, tupperware, etc.(Including when you get food - to - go!)."
-      ]
-    },
-    {
-      "category": [],
-      "actions": [
-
-
-        "Walk, rollerblade, skateboard, unicycle, or ride a bike",
-        "Carpool and ride - share whenever possible.",
-        "Use alternative transportation: bike / walk / cartwheel / carpool",
-        "If you buy a car, consider buying electric or hybrid",
-        "Use public transportation (bus, subway, train) instead of a personal car ",
-        "Drive a fuel efficient, hybrid, or electric car.",
-        "If you own a car, avoid using the air conditioning.",
-        "Be an eco-driver (slow acceleration, gradual deceleration, smart parking, etc..)",
-        "Keep your trunk clean, extra weight decreases gas mileage.",
-        "Make sure the tires on your car are properly inflated and balanced. | Keep your car tuned up. | Pick up litter when you walk; participate in (or start) litter pick-up | days in your neighborhood  | Start litter pick - up days in your neighborhood"
-
-      ]
-    },
-    {
-      "category": [],
-      "actions": [
-
-        "Put a brick or rocks in your toilet tank to conserve water each time you flush",
-        "Minimize toilet flushing  | if it's yellow let it mellow",
-        "Say no to plastic straws(tally straws denied!)",
-        "AMBIGUOUS: Cut water use"
-      ]
-    },
-    {
-      "category": [],
-      "actions": [
-        "Buy from small businesses",
-        "Vote with your dollar",
-        "Organize a protest",
-        "Educate yourself about issues that affect your community"
-      ]
-    }
+    } 
   ]
 }
