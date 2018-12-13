@@ -22,7 +22,7 @@ const MyActionsStack = createStackNavigator({
 
 MyActionsStack.navigationOptions = {
   tabBarLabel: 'My Actions',
-  title: 'My Actions',
+  title: 'My Actions'
 };
 
 const CommunityStack = createStackNavigator({
@@ -38,7 +38,7 @@ const BasicsStack = createStackNavigator({
 });
 
 BasicsStack.navigationOptions = {
-  tabBarLabel: 'Basics',
+  tabBarLabel: 'Energy',
 };
 
 const TransportationStack = createStackNavigator({
@@ -46,7 +46,7 @@ const TransportationStack = createStackNavigator({
 });
 
 TransportationStack.navigationOptions = {
-  tabBarLabel: 'Transportation',
+  tabBarLabel: 'Food',
 };
 
 const FashionStack = createStackNavigator({
@@ -62,7 +62,7 @@ const SportsStack = createStackNavigator({
 });
 
 SportsStack.navigationOptions = {
-  tabBarLabel: 'Sports',
+  tabBarLabel: 'Water',
 };
 
 const ArtsStack = createStackNavigator({
@@ -70,11 +70,11 @@ const ArtsStack = createStackNavigator({
 });
 
 ArtsStack.navigationOptions = {
-  tabBarLabel: 'Arts',
+  tabBarLabel: 'Waste',
 };
 
 const ShoppingStack = createStackNavigator({
-  ShoppingStack: ShoppingStackScreen,
+  ShoppingStack: ShoppingStackScreen
 });
 
 ShoppingStack.navigationOptions = {
@@ -86,7 +86,7 @@ const OceansStack = createStackNavigator({
 });
 
 OceansStack.navigationOptions = {
-  tabBarLabel: 'Oceans',
+  tabBarLabel: 'Travel',
 };
 
 const LandStack = createStackNavigator({
@@ -102,31 +102,33 @@ const PoliticsStack = createStackNavigator({
 });
 
 PoliticsStack.navigationOptions = {
-  tabBarLabel: 'Politics',
+  tabBarLabel: 'Transportation',
 };
 
-const FinanceStack = createStackNavigator({
-  FinanceStack: FinanceStackScreen,
-});
+// const FinanceStack = createStackNavigator({
+//   FinanceStack: FinanceStackScreen,
+// });
 
-FinanceStack.navigationOptions = {
-  tabBarLabel: 'Finance',
-};
+// FinanceStack.navigationOptions = {
+//   tabBarLabel: 'Finance',
+// };
+
+const routeConfig = {
+  MyActionsStack,
+  CommunityStack,
+  BasicsStack,
+  TransportationStack,
+  FashionStack,
+  SportsStack,
+  ArtsStack,
+  ShoppingStack,
+  OceansStack,
+  LandStack,
+  PoliticsStack,
+}
+
 export default createMaterialTopTabNavigator(
-  {
-    MyActionsStack,
-    CommunityStack,
-    BasicsStack,
-    TransportationStack,
-    FashionStack,
-    SportsStack,
-    ArtsStack,
-    ShoppingStack,
-    OceansStack,
-    LandStack,
-    PoliticsStack,
-    FinanceStack,
-  },
+  routeConfig,
   {
     swipeEnabled: true,
     tabBarPosition: 'bottom',
@@ -137,11 +139,13 @@ export default createMaterialTopTabNavigator(
         fontSize: 13,
       },
       style: {
-        backgroundColor: '#000',
+        justifyContent:'space-between',
+        alignContent:'center',
+        backgroundColor: '#000',  
       },
       scrollEnabled: true,
       tabStyle: {
-        maxWidth: 150,
+        // maxWidth: tabWidth,
       },
       indicatorStyle: {
         width: 0,

@@ -1,5 +1,5 @@
 import React from 'react';
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView, Image, StyleSheet, Text, View } from 'react-native';
 
 export default class BasicsStackScreen extends React.Component {
   static navigationOptions = {
