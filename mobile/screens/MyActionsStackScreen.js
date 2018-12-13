@@ -18,24 +18,42 @@ import { ALL_PERSONS_QUERY } from '../components/graphql/queries/all_persons_que
 import graphql from '../components/hoc/graphql';
 import { all } from 'rsvp';
 
+const Header = () => {
+  return (
+    <View style={{ flex: 1 }}>
+      <Text style={{ color: 'red', height: 30 }}>Hello World</Text>
+    </View>
+  );
+};
+
+class LogoTitle extends React.Component {
+  render() {
+    return (
+      <Image
+        source={require('../assets/icon.png')}
+        style={{ width: 30, height: 30 }}
+      />
+    );
+  }
+}
 @graphql(ALL_PERSONS_QUERY, {
   name: 'all_persons',
   fetchPolicy: 'network-only',
 })
 class MyActionsStackScreen extends React.Component {
   static navigationOptions = {
-    //header: null,
-    title: 'Actions',
+    //title: 'Hello',
     header: null,
+    //headerTitle: <LogoTitle />,
   };
   state = {
     photos: [],
     actions: [],
   };
 
-  constructor(props) {
-    super(props);
-  }
+  // constructor(props) {
+  //   super(props);
+  // }
 
   componentDidMount() {
     // these methods are just for the dummy data

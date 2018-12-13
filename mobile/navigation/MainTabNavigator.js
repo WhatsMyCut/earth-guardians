@@ -22,11 +22,12 @@ const MyActionsStack = createStackNavigator({
 
 MyActionsStack.navigationOptions = {
   tabBarLabel: 'My Actions',
-  title: 'My Actions'
+  headerMode: 'none',
+  title: 'Act',
 };
 
 const CommunityStack = createStackNavigator({
-  CommunityStack: CommunityStackScreen,
+  Community: CommunityStackScreen,
 });
 
 CommunityStack.navigationOptions = {
@@ -34,7 +35,7 @@ CommunityStack.navigationOptions = {
 };
 
 const BasicsStack = createStackNavigator({
-  BasicsStack: BasicsStackScreen,
+  Basics: BasicsStackScreen,
 });
 
 BasicsStack.navigationOptions = {
@@ -42,7 +43,7 @@ BasicsStack.navigationOptions = {
 };
 
 const TransportationStack = createStackNavigator({
-  TransportationStack: TransportationStackScreen,
+  Transportation: TransportationStackScreen,
 });
 
 TransportationStack.navigationOptions = {
@@ -50,7 +51,7 @@ TransportationStack.navigationOptions = {
 };
 
 const FashionStack = createStackNavigator({
-  FashionStack: FashionStackScreen,
+  Fashion: FashionStackScreen,
 });
 
 FashionStack.navigationOptions = {
@@ -58,7 +59,7 @@ FashionStack.navigationOptions = {
 };
 
 const SportsStack = createStackNavigator({
-  SportsStack: SportsStackScreen,
+  Sports: SportsStackScreen,
 });
 
 SportsStack.navigationOptions = {
@@ -66,7 +67,7 @@ SportsStack.navigationOptions = {
 };
 
 const ArtsStack = createStackNavigator({
-  ArtsStack: ArtsStackScreen,
+  Arts: ArtsStackScreen,
 });
 
 ArtsStack.navigationOptions = {
@@ -74,7 +75,7 @@ ArtsStack.navigationOptions = {
 };
 
 const ShoppingStack = createStackNavigator({
-  ShoppingStack: ShoppingStackScreen
+  Shopping: ShoppingStackScreen,
 });
 
 ShoppingStack.navigationOptions = {
@@ -82,7 +83,7 @@ ShoppingStack.navigationOptions = {
 };
 
 const OceansStack = createStackNavigator({
-  OceansStack: OceansStackScreen,
+  Oceans: OceansStackScreen,
 });
 
 OceansStack.navigationOptions = {
@@ -90,7 +91,7 @@ OceansStack.navigationOptions = {
 };
 
 const LandStack = createStackNavigator({
-  LandStack: LandStackScreen,
+  Land: LandStackScreen,
 });
 
 LandStack.navigationOptions = {
@@ -98,7 +99,7 @@ LandStack.navigationOptions = {
 };
 
 const PoliticsStack = createStackNavigator({
-  PoliticsStack: PoliticsStackScreen,
+  Politics: PoliticsStackScreen,
 });
 
 PoliticsStack.navigationOptions = {
@@ -106,7 +107,7 @@ PoliticsStack.navigationOptions = {
 };
 
 // const FinanceStack = createStackNavigator({
-//   FinanceStack: FinanceStackScreen,
+//   Finance: FinanceStackScreen,
 // });
 
 // FinanceStack.navigationOptions = {
@@ -125,33 +126,30 @@ const routeConfig = {
   OceansStack,
   LandStack,
   PoliticsStack,
-}
+};
 
-export default createMaterialTopTabNavigator(
-  routeConfig,
-  {
-    swipeEnabled: true,
-    tabBarPosition: 'bottom',
-    animationEnabled: true,
-    tabBarOptions: {
-      labelStyle: {
-        fontWeight: 'bold',
-        fontSize: 13,
-      },
-      style: {
-        justifyContent:'space-between',
-        alignContent:'center',
-        backgroundColor: '#000',  
-      },
-      scrollEnabled: true,
-      tabStyle: {
-        // maxWidth: tabWidth,
-      },
-      indicatorStyle: {
-        width: 0,
-      },
+export default createMaterialTopTabNavigator(routeConfig, {
+  swipeEnabled: true,
+  tabBarPosition: 'bottom',
+  animationEnabled: true,
+  tabBarOptions: {
+    labelStyle: {
+      fontWeight: 'bold',
+      fontSize: 13,
     },
-    lazy: true,
-    initialRouteName: 'MyActionsStack',
-  }
-);
+    style: {
+      justifyContent: 'space-between',
+      alignContent: 'center',
+      backgroundColor: '#000',
+    },
+    scrollEnabled: true,
+    tabStyle: {
+      // maxWidth: tabWidth,
+    },
+    indicatorStyle: {
+      width: 0,
+    },
+  },
+  lazy: true,
+  initialRouteName: 'MyActionsStack',
+});
