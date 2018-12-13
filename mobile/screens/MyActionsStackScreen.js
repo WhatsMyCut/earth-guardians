@@ -13,7 +13,17 @@ import {
 import Styles from '../constants/Styles';
 
 import { data } from './actions.json';
-export default class MyActionsStackScreen extends React.Component {
+
+import {ALL_PERSONS_QUERY} from '../components/graphql/queries/all_persons_query'
+import graphql from '../components/hoc/graphql';
+import { all } from 'rsvp';
+
+
+@graphql(ALL_PERSONS_QUERY, {
+  name:"all_persons",
+  fetchPolicy: 'network-only'
+})
+class MyActionsStackScreen extends React.Component {
   static navigationOptions = {
     //header: null,
     title: 'Actions',
@@ -23,6 +33,10 @@ export default class MyActionsStackScreen extends React.Component {
     photos: [],
     actions: [],
   };
+
+  constructor(props){
+    super(props);
+  }
 
   componentDidMount() {
     // these methods are just for the dummy data
@@ -37,6 +51,13 @@ export default class MyActionsStackScreen extends React.Component {
     this.setState({ actions: actions });
   }
   render() {
+    const { all_persons } = this.props;
+    if(!all_persons.loading){
+      console.log('all persons', all_persons.allPersons[0].name);
+    }
+    if(all_persons.loading){
+      return <SafeAreaView style={{flex:1}}><Text>Loading ...</Text></SafeAreaView>
+    }
     return (
       <SafeAreaView style={{ flex: 1 }}>
         <View style={styles.container}>
@@ -65,7 +86,7 @@ export default class MyActionsStackScreen extends React.Component {
                       color: '#fff',
                       fontSize: 18,
                     }}
-                  > {console.log(item)}
+                  >
                     {item.action.text.substring(0, 50)}
                   </Text>
                 </View>
@@ -98,3 +119,6 @@ const styles = StyleSheet.create({
     borderRadius: Styles.borderRadius,
   },
 });
+
+
+export default MyActionsStackScreen;
