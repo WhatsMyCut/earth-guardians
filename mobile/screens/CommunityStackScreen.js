@@ -3,11 +3,11 @@ import GeneralScreen from './GeneralScreen';
 // import { StyleSheet, Text, SafeAreaView, View } from 'react-native';
 import { data } from './actions.json';
 import HeaderNavBar from '../components/shared/navBar/HeaderNavBar';
-
+import Styles from '../constants/Styles';
 export default class CommunityStackScreen extends React.Component {
   static navigationOptions = {
     headerTitle: <HeaderNavBar />,
-    headerStyle: { backgroundColor: '#333' },
+    headerStyle: { backgroundColor: '#333', height: Styles.headerNavBarHeight },
   };
 
   render() {

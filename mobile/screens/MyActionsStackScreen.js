@@ -27,13 +27,11 @@ const Header = () => {
   );
 };
 
-
 @graphql(ALL_ACTION_CATEGORIES, {
   name: 'all_categories',
   fetchPolicy: 'network-only',
 })
 class MyActionsStackScreen extends React.Component {
-  
   state = {
     photos: [],
     actions: [],
@@ -130,14 +128,15 @@ const styles = StyleSheet.create({
   },
 });
 
-
-
 MyActionsStackScreen.navigationOptions = {
-    headerTitle: HeaderNavBar,
-    headerStyle: { backgroundColor: '#333' },
-  }
-
-
-
+  headerTitle: HeaderNavBar,
+  headerStyle: {
+    backgroundColor: '#333',
+    height: Styles.headerNavBarHeight,
+  },
+  headerStatusBarStyle: {
+    color: '#fff',
+  },
+};
 
 export default MyActionsStackScreen;

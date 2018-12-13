@@ -4,4 +4,5 @@ export default {
   leftMargin: 10,
   rightMargin: 10,
   margin: 20,
+  headerNavBarHeight: 80,
 };

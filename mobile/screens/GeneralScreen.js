@@ -16,11 +16,6 @@ import Styles from '../constants/Styles';
 import LinearGradientProps from '../constants/LinearGradientProps';
 
 export default class CommunityStackScreen extends React.Component {
-  static navigationOptions = {
-    headerTitle: <HeaderNavBar />,
-    headerStyle: { backgroundColor: '#333' },
-  };
-
   state = { photos: [], actions: [] };
 
   componentDidMount() {
