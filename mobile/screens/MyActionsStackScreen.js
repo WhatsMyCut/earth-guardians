@@ -14,7 +14,7 @@ import Styles from '../constants/Styles';
 
 import { data } from './actions.json';
 
-import { ALL_PERSONS_QUERY } from '../components/graphql/queries/all_persons_query';
+import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_categories_query';
 import graphql from '../components/hoc/graphql';
 import { all } from 'rsvp';
 
@@ -26,18 +26,8 @@ const Header = () => {
   );
 };
 
-class LogoTitle extends React.Component {
-  render() {
-    return (
-      <Image
-        source={require('../assets/icon.png')}
-        style={{ width: 30, height: 30 }}
-      />
-    );
-  }
-}
-@graphql(ALL_PERSONS_QUERY, {
-  name: 'all_persons',
+@graphql(ALL_ACTION_CATEGORIES, {
+  name: 'all_categories',
   fetchPolicy: 'network-only',
 })
 class MyActionsStackScreen extends React.Component {
@@ -68,11 +58,11 @@ class MyActionsStackScreen extends React.Component {
     this.setState({ actions: actions });
   }
   render() {
-    const { all_persons } = this.props;
-    if (!all_persons.loading) {
-      console.log('all persons', all_persons.allPersons[0].name);
+    const { all_categories } = this.props;
+    if (!all_categories.loading) {
+      console.log('all persons', all_categories.actionCategories[0].name);
     }
-    if (all_persons.loading) {
+    if (all_categories.loading) {
       return (
         <SafeAreaView style={{ flex: 1 }}>
           <Text>Loading ...</Text>
