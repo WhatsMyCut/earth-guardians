@@ -1,34 +1,20 @@
 import React from 'react';
-import {
-  StyleSheet,
-  Text,
-  SafeAreaView,
-  View,
-  Image,
-  TouchableOpacity,
-} from 'react-native';
-
+import GeneralScreen from './GeneralScreen';
+// import { StyleSheet, Text, SafeAreaView, View } from 'react-native';
+import { data } from './actions.json';
 import HeaderNavBar from '../components/shared/navBar/HeaderNavBar';
 
 export default class CommunityStackScreen extends React.Component {
-  static navigationOptions = ({ navigation }) => {
-    return {
-      headerTitle: <HeaderNavBar navigation={navigation} />,
-
-      headerStyle: { backgroundColor: '#333' },
-    };
-    //title: 'hello',
+  static navigationOptions = {
+    headerTitle: <HeaderNavBar />,
+    headerStyle: { backgroundColor: '#333' },
   };
 
   render() {
-    return (
-      <SafeAreaView style={{ flex: 1 }}>
-        <View
-          style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
-        >
-          <Text style={{ fontSize: 30 }}>Community</Text>
-        </View>
-      </SafeAreaView>
-    );
+    return <GeneralScreen data={data} />;
   }
 }
+
+// const styles = StyleSheet.create({
+//   container: { flex: 1, alignItems: 'center', justifyContent: 'center' },
+// });
