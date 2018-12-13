@@ -39,9 +39,7 @@ export default class CommunityStackScreen extends React.Component {
   render() {
     return (
       <LinearGradient
-        {...LinearGradientProps.whiteToBlackcolors}
-        // colors={['#ffffff', '#000000']}
-        // locations={[0.7, 1]}
+        {...LinearGradientProps.lightGrayToDarkGraycolors}
         style={styles.linearGradient}
       >
         <SafeAreaView style={{ flex: 1 }}>
