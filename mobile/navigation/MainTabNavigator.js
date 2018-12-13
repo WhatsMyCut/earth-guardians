@@ -2,7 +2,7 @@ import {
   createStackNavigator,
   createMaterialTopTabNavigator,
 } from 'react-navigation';
-
+import React from 'react';
 import MyActionsStackScreen from '../screens/MyActionsStackScreen';
 import CommunityStackScreen from '../screens/CommunityStackScreen';
 import BasicsStackScreen from '../screens/BasicsStackScreen';
@@ -15,15 +15,22 @@ import OceansStackScreen from '../screens/OceansStackScreen';
 import LandStackScreen from '../screens/LandStackScreen';
 import PoliticsStackScreen from '../screens/ShoppingStackScreen';
 import FinanceStackScreen from '../screens/FinanceStackScreen';
+import HeaderNavBar from '../components/shared/navBar/HeaderNavBar';
+import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_categories_query';
+import { all } from 'rsvp';
+
+
 
 const MyActionsStack = createStackNavigator({
   MyActions: MyActionsStackScreen,
+  
 });
 
-MyActionsStack.navigationOptions = {
-  tabBarLabel: 'My Actions',
-  headerMode: 'none',
-  title: 'Act',
+MyActionsStack.navigationOptions = (props) =>{
+  console.log('props', props)
+  return {
+    tabBarLabel: 'My Actions'
+  }
 };
 
 const CommunityStack = createStackNavigator({
