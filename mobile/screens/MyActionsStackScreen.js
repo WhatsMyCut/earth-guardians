@@ -15,10 +15,8 @@ import Styles from '../constants/Styles';
 import { data } from './actions.json';
 
 import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_categories_query';
-// import { gql, graphql } from 'react-apollo';
 import { all } from 'rsvp';
 import HeaderNavBar from '../components/shared/navBar/HeaderNavBar';
-import { withNavigation } from 'react-navigation';
 import graphql from '../components/hoc/graphql';
 
 const Header = () => {
