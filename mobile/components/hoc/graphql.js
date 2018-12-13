@@ -1,6 +1,7 @@
 import React from 'react';
 import { getMainDefinition } from 'apollo-utilities';
 import { graphql } from 'react-apollo';
+import { withNavigation } from 'react-navigation';
 
 export default function(document, operationOptions = {}) {
   const { kind, operation } = getMainDefinition(document);
@@ -11,8 +12,12 @@ export default function(document, operationOptions = {}) {
   const name = operationOptions.name || 'data';
   return function componentWrapper(Component) {
     @graphql(document, operationOptions)
+    @withNavigation
     class GraphqlClass extends React.Component {
 
+      constructor(props){
+        super(props);
+      }
       state = {
         fetching: false
       };
@@ -23,7 +28,7 @@ export default function(document, operationOptions = {}) {
         if (data && data.error) {
           return console.error('There was an Error', data.error);
         }
-        return <Component {...this.props} />;
+        return <Component {...this.props}/>;
       }
 
       

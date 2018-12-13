@@ -15,8 +15,9 @@ import Styles from '../constants/Styles';
 import { data } from './actions.json';
 
 import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_categories_query';
-import graphql from '../components/hoc/graphql';
 import { all } from 'rsvp';
+import HeaderNavBar from '../components/shared/navBar/HeaderNavBar';
+import graphql from '../components/hoc/graphql';
 
 const Header = () => {
   return (
@@ -26,24 +27,22 @@ const Header = () => {
   );
 };
 
+
 @graphql(ALL_ACTION_CATEGORIES, {
   name: 'all_categories',
   fetchPolicy: 'network-only',
 })
 class MyActionsStackScreen extends React.Component {
-  static navigationOptions = {
-    //title: 'Hello',
-    header: null,
-    //headerTitle: <LogoTitle />,
-  };
+  
   state = {
     photos: [],
     actions: [],
   };
 
-  // constructor(props) {
-  //   super(props);
-  // }
+  constructor(props) {
+    super(props);
+    console.log('props inside of stack', props.navigationOptions);
+  }
 
   componentDidMount() {
     // these methods are just for the dummy data
@@ -130,5 +129,15 @@ const styles = StyleSheet.create({
     borderRadius: Styles.borderRadius,
   },
 });
+
+
+
+MyActionsStackScreen.navigationOptions = {
+    headerTitle: HeaderNavBar,
+    headerStyle: { backgroundColor: '#333' },
+  }
+
+
+
 
 export default MyActionsStackScreen;
