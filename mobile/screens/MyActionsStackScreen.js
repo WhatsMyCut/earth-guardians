@@ -132,18 +132,12 @@ const styles = StyleSheet.create({
 
 
 
-
-
-MyActionsStackScreen.navigationOptions = ({ navigation }) => {
-  return {
-    headerTitle: <HeaderNavBar navigation={navigation} />,
-
+MyActionsStackScreen.navigationOptions = {
+    headerTitle: HeaderNavBar,
     headerStyle: { backgroundColor: '#333' },
-  };
-  //title: 'hello',
-};
+  }
 
 
 
 
-export default MyActionsStackScreen
+export default MyActionsStackScreen;
