@@ -1,9 +1,23 @@
 import React from 'react';
-import { StyleSheet, Text, SafeAreaView, View } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  SafeAreaView,
+  View,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
+
+import HeaderNavBar from '../components/shared/navBar/HeaderNavBar';
 
 export default class CommunityStackScreen extends React.Component {
-  static navigationOptions = {
-    header: null,
+  static navigationOptions = ({ navigation }) => {
+    return {
+      headerTitle: <HeaderNavBar navigation={navigation} />,
+
+      headerStyle: { backgroundColor: '#333' },
+    };
+    //title: 'hello',
   };
 
   render() {

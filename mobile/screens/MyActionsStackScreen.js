@@ -14,29 +14,36 @@ import Styles from '../constants/Styles';
 
 import { data } from './actions.json';
 
-import {ALL_ACTION_CATEGORIES} from '../components/graphql/queries/all_action_categories_query'
+import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_categories_query';
 import graphql from '../components/hoc/graphql';
 import { all } from 'rsvp';
 
+const Header = () => {
+  return (
+    <View style={{ flex: 1 }}>
+      <Text style={{ color: 'red', height: 30 }}>Hello World</Text>
+    </View>
+  );
+};
 
 @graphql(ALL_ACTION_CATEGORIES, {
-  name:"all_categories",
-  fetchPolicy: 'network-only'
+  name: 'all_categories',
+  fetchPolicy: 'network-only',
 })
 class MyActionsStackScreen extends React.Component {
   static navigationOptions = {
-    //header: null,
-    title: 'Actions',
-    header:null
+    //title: 'Hello',
+    header: null,
+    //headerTitle: <LogoTitle />,
   };
   state = {
     photos: [],
     actions: [],
   };
 
-  constructor(props){
-    super(props);
-  }
+  // constructor(props) {
+  //   super(props);
+  // }
 
   componentDidMount() {
     // these methods are just for the dummy data
@@ -52,11 +59,15 @@ class MyActionsStackScreen extends React.Component {
   }
   render() {
     const { all_categories } = this.props;
-    if(!all_categories.loading){
+    if (!all_categories.loading) {
       console.log('all persons', all_categories.actionCategories[0].name);
     }
-    if(all_categories.loading){
-      return <SafeAreaView style={{flex:1}}><Text>Loading ...</Text></SafeAreaView>
+    if (all_categories.loading) {
+      return (
+        <SafeAreaView style={{ flex: 1 }}>
+          <Text>Loading ...</Text>
+        </SafeAreaView>
+      );
     }
     return (
       <SafeAreaView style={{ flex: 1 }}>
@@ -119,6 +130,5 @@ const styles = StyleSheet.create({
     borderRadius: Styles.borderRadius,
   },
 });
-
 
 export default MyActionsStackScreen;
