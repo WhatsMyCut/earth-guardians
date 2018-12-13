@@ -5,26 +5,63 @@ import { StoreProvider } from './store/Store';
 import AppNavigator from './navigation/AppNavigator';
 import NavigationService from './navigation/navigationService';
 import { graphql, ApolloProvider } from 'react-apollo';
-import ApolloClient, { createNetworkInterface } from 'apollo-client';
+import { ApolloClient } from 'apollo-client';
+import { ApolloLink, split } from 'apollo-link';
+import { createUploadLink } from 'apollo-upload-client';
+import { setContext } from 'apollo-link-context';
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import { getFragmentDefinitions, getMainDefinition } from 'apollo-utilities';
+import { HttpLink } from 'apollo-link-http';
+import { onError } from 'apollo-link-error';
+
+const httpLink = new HttpLink({
+  uri: 'https://api.graph.cool/simple/v1/swapi'
+});
+
+
+const errorLink = onError(({ graphQLErrors, networkError, operation }) => {
+  if (graphQLErrors) {
+    graphQLErrors.map(({ message, locations, path }) => {
+      console.log(
+        'multiple errors',
+        JSON.stringify({ message, locations, path })
+      );
+      return message;
+    });
+  }
+
+  if (networkError) {
+    console.log(`Network error: ${networkError}`);
+  }
+});
+
+
+const authLink = setContext((_, context) => {
+  const headers = { ...context.headers };
+  const token = AsyncStorage.getItem('EARTH_GUARDIANS_TOKEN');
+  if (token) {
+    headers.authorization = `Bearer ${token}`;
+  }
+
+  return {
+    ...context,
+    headers
+  };
+});
+
+
 // For info on how to use navigation service
 // https://reactnavigation.org/docs/en/navigating-without-navigation-prop.html#docsNav
 
-const networkInterface = createNetworkInterface({uri: 'localhost:4400'});
-
-networkInterface.use([{
-  applyMiddleware(req, next) {
-    if (!req.options.headers) {
-      req.options.headers = {};  // Create the header object if needed.
-    }
-    const TOKEN = AsyncStorage.getItem('EARTH_GUARDIANS_TOKEN') || null;
-    // Send the login token in the Authorization header
-    req.options.headers.authorization = `Bearer ${TOKEN}`;
-    next();
-  }
-}]);
 
 const client = new ApolloClient({
-  networkInterface,
+  ssrForceFetchDelay: 100,
+  link : ApolloLink.from([
+    authLink,
+    errorLink,
+    httpLink
+  ]),
+  cache: new InMemoryCache()
 });
 
 

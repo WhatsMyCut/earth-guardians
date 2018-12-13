@@ -1,3 +1,4 @@
+import React from 'react';
 import { getMainDefinition } from 'apollo-utilities';
 import { graphql } from 'react-apollo';
 
@@ -19,11 +20,9 @@ export default function(document, operationOptions = {}) {
 
       render() {
         const data = this.props[name];
-
         if (data && data.error) {
           return console.error('There was an Error', data.error);
         }
-
         return <Component {...this.props} />;
       }
 
