@@ -19,18 +19,15 @@ import HeaderNavBar from '../components/shared/navBar/HeaderNavBar';
 import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_categories_query';
 import { all } from 'rsvp';
 
-
-
 const MyActionsStack = createStackNavigator({
   MyActions: MyActionsStackScreen,
-  
 });
 
-MyActionsStack.navigationOptions = (props) =>{
-  console.log('props', props)
+MyActionsStack.navigationOptions = props => {
+  console.log('props', props);
   return {
-    tabBarLabel: 'My Actions'
-  }
+    tabBarLabel: 'My Actions',
+  };
 };
 
 const CommunityStack = createStackNavigator({
@@ -154,7 +151,8 @@ export default createMaterialTopTabNavigator(routeConfig, {
       // maxWidth: tabWidth,
     },
     indicatorStyle: {
-      width: 0,
+      width: 10,
+      textAlign: 'center',
     },
   },
   lazy: true,

@@ -10,15 +10,23 @@ export default class CommunityStackScreen extends React.Component {
     headerStyle: { backgroundColor: '#333', height: Styles.headerNavBarHeight },
   };
 
-  state = { primary_photo: '', primary_video: '', actions: [] };
+  state = { primary_image: '', primary_video: '', actions: [] };
   componentDidMount() {
     const actions = data[0].actions;
+    const primary_image = data[0].primary.image;
+    const primary_video = data[0].primary.video_url;
 
-    this.setState({ actions: actions });
+    this.setState({ actions, primary_image, primary_video });
   }
 
   render() {
-    return <GeneralScreen data={this.state.actions} />;
+    return (
+      <GeneralScreen
+        data={this.state.actions}
+        primary_image={this.state.primary_image}
+        primary_video={this.state.primary_video}
+      />
+    );
   }
 }
 

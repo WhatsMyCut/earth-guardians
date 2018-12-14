@@ -1,5 +1,11 @@
 {
   "data": [{
+    "primary": {
+      "key": 1,
+      "text": "Replace screen time with socializing, creating, learning, art, and exercise.",
+      "image": "https://images.pexels.com/photos/1374448/pexels-photo-1374448.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "video_url": ""
+    },
     "category": ["socializing", "creating", "learning", "art", "exercise"],
     "actions": [{
         "key": 1,
