@@ -6,8 +6,8 @@ const CommunityIcon = () => {
   return (
     <TouchableOpacity onPress={() => navigationService.navigate('Community')}>
       <Image
-        source={require('../../../assets/community_w.png')}
-        style={{ width: 60, height: 35, marginLeft: 10 }}
+        source={require('../../../assets/eye_w.png')}
+        style={{ width: 40, height: 27 }}
       />
     </TouchableOpacity>
   );
@@ -17,8 +17,8 @@ const EyeIcon = () => {
   return (
     <TouchableOpacity onPress={() => navigationService.navigate('MyActions')}>
       <Image
-        source={require('../../../assets/eye_w.png')}
-        style={{ width: 50, height: 35 }}
+        source={require('../../../assets/user_w.png')}
+        style={{ width: 20, height: 20}}
       />
     </TouchableOpacity>
   );
@@ -28,8 +28,8 @@ const UserIcon = () => {
   return (
     <TouchableOpacity onPress={() => navigationService.navigate('Profile')}>
       <Image
-        source={require('../../../assets/user_w.png')}
-        style={{ width: 35, height: 35, marginRight: 10 }}
+        source={require('../../../assets/community_w.png')}
+        style={{ width: 35, height: 20}}
       />
     </TouchableOpacity>
   );
@@ -39,7 +39,7 @@ const UserIcon = () => {
 export default () => {
   return (
     <View
-      style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}
+      style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignContent:'space-between',alignItems:'baseline', paddingHorizontal:20 }}
     >
       <CommunityIcon />
       <EyeIcon />
