@@ -1,9 +1,10 @@
 import React from 'react';
 import { View, Image, TouchableOpacity } from 'react-native';
 import navigationService from '../../../navigation/navigationService';
-const EyeIcon = props => {
+
+const CommunityIcon = () => {
   return (
-    <TouchableOpacity onPress={() => props.navigation.navigate('MyActions')}>
+    <TouchableOpacity onPress={() => navigationService.navigate('Community')}>
       <Image
         source={require('../../../assets/eye_w.png')}
         style={{ width: 40, height: 27 }}
@@ -12,9 +13,9 @@ const EyeIcon = props => {
   );
 };
 
-const UserIcon = props => {
+const EyeIcon = () => {
   return (
-    <TouchableOpacity onPress={() => navigationService.navigate('LandStack')}>
+    <TouchableOpacity onPress={() => navigationService.navigate('MyActions')}>
       <Image
         source={require('../../../assets/user_w.png')}
         style={{ width: 20, height: 20}}
@@ -23,9 +24,9 @@ const UserIcon = props => {
   );
 };
 
-const CommunityIcon = props => {
+const UserIcon = () => {
   return (
-    <TouchableOpacity>
+    <TouchableOpacity onPress={() => navigationService.navigate('Profile')}>
       <Image
         source={require('../../../assets/community_w.png')}
         style={{ width: 35, height: 20}}
@@ -35,13 +36,13 @@ const CommunityIcon = props => {
 };
 
 // Anonymous default function, HeaderNavBar
-export default props => {
+export default () => {
   return (
     <View
       style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignContent:'space-between',alignItems:'baseline', paddingHorizontal:20 }}
     >
       <CommunityIcon />
-      <EyeIcon navigation={props.navigation} />
+      <EyeIcon />
       <UserIcon />
     </View>
   );

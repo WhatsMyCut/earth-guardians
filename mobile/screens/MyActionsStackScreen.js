@@ -29,13 +29,11 @@ const Header = () => {
   );
 };
 
-
 @graphql(ALL_ACTION_CATEGORIES, {
   name: 'all_categories',
   fetchPolicy: 'network-only',
 })
 class MyActionsStackScreen extends React.Component {
-  
   state = {
     photos: [],
     actions: [],
@@ -92,8 +90,6 @@ const styles = StyleSheet.create({
     paddingTop:15
   },
 });
-
-
 
 MyActionsStackScreen.navigationOptions = {
     headerTitle: HeaderNavBar,
