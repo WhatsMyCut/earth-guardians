@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   StyleSheet,
-  Text,
   FlatList,
   SafeAreaView,
   TouchableOpacity,
@@ -11,7 +10,7 @@ import {
 } from 'react-native';
 import { LinearGradient } from 'expo';
 
-import HeaderNavBar from '../components/shared/navBar/HeaderNavBar';
+import navigationService from '../navigation/navigationService';
 import Layout from '../constants/Layout';
 import Styles from '../constants/Styles';
 import LinearGradientProps from '../constants/LinearGradientProps';
@@ -21,19 +20,23 @@ const primaryHeight = Styles.primaryHeight;
 export default class CommunityStackScreen extends React.Component {
   renderPrimaryImage = () => {
     return (
-      <Image
-        source={{ uri: this.props.primary_image }}
-        style={styles.primaryMedia}
-      />
+      <TouchableOpacity>
+        <Image
+          source={{ uri: this.props.primary_image }}
+          style={styles.primaryMedia}
+        />
+      </TouchableOpacity>
     );
   };
 
   renderPrimaryVideo = () => {
     return (
-      <Image
-        source={{ uri: this.props.primary_video }}
-        style={styles.primaryMedia}
-      />
+      <TouchableOpacity onPress={() => navigationService.navigate('Video')}>
+        <Image
+          source={{ uri: this.props.primary_video }}
+          style={styles.primaryMedia}
+        />
+      </TouchableOpacity>
     );
   };
   primaryView = () => {
@@ -89,6 +92,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     width: width,
     marginHorizontal: 10,
+    marginTop: 20,
     justifyContent: 'center',
     alignItems: 'center',
     shadowColor: '#000',

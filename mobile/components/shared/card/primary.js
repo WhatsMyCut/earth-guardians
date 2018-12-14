@@ -1,22 +1,12 @@
 import React from 'react';
-import {
-  SafeAreaView,
-  ImageBackground,
-  Image,
-  Platform,
-  FlatList,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { LinearGradient } from 'expo';
 import Styles from '../../../constants/Styles';
 // import graphql from '../components/hoc/graphql';
 
-export default class ActionCardSmall extends React.Component {
+export default class PrimaryCard extends React.Component {
   render() {
-    const { item, index } = this.props;
+    const { primary_photo, primary_video } = this.props;
     return (
       <TouchableOpacity style={{ flex: 1, height: index % 2 ? 230 : 250 }}>
         <View style={styles.item}>
@@ -54,6 +44,7 @@ export default class ActionCardSmall extends React.Component {
   }
 }
 
+/*
 const styles = StyleSheet.create({
   item: {
     flex: 1,
@@ -71,3 +62,4 @@ const styles = StyleSheet.create({
     borderRadius: Styles.borderRadius,
   },
 });
+*/
