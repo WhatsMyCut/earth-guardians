@@ -18,6 +18,7 @@ import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_
 import { all } from 'rsvp';
 import HeaderNavBar from '../components/shared/navBar/HeaderNavBar';
 import graphql from '../components/hoc/graphql';
+import ActionCardSmall from '../components/shared/card';
 
 @graphql(ALL_ACTION_CATEGORIES, {
   name: 'all_categories',
@@ -51,35 +52,11 @@ class MyActionsStackScreen extends React.Component {
       <SafeAreaView style={{ flex: 1 }}>
         <View style={styles.container}>
           <FlatList
-            style={{ backgroundColor: '#D3D3D3' }}
+            style={{ backgroundColor: '#333' }}
             numColumns={2}
             data={this.state.actions}
             renderItem={({ item, index }) => (
-              <TouchableOpacity style={{ flex: 1 }}>
-                <View style={styles.item}>
-                  <Image
-                    source={{ uri: item.image }}
-                    style={{
-                      flex: 1,
-                      width: null,
-                      height: null,
-                      borderRadius: Styles.borderRadius,
-                    }}
-                  />
-                  <Text
-                    style={{
-                      position: 'absolute',
-                      bottom: 10,
-                      left: 10,
-                      fontWeight: 'bold',
-                      color: '#fff',
-                      fontSize: 18,
-                    }}
-                  >
-                    {item.text.substring(0, 50)}
-                  </Text>
-                </View>
-              </TouchableOpacity>
+              <ActionCardSmall item={item} index={index} />
             )}
           />
         </View>
@@ -91,21 +68,8 @@ class MyActionsStackScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  item: {
-    flex: 1,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
-    elevation: 1,
-    margin: 5,
-    marginTop: 10,
-    minHeight: 200,
-    maxHeight: 230,
-    borderColor: 'gray',
-    borderWidth: 1,
-    borderRadius: Styles.borderRadius,
+    backgroundColor: '#333',
+    paddingTop: 15,
   },
 });
 
@@ -113,10 +77,12 @@ MyActionsStackScreen.navigationOptions = {
   headerTitle: HeaderNavBar,
   headerStyle: {
     backgroundColor: '#333',
-    height: Styles.headerNavBarHeight,
-  },
-  headerStatusBarStyle: {
-    color: '#fff',
+    borderBottomWidth: 0,
+    shadowColor: 'transparent',
+    shadowRadius: 0,
+    shadowOffset: {
+      height: 0,
+    },
   },
 };
 

@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   View,
   Image,
+  ScrollView,
 } from 'react-native';
 import { LinearGradient } from 'expo';
 
@@ -18,6 +19,12 @@ import LinearGradientProps from '../constants/LinearGradientProps';
 export default class CommunityStackScreen extends React.Component {
   render() {
     console.log(this.props.data);
+    const image_url = this.props.data.length
+      ? this.props.data[0].image
+      : 'none';
+    const text_str = this.props.data.length
+      ? this.props.data[0].text.substring(0, 50)
+      : null;
     return (
       <LinearGradient
         {...LinearGradientProps.lightGrayToDarkGraycolors}
@@ -25,16 +32,45 @@ export default class CommunityStackScreen extends React.Component {
       >
         <SafeAreaView style={{ flex: 1 }}>
           <View style={styles.container}>
-            <View style={styles.headlineView}>
-              <Image
-                source={require('../assets/bg.png')}
-                style={{
-                  width: Layout.window.width - Styles.margin,
-                  height: 200,
-                }}
-              />
-            </View>
+            <ScrollView style={{ flex: 1 }}>
+              <View style={styles.headlineView}>
+                <Image
+                  source={require('../assets/bg.png')}
+                  style={{
+                    width: Layout.window.width - Styles.margin,
+                    height: 200,
+                  }}
+                />
+              </View>
 
+              <View style={styles.bodyView}>
+                <TouchableOpacity style={{ flex: 1 }}>
+                  <View style={styles.item}>
+                    <Image
+                      source={{ uri: image_url }}
+                      style={{
+                        flex: 1,
+                        width: null,
+                        height: null,
+                        borderRadius: Styles.borderRadius,
+                      }}
+                    />
+                    <Text
+                      style={{
+                        position: 'absolute',
+                        bottom: 10,
+                        left: 10,
+                        fontWeight: 'bold',
+                        color: '#fff',
+                        fontSize: 18,
+                      }}
+                    >
+                      {text_str}
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+              </View>
+            </ScrollView>
             <FlatList
               style={{ flex: 1 }}
               numColumns={2}
@@ -93,8 +129,9 @@ const styles = StyleSheet.create({
 
     borderColor: 'gray',
     borderWidth: 1,
-    borderRadius: Styles.borderRadius,
+    borderRadius: Styles.borderRadius + 20,
   },
+  bodyView: {},
   item: {
     flex: 1,
     shadowColor: '#000',
