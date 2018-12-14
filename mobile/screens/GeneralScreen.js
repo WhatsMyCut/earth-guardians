@@ -50,13 +50,6 @@ export default class CommunityStackScreen extends React.Component {
     }
   };
   render() {
-    // uri  can't be empty so, we give it a none string
-    const primary_image = this.props.primary_image
-      ? this.props.primary_image
-      : 'none';
-    const primary_video = this.props.primary_video
-      ? this.props.primary_video
-      : null;
     return (
       <LinearGradient
         {...LinearGradientProps.lightGrayToDarkGraycolors}
