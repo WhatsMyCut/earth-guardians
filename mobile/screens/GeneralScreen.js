@@ -81,9 +81,12 @@ export default class CommunityStackScreen extends React.Component {
 
 const styles = StyleSheet.create({
   linearGradient: {
-    flex: 1,
+    flex: 1
   },
-  container: { flex: 1 },
+  container: { 
+    flex: 1,
+    paddingTop: 30
+  },
   headlineView: {
     height: primaryHeight,
     borderWidth: 1,

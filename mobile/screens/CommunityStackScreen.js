@@ -7,7 +7,15 @@ import Styles from '../constants/Styles';
 export default class CommunityStackScreen extends React.Component {
   static navigationOptions = {
     headerTitle: <HeaderNavBar />,
-    headerStyle: { backgroundColor: '#333', height: Styles.headerNavBarHeight },
+    headerStyle: {
+      backgroundColor: '#333',
+      borderBottomWidth: 0,
+      shadowColor: 'transparent',
+      shadowRadius: 0,
+      shadowOffset: {
+        height: 0,
+      },
+    },
   };
 
   state = { primary_image: '', primary_video: '', actions: [] };
@@ -33,3 +41,4 @@ export default class CommunityStackScreen extends React.Component {
 // const styles = StyleSheet.create({
 //   container: { flex: 1, alignItems: 'center', justifyContent: 'center' },
 // });
+
