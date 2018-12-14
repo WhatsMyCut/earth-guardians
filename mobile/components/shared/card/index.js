@@ -18,8 +18,8 @@ export default class ActionCardSmall extends React.Component {
   render() {
     const { item, index } = this.props;
     return (
-      <TouchableOpacity style={{ flex: 1 }}>
-        <View style={index % 2 ? { height: 200, width: 160 } : styles.item}>
+      <TouchableOpacity style={{ flex: 1, height: index %2 ? 230 : 250 }}>
+        <View style={styles.item}>
           <LinearGradient
             colors={['#ffffff', '#000000']}
             locations={[0.6, 1]}
@@ -57,16 +57,15 @@ export default class ActionCardSmall extends React.Component {
 const styles = StyleSheet.create({
   item: {
     flex: 1,
+    alignContent:'space-between',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 3 },
     shadowOpacity: 0.8,
     shadowRadius: 2,
+    paddingHorizontal:10,
     elevation: 1,
-    margin: 5,
     marginTop: 10,
-    minHeight: 200,
-    maxHeight: 250,
-    width: 160,
+
     borderColor: 'transparent',
     borderWidth: 1,
     borderRadius: Styles.borderRadius,
