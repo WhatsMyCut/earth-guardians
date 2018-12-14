@@ -16,22 +16,8 @@ import Styles from '../constants/Styles';
 import LinearGradientProps from '../constants/LinearGradientProps';
 
 export default class CommunityStackScreen extends React.Component {
-  state = { photos: [], actions: [] };
-
-  componentDidMount() {
-    // these methods are just for the dummy data
-    const actions = [];
-    this.props.data.forEach(item => {
-      // make random keys and push them as objects
-      item.actions.forEach(action => {
-        const key = Math.random() * Math.random() * 10000000000;
-        actions.push({ key, action });
-      });
-    });
-    this.setState({ actions: actions });
-  }
-
   render() {
+    console.log(this.props.data);
     return (
       <LinearGradient
         {...LinearGradientProps.lightGrayToDarkGraycolors}
@@ -52,12 +38,12 @@ export default class CommunityStackScreen extends React.Component {
             <FlatList
               style={{ flex: 1 }}
               numColumns={2}
-              data={this.state.actions}
+              data={this.props.data}
               renderItem={({ item, index }) => (
                 <TouchableOpacity style={{ flex: 1 }}>
                   <View style={styles.item}>
                     <Image
-                      source={{ uri: item.action.image }}
+                      source={{ uri: item.image }}
                       style={{
                         flex: 1,
                         width: null,
@@ -75,7 +61,7 @@ export default class CommunityStackScreen extends React.Component {
                         fontSize: 18,
                       }}
                     >
-                      {item.action.text.substring(0, 50)}
+                      {item.text.substring(0, 50)}
                     </Text>
                   </View>
                 </TouchableOpacity>
