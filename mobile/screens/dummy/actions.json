@@ -1,0 +1,41 @@
+{
+  "data": [{
+    "category": ["socializing", "creating", "learning", "art", "exercise"],
+    "actions": [{
+        "key": 1,
+        "text": "Replace screen time with socializing, creating, learning, art, and exercise.",
+        "image": "https://images.pexels.com/photos/1374448/pexels-photo-1374448.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+      },
+      {
+        "key": 2,
+        "text": "Go to local event",
+        "image": "https://img-aws.ehowcdn.com/350x235p/photos.demandstudios.com/getty/article/211/17/181530805.jpg"
+      },
+      {
+        "key": 3,
+        "text": "Donate to an environmentally healthy cause Volunteer at community center / non - profit / school ",
+        "image": "https://img-aws.ehowcdn.com/350x235p/photos.demandstudios.com/getty/article/211/17/181530805.jpg"
+      },
+      {
+        "key": 4,
+        "text": "Avoid  using  the  clothes  dryer,  hang  your  cloths  out  to  dry whenever possible.",
+        "image": "https://images.unsplash.com/photo-1534152294282-c9a7a6895d6c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80"
+      },
+      {
+        "key": 5,
+        "text": "Turn  down  the  temperature  on  your  water  heater  (130 degrees is hot enough).",
+        "image": "https://images.pexels.com/photos/534/animal-countryside-agriculture-farm.jpg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+      },
+      {
+        "key": 6,
+        "text": "When you leave, turn all lights off and unplug electronics",
+        "image": "https://img-aws.ehowcdn.com/350x235p/photos.demandstudios.com/getty/article/211/17/181530805.jpg"
+      },
+      {
+        "key": 7,
+        "text": "In winter, turn your thermostat down to 68 degrees or below.Consider wearing warmer clothes",
+        "image": "https://images.pexels.com/photos/534/animal-countryside-agriculture-farm.jpg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+      }
+    ]
+  }]
+}

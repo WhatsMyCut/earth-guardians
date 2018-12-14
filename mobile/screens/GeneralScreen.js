@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   View,
   Image,
+  ScrollView,
 } from 'react-native';
 import { LinearGradient } from 'expo';
 
@@ -16,22 +17,14 @@ import Styles from '../constants/Styles';
 import LinearGradientProps from '../constants/LinearGradientProps';
 
 export default class CommunityStackScreen extends React.Component {
-  state = { photos: [], actions: [] };
-
-  componentDidMount() {
-    // these methods are just for the dummy data
-    const actions = [];
-    this.props.data.forEach(item => {
-      // make random keys and push them as objects
-      item.actions.forEach(action => {
-        const key = Math.random() * Math.random() * 10000000000;
-        actions.push({ key, action });
-      });
-    });
-    this.setState({ actions: actions });
-  }
-
   render() {
+    console.log(this.props.data);
+    const image_url = this.props.data.length
+      ? this.props.data[0].image
+      : 'none';
+    const text_str = this.props.data.length
+      ? this.props.data[0].text.substring(0, 50)
+      : null;
     return (
       <LinearGradient
         {...LinearGradientProps.lightGrayToDarkGraycolors}
@@ -39,25 +32,22 @@ export default class CommunityStackScreen extends React.Component {
       >
         <SafeAreaView style={{ flex: 1 }}>
           <View style={styles.container}>
-            <View style={styles.headlineView}>
-              <Image
-                source={require('../assets/bg.png')}
-                style={{
-                  width: Layout.window.width - Styles.margin,
-                  height: 200,
-                }}
-              />
-            </View>
+            <ScrollView style={{ flex: 1 }}>
+              <View style={styles.headlineView}>
+                <Image
+                  source={require('../assets/bg.png')}
+                  style={{
+                    width: Layout.window.width - Styles.margin,
+                    height: 200,
+                  }}
+                />
+              </View>
 
-            <FlatList
-              style={{ flex: 1 }}
-              numColumns={2}
-              data={this.state.actions}
-              renderItem={({ item, index }) => (
+              <View style={styles.bodyView}>
                 <TouchableOpacity style={{ flex: 1 }}>
                   <View style={styles.item}>
                     <Image
-                      source={{ uri: item.action.image }}
+                      source={{ uri: image_url }}
                       style={{
                         flex: 1,
                         width: null,
@@ -75,7 +65,39 @@ export default class CommunityStackScreen extends React.Component {
                         fontSize: 18,
                       }}
                     >
-                      {item.action.text.substring(0, 50)}
+                      {text_str}
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+              </View>
+            </ScrollView>
+            <FlatList
+              style={{ flex: 1 }}
+              numColumns={2}
+              data={this.props.data}
+              renderItem={({ item, index }) => (
+                <TouchableOpacity style={{ flex: 1 }}>
+                  <View style={styles.item}>
+                    <Image
+                      source={{ uri: item.image }}
+                      style={{
+                        flex: 1,
+                        width: null,
+                        height: null,
+                        borderRadius: Styles.borderRadius,
+                      }}
+                    />
+                    <Text
+                      style={{
+                        position: 'absolute',
+                        bottom: 10,
+                        left: 10,
+                        fontWeight: 'bold',
+                        color: '#fff',
+                        fontSize: 18,
+                      }}
+                    >
+                      {item.text.substring(0, 50)}
                     </Text>
                   </View>
                 </TouchableOpacity>
@@ -107,8 +129,9 @@ const styles = StyleSheet.create({
 
     borderColor: 'gray',
     borderWidth: 1,
-    borderRadius: Styles.borderRadius,
+    borderRadius: Styles.borderRadius + 20,
   },
+  bodyView: {},
   item: {
     flex: 1,
     shadowColor: '#000',
