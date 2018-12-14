@@ -6,7 +6,7 @@ const EyeIcon = props => {
     <TouchableOpacity onPress={() => props.navigation.navigate('MyActions')}>
       <Image
         source={require('../../../assets/eye_w.png')}
-        style={{ width: 50, height: 35 }}
+        style={{ width: 40, height: 27 }}
       />
     </TouchableOpacity>
   );
@@ -17,7 +17,7 @@ const UserIcon = props => {
     <TouchableOpacity onPress={() => navigationService.navigate('LandStack')}>
       <Image
         source={require('../../../assets/user_w.png')}
-        style={{ width: 35, height: 35, marginRight: 10 }}
+        style={{ width: 20, height: 20}}
       />
     </TouchableOpacity>
   );
@@ -28,7 +28,7 @@ const CommunityIcon = props => {
     <TouchableOpacity>
       <Image
         source={require('../../../assets/community_w.png')}
-        style={{ width: 60, height: 35, marginLeft: 10 }}
+        style={{ width: 35, height: 20}}
       />
     </TouchableOpacity>
   );
@@ -38,7 +38,7 @@ const CommunityIcon = props => {
 export default props => {
   return (
     <View
-      style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}
+      style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignContent:'space-between',alignItems:'baseline', paddingHorizontal:20 }}
     >
       <CommunityIcon />
       <EyeIcon navigation={props.navigation} />
