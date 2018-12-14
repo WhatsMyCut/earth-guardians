@@ -15,94 +15,63 @@ import HeaderNavBar from '../components/shared/navBar/HeaderNavBar';
 import Layout from '../constants/Layout';
 import Styles from '../constants/Styles';
 import LinearGradientProps from '../constants/LinearGradientProps';
-
+import ActionCardSmall from '../components/shared/card';
+const width = Layout.window.width - 2 * Styles.marginHorizontal;
+const primaryHeight = Styles.primaryHeight;
 export default class CommunityStackScreen extends React.Component {
+  renderPrimaryImage = () => {
+    return (
+      <Image
+        source={{ uri: this.props.primary_image }}
+        style={styles.primaryMedia}
+      />
+    );
+  };
+
+  renderPrimaryVideo = () => {
+    return (
+      <Image
+        source={{ uri: this.props.primary_video }}
+        style={styles.primaryMedia}
+      />
+    );
+  };
+  primaryView = () => {
+    if (this.props.primary_video) {
+      return this.renderPrimaryVideo();
+    } else if (this.props.primary_image) {
+      return this.renderPrimaryImage();
+    } else {
+      // do nothing
+      return null;
+    }
+  };
   render() {
-    console.log(this.props.data);
-    const image_url = this.props.data.length
-      ? this.props.data[0].image
+    // uri  can't be empty so, we give it a none string
+    const primary_image = this.props.primary_image
+      ? this.props.primary_image
       : 'none';
-    const text_str = this.props.data.length
-      ? this.props.data[0].text.substring(0, 50)
+    const primary_video = this.props.primary_video
+      ? this.props.primary_video
       : null;
     return (
       <LinearGradient
         {...LinearGradientProps.lightGrayToDarkGraycolors}
         style={styles.linearGradient}
       >
-        <SafeAreaView style={{ flex: 1 }}>
+        <SafeAreaView style={styles.container}>
           <View style={styles.container}>
             <ScrollView style={{ flex: 1 }}>
-              <View style={styles.headlineView}>
-                <Image
-                  source={require('../assets/bg.png')}
-                  style={{
-                    width: Layout.window.width - Styles.margin,
-                    height: 200,
-                  }}
-                />
-              </View>
-
-              <View style={styles.bodyView}>
-                <TouchableOpacity style={{ flex: 1 }}>
-                  <View style={styles.item}>
-                    <Image
-                      source={{ uri: image_url }}
-                      style={{
-                        flex: 1,
-                        width: null,
-                        height: null,
-                        borderRadius: Styles.borderRadius,
-                      }}
-                    />
-                    <Text
-                      style={{
-                        position: 'absolute',
-                        bottom: 10,
-                        left: 10,
-                        fontWeight: 'bold',
-                        color: '#fff',
-                        fontSize: 18,
-                      }}
-                    >
-                      {text_str}
-                    </Text>
-                  </View>
-                </TouchableOpacity>
-              </View>
+              <View style={styles.headlineView}>{this.primaryView()}</View>
+              <FlatList
+                style={styles.container}
+                numColumns={2}
+                data={this.props.data}
+                renderItem={({ item, index }) => (
+                  <ActionCardSmall item={item} index={index} />
+                )}
+              />
             </ScrollView>
-            <FlatList
-              style={{ flex: 1 }}
-              numColumns={2}
-              data={this.props.data}
-              renderItem={({ item, index }) => (
-                <TouchableOpacity style={{ flex: 1 }}>
-                  <View style={styles.item}>
-                    <Image
-                      source={{ uri: item.image }}
-                      style={{
-                        flex: 1,
-                        width: null,
-                        height: null,
-                        borderRadius: Styles.borderRadius,
-                      }}
-                    />
-                    <Text
-                      style={{
-                        position: 'absolute',
-                        bottom: 10,
-                        left: 10,
-                        fontWeight: 'bold',
-                        color: '#fff',
-                        fontSize: 18,
-                      }}
-                    >
-                      {item.text.substring(0, 50)}
-                    </Text>
-                  </View>
-                </TouchableOpacity>
-              )}
-            />
           </View>
         </SafeAreaView>
       </LinearGradient>
@@ -114,11 +83,12 @@ const styles = StyleSheet.create({
   linearGradient: {
     flex: 1,
   },
-  container: { flex: 1, margin: Styles.margin },
+  container: { flex: 1 },
   headlineView: {
-    height: 200,
-
-    borderWidth: Styles.borderWidth,
+    height: primaryHeight,
+    borderWidth: 1,
+    width: width,
+    marginHorizontal: 10,
     justifyContent: 'center',
     alignItems: 'center',
     shadowColor: '#000',
@@ -129,21 +99,11 @@ const styles = StyleSheet.create({
 
     borderColor: 'gray',
     borderWidth: 1,
-    borderRadius: Styles.borderRadius + 20,
+    borderRadius: Styles.borderRadius,
   },
-  bodyView: {},
-  item: {
-    flex: 1,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
-    elevation: 1,
-    marginTop: 10,
-    minHeight: 200,
-    maxHeight: 230,
-    borderColor: 'gray',
-    borderWidth: 1,
+  primaryMedia: {
+    width: width,
+    height: primaryHeight,
     borderRadius: Styles.borderRadius,
   },
 });

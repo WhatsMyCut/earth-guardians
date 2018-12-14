@@ -5,4 +5,7 @@ export default {
   rightMargin: 10,
   margin: 20,
   headerNavBarHeight: 80,
+  marginHorizontal: 10,
+  paddingHorizontal: 10,
+  primaryHeight: 200,
 };
