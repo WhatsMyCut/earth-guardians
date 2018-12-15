@@ -132,6 +132,9 @@ const routeConfig = {
 };
 
 export default createMaterialTopTabNavigator(routeConfig, {
+  navigationOptions:{
+    headerTitle: <HeaderNavBar />
+  },
   swipeEnabled: true,
   tabBarPosition: 'bottom',
   animationEnabled: true,
@@ -144,6 +147,7 @@ export default createMaterialTopTabNavigator(routeConfig, {
       justifyContent: 'space-between',
       alignContent: 'center',
       backgroundColor: '#000',
+      height:40
     },
     scrollEnabled: true,
     tabStyle: {

@@ -5,22 +5,29 @@ import {
   ScrollView,
   View,
   TouchableHighlight,
+  TouchableOpacity,
   Text,
 } from 'react-native';
 import { Video } from 'expo';
+import { Ionicons } from '@expo/vector-icons';
+
+
 import VideoPlayer from '@expo/videoplayer';
 import BaseScreen from './BaseScreen';
 
 import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_categories_query';
-import graphql from '../components/hoc/graphql';
+
 import HeaderNavBar from '../components/shared/navBar/HeaderNavBar';
 
 import { data } from './dummy/actions.json';
-@graphql(ALL_ACTION_CATEGORIES, {
-  name: 'all_categories',
-  fetchPolicy: 'network-only',
-})
+import navigationService from '../navigation/navigationService';
+
 class DefaultScreen extends BaseScreen {
+
+  constructor(props){
+    super(props);
+    console.log('default screen props', props);
+  }
   changeRate(rate) {
     this._playbackInstance.setStatusAsync({
       rate: rate,
@@ -43,14 +50,27 @@ class DefaultScreen extends BaseScreen {
         <Text>{rate + 'x'}</Text>
       </TouchableHighlight>
     );
+
+    const screen = this.props.navigation.getParam('screen', 'MyActions');
+    console.ignoredYellowBox = ['Warning:'];
     return (
       <SafeAreaView style={{ flex: 1 }}>
         <View style={styles.container}>
+          <View style={styles.topBackNav}>
+          <TouchableOpacity onPress={()=>this.props.navigation.navigate(screen)}>
+            <Ionicons name="ios-arrow-round-back" size={42} color="white" />
+          </TouchableOpacity>
+          </View>
           <ScrollView
             style={styles.container}
-            contentContainerStyle={styles.contentContainer}
           >
             <VideoPlayer
+              style={
+                {
+                  justifyContent:'flex-start',
+                
+                }
+              }
               videoProps={{
                 shouldPlay: true,
                 resizeMode: Video.RESIZE_MODE_CONTAIN,
@@ -73,15 +93,15 @@ class DefaultScreen extends BaseScreen {
             <View
               style={{
                 flexDirection: 'row',
-                justifyContent: 'flex-start',
+                justifyContent: 'space-between',
                 alignItems: 'center',
-                marginTop: 20,
+                alignContent:'center'
               }}
             >
-              <Text> Change Default Rate </Text>
-              <RateButton rate={1} />
-              <RateButton rate={2} />
-              <RateButton rate={4} />
+              <Text style={{color:'#ffffff'}}> Change Default Rate </Text>
+              <RateButton rate={1} style={{color:'#ffffff'}}/>
+              <RateButton rate={2} style={{color:'#ffffff'}}/>
+              <RateButton rate={4} style={{color:'#ffffff'}}/>
             </View>
           </ScrollView>
         </View>
@@ -93,21 +113,27 @@ class DefaultScreen extends BaseScreen {
 const styles = {
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#000000',
   },
+  topBackNav: {
+    flex:1,
+    justifyContent:'flex-start',
+    maxHeight:30,
+    paddingHorizontal:5,
+  }
 };
 
 DefaultScreen.navigationOptions = {
-  headerTitle: HeaderNavBar,
-  headerStyle: {
-    backgroundColor: '#aaa',
-    borderBottomWidth: 0,
-    shadowColor: 'transparent',
-    shadowRadius: 0,
-    shadowOffset: {
-      height: 0,
+
+    headerStyle: {
+      backgroundColor: '#000000',
+      borderBottomWidth: 0,
+      shadowColor: 'transparent',
+      shadowRadius: 0,
+      shadowOffset: {
+        height: 0,
+      },
     },
-  },
-};
+  }
 
 export default DefaultScreen;

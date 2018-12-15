@@ -15,15 +15,25 @@ import Layout from '../constants/Layout';
 import Styles from '../constants/Styles';
 import LinearGradientProps from '../constants/LinearGradientProps';
 import ActionCardSmall from '../components/shared/card';
+import Ionicons from '@expo/vector-icons/Ionicons';
+
+import FontAwesome from '@expo/vector-icons/FontAwesome';
 const width = Layout.window.width - 2 * Styles.marginHorizontal;
 const primaryHeight = Styles.primaryHeight;
 export default class CommunityStackScreen extends React.Component {
   renderPrimaryImage = () => {
     return (
-      <TouchableOpacity>
+      <TouchableOpacity 
+        style={{
+          shadowOffset:{  width: 10,  height: 10,  },
+          shadowColor: 'transparent',
+          shadowOpacity: 1.0,}
+        }
+      >
         <Image
           source={{ uri: this.props.primary_image }}
           style={styles.primaryMedia}
+
         />
       </TouchableOpacity>
     );
@@ -31,11 +41,20 @@ export default class CommunityStackScreen extends React.Component {
 
   renderPrimaryVideo = () => {
     return (
-      <TouchableOpacity onPress={() => navigationService.navigate('Video')}>
+      <TouchableOpacity onPress={() => navigationService.navigate('Video', {screen:"Community"})}>
         <Image
           source={{ uri: this.props.primary_video }}
           style={styles.primaryMedia}
         />
+        <View style={styles.imageLinearGradient} >
+          <LinearGradient locations={[0, 1.0]}  colors={['rgba(0,0,0,0.00)', 'rgba(0,0,0,0.70)']} style={styles.imageLinearGradient} >
+
+          </LinearGradient>
+      </View>
+        <View style={styles.headlineViewPlayIcon}>
+          <FontAwesome name="play" size={52} color="white"/>
+        </View>
+           
       </TouchableOpacity>
     );
   };
@@ -81,29 +100,37 @@ const styles = StyleSheet.create({
   },
   container: { 
     flex: 1,
-    paddingTop: 30
   },
   headlineView: {
     height: primaryHeight,
     borderWidth: 1,
-    width: width,
-    marginHorizontal: 10,
-    marginTop: 20,
+    paddingHorizontal: 10,
+    marginTop: 35,
     justifyContent: 'center',
     alignItems: 'center',
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.8,
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.6,
     shadowRadius: 2,
     elevation: 1,
-
-    borderColor: 'gray',
+    borderColor:'transparent',
+    borderRadius: Styles.borderRadius,
+  },
+  headlineViewPlayIcon: {
+    position: 'absolute', opacity:0.8, top: 0, left: 0, right: 0, bottom: 0, justifyContent: 'center', alignItems: 'center'
+  },
+  imageLinearGradient :{
+    position:'absolute',
+    width:width,
+    height:primaryHeight,
+    borderColor: 'transparent',
+    elevation: 1,
     borderWidth: 1,
     borderRadius: Styles.borderRadius,
   },
   primaryMedia: {
     width: width,
     height: primaryHeight,
-    borderRadius: Styles.borderRadius,
+    borderRadius: Styles.borderRadius
   },
 });

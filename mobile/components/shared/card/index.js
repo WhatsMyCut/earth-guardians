@@ -27,13 +27,13 @@ export default class ActionCardSmall extends React.Component {
   showDelete = () => {
     if (this.state.delete) {
       return (
-        <Icon.Entypo
-          onPress={() => this.delete()}
-          name="circle-with-cross"
-          size={32}
-          color="red"
-          style={{ position: 'absolute', right: 2 }}
-        />
+        <TouchableOpacity onPress={() => this.delete()} style={{ position: 'absolute', right: -2, top:-15}}>
+          <Icon.AntDesign
+            name="closecircle"
+            size={32}
+            color="red"
+          />
+        </TouchableOpacity>
       );
     }
   };
@@ -45,11 +45,7 @@ export default class ActionCardSmall extends React.Component {
         onLongPress={() => this.setState({ delete: !this.state.delete })}
       >
         <View style={styles.item}>
-          <LinearGradient
-            colors={['#ffffff', '#000000']}
-            locations={[0.6, 1]}
-            style={{ flex: 1, borderRadius: Styles.borderRadius }}
-          >
+          
             <Image
               source={{ uri: item.image }}
               style={{
@@ -59,12 +55,11 @@ export default class ActionCardSmall extends React.Component {
                 borderRadius: Styles.borderRadius,
               }}
             />
-
             <Text
               style={{
                 position: 'absolute',
                 bottom: 10,
-                left: 10,
+                left: 15,
                 fontWeight: 'bold',
                 color: '#fff',
                 fontSize: 18,
@@ -74,7 +69,6 @@ export default class ActionCardSmall extends React.Component {
             </Text>
 
             {this.showDelete()}
-          </LinearGradient>
         </View>
       </TouchableOpacity>
     );
@@ -92,7 +86,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     elevation: 1,
     marginTop: 10,
-
+    borderColor: 'transparent',
+    borderWidth: 1,
+    borderRadius: Styles.borderRadius,
+  },
+  imageLinearGradient :{
+    position:'absolute',
+    height:'100%',
+    width:'100%',
     borderColor: 'transparent',
     borderWidth: 1,
     borderRadius: Styles.borderRadius,

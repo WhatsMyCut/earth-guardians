@@ -70,7 +70,9 @@ class CustomScreen extends BaseScreen {
 const styles = {
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    justifyConte:'center',
+    alignItems:'center',
+    backgroundColor: '#000000',
   },
 };
 

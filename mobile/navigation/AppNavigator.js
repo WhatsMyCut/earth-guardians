@@ -1,3 +1,4 @@
+import React from 'react';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 
 import AuthLoadingScreen from '../screens/AuthLoadingScreen';
@@ -12,7 +13,7 @@ export default createAppContainer(
       AuthLoading: AuthLoadingScreen,
       Main: MainTabNavigator,
       Profile: ProfileStackScreen,
-      Video: DefaultScreen,
+      Video: DefaultScreen ,
     },
     {
       initialRouteName: 'Main',

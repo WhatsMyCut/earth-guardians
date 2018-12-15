@@ -69,6 +69,7 @@ const client = new ApolloClient({
 export default class App extends React.Component {
   // feed the store to the app
   render() {
+    console.disableYellowBox = true;
     return (
       <StoreProvider>
         <ApolloProvider client={client}>
