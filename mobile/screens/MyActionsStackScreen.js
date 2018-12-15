@@ -1,25 +1,13 @@
 import React from 'react';
-import {
-  SafeAreaView,
-  ImageBackground,
-  Image,
-  Platform,
-  FlatList,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import Styles from '../constants/Styles';
-
-import { data } from './dummy/actions.json';
+import { SafeAreaView, FlatList, StyleSheet, Text, View } from 'react-native';
+import { all } from 'rsvp';
 
 import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_categories_query';
-import { all } from 'rsvp';
 import HeaderNavBar from '../components/shared/navBar/HeaderNavBar';
 import graphql from '../components/hoc/graphql';
 import ActionCardSmall from '../components/shared/card';
 
+import { data } from './dummy/actions.json';
 @graphql(ALL_ACTION_CATEGORIES, {
   name: 'all_categories',
   fetchPolicy: 'network-only',

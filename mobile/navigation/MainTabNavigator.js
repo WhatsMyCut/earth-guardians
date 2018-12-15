@@ -150,7 +150,9 @@ export default createMaterialTopTabNavigator(routeConfig, {
       // maxWidth: tabWidth,
     },
     indicatorStyle: {
-      width:0
+
+      width: 0,
+
     },
   },
   lazy: true,

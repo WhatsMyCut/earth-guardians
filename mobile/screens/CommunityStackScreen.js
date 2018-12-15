@@ -1,23 +1,19 @@
 import React from 'react';
-import GeneralScreen from './GeneralScreen';
-// import { StyleSheet, Text, SafeAreaView, View } from 'react-native';
-import { data } from './dummy/actions.json';
-import HeaderNavBar from '../components/shared/navBar/HeaderNavBar';
-import Styles from '../constants/Styles';
-export default class CommunityStackScreen extends React.Component {
-  static navigationOptions = {
-    headerTitle: <HeaderNavBar />,
-    headerStyle: {
-      backgroundColor: '#333',
-      borderBottomWidth: 0,
-      shadowColor: 'transparent',
-      shadowRadius: 0,
-      shadowOffset: {
-        height: 0,
-      },
-    },
-  };
+import { all } from 'rsvp';
 
+import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_categories_query';
+import graphql from '../components/hoc/graphql';
+import HeaderNavBar from '../components/shared/navBar/HeaderNavBar';
+
+import GeneralScreen from './GeneralScreen';
+
+
+import { data } from './dummy/actions.json';
+@graphql(ALL_ACTION_CATEGORIES, {
+  name: 'all_categories',
+  fetchPolicy: 'network-only',
+})
+class CommunityStackScreen extends React.Component {
   state = { primary_image: '', primary_video: '', actions: [] };
   componentDidMount() {
     const actions = data[0].actions;
@@ -38,7 +34,19 @@ export default class CommunityStackScreen extends React.Component {
   }
 }
 
-// const styles = StyleSheet.create({
-//   container: { flex: 1, alignItems: 'center', justifyContent: 'center' },
-// });
+
+CommunityStackScreen.navigationOptions = {
+  headerTitle: HeaderNavBar,
+  headerStyle: {
+    backgroundColor: '#aaa',
+    borderBottomWidth: 0,
+    shadowColor: 'transparent',
+    shadowRadius: 0,
+    shadowOffset: {
+      height: 0,
+    },
+  },
+};
+
+export default CommunityStackScreen;
 
