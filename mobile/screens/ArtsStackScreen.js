@@ -1,6 +1,7 @@
 import React from 'react';
 import { all } from 'rsvp';
 
+import { SafeAreaView, View, Text } from 'react-native';
 import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_categories_query';
 import graphql from '../components/hoc/graphql';
 import HeaderNavBar from '../components/shared/navBar/HeaderNavBar';
@@ -22,11 +23,13 @@ class ArtsStackScreen extends React.Component {
   }
   render() {
     return (
-      <GeneralScreen
-        data={this.state.actions}
-        primary_image={this.state.primary_image}
-        primary_video={this.state.primary_video}
-      />
+      <SafeAreaView style={{ flex: 1 }}>
+        <View
+          style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
+        >
+          <Text style={{ fontSize: 30 }}>Waste</Text>
+        </View>
+      </SafeAreaView>
     );
   }
 }

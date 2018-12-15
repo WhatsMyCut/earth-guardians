@@ -1,7 +1,18 @@
 import React from 'react';
-import { StyleSheet, Text, SafeAreaView, View } from 'react-native';
+import { all } from 'rsvp';
 
-export default class ArtsStackScreen extends React.Component {
+import { SafeAreaView, View, Text } from 'react-native';
+import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_categories_query';
+import graphql from '../components/hoc/graphql';
+import HeaderNavBar from '../components/shared/navBar/HeaderNavBar';
+import GeneralScreen from './GeneralScreen';
+
+import { data } from './dummy/actions.json';
+@graphql(ALL_ACTION_CATEGORIES, {
+  name: 'all_categories',
+  fetchPolicy: 'network-only',
+})
+class PoliticsStackScreen extends React.Component {
   static navigationOptions = {
     header: null,
   };
@@ -18,3 +29,18 @@ export default class ArtsStackScreen extends React.Component {
     );
   }
 }
+
+PoliticsStackScreen.navigationOptions = {
+  headerTitle: HeaderNavBar,
+  headerStyle: {
+    backgroundColor: '#aaa',
+    borderBottomWidth: 0,
+    shadowColor: 'transparent',
+    shadowRadius: 0,
+    shadowOffset: {
+      height: 0,
+    },
+  },
+};
+
+export default PoliticsStackScreen;

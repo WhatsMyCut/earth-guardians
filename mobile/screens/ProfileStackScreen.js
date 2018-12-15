@@ -1,8 +1,19 @@
 import React from 'react';
-import { StyleSheet, Text, SafeAreaView, View, Button } from 'react-native';
-import NavigationService from '../navigation/navigationService';
+import { all } from 'rsvp';
 
-export default class ProfileStackScreen extends React.Component {
+import { SafeAreaView, View, Text, Button } from 'react-native';
+import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_categories_query';
+import graphql from '../components/hoc/graphql';
+import HeaderNavBar from '../components/shared/navBar/HeaderNavBar';
+import NavigationService from '../navigation/navigationService';
+import GeneralScreen from './GeneralScreen';
+
+import { data } from './dummy/actions.json';
+@graphql(ALL_ACTION_CATEGORIES, {
+  name: 'all_categories',
+  fetchPolicy: 'network-only',
+})
+class ProfileStackScreen extends React.Component {
   static navigationOptions = {
     header: null,
   };
@@ -23,3 +34,17 @@ export default class ProfileStackScreen extends React.Component {
     );
   }
 }
+ProfileStackScreen.navigationOptions = {
+  headerTitle: HeaderNavBar,
+  headerStyle: {
+    backgroundColor: '#aaa',
+    borderBottomWidth: 0,
+    shadowColor: 'transparent',
+    shadowRadius: 0,
+    shadowOffset: {
+      height: 0,
+    },
+  },
+};
+
+export default ProfileStackScreen;

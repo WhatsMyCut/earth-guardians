@@ -1,18 +1,28 @@
 import React from 'react';
-import { ScrollView, View, TouchableHighlight, Text } from 'react-native';
+
+import { all } from 'rsvp';
+import {
+  SafeAreaView,
+  ScrollView,
+  View,
+  TouchableHighlight,
+  Text,
+} from 'react-native';
 import VideoPlayer from '@expo/videoplayer';
 import { Ionicons } from '@expo/vector-icons';
 import BaseScreen from './BaseScreen';
 import { Video } from 'expo';
 
-var styles = {
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-};
+import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_categories_query';
+import graphql from '../components/hoc/graphql';
+import HeaderNavBar from '../components/shared/navBar/HeaderNavBar';
 
-export default class CustomScreen extends BaseScreen {
+import { data } from './dummy/actions.json';
+@graphql(ALL_ACTION_CATEGORIES, {
+  name: 'all_categories',
+  fetchPolicy: 'network-only',
+})
+class CustomScreen extends BaseScreen {
   render() {
     const COLOR = '#92DCE5';
     const icon = (name, size = 36) => () => (
@@ -56,3 +66,25 @@ export default class CustomScreen extends BaseScreen {
     );
   }
 }
+
+const styles = {
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+};
+
+CustomScreen.navigationOptions = {
+  headerTitle: HeaderNavBar,
+  headerStyle: {
+    backgroundColor: '#aaa',
+    borderBottomWidth: 0,
+    shadowColor: 'transparent',
+    shadowRadius: 0,
+    shadowOffset: {
+      height: 0,
+    },
+  },
+};
+
+export default CustomScreen;
