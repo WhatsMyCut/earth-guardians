@@ -24,7 +24,6 @@ const MyActionsStack = createStackNavigator({
 });
 
 MyActionsStack.navigationOptions = props => {
-  console.log('props', props);
   return {
     tabBarLabel: 'My Actions',
   };
@@ -151,7 +150,9 @@ export default createMaterialTopTabNavigator(routeConfig, {
       // maxWidth: tabWidth,
     },
     indicatorStyle: {
+
       width: 0,
+
     },
   },
   lazy: true,

@@ -4,7 +4,9 @@ import { all } from 'rsvp';
 import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_categories_query';
 import graphql from '../components/hoc/graphql';
 import HeaderNavBar from '../components/shared/navBar/HeaderNavBar';
+
 import GeneralScreen from './GeneralScreen';
+
 
 import { data } from './dummy/actions.json';
 @graphql(ALL_ACTION_CATEGORIES, {
@@ -32,6 +34,7 @@ class CommunityStackScreen extends React.Component {
   }
 }
 
+
 CommunityStackScreen.navigationOptions = {
   headerTitle: HeaderNavBar,
   headerStyle: {
@@ -46,3 +49,4 @@ CommunityStackScreen.navigationOptions = {
 };
 
 export default CommunityStackScreen;
+

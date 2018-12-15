@@ -35,9 +35,14 @@ const UserIcon = () => {
   );
 };
 
+
 // Anonymous default function, HeaderNavBar
-export default () => {
-  return (
+export default class HeaderNavBar extends React.Component {
+  constructor(props){
+    super(props);
+  }
+  render(){
+    return (
     <View
       style={{
         flex: 1,
@@ -54,3 +59,6 @@ export default () => {
     </View>
   );
 };
+
+
+}
