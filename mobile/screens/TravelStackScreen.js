@@ -13,11 +13,11 @@ import GeneralScreen from './GeneralScreen';
   name: 'all_categories',
   fetchPolicy: 'network-only',
 })
-class LandStackScreen extends React.Component {
+class TravelStackScreen extends React.Component {
   state = { primary_image: '', primary_video: '', actions: [] };
   render() {
     return (
-      <LinearGradient {...LinearGradientProps.default} style={{ flex: 1 }}>
+      <LinearGradient {...LinearGradientProps.travel} style={{ flex: 1 }}>
         <GeneralScreen
         // data={[this.state.actions]}
         // primary_image={this.state.primary_image}
@@ -28,10 +28,10 @@ class LandStackScreen extends React.Component {
   }
 }
 
-LandStackScreen.navigationOptions = {
+TravelStackScreen.navigationOptions = {
   headerTitle: HeaderNavBar,
   headerStyle: {
-    backgroundColor: LinearGradientProps.default.colors[0],
+    backgroundColor: LinearGradientProps.travel.colors[0],
     borderBottomWidth: 0,
     shadowColor: 'transparent',
     shadowRadius: 0,
@@ -41,4 +41,4 @@ LandStackScreen.navigationOptions = {
   },
 };
 
-export default LandStackScreen;
+export default TravelStackScreen;

@@ -24,7 +24,6 @@ class CommunityStackScreen extends React.Component {
   }
 
   render() {
-    console.log(LinearGradientProps);
     return (
       <LinearGradient {...LinearGradientProps.travel} style={{ flex: 1 }}>
         <GeneralScreen
