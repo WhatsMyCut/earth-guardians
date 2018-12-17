@@ -5,7 +5,7 @@ import {
 import React from 'react';
 import MyActionsStackScreen from '../screens/MyActionsStackScreen';
 import CommunityStackScreen from '../screens/CommunityStackScreen';
-import BasicsStackScreen from '../screens/BasicsStackScreen';
+import EnergyStackScreen from '../screens/EnergyStackScreen';
 import TransportationStackScreen from '../screens/TransportationStackScreen';
 import FashionStackScreen from '../screens/FashionStackScreen';
 import SportsStackScreen from '../screens/SportsStackScreen';
@@ -37,11 +37,11 @@ CommunityStack.navigationOptions = {
   tabBarLabel: 'Community',
 };
 
-const BasicsStack = createStackNavigator({
-  Basics: BasicsStackScreen,
+const EnergyStack = createStackNavigator({
+  Energy: EnergyStackScreen,
 });
 
-BasicsStack.navigationOptions = {
+EnergyStack.navigationOptions = {
   tabBarLabel: 'Energy',
 };
 
@@ -120,7 +120,7 @@ PoliticsStack.navigationOptions = {
 const routeConfig = {
   MyActionsStack,
   CommunityStack,
-  BasicsStack,
+  EnergyStack,
   TransportationStack,
   FashionStack,
   SportsStack,
@@ -132,8 +132,8 @@ const routeConfig = {
 };
 
 export default createMaterialTopTabNavigator(routeConfig, {
-  navigationOptions:{
-    headerTitle: <HeaderNavBar />
+  navigationOptions: {
+    headerTitle: <HeaderNavBar />,
   },
   swipeEnabled: true,
   tabBarPosition: 'bottom',
@@ -147,16 +147,14 @@ export default createMaterialTopTabNavigator(routeConfig, {
       justifyContent: 'space-between',
       alignContent: 'center',
       backgroundColor: '#000',
-      height:40
+      height: 40,
     },
     scrollEnabled: true,
     tabStyle: {
       // maxWidth: tabWidth,
     },
     indicatorStyle: {
-
       width: 0,
-
     },
   },
   lazy: true,
