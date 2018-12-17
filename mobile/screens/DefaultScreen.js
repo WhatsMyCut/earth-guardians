@@ -11,7 +11,6 @@ import {
 import { Video } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
 
-
 import VideoPlayer from '@expo/videoplayer';
 import BaseScreen from './BaseScreen';
 
@@ -23,8 +22,7 @@ import { data } from './dummy/actions.json';
 import navigationService from '../navigation/navigationService';
 
 class DefaultScreen extends BaseScreen {
-
-  constructor(props){
+  constructor(props) {
     super(props);
     console.log('default screen props', props);
   }
@@ -57,20 +55,17 @@ class DefaultScreen extends BaseScreen {
       <SafeAreaView style={{ flex: 1 }}>
         <View style={styles.container}>
           <View style={styles.topBackNav}>
-          <TouchableOpacity onPress={()=>this.props.navigation.navigate(screen)}>
-            <Ionicons name="ios-arrow-round-back" size={42} color="white" />
-          </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate(screen)}
+            >
+              <Ionicons name="ios-arrow-round-back" size={42} color="white" />
+            </TouchableOpacity>
           </View>
-          <ScrollView
-            style={styles.container}
-          >
+          <ScrollView style={styles.container}>
             <VideoPlayer
-              style={
-                {
-                  justifyContent:'flex-start',
-                
-                }
-              }
+              style={{
+                justifyContent: 'flex-start',
+              }}
               videoProps={{
                 shouldPlay: true,
                 resizeMode: Video.RESIZE_MODE_CONTAIN,
@@ -95,13 +90,13 @@ class DefaultScreen extends BaseScreen {
                 flexDirection: 'row',
                 justifyContent: 'space-between',
                 alignItems: 'center',
-                alignContent:'center'
+                alignContent: 'center',
               }}
             >
-              <Text style={{color:'#ffffff'}}> Change Default Rate </Text>
-              <RateButton rate={1} style={{color:'#ffffff'}}/>
-              <RateButton rate={2} style={{color:'#ffffff'}}/>
-              <RateButton rate={4} style={{color:'#ffffff'}}/>
+              <Text style={{ color: '#ffffff' }}> Change Default Rate </Text>
+              <RateButton rate={1} style={{ color: '#ffffff' }} />
+              <RateButton rate={2} style={{ color: '#ffffff' }} />
+              <RateButton rate={4} style={{ color: '#ffffff' }} />
             </View>
           </ScrollView>
         </View>
@@ -116,24 +111,23 @@ const styles = {
     backgroundColor: '#000000',
   },
   topBackNav: {
-    flex:1,
-    justifyContent:'flex-start',
-    maxHeight:30,
-    paddingHorizontal:5,
-  }
+    flex: 1,
+    justifyContent: 'flex-start',
+    maxHeight: 30,
+    paddingHorizontal: 5,
+  },
 };
 
 DefaultScreen.navigationOptions = {
-
-    headerStyle: {
-      backgroundColor: '#000000',
-      borderBottomWidth: 0,
-      shadowColor: 'transparent',
-      shadowRadius: 0,
-      shadowOffset: {
-        height: 0,
-      },
+  headerStyle: {
+    backgroundColor: '#000000',
+    borderBottomWidth: 0,
+    shadowColor: 'transparent',
+    shadowRadius: 0,
+    shadowOffset: {
+      height: 0,
     },
-  }
+  },
+};
 
 export default DefaultScreen;

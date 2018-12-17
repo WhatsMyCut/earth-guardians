@@ -23,17 +23,16 @@ const primaryHeight = Styles.primaryHeight;
 export default class CommunityStackScreen extends React.Component {
   renderPrimaryImage = () => {
     return (
-      <TouchableOpacity 
+      <TouchableOpacity
         style={{
-          shadowOffset:{  width: 10,  height: 10,  },
+          shadowOffset: { width: 10, height: 10 },
           shadowColor: 'transparent',
-          shadowOpacity: 1.0,}
-        }
+          shadowOpacity: 1.0,
+        }}
       >
         <Image
           source={{ uri: this.props.primary_image }}
           style={styles.primaryMedia}
-
         />
       </TouchableOpacity>
     );
@@ -41,20 +40,25 @@ export default class CommunityStackScreen extends React.Component {
 
   renderPrimaryVideo = () => {
     return (
-      <TouchableOpacity onPress={() => navigationService.navigate('Video', {screen:"Community"})}>
+      <TouchableOpacity
+        onPress={() =>
+          navigationService.navigate('Video', { screen: 'Community' })
+        }
+      >
         <Image
           source={{ uri: this.props.primary_video }}
           style={styles.primaryMedia}
         />
-        <View style={styles.imageLinearGradient} >
-          <LinearGradient locations={[0, 1.0]}  colors={['rgba(0,0,0,0.00)', 'rgba(0,0,0,0.70)']} style={styles.imageLinearGradient} >
-
-          </LinearGradient>
-      </View>
-        <View style={styles.headlineViewPlayIcon}>
-          <FontAwesome name="play" size={52} color="white"/>
+        <View style={styles.imageLinearGradient}>
+          <LinearGradient
+            locations={[0, 1.0]}
+            colors={['rgba(0,0,0,0.00)', 'rgba(0,0,0,0.70)']}
+            style={styles.imageLinearGradient}
+          />
         </View>
-           
+        <View style={styles.headlineViewPlayIcon}>
+          <FontAwesome name="play" size={52} color="white" />
+        </View>
       </TouchableOpacity>
     );
   };
@@ -70,35 +74,30 @@ export default class CommunityStackScreen extends React.Component {
   };
   render() {
     return (
-      <LinearGradient
-        {...LinearGradientProps.lightGrayToDarkGraycolors}
-        style={styles.linearGradient}
-      >
-        <SafeAreaView style={styles.container}>
-          <View style={styles.container}>
-            <ScrollView style={{ flex: 1 }}>
-              <View style={styles.headlineView}>{this.primaryView()}</View>
-              <FlatList
-                style={styles.container}
-                numColumns={2}
-                data={this.props.data}
-                renderItem={({ item, index }) => (
-                  <ActionCardSmall item={item} index={index} />
-                )}
-              />
-            </ScrollView>
-          </View>
-        </SafeAreaView>
-      </LinearGradient>
+      <SafeAreaView style={styles.container}>
+        <View style={styles.container}>
+          <ScrollView style={{ flex: 1 }}>
+            <View style={styles.headlineView}>{this.primaryView()}</View>
+            <FlatList
+              style={styles.container}
+              numColumns={2}
+              data={this.props.data}
+              renderItem={({ item, index }) => (
+                <ActionCardSmall item={item} index={index} />
+              )}
+            />
+          </ScrollView>
+        </View>
+      </SafeAreaView>
     );
   }
 }
 
 const styles = StyleSheet.create({
   linearGradient: {
-    flex: 1
+    flex: 1,
   },
-  container: { 
+  container: {
     flex: 1,
   },
   headlineView: {
@@ -113,16 +112,23 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.6,
     shadowRadius: 2,
     elevation: 1,
-    borderColor:'transparent',
+    borderColor: 'transparent',
     borderRadius: Styles.borderRadius,
   },
   headlineViewPlayIcon: {
-    position: 'absolute', opacity:0.8, top: 0, left: 0, right: 0, bottom: 0, justifyContent: 'center', alignItems: 'center'
+    position: 'absolute',
+    opacity: 0.8,
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  imageLinearGradient :{
-    position:'absolute',
-    width:width,
-    height:primaryHeight,
+  imageLinearGradient: {
+    position: 'absolute',
+    width: width,
+    height: primaryHeight,
     borderColor: 'transparent',
     elevation: 1,
     borderWidth: 1,
@@ -131,6 +137,6 @@ const styles = StyleSheet.create({
   primaryMedia: {
     width: width,
     height: primaryHeight,
-    borderRadius: Styles.borderRadius
+    borderRadius: Styles.borderRadius,
   },
 });

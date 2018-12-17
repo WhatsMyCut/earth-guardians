@@ -1,9 +1,11 @@
 import React from 'react';
 import { all } from 'rsvp';
-import { SafeAreaView, View, Text } from 'react-native';
+import { LinearGradient } from 'expo';
+
 import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_categories_query';
 import graphql from '../components/hoc/graphql';
 import HeaderNavBar from '../components/shared/navBar/HeaderNavBar';
+import LinearGradientProps from '../constants/LinearGradientProps';
 import GeneralScreen from './GeneralScreen';
 
 import { data } from './dummy/actions.json';
@@ -11,33 +13,33 @@ import { data } from './dummy/actions.json';
   name: 'all_categories',
   fetchPolicy: 'network-only',
 })
-class BasicsStackScreen extends React.Component {
+class EnergyStackScreen extends React.Component {
   state = { primary_image: '', primary_video: '', actions: [] };
   componentDidMount() {
     const actions = data[0].actions;
-    const primary_image = data[0].primary.image;
-    const primary_video = data[0].primary.video_url;
+    const primary_image = data[1].primary.image;
+    const primary_video = data[1].primary.video_url;
 
     this.setState({ actions, primary_image, primary_video });
   }
 
   render() {
     return (
-      <SafeAreaView style={{ flex: 1 }}>
-        <View
-          style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
-        >
-          <Text style={{ fontSize: 30 }}>Basics</Text>
-        </View>
-      </SafeAreaView>
+      <LinearGradient {...LinearGradientProps.energy} style={{ flex: 1 }}>
+        <GeneralScreen
+          data={this.state.actions}
+          primary_image={this.state.primary_image}
+          primary_video={this.state.primary_video}
+        />
+      </LinearGradient>
     );
   }
 }
 
-BasicsStackScreen.navigationOptions = {
+EnergyStackScreen.navigationOptions = {
   headerTitle: HeaderNavBar,
   headerStyle: {
-    backgroundColor: '#aaa',
+    backgroundColor: LinearGradientProps.energy.colors[0],
     borderBottomWidth: 0,
     shadowColor: 'transparent',
     shadowRadius: 0,
@@ -47,4 +49,4 @@ BasicsStackScreen.navigationOptions = {
   },
 };
 
-export default BasicsStackScreen;
+export default EnergyStackScreen;

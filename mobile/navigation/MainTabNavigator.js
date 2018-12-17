@@ -5,16 +5,14 @@ import {
 import React from 'react';
 import MyActionsStackScreen from '../screens/MyActionsStackScreen';
 import CommunityStackScreen from '../screens/CommunityStackScreen';
-import BasicsStackScreen from '../screens/BasicsStackScreen';
-import TransportationStackScreen from '../screens/TransportationStackScreen';
+import EnergyStackScreen from '../screens/EnergyStackScreen';
+import FoodStackScreen from '../screens/FoodStackScreen';
 import FashionStackScreen from '../screens/FashionStackScreen';
-import SportsStackScreen from '../screens/SportsStackScreen';
-import ArtsStackScreen from '../screens/ArtsStackScreen';
+import WaterStackScreen from '../screens/WaterStackScreen';
+import WasteStackScreen from '../screens/WasteStackScreen';
 import ShoppingStackScreen from '../screens/ShoppingStackScreen';
-import OceansStackScreen from '../screens/OceansStackScreen';
+import TravelStackScreen from '../screens/TravelStackScreen';
 import LandStackScreen from '../screens/LandStackScreen';
-import PoliticsStackScreen from '../screens/ShoppingStackScreen';
-import FinanceStackScreen from '../screens/FinanceStackScreen';
 import HeaderNavBar from '../components/shared/navBar/HeaderNavBar';
 import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_categories_query';
 import { all } from 'rsvp';
@@ -37,19 +35,19 @@ CommunityStack.navigationOptions = {
   tabBarLabel: 'Community',
 };
 
-const BasicsStack = createStackNavigator({
-  Basics: BasicsStackScreen,
+const EnergyStack = createStackNavigator({
+  Energy: EnergyStackScreen,
 });
 
-BasicsStack.navigationOptions = {
+EnergyStack.navigationOptions = {
   tabBarLabel: 'Energy',
 };
 
-const TransportationStack = createStackNavigator({
-  Transportation: TransportationStackScreen,
+const FoodStack = createStackNavigator({
+  Food: FoodStackScreen,
 });
 
-TransportationStack.navigationOptions = {
+FoodStack.navigationOptions = {
   tabBarLabel: 'Food',
 };
 
@@ -61,19 +59,19 @@ FashionStack.navigationOptions = {
   tabBarLabel: 'Fashion',
 };
 
-const SportsStack = createStackNavigator({
-  Sports: SportsStackScreen,
+const WaterStack = createStackNavigator({
+  Water: WaterStackScreen,
 });
 
-SportsStack.navigationOptions = {
+WaterStack.navigationOptions = {
   tabBarLabel: 'Water',
 };
 
-const ArtsStack = createStackNavigator({
-  Arts: ArtsStackScreen,
+const WasteStack = createStackNavigator({
+  Waste: WasteStackScreen,
 });
 
-ArtsStack.navigationOptions = {
+WasteStack.navigationOptions = {
   tabBarLabel: 'Waste',
 };
 
@@ -85,11 +83,11 @@ ShoppingStack.navigationOptions = {
   tabBarLabel: 'Shopping',
 };
 
-const OceansStack = createStackNavigator({
-  Oceans: OceansStackScreen,
+const TravelStack = createStackNavigator({
+  Travel: TravelStackScreen,
 });
 
-OceansStack.navigationOptions = {
+TravelStack.navigationOptions = {
   tabBarLabel: 'Travel',
 };
 
@@ -101,39 +99,22 @@ LandStack.navigationOptions = {
   tabBarLabel: 'Land',
 };
 
-const PoliticsStack = createStackNavigator({
-  Politics: PoliticsStackScreen,
-});
-
-PoliticsStack.navigationOptions = {
-  tabBarLabel: 'Transportation',
-};
-
-// const FinanceStack = createStackNavigator({
-//   Finance: FinanceStackScreen,
-// });
-
-// FinanceStack.navigationOptions = {
-//   tabBarLabel: 'Finance',
-// };
-
 const routeConfig = {
   MyActionsStack,
   CommunityStack,
-  BasicsStack,
-  TransportationStack,
+  EnergyStack,
+  TravelStack,
   FashionStack,
-  SportsStack,
-  ArtsStack,
+  WaterStack,
+  WasteStack,
   ShoppingStack,
-  OceansStack,
   LandStack,
-  PoliticsStack,
+  FoodStack,
 };
 
 export default createMaterialTopTabNavigator(routeConfig, {
-  navigationOptions:{
-    headerTitle: <HeaderNavBar />
+  navigationOptions: {
+    headerTitle: <HeaderNavBar />,
   },
   swipeEnabled: true,
   tabBarPosition: 'bottom',
@@ -147,16 +128,14 @@ export default createMaterialTopTabNavigator(routeConfig, {
       justifyContent: 'space-between',
       alignContent: 'center',
       backgroundColor: '#000',
-      height:40
+      height: 40,
     },
     scrollEnabled: true,
     tabStyle: {
       // maxWidth: tabWidth,
     },
     indicatorStyle: {
-
       width: 0,
-
     },
   },
   lazy: true,

@@ -1,12 +1,12 @@
 import React from 'react';
 import { all } from 'rsvp';
+import { LinearGradient } from 'expo';
 
 import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_categories_query';
 import graphql from '../components/hoc/graphql';
 import HeaderNavBar from '../components/shared/navBar/HeaderNavBar';
-
+import LinearGradientProps from '../constants/LinearGradientProps';
 import GeneralScreen from './GeneralScreen';
-
 
 import { data } from './dummy/actions.json';
 @graphql(ALL_ACTION_CATEGORIES, {
@@ -25,20 +25,21 @@ class CommunityStackScreen extends React.Component {
 
   render() {
     return (
-      <GeneralScreen
-        data={this.state.actions}
-        primary_image={this.state.primary_image}
-        primary_video={this.state.primary_video}
-      />
+      <LinearGradient {...LinearGradientProps.travel} style={{ flex: 1 }}>
+        <GeneralScreen
+          data={this.state.actions}
+          primary_image={this.state.primary_image}
+          primary_video={this.state.primary_video}
+        />
+      </LinearGradient>
     );
   }
 }
 
-
 CommunityStackScreen.navigationOptions = {
   headerTitle: HeaderNavBar,
   headerStyle: {
-    backgroundColor: '#aaa',
+    backgroundColor: LinearGradientProps.travel.colors[0],
     borderBottomWidth: 0,
     shadowColor: 'transparent',
     shadowRadius: 0,
@@ -49,4 +50,3 @@ CommunityStackScreen.navigationOptions = {
 };
 
 export default CommunityStackScreen;
-
