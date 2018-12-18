@@ -142,7 +142,7 @@ class CommunityStackScreen extends React.Component {
             </Animated.View>
           );
         } else {
-          let offset = (index + 1) * 10 + 60;
+          let offset = index * 1 * 10;
           return (
             <Animated.View
               key={image.id}
