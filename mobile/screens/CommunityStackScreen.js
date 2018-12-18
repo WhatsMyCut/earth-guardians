@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  Text,
   View,
   StyleSheet,
   Image,
@@ -7,7 +8,9 @@ import {
   Dimensions,
   Animated,
   PanResponder,
+  TouchableOpacity,
 } from 'react-native';
+
 import { all } from 'rsvp';
 import { LinearGradient } from 'expo';
 
@@ -15,102 +18,169 @@ import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_
 import graphql from '../components/hoc/graphql';
 import HeaderNavBar from '../components/shared/navBar/HeaderNavBar';
 import LinearGradientProps from '../constants/LinearGradientProps';
+import navigationService from '../navigation/navigationService';
 
 import { images } from './dummy/community_data.json';
+
+// get the device dimensions
+SCREEN_HEIGHT = Dimensions.get('window').height;
+SCREEN_WIDTH = Dimensions.get('window').width;
+
 @graphql(ALL_ACTION_CATEGORIES, {
   name: 'all_categories',
   fetchPolicy: 'network-only',
 })
 class CommunityStackScreen extends React.Component {
-  state = { images: [], imageIndex: 0 };
+  state = {
+    currentIndex: 0,
+  };
+  position = new Animated.ValueXY();
 
-  // get the device dimensions
-  height = Dimensions.get('window').height;
-  width = Dimensions.get('window').width;
-  imageYPos = new Animated.Value(0);
+  rotateAndTranslate = {
+    transform: [...this.position.getTranslateTransform()],
+  };
 
-  async componentDidMount() {
-    this.setState({
-      images,
-    });
-  }
+  nextCardOpacity = this.position.x.interpolate({
+    inputRange: [0, SCREEN_HEIGHT / 2, SCREEN_HEIGHT],
+    outputRange: [0.5, 0.8, 1],
+    extrapolate: 'clamp',
+  });
+
+  nextCardScale = this.position.x.interpolate({
+    inputRange: [0, SCREEN_HEIGHT / 2, SCREEN_HEIGHT],
+    outputRange: [1, 1, 1],
+    extrapolate: 'clamp',
+  });
 
   imagePanResponder = PanResponder.create({
     onStartShouldSetPanResponder: () => true,
-    onPanResponderMove: (evt, gs) => {
-      //determine which direct you are swipping, only take action if the swipe is up
-      const direction = Math.sign(gs.dy);
-      if (direction < 0) {
-        this.imageYPos.setValue(gs.dy);
-      }
-    },
-    onPanResponderRelease: (evt, gs) => {
-      if (Math.abs(gs.dy) > this.height * 0.3) {
-        // 20% swipped, finish the swipping
-        // completed the animation
 
-        //determine which direct you are swipping
-        // -1 === swipe up, +1 === swipe down
-        const direction = Math.sign(gs.dy);
-        Animated.timing(this.imageYPos, {
-          toValue: direction * this.height,
-          duration: 250,
-        }).start(() => this.handleSwipe(-1 * direction));
+    onPanResponderMove: (evt, gs) => {
+      this.position.setValue({ x: 0, y: gs.dy });
+    },
+
+    onPanResponderRelease: (evt, gs) => {
+      if (-100 > gs.dy) {
+        Animated.spring(this.position, {
+          toValue: { x: 0, y: SCREEN_HEIGHT - 2000 },
+          tension: 0,
+        }).start(() => {
+          this.position.setValue({ x: 0, y: 0 });
+          this.setState({ currentIndex: this.state.currentIndex + 1 });
+        });
       } else {
-        Animated.timing(this.imageYPos, {
-          toValue: 0,
-          duration: 250,
+        Animated.spring(this.position, {
+          toValue: { x: 0, y: 0 },
+          friction: 1,
         }).start();
       }
     },
   });
 
-  handleSwipe = direction => {
-    // do a quick check for the swipes
-    if (!this.state.images[this.state.imageIndex + direction]) {
-      Animated.spring(this.imageYPos, {
-        toValue: 0,
-      }).start();
-      return;
-    }
-
-    // change the index to the new image, then animate the entrance of the new image
-    this.setState(
-      prevState => ({ imageIndex: prevState.imageIndex + direction }),
-      () => {
-        this.imageYPos.setValue(direction * this.height);
-        Animated.spring(this.imageYPos, {
-          toValue: 0,
-        }).start();
-      }
-    );
+  _handleLoading = () => {
+    this.setState({ loading: false });
   };
+  _renderCards = () => {
+    return images
+      .map((image, index) => {
+        if (index < this.state.currentIndex) {
+          return null;
+        } else if (index === this.state.currentIndex) {
+          return (
+            <Animated.View
+              {...this.imagePanResponder.panHandlers}
+              key={image.id}
+              style={[
+                this.rotateAndTranslate,
+                {
+                  height: SCREEN_HEIGHT - 140,
+                  width: SCREEN_WIDTH,
+                  paddingHorizontal: 20,
+                  position: 'absolute',
+                },
+              ]}
+            >
+              <Animated.View
+                style={[
+                  { opacity: this.nextCardOpacity / 1 },
+                  {
+                    position: 'absolute',
+                    bottom: 50,
+                    left: 10,
+                    zIndex: 1000,
+                    paddingHorizontal: 20,
+                  },
+                ]}
+              >
+                <TouchableOpacity
+                  onPress={() =>
+                    navigationService.navigate('Petition', {
+                      screen: 'Community',
+                    })
+                  }
+                >
+                  <Text style={{ color: 'white', fontSize: 24 }}>
+                    {image.title}
+                  </Text>
 
-  renderImages = () => (
-    <Animated.View style={[{ flex: 1, padding: 10, top: this.imageYPos }]}>
-      <Image
-        {...this.imagePanResponder.panHandlers}
-        style={{
-          flex: 1,
-          width: null,
-          height: null,
-          resizeMode: 'cover',
-          borderRadius: 20,
-        }}
-        source={{ uri: this.state.images[this.state.imageIndex].url }}
-      />
-    </Animated.View>
-  );
+                  <Text style={{ color: 'white' }}>{image.description}</Text>
+                </TouchableOpacity>
+              </Animated.View>
+
+              <Image
+                style={{
+                  flex: 1,
+                  height: null,
+                  width: null,
+                  resizeMode: 'cover',
+                  borderRadius: 20,
+                }}
+                source={{ uri: image.url }}
+                onLoad={this._handleLoading}
+              />
+            </Animated.View>
+          );
+        } else {
+          let offset = index * 1 * 10;
+          return (
+            <Animated.View
+              key={image.id}
+              style={[
+                {
+                  opacity: this.nextCardOpacity,
+                  height: SCREEN_HEIGHT - 120,
+                  width: SCREEN_WIDTH,
+                  padding: 20,
+                  position: 'absolute',
+                  top: offset,
+                },
+              ]}
+            >
+              <Image
+                style={{
+                  flex: 1,
+                  height: null,
+                  width: null,
+                  resizeMode: 'cover',
+                  borderRadius: 20,
+                }}
+                source={{ uri: image.url }}
+              />
+            </Animated.View>
+          );
+        }
+      })
+      .reverse();
+  };
 
   render() {
     return (
-      <LinearGradient {...LinearGradientProps.default} style={{ flex: 1 }}>
-        <SafeAreaView style={styles.container}>
-          <View style={styles.container}>
-            <View style={{ flex: 1 }}>
-              {this.state.images.length ? this.renderImages() : null}
-            </View>
-          </View>
+      <LinearGradient
+        {...LinearGradientProps.whiteToBlackcolors}
+        style={{ flex: 1 }}
+      >
+        <SafeAreaView style={{ flex: 1 }}>
+          <View style={styles.container}>{this._renderCards()}</View>
         </SafeAreaView>
       </LinearGradient>
     );
@@ -120,16 +190,15 @@ class CommunityStackScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    height: this.height - 120, 
-    width: this.width, 
-    padding: 10 , 
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 
 CommunityStackScreen.navigationOptions = {
   headerTitle: HeaderNavBar,
   headerStyle: {
-    backgroundColor: LinearGradientProps.default.colors[0],
+    backgroundColor: 'rgba(100, 100,100, 0.1)',
     borderBottomWidth: 0,
     shadowColor: 'transparent',
     shadowRadius: 0,
