@@ -32,28 +32,21 @@ class CommunityStackScreen extends React.Component {
     currentIndex: 0,
   };
   position = new Animated.ValueXY();
-  rotate = this.position.x.interpolate({
-    inputRange: [-SCREEN_WIDTH / 2, 0, SCREEN_WIDTH / 2],
-    outputRange: ['-12deg', '0deg', '12deg'],
-    extrapolate: 'clamp',
-  });
+  
   rotateAndTranslate = {
     transform: [
-      {
-        rotate: this.rotate,
-      },
       ...this.position.getTranslateTransform(),
     ],
   };
 
   nextCardOpacity = this.position.x.interpolate({
-    inputRange: [-SCREEN_WIDTH / 2, 0, SCREEN_WIDTH / 2],
-    outputRange: [1, 0.5, 1],
+    inputRange: [0, SCREEN_HEIGHT / 2, SCREEN_HEIGHT],
+    outputRange: [0.5, 0.8, 1],
     extrapolate: 'clamp',
   });
 
   nextCardScale = this.position.x.interpolate({
-    inputRange: [-SCREEN_WIDTH / 2, 0, SCREEN_WIDTH / 2],
+    inputRange: [0, SCREEN_HEIGHT / 2, SCREEN_HEIGHT],
     outputRange: [1, 1, 1],
     extrapolate: 'clamp',
   });
@@ -62,20 +55,14 @@ class CommunityStackScreen extends React.Component {
     onStartShouldSetPanResponder: () => true,
 
     onPanResponderMove: (evt, gs) => {
-      this.position.setValue({ x: gs.dx, y: gs.dy });
+      this.position.setValue({ x: 0, y: gs.dy });
     },
 
     onPanResponderRelease: (evt, gs) => {
-      if (gs.dx > 120) {
+      if (-100 > gs.dy) {
         Animated.spring(this.position, {
-          toValue: { x: SCREEN_WIDTH + 100, y: gs.dy },
-        }).start(() => {
-          this.position.setValue({ x: 0, y: 0 });
-          this.setState({ currentIndex: this.state.currentIndex + 1 });
-        });
-      } else if (gs.dx < -120) {
-        Animated.spring(this.position, {
-          toValue: { x: -SCREEN_WIDTH - 100, y: gs.dy },
+          toValue: { x: 0, y: SCREEN_HEIGHT - 2000 },
+          tension:0
         }).start(() => {
           this.position.setValue({ x: 0, y: 0 });
           this.setState({ currentIndex: this.state.currentIndex + 1 });
@@ -83,11 +70,13 @@ class CommunityStackScreen extends React.Component {
       } else {
         Animated.spring(this.position, {
           toValue: { x: 0, y: 0 },
-          friction: 2,
+          friction: 1,
         }).start();
       }
     },
   });
+
+
   _handleLoading = () => {
     this.setState({ loading: false });
   };
@@ -104,9 +93,9 @@ class CommunityStackScreen extends React.Component {
               style={[
                 this.rotateAndTranslate,
                 {
-                  height: SCREEN_HEIGHT - 150,
+                  height: SCREEN_HEIGHT - 140,
                   width: SCREEN_WIDTH,
-                  paddingHorizontal: 10,
+                  paddingHorizontal: 20,
                   position: 'absolute',
                 },
               ]}
@@ -149,10 +138,9 @@ class CommunityStackScreen extends React.Component {
               style={[
                 {
                   opacity: this.nextCardOpacity,
-                  transform: [{ scale: this.nextCardScale }],
-                  height: SCREEN_HEIGHT - 150,
+                  height: SCREEN_HEIGHT - 120,
                   width: SCREEN_WIDTH,
-                  padding: 10,
+                  padding: 20,
                   position: 'absolute',
                   top: offset,
                 },
