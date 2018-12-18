@@ -35,9 +35,9 @@ class ProfileStackScreen extends React.Component {
   }
 }
 ProfileStackScreen.navigationOptions = {
-  headerTitle: HeaderNavBar,
+  headerTitle: <Text style={{color:'#ffffff', fontSize:28, fontFamily:"Proxima Nova Bold"}}>MY IMPACT</Text>,
   headerStyle: {
-    backgroundColor: '#aaa',
+    backgroundColor: '#1A1A1A',
     borderBottomWidth: 0,
     shadowColor: 'transparent',
     shadowRadius: 0,

@@ -61,6 +61,7 @@ export default class ActionCardSmall extends React.Component {
                 bottom: 10,
                 left: 15,
                 fontWeight: 'bold',
+                fontFamily:"Proxima Nova Bold",
                 color: '#fff',
                 fontSize: 18,
               }}

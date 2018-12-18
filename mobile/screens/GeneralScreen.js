@@ -130,8 +130,7 @@ const styles = StyleSheet.create({
     width: width,
     height: primaryHeight,
     borderColor: 'transparent',
-    elevation: 1,
-    borderWidth: 1,
+    borderWidth: 0,
     borderRadius: Styles.borderRadius,
   },
   primaryMedia: {
