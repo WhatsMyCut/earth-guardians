@@ -8,6 +8,7 @@ import {
   Dimensions,
   Animated,
   PanResponder,
+  TouchableOpacity,
 } from 'react-native';
 import { Button } from 'react-native-paper';
 import { all } from 'rsvp';
@@ -111,22 +112,19 @@ class CommunityStackScreen extends React.Component {
                   },
                 ]}
               >
-                <Text style={{ color: 'white', fontSize: 24 }}>
-                  {image.title}
-                </Text>
-
-                <Text style={{ color: 'white' }}>{image.description}</Text>
-                <Button
+                <TouchableOpacity
                   onPress={() =>
                     navigationService.navigate('Petition', {
                       screen: 'Community',
                     })
                   }
-                  mode="contained"
-                  color="lightblue"
                 >
-                  Take Action
-                </Button>
+                  <Text style={{ color: 'white', fontSize: 24 }}>
+                    {image.title}
+                  </Text>
+
+                  <Text style={{ color: 'white' }}>{image.description}</Text>
+                </TouchableOpacity>
               </Animated.View>
 
               <Image
