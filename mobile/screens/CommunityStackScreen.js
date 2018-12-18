@@ -9,6 +9,7 @@ import {
   Animated,
   PanResponder,
 } from 'react-native';
+import { Button } from 'react-native-paper';
 import { all } from 'rsvp';
 import { LinearGradient } from 'expo';
 
@@ -16,6 +17,7 @@ import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_
 import graphql from '../components/hoc/graphql';
 import HeaderNavBar from '../components/shared/navBar/HeaderNavBar';
 import LinearGradientProps from '../constants/LinearGradientProps';
+import navigationService from '../navigation/navigationService';
 
 import { images } from './dummy/community_data.json';
 
@@ -32,11 +34,9 @@ class CommunityStackScreen extends React.Component {
     currentIndex: 0,
   };
   position = new Animated.ValueXY();
-  
+
   rotateAndTranslate = {
-    transform: [
-      ...this.position.getTranslateTransform(),
-    ],
+    transform: [...this.position.getTranslateTransform()],
   };
 
   nextCardOpacity = this.position.x.interpolate({
@@ -62,7 +62,7 @@ class CommunityStackScreen extends React.Component {
       if (-100 > gs.dy) {
         Animated.spring(this.position, {
           toValue: { x: 0, y: SCREEN_HEIGHT - 2000 },
-          tension:0
+          tension: 0,
         }).start(() => {
           this.position.setValue({ x: 0, y: 0 });
           this.setState({ currentIndex: this.state.currentIndex + 1 });
@@ -75,7 +75,6 @@ class CommunityStackScreen extends React.Component {
       }
     },
   });
-
 
   _handleLoading = () => {
     this.setState({ loading: false });
@@ -115,8 +114,21 @@ class CommunityStackScreen extends React.Component {
                 <Text style={{ color: 'white', fontSize: 24 }}>
                   {image.title}
                 </Text>
+
                 <Text style={{ color: 'white' }}>{image.description}</Text>
+                <Button
+                  onPress={() =>
+                    navigationService.navigate('Petition', {
+                      screen: 'Community',
+                    })
+                  }
+                  mode="contained"
+                  color="lightblue"
+                >
+                  Take Action
+                </Button>
               </Animated.View>
+
               <Image
                 style={{
                   flex: 1,

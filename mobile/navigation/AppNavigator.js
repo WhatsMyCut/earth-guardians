@@ -3,6 +3,7 @@ import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 
 import AuthLoadingScreen from '../screens/AuthLoadingScreen';
 import DefaultScreen from '../screens/DefaultScreen';
+import PetitionScreen from '../screens/PetitionScreen';
 import ProfileStack from './profileStackNavigation';
 import MainTabNavigator from './MainTabNavigator';
 
@@ -13,6 +14,7 @@ export default createAppContainer(
       Main: MainTabNavigator,
       Profile: ProfileStack,
       Video: DefaultScreen,
+      Petition: PetitionScreen,
     },
     {
       initialRouteName: 'Main',
