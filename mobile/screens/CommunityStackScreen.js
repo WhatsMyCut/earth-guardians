@@ -10,7 +10,7 @@ import {
   PanResponder,
   TouchableOpacity,
 } from 'react-native';
-import { Button } from 'react-native-paper';
+
 import { all } from 'rsvp';
 import { LinearGradient } from 'expo';
 
