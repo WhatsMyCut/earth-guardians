@@ -120,6 +120,9 @@ class CommunityStackScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    height: this.height - 120, 
+    width: this.width, 
+    padding: 10 , 
   },
 });
 
