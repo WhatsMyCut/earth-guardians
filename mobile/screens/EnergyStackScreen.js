@@ -8,19 +8,29 @@ import HeaderNavBar from '../components/shared/navBar/HeaderNavBar';
 import LinearGradientProps from '../constants/LinearGradientProps';
 import GeneralScreen from './GeneralScreen';
 
-import { data } from './dummy/actions.json';
+//import { data } from './dummy/actions.json';
+
+import { energy_data, primary_energy_id } from './dummy/data';
 @graphql(ALL_ACTION_CATEGORIES, {
   name: 'all_categories',
   fetchPolicy: 'network-only',
 })
 class EnergyStackScreen extends React.Component {
   state = { primary_image: '', primary_video: '', actions: [] };
-  componentDidMount() {
-    const actions = data[0].actions;
-    const primary_image = data[1].primary.image;
-    const primary_video = data[1].primary.video_url;
+  async componentDidMount() {
+    try {
+      // get the data
+      const actions = await energy_data();
 
-    this.setState({ actions, primary_image, primary_video });
+      // set the primary image and video
+      const primary_image = actions[4].image;
+      const primary_video = actions[0].video;
+
+      //update the state
+      this.setState({ actions, primary_image, primary_video });
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   render() {

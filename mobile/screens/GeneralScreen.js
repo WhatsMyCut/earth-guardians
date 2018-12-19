@@ -82,6 +82,7 @@ export default class CommunityStackScreen extends React.Component {
               style={styles.container}
               numColumns={2}
               data={this.props.data}
+              keyExtractor={(item, index) => item.id}
               renderItem={({ item, index }) => (
                 <ActionCardSmall item={item} index={index} />
               )}

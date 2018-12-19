@@ -22,6 +22,7 @@ import navigationService from '../navigation/navigationService';
 
 import { images } from './dummy/community_data.json';
 
+
 // get the device dimensions
 SCREEN_HEIGHT = Dimensions.get('window').height;
 SCREEN_WIDTH = Dimensions.get('window').width;
