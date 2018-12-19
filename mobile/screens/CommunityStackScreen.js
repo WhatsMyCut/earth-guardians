@@ -14,23 +14,22 @@ import {
 import { all } from 'rsvp';
 import { LinearGradient } from 'expo';
 
-import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_categories_query';
-import graphql from '../components/hoc/graphql';
+// import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_categories_query';
+// import graphql from '../components/hoc/graphql';
 import HeaderNavBar from '../components/shared/navBar/HeaderNavBar';
 import LinearGradientProps from '../constants/LinearGradientProps';
 import navigationService from '../navigation/navigationService';
 
 import { images } from './dummy/community_data.json';
 
-
 // get the device dimensions
 SCREEN_HEIGHT = Dimensions.get('window').height;
 SCREEN_WIDTH = Dimensions.get('window').width;
 
-@graphql(ALL_ACTION_CATEGORIES, {
-  name: 'all_categories',
-  fetchPolicy: 'network-only',
-})
+// @graphql(ALL_ACTION_CATEGORIES, {
+//   name: 'all_categories',
+//   fetchPolicy: 'network-only',
+// })
 class CommunityStackScreen extends React.Component {
   state = {
     currentIndex: 0,

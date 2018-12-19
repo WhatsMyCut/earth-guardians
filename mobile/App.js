@@ -1,5 +1,5 @@
 import React from 'react';
-import { AsyncStorage } from 'react-native'
+import { AsyncStorage } from 'react-native';
 import { StoreProvider } from './store/Store';
 import { Font } from 'expo';
 import AppNavigator from './navigation/AppNavigator';
@@ -14,57 +14,47 @@ import { getFragmentDefinitions, getMainDefinition } from 'apollo-utilities';
 import { HttpLink } from 'apollo-link-http';
 import { onError } from 'apollo-link-error';
 
-const httpLink = new HttpLink({
-  uri: `https://us1.prisma.sh/daniel-ashcraft-a99d55/earth_guardians/dev?headers={"Authorization":"Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1NDQ4MDY3MTYsIm5iZiI6MTU0NDcyMDMxNn0.gbuXTavijNiDgW_A9U5grNMdqzUlpfS8qzCWQm1naKI"}`
-});
+// const httpLink = new HttpLink({
+//   uri: `https://us1.prisma.sh/daniel-ashcraft-a99d55/earth_guardians/dev?headers={"Authorization":"Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1NDQ4MDY3MTYsIm5iZiI6MTU0NDcyMDMxNn0.gbuXTavijNiDgW_A9U5grNMdqzUlpfS8qzCWQm1naKI"}`
+// });
 
+// const errorLink = onError(({ graphQLErrors, networkError, operation }) => {
+//   if (graphQLErrors) {
+//     graphQLErrors.map(({ message, locations, path }) => {
+//       console.log(
+//         'multiple errors',
+//         JSON.stringify({ message, locations, path })
+//       );
+//       return message;
+//     });
+//   }
 
-const errorLink = onError(({ graphQLErrors, networkError, operation }) => {
-  if (graphQLErrors) {
-    graphQLErrors.map(({ message, locations, path }) => {
-      console.log(
-        'multiple errors',
-        JSON.stringify({ message, locations, path })
-      );
-      return message;
-    });
-  }
+//   if (networkError) {
+//     console.log(`Network error: ${networkError}`);
+//   }
+// });
 
-  if (networkError) {
-    console.log(`Network error: ${networkError}`);
-  }
-});
+// const authLink = setContext((_, context) => {
+//   const headers = { ...context.headers };
+//   const token = AsyncStorage.getItem('EARTH_GUARDIANS_TOKEN');
+//   if (token) {
+//     headers.authorization = `Bearer ${token}`;
+//   }
 
-
-const authLink = setContext((_, context) => {
-  const headers = { ...context.headers };
-  const token = AsyncStorage.getItem('EARTH_GUARDIANS_TOKEN');
-  if (token) {
-    headers.authorization = `Bearer ${token}`;
-  }
-
-  return {
-    ...context,
-    headers
-  };
-});
-
+//   return {
+//     ...context,
+//     headers,
+//   };
+// });
 
 // For info on how to use navigation service
 // https://reactnavigation.org/docs/en/navigating-without-navigation-prop.html#docsNav
 
-
-const client = new ApolloClient({
-  ssrForceFetchDelay: 100,
-  link : ApolloLink.from([
-    authLink,
-    errorLink,
-    httpLink
-  ]),
-  cache: new InMemoryCache()
-});
-
-
+// const client = new ApolloClient({
+//   ssrForceFetchDelay: 100,
+//   link: ApolloLink.from([authLink, errorLink, httpLink]),
+//   cache: new InMemoryCache(),
+// });
 
 export default class App extends React.Component {
   // feed the store to the app
@@ -82,20 +72,20 @@ export default class App extends React.Component {
   }
 
   render() {
-    console.disableYellowBox = true;
+    // console.disableYellowBox = true;
     const { fontLoaded } = this.state;
-    if(!fontLoaded){
+    if (!fontLoaded) {
       return null;
     }
     return (
       <StoreProvider>
-        <ApolloProvider client={client}>
+        {/* <ApolloProvider client={client}> */}
         <AppNavigator
           ref={navigatorRef => {
             NavigationService.setTopLevelNavigator(navigatorRef);
           }}
         />
-        </ApolloProvider>
+        {/* </ApolloProvider> */}
       </StoreProvider>
     );
   }

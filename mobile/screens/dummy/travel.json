@@ -1,28 +1,119 @@
 {
-  "waterActions": [{
+  "travelActions": [{
       "id": 1,
-      "title": "The title",
-      "action": "This is a description",
-      "image": "https://images.unsplash.com/photo-1544954617-f5c6b0d16164?ixlib=rb-1.2.1&auto=format&fit=crop&w=1032&q=80",
-      "video": ""
-    }
-
-    {
-      "id": ,
-      "title": "",
-      "action": "",
-      "3rdPerson": "",
-      "1stPerson": "",
-      "sector": "energy",
+      "title": "Bike or Walk",
+      "text": "Bike or Walk",
+      "text_3rdPerson": "Bike or Walk",
+      "text_1stPerson": "I biked I walked Travel",
+      "sector": "travel",
       "frequency": "1 per day",
-      "co2": 3.0,
+      "co2": null,
+      "h2o": null,
+      "waste": null,
+      "points": null,
+      "fact": "",
+      "image": "https://www.tanqueverderanch.com/wp-content/uploads/freshizer/f0a1327a60ae17d5afe0bb38d1c23acf_biking20-870-475-c.jpg",
+      "video": ""
+    },
+    {
+      "id": 2,
+      "title": "Maintenance",
+      "text": "Regular Vehicle Maintenance",
+      "text_3rdPerson": "Maintain your vehicle regularly",
+      "text_1stPerson": "I got my vehicle serviced recently",
+      "sector": "travel",
+      "frequency": "1 per month",
+      "co2": 74.0,
+      "h2o": 0.0,
+      "waste": 0.0,
+      "points": 3,
+      "fact": "Improve fuel efficiency by 4 % with a proper tune up or over 1 lb CO2e daily.",
+      "image": "https://images.pexels.com/photos/1266019/pexels-photo-1266019.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+      "video": ""
+    },
+    {
+      "id": 3,
+      "title": "Tranportation",
+      "text": "Use public transportation: bus / train or light rail(SEE GAME TAB)",
+      "text_3rdPerson": "gametab",
+      "text_1stPerson": "gametab ",
+      "sector": "travel",
+      "frequency": "gameday",
+      "co2": null,
+      "h2o": null,
+      "waste": null,
+      "points": null,
+      "fact": "Travel gametab gametab gametab gametab gametab Driving 20 fewer miles per week saves 1, 062 lbs.of CO2 and $175(EPA).",
+      "image": "https://images.pexels.com/photos/38296/cycling-bicycle-riding-sport-38296.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+      "video": ""
+    },
+    {
+      "id": 4,
+      "title": "Tires",
+      "text": "Inflate your tires properly",
+      "text_3rdPerson": "Inflate your tires properly",
+      "text_1stPerson": "I inflated my tires to the correct pressure",
+      "sector": "travel",
+      "frequency": "1 per month",
+      "co2": 1.0,
       "h2o": 0.0,
       "waste": 0.0,
       "points": 2,
-      "fact": "",
-      "image": "https://",
+      "fact": "Properly inflated tires can maximize your miles per gallon, and for every gallon of gas saved, 20 pounds of CO2 won’ t be released into the atmosphere ",
+      "image": "https://cdn.shopify.com/s/files/1/0196/5170/products/IMG_8859_grande_a8689373-daf0-494d-bbeb-ebf76f2e7bd8_grande.jpg?v=1510578063",
       "video": ""
     },
+    {
+      "id": 5,
+      "title": "Offsets",
+      "text": "Offset your travel foot print by buying carbon credits from Chooose",
+
+      "text_3rdPerson": "Offset travel with CHOOOSE",
+      "text_1stPerson": "I offset my travel with CHOOOSE",
+      "sector": "travel",
+      "frequency": "1 per month",
+      "co2": 42.0,
+      "h2o": 0.0,
+      "waste": 0.0,
+      "points": 15,
+      "fact": "CHOOOSE buys carbon credits on your behalf, each representing one tonne of CO2 reduction.We then tear them up and remove them from circulation completely.The money paid for carbon credits goes to UN - certified clean energy projects in developing countries.",
+      "image": "https://chooose.today/nas/content/live/chooose/wp-content/uploads/2018/09/community_image.jpg",
+      "video": ""
+    },
+    {
+      "id": 6,
+      "title": "Carpool",
+      "text": "Carpool with coworkers or friends",
+      "text_3rdPerson": "Carpool when possible",
+      "text_1stPerson": "I carpooled Travel",
+      "sector": "travel",
+      "frequency": "1 per day",
+      "co2": 18.0,
+      "h2o": 0.0,
+      "waste": 0.0,
+      "points": 20,
+      "fact": "Carpooling has a big impact!Carpooling eases traffic congestion and reduces greenhouse emissions.On average, sharing a ride with one other person to work and back will reduce greenhouse gas emissions by 3.72 kilograms.",
+      "image": "https://bcgreencare.ca/sites/default/files/styles/scale_340_by_340/public/Car.Share_.COV_.jpg?itok=2jm-vafR",
+      "video": ""
+    },
+
+
+    {
+      "id": 7,
+      "title": "Ride share",
+      "text": "Share a Lyft or Uber ride",
+      "text_3rdPerson": "Share rides",
+      "text_1stPerson": "I shared a ride",
+      "sector": "travel",
+      "frequency": "1 per day",
+      "co2": null,
+      "h2o": null,
+      "waste": null,
+      "points": null,
+      "fact": "",
+      "image": "https://www.pymnts.com/wp-content/uploads/2018/10/uber-IPO-wallstreet-investments.jpg",
+      "video": ""
+    }
   ],
-  "primaryId": 1
+  "primaryId": 6
 }
