@@ -27,49 +27,48 @@ export default class ActionCardSmall extends React.Component {
   showDelete = () => {
     if (this.state.delete) {
       return (
-        <TouchableOpacity onPress={() => this.delete()} style={{ position: 'absolute', right: -2, top:-15}}>
-          <Icon.AntDesign
-            name="closecircle"
-            size={32}
-            color="red"
-          />
+        <TouchableOpacity
+          onPress={() => this.delete()}
+          style={{ position: 'absolute', right: -2, top: -15 }}
+        >
+          <Icon.AntDesign name="closecircle" size={32} color="red" />
         </TouchableOpacity>
       );
     }
   };
   render() {
     const { item, index } = this.props;
+
     return (
       <TouchableOpacity
         style={{ flex: 1, height: index % 2 ? 230 : 250 }}
         onLongPress={() => this.setState({ delete: !this.state.delete })}
       >
         <View style={styles.item}>
-          
-            <Image
-              source={{ uri: item.image }}
-              style={{
-                flex: 1,
-                width: null,
-                height: null,
-                borderRadius: Styles.borderRadius,
-              }}
-            />
-            <Text
-              style={{
-                position: 'absolute',
-                bottom: 10,
-                left: 15,
-                fontWeight: 'bold',
-                fontFamily:"Proxima Nova Bold",
-                color: '#fff',
-                fontSize: 18,
-              }}
-            >
-              {item.text.substring(0, 50)}
-            </Text>
+          <Image
+            source={{ uri: item.image }}
+            style={{
+              flex: 1,
+              width: null,
+              height: null,
+              borderRadius: Styles.borderRadius,
+            }}
+          />
+          <Text
+            style={{
+              position: 'absolute',
+              bottom: 10,
+              left: 15,
+              fontWeight: 'bold',
+              fontFamily: 'Proxima Nova Bold',
+              color: '#fff',
+              fontSize: 18,
+            }}
+          >
+            {item.text.length > 50 ? item.text.substring(0, 50) : item.text}
+          </Text>
 
-            {this.showDelete()}
+          {this.showDelete()}
         </View>
       </TouchableOpacity>
     );
@@ -91,10 +90,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: Styles.borderRadius,
   },
-  imageLinearGradient :{
-    position:'absolute',
-    height:'100%',
-    width:'100%',
+  imageLinearGradient: {
+    position: 'absolute',
+    height: '100%',
+    width: '100%',
     borderColor: 'transparent',
     borderWidth: 1,
     borderRadius: Styles.borderRadius,

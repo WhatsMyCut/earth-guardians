@@ -8,10 +8,10 @@ import graphql from '../components/hoc/graphql';
 import ActionCardSmall from '../components/shared/card';
 
 import { data } from './dummy/actions.json';
-@graphql(ALL_ACTION_CATEGORIES, {
-  name: 'all_categories',
-  fetchPolicy: 'network-only',
-})
+// @graphql(ALL_ACTION_CATEGORIES, {
+//   name: 'all_categories',
+//   fetchPolicy: 'network-only',
+// })
 class MyActionsStackScreen extends React.Component {
   state = {
     primary_photo: '',
@@ -25,17 +25,17 @@ class MyActionsStackScreen extends React.Component {
     this.setState({ actions: actions });
   }
   render() {
-    const { all_categories } = this.props;
-    if (!all_categories.loading) {
-      console.log('all persons', all_categories.actionCategories[0].name);
-    }
-    if (all_categories.loading) {
-      return (
-        <SafeAreaView style={{ flex: 1 }}>
-          <Text>Loading ...</Text>
-        </SafeAreaView>
-      );
-    }
+    // const { all_categories } = this.props;
+    // if (!all_categories.loading) {
+    //   console.log('all persons', all_categories.actionCategories[0].name);
+    // }
+    // if (all_categories.loading) {
+    //   return (
+    //     <SafeAreaView style={{ flex: 1 }}>
+    //       <Text>Loading ...</Text>
+    //     </SafeAreaView>
+    //   );
+    // }
     return (
       <SafeAreaView style={{ flex: 1 }}>
         <View style={styles.container}>
