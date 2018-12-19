@@ -9,10 +9,10 @@ import NavigationService from '../navigation/navigationService';
 import GeneralScreen from './GeneralScreen';
 
 import { data } from './dummy/actions.json';
-@graphql(ALL_ACTION_CATEGORIES, {
-  name: 'all_categories',
-  fetchPolicy: 'network-only',
-})
+// @graphql(ALL_ACTION_CATEGORIES, {
+//   name: 'all_categories',
+//   fetchPolicy: 'network-only',
+// })
 class ProfileStackScreen extends React.Component {
   static navigationOptions = {
     header: null,
@@ -35,7 +35,17 @@ class ProfileStackScreen extends React.Component {
   }
 }
 ProfileStackScreen.navigationOptions = {
-  headerTitle: <Text style={{color:'#ffffff', fontSize:28, fontFamily:"Proxima Nova Bold"}}>MY IMPACT</Text>,
+  headerTitle: (
+    <Text
+      style={{
+        color: '#ffffff',
+        fontSize: 28,
+        fontFamily: 'Proxima Nova Bold',
+      }}
+    >
+      MY IMPACT
+    </Text>
+  ),
   headerStyle: {
     backgroundColor: '#1A1A1A',
     borderBottomWidth: 0,
