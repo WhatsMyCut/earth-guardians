@@ -4,8 +4,10 @@ import {
   View,
   TouchableOpacity,
   Text,
+  ImageBackground,
   StyleSheet,
   Platform,
+  Dimensions,
 } from 'react-native';
 import { Button } from 'react-native-paper';
 import { all } from 'rsvp';
@@ -16,18 +18,35 @@ import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_
 import graphql from '../components/hoc/graphql';
 import HeaderNavBar from '../components/shared/navBar/HeaderNavBar';
 import TabBarIcon from '../components/shared/icons/TabBarIcon';
-
+import navigationService from '../navigation/navigationService';
 import LinearGradientProps from '../constants/LinearGradientProps';
 import GeneralScreen from './GeneralScreen';
-
+const SCREEN_HEIGHT = Dimensions.get('window').height;
 // @graphql(ALL_ACTION_CATEGORIES, {
 //   name: 'all_categories',
 //   fetchPolicy: 'network-only',
 // })
 class PetitionScreen extends React.Component {
-  state = { primary_image: '', primary_video: '', actions: [] };
+  state = { in: false }; //TODO, when Database is established, do a componentDidMount to load status
+  screen = this.props.navigation.getParam('screen');
+  image = this.props.navigation.getParam('image');
+  togglePetition = () => {
+    // TODO update Database
+    this.setState(
+      prevState => ({
+        in: !prevState.in,
+      }),
+      () => {
+        console.log(`The state is ${this.state.in}`);
+      }
+    );
+  };
+
   render() {
-    const screen = this.props.navigation.getParam('screen', 'MyActions');
+    const status_icon_name = this.state.in
+      ? 'circle-slice-8'
+      : 'circle-outline';
+    const color = this.state.in ? 'green' : '#aaa';
     return (
       <LinearGradient
         {...LinearGradientProps.whiteToBlackcolors}
@@ -35,9 +54,13 @@ class PetitionScreen extends React.Component {
       >
         <SafeAreaView style={{ flex: 1 }}>
           <View style={styles.container}>
+            <ImageBackground
+              source={{ uri: this.image }}
+              style={{ flex: 1, width: null, height: SCREEN_HEIGHT }}
+            />
             <View style={styles.topBackNav}>
               <TouchableOpacity
-                onPress={() => this.props.navigation.navigate(screen)}
+                onPress={() => this.props.navigation.navigate(this.screen)}
               >
                 <Ionicons name="ios-arrow-round-back" size={42} color="#ccc" />
               </TouchableOpacity>
@@ -66,11 +89,14 @@ class PetitionScreen extends React.Component {
               >
                 <Button
                   mode="contained"
-                  color="#aaa"
-                  onPress={() => console.log('petition')}
-                  title="join"
+                  color="#fff"
+                  onPress={() => this.togglePetition()}
                 >
-                  I'm in!
+                  <Text>I'm in!</Text>
+                  <Icon.MaterialCommunityIcons
+                    name={status_icon_name}
+                    style={{ color: color, fontSize: 20 }}
+                  />
                 </Button>
 
                 <Icon.AntDesign
@@ -88,7 +114,11 @@ class PetitionScreen extends React.Component {
                 </Text>
               </View>
               <TouchableOpacity
-                onPress={this.phone_signup}
+                onPress={() =>
+                  navigationService.navigate('PetitionText', {
+                    image: this.image,
+                  })
+                }
                 style={{
                   color: '#fff',
                   alignSelf: 'center',
@@ -120,18 +150,5 @@ const styles = {
     paddingHorizontal: 5,
   },
 };
-
-// PetitionScreen.navigationOptions = {
-//   headerTitle: HeaderNavBar,
-//   headerStyle: {
-//     backgroundColor: LinearGradientProps.default.colors[0],
-//     borderBottomWidth: 0,
-//     shadowColor: 'transparent',
-//     shadowRadius: 0,
-//     shadowOffset: {
-//       height: 0,
-//     },
-//   },
-// };
 
 export default PetitionScreen;
