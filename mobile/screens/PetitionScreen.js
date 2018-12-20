@@ -20,10 +20,10 @@ import TabBarIcon from '../components/shared/icons/TabBarIcon';
 import LinearGradientProps from '../constants/LinearGradientProps';
 import GeneralScreen from './GeneralScreen';
 
-@graphql(ALL_ACTION_CATEGORIES, {
-  name: 'all_categories',
-  fetchPolicy: 'network-only',
-})
+// @graphql(ALL_ACTION_CATEGORIES, {
+//   name: 'all_categories',
+//   fetchPolicy: 'network-only',
+// })
 class PetitionScreen extends React.Component {
   state = { primary_image: '', primary_video: '', actions: [] };
   render() {
