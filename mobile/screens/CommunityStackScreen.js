@@ -20,8 +20,8 @@ import HeaderNavBar from '../components/shared/navBar/HeaderNavBar';
 import LinearGradientProps from '../constants/LinearGradientProps';
 import navigationService from '../navigation/navigationService';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { images } from './dummy/community_data.json';
-
+//import { petitions } from './dummy/community_data.json';
+import { community_data } from './dummy/data';
 // get the device dimensions
 SCREEN_HEIGHT = Dimensions.get('window').height;
 SCREEN_WIDTH = Dimensions.get('window').width;
@@ -33,6 +33,7 @@ SCREEN_WIDTH = Dimensions.get('window').width;
 class CommunityStackScreen extends React.Component {
   state = {
     currentIndex: 0,
+    petitions: [],
   };
   position = new Animated.ValueXY();
 
@@ -81,15 +82,15 @@ class CommunityStackScreen extends React.Component {
     this.setState({ loading: false });
   };
   _renderCards = () => {
-    return images
-      .map((image, index) => {
+    return this.state.petitions
+      .map((petition, index) => {
         if (index < this.state.currentIndex) {
           return null;
         } else if (index === this.state.currentIndex) {
           return (
             <Animated.View
               {...this.imagePanResponder.panHandlers}
-              key={image.id}
+              key={petition.id}
               style={[
                 this.rotateAndTranslate,
                 {
@@ -116,15 +117,16 @@ class CommunityStackScreen extends React.Component {
                   onPress={() =>
                     navigationService.navigate('Petition', {
                       screen: 'Community',
-                      image: image.url,
+                      image: petition.image,
+                      title: petition.title,
                     })
                   }
                 >
                   <Text style={{ color: 'white', fontSize: 24 }}>
-                    {image.title}
+                    {petition.title}
                   </Text>
 
-                  <Text style={{ color: 'white' }}>{image.description}</Text>
+                  <Text style={{ color: 'white' }}>{petition.description}</Text>
                 </TouchableOpacity>
               </Animated.View>
 
@@ -136,7 +138,7 @@ class CommunityStackScreen extends React.Component {
                   resizeMode: 'cover',
                   borderRadius: 20,
                 }}
-                source={{ uri: image.url }}
+                source={{ uri: petition.image }}
                 onLoad={this._handleLoading}
               />
               <View style={styles.headlineViewPlayIcon}>
@@ -144,7 +146,7 @@ class CommunityStackScreen extends React.Component {
                   onPress={() =>
                     navigationService.navigate('Petition', {
                       screen: 'Community',
-                      image: image.url,
+                      image: petition.image,
                     })
                   }
                 >
@@ -157,7 +159,7 @@ class CommunityStackScreen extends React.Component {
           let offset = index * 1 * 10;
           return (
             <Animated.View
-              key={image.id}
+              key={petition.id}
               style={[
                 {
                   opacity: this.nextCardOpacity,
@@ -177,7 +179,7 @@ class CommunityStackScreen extends React.Component {
                   resizeMode: 'cover',
                   borderRadius: 20,
                 }}
-                source={{ uri: image.url }}
+                source={{ uri: petition.image }}
               />
             </Animated.View>
           );
@@ -186,6 +188,12 @@ class CommunityStackScreen extends React.Component {
       .reverse();
   };
 
+  async componentDidMount() {
+    const petitions = await community_data();
+    this.setState({
+      petitions,
+    });
+  }
   render() {
     return (
       <LinearGradient

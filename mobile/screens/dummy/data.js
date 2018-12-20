@@ -7,6 +7,7 @@ import {
   primaryId as primaryShoppingId,
 } from './shopping.json';
 import { foodActions, primaryId as primaryFoodId } from './food.json';
+import { petitions } from './community_data.json';
 
 export const energy_data = () => {
   return energyActions;
@@ -45,11 +46,9 @@ export const waste_data = () => {
 export const primary_waste_id = primaryWasteId;
 
 //TODO bring the community into here
-/*
 export const community_data = () => {
-  return petitionData
-}
-*/
+  return petitions;
+};
 
 let key = 1;
 export const actions_data = () => {
