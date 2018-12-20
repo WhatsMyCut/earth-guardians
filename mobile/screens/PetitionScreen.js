@@ -115,8 +115,7 @@ class PetitionScreen extends React.Component {
               </View>
               <TouchableOpacity
                 onPress={() =>
-                  navigationService.navigate('PetitionTextTODO', {
-                    screen: 'Petition',
+                  navigationService.navigate('PetitionText', {
                     image: this.image,
                   })
                 }

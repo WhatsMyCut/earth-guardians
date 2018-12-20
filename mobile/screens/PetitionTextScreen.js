@@ -28,7 +28,6 @@ const SCREEN_HEIGHT = Dimensions.get('window').height;
 // })
 class PetitionTextScreen extends React.Component {
   state = { in: false }; //TODO, when Database is established, do a componentDidMount to load status
-  screen = this.props.navigation.getParam('screen');
   image = this.props.navigation.getParam('image');
   togglePetition = () => {
     // TODO update Database
@@ -43,16 +42,17 @@ class PetitionTextScreen extends React.Component {
   };
 
   render() {
-    const status_icon_name = this.state.in
-      ? 'circle-slice-8'
-      : 'circle-outline';
-    const color = this.state.in ? 'green' : '#aaa';
     return (
       <SafeAreaView style={{ flex: 1 }}>
         <View style={styles.container}>
           <View style={styles.topBackNav}>
             <TouchableOpacity
-              onPress={() => this.props.navigation.navigate(this.screen)}
+              onPress={() =>
+                this.props.navigation.navigate('Petition', {
+                  screen: 'Community',
+                  image: this.image,
+                })
+              }
             >
               <Ionicons name="ios-arrow-round-back" size={42} color="#ccc" />
             </TouchableOpacity>
@@ -60,61 +60,69 @@ class PetitionTextScreen extends React.Component {
           <View
             style={{
               flex: 1,
-              justifyContent: 'flex-end',
+              justifyContent: 'flex-start',
               alignItems: 'Flex-start',
-              padding: 20,
+              paddingRight: 10,
+              paddingLeft: 20,
             }}
           >
-            <Text style={{ color: 'white', fontSize: 30 }}>Petition Title</Text>
-            <Text style={{ color: 'white', fontSize: 16 }}>
+            <Text
+              style={{
+                fontSize: 30,
+                fontWeight: 'bold',
+                paddingBottom: 10,
+                paddingTop: 30,
+                color: 'blue',
+              }}
+            >
+              Our Petition
+            </Text>
+            <Text
+              style={{
+                fontSize: 16,
+                fontWeight: 'bold',
+                paddingBottom: 10,
+              }}
+            >
               Lorem Ipsum is simply dummy text of the printing and typesetting
               industry. Lorem Ipsum has been the industry's standard
             </Text>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}
-            >
-              <Button
-                mode="contained"
-                color="#fff"
-                onPress={() => this.togglePetition()}
-              >
-                <Text>I'm in!</Text>
-                <Icon.MaterialCommunityIcons
-                  name={status_icon_name}
-                  style={{ color: color, fontSize: 20 }}
-                />
-              </Button>
-
-              <Icon.AntDesign
-                name="eyeo"
-                style={{
-                  color: '#fff',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  fontSize: 20,
-                  marginHorizontal: 10,
-                }}
-              />
-              <Text style={{ color: '#fff', alignSelf: 'center' }}>
-                4K took action
-              </Text>
-            </View>
+            <Text style={{ fontSize: 16, paddingBottom: 10 }}>
+              Lorem Ipsum is simply dummy text of the printing and typesetting
+              industry. Lorem Ipsum has been the industry's standard
+            </Text>
+            <Text style={{ fontSize: 16, paddingBottom: 10 }}>
+              Lorem Ipsum is simply dummy text of the printing and typesetting
+              industry. Lorem Ipsum has been the industry's standard
+            </Text>
+            <Text style={{ fontSize: 16, paddingBottom: 10 }}>
+              Lorem Ipsum is simply dummy text of the printing and typesetting
+              industry. Lorem Ipsum has been the industry's standard
+            </Text>
+            <Text style={{ fontSize: 16, paddingBottom: 10 }}>
+              Lorem Ipsum is simply dummy text of the printing and typesetting
+              industry. Lorem Ipsum has been the industry's standard
+            </Text>
+            <Text style={{ fontSize: 16, paddingBottom: 10 }}>
+              Lorem Ipsum is simply dummy text of the printing and typesetting
+              industry. Lorem Ipsum has been the industry's standard
+            </Text>
+          </View>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
             <TouchableOpacity
               onPress={() =>
-                navigationService.navigate('PetitionTextScreen', {
+                navigationService.navigate('TODOAnotherPetitionTextScreen', {
                   screen: 'Petition',
                   image: this.image,
                 })
               }
-              style={{
-                color: '#fff',
-                alignSelf: 'center',
-                paddingBottom: 10,
-              }}
+              style={{ color: '#fff', alignSelf: 'center', paddingBottom: 10 }}
             >
               <TabBarIcon
                 name={
