@@ -42,11 +42,11 @@ export default class CommunityStackScreen extends React.Component {
     return (
       <TouchableOpacity
         onPress={() =>
-          navigationService.navigate('Video', { screen: 'Community' })
+          navigationService.navigate('Video', { screen: this.props.screen, video:this.props.primary_video })
         }
       >
         <Image
-          source={{ uri: this.props.primary_video }}
+          source={{ uri: this.props.primary_image }}
           style={styles.primaryMedia}
         />
         <View style={styles.imageLinearGradient}>

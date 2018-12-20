@@ -26,11 +26,17 @@ class DefaultScreen extends BaseScreen {
     super(props);
     console.log('default screen props', props);
   }
+
+  
   changeRate(rate) {
     this._playbackInstance.setStatusAsync({
       rate: rate,
       shouldCorrectPitch: true,
     });
+  }
+
+  _mountVideo = component =>{
+    this.video = component;
   }
 
   render() {
@@ -50,6 +56,9 @@ class DefaultScreen extends BaseScreen {
     );
 
     const screen = this.props.navigation.getParam('screen', 'MyActions');
+    const videoUrl = this.props.navigation.getParam('video', 'https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8')
+    
+
     console.ignoredYellowBox = ['Warning:'];
     return (
       <SafeAreaView style={{ flex: 1 }}>
@@ -63,15 +72,16 @@ class DefaultScreen extends BaseScreen {
           </View>
           <ScrollView style={styles.container}>
             <VideoPlayer
+              ref={this._mountVideo} 
               style={{
                 justifyContent: 'flex-start',
               }}
               videoProps={{
                 shouldPlay: true,
-                resizeMode: Video.RESIZE_MODE_CONTAIN,
+                resizeMode: 'cover',
                 source: {
                   uri:
-                    'https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8',
+                  videoUrl,
                 },
                 isMuted: false,
                 ref: component => {
@@ -84,7 +94,6 @@ class DefaultScreen extends BaseScreen {
               switchToPortrait={this.switchToPortrait.bind(this)}
               playFromPositionMillis={0}
             />
-
             <View
               style={{
                 flexDirection: 'row',

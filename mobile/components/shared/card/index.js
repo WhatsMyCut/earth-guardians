@@ -91,10 +91,7 @@ export default class ActionCardSmall extends React.Component {
       >
         
         <Animated.View style={[styles.item,frontAnimatedStyle, {height: index % 2 ? 230 : 250}]}>
-        {/* <LinearGradient
-          {...LinearGradientProps.energy} 
-        style={[styles.item, {height: index % 2 ? 230 : 250}]}
-        ></LinearGradient> */}
+        
           <Image
             source={{ uri: item.image }}
             style={{
@@ -104,6 +101,11 @@ export default class ActionCardSmall extends React.Component {
               borderRadius: Styles.borderRadius,
             }}
           />
+          <LinearGradient
+        colors={['rgba(255,255,255,0)', '#000000']}
+        locations= {[0.3, 1]}
+        style={[styles.gradient, {height: index % 2 ? 220 : 240}]}
+        ></LinearGradient>
           <Text
             style={{
               position: 'absolute',
@@ -159,6 +161,13 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: Styles.borderRadius,
     backfaceVisibility: 'hidden',
+  },
+  gradient:{
+    position: 'absolute',
+    paddingHorizontal: 10,
+    borderRadius: Styles.borderRadius,
+    left:10, 
+    width:160,
   },
   flippedItem:{
     backgroundColor:"#ffffff",

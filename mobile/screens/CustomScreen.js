@@ -33,6 +33,8 @@ class CustomScreen extends BaseScreen {
         style={{ textAlign: 'center' }}
       />
     );
+    console.log('this.props', this.props);
+    let videoUrl = this.props.navigation.state.params.video;
     return (
       <View style={styles.container}>
         <ScrollView style={styles.container}>
@@ -41,7 +43,7 @@ class CustomScreen extends BaseScreen {
               shouldPlay: false,
               resizeMode: Video.RESIZE_MODE_CONTAIN,
               source: {
-                uri: 'http://www.streambox.fr/playlists/test_001/stream.m3u8',
+                uri: videoUrl,
               },
               isMuted: false,
             }}

@@ -36,6 +36,7 @@ class EnergyStackScreen extends React.Component {
       <LinearGradient {...LinearGradientProps.energy} style={{ flex: 1 }}>
         <GeneralScreen
           data={this.state.actions}
+          screen={'Energy'}
           primary_image={this.state.primary_image}
           primary_video={this.state.primary_video}
         />

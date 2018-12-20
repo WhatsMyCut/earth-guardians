@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "mobile",
-    "slug": "mobile",
-    "privacy": "public",
+    "name": "Earth Guardians Test",
+    "slug": "earth-guardians-test",
+    "privacy": "unlisted",
     "sdkVersion": "31.0.0",
     "platforms": [
       "ios",
@@ -24,6 +24,7 @@
     ],
     "ios": {
       "supportsTablet": true
-    }
+    },
+    "description": ""
   }
 }
