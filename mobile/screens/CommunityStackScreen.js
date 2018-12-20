@@ -94,7 +94,7 @@ class CommunityStackScreen extends React.Component {
                 this.rotateAndTranslate,
                 {
                   height: SCREEN_HEIGHT - 180,
-                  width: SCREEN_WIDTH-60,
+                  width: SCREEN_WIDTH - 60,
                   paddingHorizontal: 20,
                   position: 'absolute',
                 },
@@ -116,6 +116,7 @@ class CommunityStackScreen extends React.Component {
                   onPress={() =>
                     navigationService.navigate('Petition', {
                       screen: 'Community',
+                      image: image.url,
                     })
                   }
                 >
@@ -149,7 +150,7 @@ class CommunityStackScreen extends React.Component {
                 {
                   opacity: this.nextCardOpacity,
                   height: SCREEN_HEIGHT - 180,
-                  width: SCREEN_WIDTH-80,
+                  width: SCREEN_WIDTH - 80,
                   padding: 20,
                   position: 'absolute',
                   top: offset,

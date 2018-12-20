@@ -4,8 +4,10 @@ import {
   View,
   TouchableOpacity,
   Text,
+  ImageBackground,
   StyleSheet,
   Platform,
+  Dimensions,
 } from 'react-native';
 import { Button } from 'react-native-paper';
 import { all } from 'rsvp';
@@ -19,7 +21,7 @@ import TabBarIcon from '../components/shared/icons/TabBarIcon';
 
 import LinearGradientProps from '../constants/LinearGradientProps';
 import GeneralScreen from './GeneralScreen';
-
+const SCREEN_HEIGHT = Dimensions.get('window').height;
 // @graphql(ALL_ACTION_CATEGORIES, {
 //   name: 'all_categories',
 //   fetchPolicy: 'network-only',
@@ -27,7 +29,9 @@ import GeneralScreen from './GeneralScreen';
 class PetitionScreen extends React.Component {
   state = { primary_image: '', primary_video: '', actions: [] };
   render() {
-    const screen = this.props.navigation.getParam('screen', 'MyActions');
+    const screen = this.props.navigation.getParam('screen');
+    const image = this.props.navigation.getParam('image');
+
     return (
       <LinearGradient
         {...LinearGradientProps.whiteToBlackcolors}
@@ -35,6 +39,10 @@ class PetitionScreen extends React.Component {
       >
         <SafeAreaView style={{ flex: 1 }}>
           <View style={styles.container}>
+            <ImageBackground
+              source={{ uri: image }}
+              style={{ flex: 1, width: null, height: SCREEN_HEIGHT }}
+            />
             <View style={styles.topBackNav}>
               <TouchableOpacity
                 onPress={() => this.props.navigation.navigate(screen)}
@@ -66,11 +74,20 @@ class PetitionScreen extends React.Component {
               >
                 <Button
                   mode="contained"
-                  color="#aaa"
+                  color="#fff"
                   onPress={() => console.log('petition')}
-                  title="join"
                 >
-                  I'm in!
+                  <Text>I'm in!</Text>
+                  <Icon.MaterialCommunityIcons
+                    //name="circle-outline"
+                    name="circle-slice-8"
+                    style={{
+                      color: 'green',
+                      borderBottomColor: '#aaa',
+                      borderWidth: 1,
+                      fontSize: 20,
+                    }}
+                  />
                 </Button>
 
                 <Icon.AntDesign
