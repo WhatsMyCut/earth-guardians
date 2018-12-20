@@ -19,7 +19,7 @@ import { LinearGradient } from 'expo';
 import HeaderNavBar from '../components/shared/navBar/HeaderNavBar';
 import LinearGradientProps from '../constants/LinearGradientProps';
 import navigationService from '../navigation/navigationService';
-
+import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { images } from './dummy/community_data.json';
 
 // get the device dimensions
@@ -139,6 +139,18 @@ class CommunityStackScreen extends React.Component {
                 source={{ uri: image.url }}
                 onLoad={this._handleLoading}
               />
+              <View style={styles.headlineViewPlayIcon}>
+                <TouchableOpacity
+                  onPress={() =>
+                    navigationService.navigate('Petition', {
+                      screen: 'Community',
+                      image: image.url,
+                    })
+                  }
+                >
+                  <FontAwesome name="play" size={52} color="white" />
+                </TouchableOpacity>
+              </View>
             </Animated.View>
           );
         } else {
@@ -193,6 +205,16 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  headlineViewPlayIcon: {
+    position: 'absolute',
+    opacity: 0.8,
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 

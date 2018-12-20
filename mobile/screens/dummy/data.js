@@ -43,3 +43,47 @@ export const waste_data = () => {
 };
 
 export const primary_waste_id = primaryWasteId;
+
+//TODO bring the community into here
+/*
+export const community_data = () => {
+  return petitionData
+}
+*/
+
+let key = 1;
+export const actions_data = () => {
+  // destruucture only partial results, and adding a key because flaslist requires a different key
+  return [
+    ...energyActions.slice(0, 3).map(object => {
+      object.key = key;
+      key++;
+      return object;
+    }),
+    ...travelActions.slice(0, 3).map(object => {
+      object.key = key;
+      key++;
+      return object;
+    }),
+    ...foodActions.slice(0, 3).map(object => {
+      object.key = key;
+      key++;
+      return object;
+    }),
+    ...shoppingActions.slice(0, 3).map(object => {
+      object.key = key;
+      key++;
+      return object;
+    }),
+    ...waterActions.slice(0, 3).map(object => {
+      object.key = key;
+      key++;
+      return object;
+    }),
+    ...wasteActions.slice(0, 3).map(object => {
+      object.key = key;
+      key++;
+      return object;
+    }),
+  ];
+};
