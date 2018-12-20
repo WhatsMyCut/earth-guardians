@@ -93,8 +93,8 @@ class CommunityStackScreen extends React.Component {
               style={[
                 this.rotateAndTranslate,
                 {
-                  height: SCREEN_HEIGHT - 140,
-                  width: SCREEN_WIDTH,
+                  height: SCREEN_HEIGHT - 180,
+                  width: SCREEN_WIDTH-60,
                   paddingHorizontal: 20,
                   position: 'absolute',
                 },
@@ -148,8 +148,8 @@ class CommunityStackScreen extends React.Component {
               style={[
                 {
                   opacity: this.nextCardOpacity,
-                  height: SCREEN_HEIGHT - 120,
-                  width: SCREEN_WIDTH,
+                  height: SCREEN_HEIGHT - 180,
+                  width: SCREEN_WIDTH-80,
                   padding: 20,
                   position: 'absolute',
                   top: offset,
