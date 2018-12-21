@@ -28,7 +28,7 @@ export default class ModalScreen extends React.Component {
             },
           ]}
         >
-          <CommunityImpactModal />
+          <CommunityEventModal />
         </View>
       </SafeAreaView>
     );
