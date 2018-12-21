@@ -32,9 +32,9 @@ export default class Profileomponent extends React.Component {
             marginTop: 10,
           }}
         >
-          <Text style={{ color: '#fff' }}>Edward</Text>
+          <Text style={{ color: '#fff' }}>First Name</Text>
           <Text style={{ color: '#fff', width: SCREEN_WIDTH * 0.9 * 0.5 }}>
-            Manda
+            Last Name
           </Text>
         </View>
         <View
