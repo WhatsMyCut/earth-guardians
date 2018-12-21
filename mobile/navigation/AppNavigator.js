@@ -20,11 +20,10 @@ export default createAppContainer(
       Video: DefaultScreen,
       Petition: PetitionScreen,
       PetitionText: PetitionTextScreen,
-      // remove
       Modal: ModalScreen,
     },
     {
-      initialRouteName: 'Modal',
+      initialRouteName: 'Main',
     }
   )
 );

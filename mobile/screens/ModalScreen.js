@@ -9,7 +9,8 @@ import {
 import { Button } from 'react-native-paper';
 import navigationService from '../navigation/navigationService';
 import RedirectModal from '../components/shared/modals/RedirectModal';
-import SubmitModal from '../components/shared/modals/SubmitModal';
+import CommunityImpactModal from '../components/shared/modals/CommunityImpactModal';
+import CommunityEventModal from '../components/shared/modals/CommunityEventModal';
 
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 
@@ -27,7 +28,7 @@ export default class ModalScreen extends React.Component {
             },
           ]}
         >
-          <SubmitModal />
+          <CommunityEventModal />
         </View>
       </SafeAreaView>
     );

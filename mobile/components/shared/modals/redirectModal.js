@@ -20,6 +20,7 @@ export default class RedirectModal extends React.Component {
             marginHorizontal: 20,
             fontSize: 18,
             fontWeight: 'bold',
+            textAlign: 'center',
           }}
         >
           EARTH GUARDIANS WILL REDIRECT YOU TO WWW.CHOOSE.TODAY

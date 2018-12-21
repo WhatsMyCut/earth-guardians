@@ -1,7 +1,8 @@
 import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity } from 'react-native';
 
-export default class RedirectModal extends React.Component {
+export default class CommunityImpactModal extends React.Component {
+  state = { zipCode: '' };
   render() {
     return (
       <View
@@ -20,11 +21,27 @@ export default class RedirectModal extends React.Component {
             marginHorizontal: 20,
             fontSize: 18,
             fontWeight: 'bold',
+            textAlign: 'center',
           }}
         >
-          EARTH GUARDIANS WILL REDIRECT YOU TO WWW.CHOOSE.TODAY
+          WANT TO SEE YOUR COMMUNITY'S IMPACT?
         </Text>
-
+        <TextInput
+          style={{
+            color: '#fff',
+            height: 30,
+            width: 200,
+            textAlign: 'center',
+            marginVertical: 30,
+            borderColor: 'gray',
+            borderBottomWidth: 1,
+          }}
+          onChangeText={zipCode => this.setState({ zipCode })}
+          placeholder="Zip Code"
+          placeholderTextColor="#fff"
+          keyboardType="numeric"
+          value={this.state.zipCode}
+        />
         <TouchableOpacity
           style={{
             backgroundColor: '#fff',
@@ -35,10 +52,10 @@ export default class RedirectModal extends React.Component {
             alignItems: 'center',
             marginTop: 20,
           }}
-          onPress={() => console.log('button pressed')}
+          onPress={() => console.log('zip code is', this.state.zipCode)}
         >
           <Text style={{ color: '#333', fontSize: 18, fontWeight: 'bold' }}>
-            REDIRECT
+            SUBMIT
           </Text>
         </TouchableOpacity>
       </View>
