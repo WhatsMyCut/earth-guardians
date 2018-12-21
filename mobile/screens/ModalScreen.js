@@ -11,6 +11,7 @@ import navigationService from '../navigation/navigationService';
 import RedirectModal from '../components/shared/modals/RedirectModal';
 import CommunityImpactModal from '../components/shared/modals/CommunityImpactModal';
 import CommunityEventModal from '../components/shared/modals/CommunityEventModal';
+import SignPetitionModal from '../components/shared/modals/SignPetitionModal';
 
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 
@@ -28,7 +29,7 @@ export default class ModalScreen extends React.Component {
             },
           ]}
         >
-          <CommunityEventModal />
+          <RedirectModal />
         </View>
       </SafeAreaView>
     );

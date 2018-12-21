@@ -5,18 +5,17 @@ import {
   TextInput,
   TouchableOpacity,
   KeyboardAvoidingView,
+  Dimensions,
 } from 'react-native';
+const SCREEN_WIDTH = Dimensions.get('window').width;
 
 export default class CommunityEventModal extends React.Component {
-  state = { typeOfEvent: '', numberOfPeople: '' };
+  state = { firstName: '', lastName: '', email: '' };
   render() {
+    console.log(SCREEN_WIDTH);
     return (
       <KeyboardAvoidingView
-        style={{
-          flex: 1,
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
+        style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
         behavior="padding"
         enabled
       >
@@ -39,30 +38,53 @@ export default class CommunityEventModal extends React.Component {
               fontWeight: 'bold',
             }}
           >
-            HAVE YOU HOSTED A COMMUNITY EVENT?
+            SIGN THE PETITION
           </Text>
           <TextInput
             style={{
               color: '#fff',
               height: 30,
               width: 200,
-              marginVertical: 30,
+              marginTop: 30,
+              marginBottom: 20,
               borderColor: 'gray',
               borderBottomWidth: 1,
             }}
-            onChangeText={typeOfEvent => this.setState({ typeOfEvent })}
-            value={this.state.typeOfEvent}
-            placeholder="Type of Event"
+            onChangeText={firstName => this.setState({ firstName })}
+            value={this.state.firstName}
+            placeholder="First Name"
             placeholderTextColor="#fff"
             returnKeyType="next"
             onSubmitEditing={() => {
-              this.numbOfPeople.focus();
+              this.lName.focus();
             }}
             blurOnSubmit={false}
           />
           <TextInput
             ref={input => {
-              this.numbOfPeople = input;
+              this.lName = input;
+            }}
+            style={{
+              color: '#fff',
+              height: 30,
+              width: 200,
+              marginBottom: 20,
+              borderColor: 'gray',
+              borderBottomWidth: 1,
+            }}
+            onChangeText={lastName => this.setState({ lastName })}
+            value={this.state.lastName}
+            placeholder="Last Name"
+            placeholderTextColor="#fff"
+            returnKeyType="next"
+            onSubmitEditing={() => {
+              this.tEmail.focus();
+            }}
+            blurOnSubmit={false}
+          />
+          <TextInput
+            ref={input => {
+              this.tEmail = input;
             }}
             style={{
               color: '#fff',
@@ -72,11 +94,11 @@ export default class CommunityEventModal extends React.Component {
               borderColor: 'gray',
               borderBottomWidth: 1,
             }}
-            onChangeText={numberOfPeople => this.setState({ numberOfPeople })}
-            value={this.state.numberOfPeople}
-            placeholder="Number of People"
+            onChangeText={email => this.setState({ email })}
+            value={this.state.email}
+            placeholder="email address"
             placeholderTextColor="#fff"
-            keyboardType="numeric"
+            keyboardType="email-address"
             returnKeyType="done"
           />
           <TouchableOpacity
@@ -91,10 +113,12 @@ export default class CommunityEventModal extends React.Component {
             }}
             onPress={() =>
               console.log(
-                'The type of event was' +
-                  this.state.typeOfEvent +
-                  ' and the number of people was ' +
-                  this.state.numberOfPeople
+                'Name is ' +
+                  this.state.firstName +
+                  ' ' +
+                  this.state.lastName +
+                  ' and the email is  ' +
+                  this.state.email
               )
             }
           >
