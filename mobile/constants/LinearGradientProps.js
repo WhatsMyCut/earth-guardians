@@ -11,6 +11,10 @@ export default {
     colors: ['#aaaaaa', '#333333'],
     locations: [0.3, 1],
   },
+  community: {
+    colors: ['#664242', '#402929'],
+    locations: [0.3, 1],
+  },
   energy: {
     colors: ['#665B38', '#403823'],
     locations: [0, 1],

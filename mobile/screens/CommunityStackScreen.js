@@ -186,10 +186,7 @@ class CommunityStackScreen extends React.Component {
   }
   render() {
     return (
-      <LinearGradient
-        {...LinearGradientProps.whiteToBlackcolors}
-        style={{ flex: 1 }}
-      >
+      <LinearGradient {...LinearGradientProps.community} style={{ flex: 1 }}>
         <SafeAreaView style={{ flex: 1 }}>
           <View style={styles.container}>{this._renderCards()}</View>
         </SafeAreaView>
@@ -219,7 +216,7 @@ const styles = StyleSheet.create({
 CommunityStackScreen.navigationOptions = {
   headerTitle: HeaderNavBar,
   headerStyle: {
-    backgroundColor: 'rgba(100, 100,100, 0.1)',
+    backgroundColor: LinearGradientProps.community.colors[0],
     borderBottomWidth: 0,
     shadowColor: 'transparent',
     shadowRadius: 0,
