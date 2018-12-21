@@ -30,6 +30,7 @@ class PetitionScreen extends React.Component {
   state = { in: false }; //TODO, when Database is established, do a componentDidMount to load status
   screen = this.props.navigation.getParam('screen');
   image = this.props.navigation.getParam('image');
+  petitionTitle = this.props.navigation.getParam('title');
   togglePetition = () => {
     // TODO update Database
     this.setState(
@@ -74,7 +75,7 @@ class PetitionScreen extends React.Component {
               }}
             >
               <Text style={{ color: 'white', fontSize: 30 }}>
-                Petition Title
+                {this.petitionTitle}
               </Text>
               <Text style={{ color: 'white', fontSize: 16 }}>
                 Lorem Ipsum is simply dummy text of the printing and typesetting
@@ -117,6 +118,7 @@ class PetitionScreen extends React.Component {
                 onPress={() =>
                   navigationService.navigate('PetitionText', {
                     image: this.image,
+                    title: this.petitionTitle,
                   })
                 }
                 style={{

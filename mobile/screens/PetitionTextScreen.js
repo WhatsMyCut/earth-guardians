@@ -29,6 +29,7 @@ const SCREEN_HEIGHT = Dimensions.get('window').height;
 class PetitionTextScreen extends React.Component {
   state = { in: false }; //TODO, when Database is established, do a componentDidMount to load status
   image = this.props.navigation.getParam('image');
+  petitionTitle = this.props.navigation.getParam('title');
   togglePetition = () => {
     // TODO update Database
     this.setState(
@@ -51,6 +52,7 @@ class PetitionTextScreen extends React.Component {
                 this.props.navigation.navigate('Petition', {
                   screen: 'Community',
                   image: this.image,
+                  title: this.petitionTitle,
                 })
               }
             >
@@ -75,7 +77,7 @@ class PetitionTextScreen extends React.Component {
                 color: 'blue',
               }}
             >
-              Our Petition
+              {this.petitionTitle} Petition
             </Text>
             <Text
               style={{
