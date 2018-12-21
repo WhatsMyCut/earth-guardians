@@ -113,21 +113,11 @@ class CommunityStackScreen extends React.Component {
                   },
                 ]}
               >
-                <TouchableOpacity
-                  onPress={() =>
-                    navigationService.navigate('Petition', {
-                      screen: 'Community',
-                      image: petition.image,
-                      title: petition.title,
-                    })
-                  }
-                >
-                  <Text style={{ color: 'white', fontSize: 24 }}>
-                    {petition.title}
-                  </Text>
+                <Text style={{ color: 'white', fontSize: 24 }}>
+                  {petition.title}
+                </Text>
 
-                  <Text style={{ color: 'white' }}>{petition.description}</Text>
-                </TouchableOpacity>
+                <Text style={{ color: 'white' }}>{petition.description}</Text>
               </Animated.View>
 
               <Image
