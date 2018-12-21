@@ -39,4 +39,8 @@ export default {
     colors: ['#614266', '#3D2940'],
     locations: [0, 1],
   },
+  profile: {
+    colors: ['#333333', '#1A1A1A'],
+    locations: [0, 1],
+  },
 };
