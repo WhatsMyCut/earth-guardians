@@ -5,14 +5,19 @@ import {
   View,
   Text,
   Button,
+  KeyboardAvoidingView,
   ImageBackground,
   TouchableOpacity,
   Platform,
+  Dimensions
 } from 'react-native';
 import { LinearGradient } from 'expo';
 
 import PhoneInputComp from '../shared/phone/PhoneInputComp';
 import TabBarIcon from '../shared/icons/TabBarIcon';
+const HEIGHT = Dimensions.get('window').height;
+const WIDTH = Dimensions.get('window').width;
+
 
 export default class PhoneSignup extends React.Component {
   state = {
@@ -39,16 +44,14 @@ export default class PhoneSignup extends React.Component {
         <SafeAreaView style={{ flex: 1 }}>
           <ImageBackground
             source={require('../../assets/bg.png')}
-            style={{ flex: 1, width: null, height: 700 }}
+            style={{ flex: 1, width: WIDTH, height: HEIGHT, position:'absolute' }}
+            resizeMode
           />
-          <View
-            flex
-            bottom
-            style={[
+          <KeyboardAvoidingView behavior="padding" style={[
               styles.container,
               { justifyContent: 'flex-end', alignItems: 'flex-start' },
-            ]}
-          >
+            ]}>
+          
             <Text style={styles.title}>Take Action</Text>
             <Text style={styles.promo}>
               Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eveniet
@@ -59,7 +62,7 @@ export default class PhoneSignup extends React.Component {
               updatePhone={this.props.updatePhone}
               validate_phone={this.is_phone_valid}
             />
-          </View>
+          
           {this.state.valid_phone ? (
             <TouchableOpacity
               onPress={this.phone_signup}
@@ -72,6 +75,7 @@ export default class PhoneSignup extends React.Component {
               />
             </TouchableOpacity>
           ) : null}
+          </KeyboardAvoidingView>
         </SafeAreaView>
       </LinearGradient>
     );
@@ -80,8 +84,9 @@ export default class PhoneSignup extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
+    flex:1,
     paddingLeft: 30,
-    paddingBottom: 20,
+    marginBottom: 80,
     paddingRight: 130,
   },
   linearGradient: {
