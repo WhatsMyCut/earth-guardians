@@ -23,7 +23,7 @@ export default createAppContainer(
       Modal: ModalScreen,
     },
     {
-      initialRouteName: 'Main',
+      initialRouteName: 'Modal',
     }
   )
 );
