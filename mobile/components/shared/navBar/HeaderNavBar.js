@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Image, TouchableOpacity } from 'react-native';
+
 import navigationService from '../../../navigation/navigationService';
 
 const CommunityIcon = () => {
@@ -28,8 +29,8 @@ const UserIcon = () => {
   return (
     <TouchableOpacity onPress={() => navigationService.navigate('Profile')}>
       <Image
-        source={require('../../../assets/user_w.png')}
         style={{ width: 20, height: 20 }}
+        source={require('../../../assets/user_w.png')}
       />
     </TouchableOpacity>
   );
