@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 import { LinearGradient, Icon } from 'expo';
 import LinearGradientProps from '../../../constants/LinearGradientProps';
+import ActionDetails from './ActionDetails';
 import Styles from '../../../constants/Styles';
 // import graphql from '../components/hoc/graphql';
 
@@ -25,37 +26,36 @@ export default class ActionCardSmall extends React.Component {
     console.log('delete');
   };
 
-  componentWillMount(){
+  componentWillMount() {
     this.animatedValue = new Animated.Value(0);
     this.value = 0;
     this.animatedValue.addListener(({ value }) => {
       this.value = value;
-    })
+    });
     this.frontInterpolate = this.animatedValue.interpolate({
       inputRange: [0, 180],
       outputRange: ['0deg', '180deg'],
-    })
+    });
     this.backInterpolate = this.animatedValue.interpolate({
       inputRange: [0, 180],
-      outputRange: ['180deg', '360deg']
-    })
+      outputRange: ['180deg', '360deg'],
+    });
   }
 
   flipCard() {
     if (this.value >= 90) {
-      Animated.spring(this.animatedValue,{
+      Animated.spring(this.animatedValue, {
         toValue: 0,
         friction: 8,
-        tension: 10
+        tension: 10,
       }).start();
     } else {
-      Animated.spring(this.animatedValue,{
+      Animated.spring(this.animatedValue, {
         toValue: 180,
         friction: 8,
-        tension: 10
+        tension: 10,
       }).start();
     }
-
   }
 
   showDelete = () => {
@@ -73,25 +73,25 @@ export default class ActionCardSmall extends React.Component {
   render() {
     const { item, index } = this.props;
     const frontAnimatedStyle = {
-      transform: [
-        { rotateY: this.frontInterpolate}
-      ]
-    }
+      transform: [{ rotateY: this.frontInterpolate }],
+    };
     const backAnimatedStyle = {
-      transform: [
-        { rotateY: this.backInterpolate }
-      ]
-    }
+      transform: [{ rotateY: this.backInterpolate }],
+    };
 
     return (
       <TouchableOpacity
-        style={{ flex: 1, height: index % 2 ? 230 : 250, width:180}}
+        style={{ flex: 1, height: index % 2 ? 230 : 250, width: 180 }}
         onPress={() => this.flipCard()}
         onLongPress={() => this.setState({ delete: !this.state.delete })}
       >
-        
-        <Animated.View style={[styles.item,frontAnimatedStyle, {height: index % 2 ? 230 : 250}]}>
-        
+        <Animated.View
+          style={[
+            styles.item,
+            frontAnimatedStyle,
+            { height: index % 2 ? 230 : 250 },
+          ]}
+        >
           <Image
             source={{ uri: item.image }}
             style={{
@@ -102,10 +102,10 @@ export default class ActionCardSmall extends React.Component {
             }}
           />
           <LinearGradient
-        colors={['rgba(255,255,255,0)', '#000000']}
-        locations= {[0.3, 1]}
-        style={[styles.gradient, {height: index % 2 ? 220 : 240}]}
-        ></LinearGradient>
+            colors={['rgba(255,255,255,0)', '#000000']}
+            locations={[0.3, 1]}
+            style={[styles.gradient, { height: index % 2 ? 220 : 240 }]}
+          />
           <Text
             style={{
               position: 'absolute',
@@ -122,21 +122,15 @@ export default class ActionCardSmall extends React.Component {
 
           {this.showDelete()}
         </Animated.View>
-        <Animated.View style={[backAnimatedStyle, styles.item, styles.flippedItem, {height: index % 2 ? 220 : 240}]}>
-          
-          <Text
-            style={{
-              position: 'absolute',
-              bottom: 10,
-              left: 15,
-              fontWeight: 'bold',
-              fontFamily: 'Proxima Nova Bold',
-              color: '#000000',
-              fontSize: 18,
-            }}
-          >
-              FLIPPED
-          </Text>
+        <Animated.View
+          style={[
+            backAnimatedStyle,
+            styles.item,
+            styles.flippedItem,
+            { height: index % 2 ? 220 : 240 },
+          ]}
+        >
+          <ActionDetails />
 
           {this.showDelete()}
         </Animated.View>
@@ -152,7 +146,7 @@ const styles = StyleSheet.create({
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 3 },
     shadowOpacity: 0.8,
-    width:180,
+    width: 180,
     shadowRadius: 2,
     paddingHorizontal: 10,
     elevation: 1,
@@ -162,19 +156,19 @@ const styles = StyleSheet.create({
     borderRadius: Styles.borderRadius,
     backfaceVisibility: 'hidden',
   },
-  gradient:{
+  gradient: {
     position: 'absolute',
     paddingHorizontal: 10,
     borderRadius: Styles.borderRadius,
-    left:10, 
-    width:160,
+    left: 10,
+    width: 160,
   },
-  flippedItem:{
-    backgroundColor:"#ffffff",
-    position:"absolute",
-    left:10, 
-    width:160,
-    flex:1
+  flippedItem: {
+    backgroundColor: '#ffffff',
+    position: 'absolute',
+    left: 10,
+    width: 160,
+    flex: 1,
   },
   imageLinearGradient: {
     position: 'absolute',
