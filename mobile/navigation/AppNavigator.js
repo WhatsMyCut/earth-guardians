@@ -7,6 +7,7 @@ import PetitionScreen from '../screens/PetitionScreen';
 import PetitionTextScreen from '../screens/PetitionTextScreen';
 import ProfileStack from './profileStackNavigation';
 import MainTabNavigator from './MainTabNavigator';
+import EarthGuardiansInfoScreen from '../screens/EarthGuardiansInfoScreen';
 
 //TODO this is just for testing purposes, remove
 import ModalScreen from '../screens/ModalScreen';
@@ -21,9 +22,10 @@ export default createAppContainer(
       Petition: PetitionScreen,
       PetitionText: PetitionTextScreen,
       Modal: ModalScreen,
+      EGInfo: EarthGuardiansInfoScreen,
     },
     {
-      initialRouteName: 'AuthLoading',
+      initialRouteName: 'Main',
     }
   )
 );

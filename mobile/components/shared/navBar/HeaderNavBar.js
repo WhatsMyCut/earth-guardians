@@ -16,7 +16,7 @@ const CommunityIcon = () => {
 
 const EyeIcon = () => {
   return (
-    <TouchableOpacity onPress={() => navigationService.navigate('MyActions')}>
+    <TouchableOpacity onPress={() => navigationService.navigate('EGInfo')}>
       <Image
         source={require('../../../assets/eye_w.png')}
         style={{ width: 40, height: 27 }}
@@ -36,31 +36,28 @@ const UserIcon = () => {
   );
 };
 
-
 // Anonymous default function, HeaderNavBar
 export default class HeaderNavBar extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
   }
-  render(){
+  render() {
     return (
-    <View
-      style={{
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignContent: 'space-between',
-        alignItems: 'baseline',
-        paddingHorizontal: 20,
-        paddingTop:5
-      }}
-    >
-      <CommunityIcon />
-      <EyeIcon />
-      <UserIcon />
-    </View>
-  );
-};
-
-
+      <View
+        style={{
+          flex: 1,
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignContent: 'space-between',
+          alignItems: 'baseline',
+          paddingHorizontal: 20,
+          paddingTop: 5,
+        }}
+      >
+        <CommunityIcon />
+        <EyeIcon />
+        <UserIcon />
+      </View>
+    );
+  }
 }

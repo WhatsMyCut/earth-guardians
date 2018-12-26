@@ -46,7 +46,8 @@ export default class CommunityEventModal extends React.Component {
               color: '#fff',
               height: 30,
               width: 200,
-              marginVertical: 30,
+              marginTop: 30,
+              marginBottom: 20,
               borderColor: 'gray',
               borderBottomWidth: 1,
             }}
