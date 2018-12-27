@@ -2,7 +2,6 @@ import React from 'react';
 import {
   SafeAreaView,
   ImageBackground,
-  Image,
   Platform,
   FlatList,
   StyleSheet,
@@ -15,6 +14,7 @@ import { LinearGradient, Icon } from 'expo';
 import LinearGradientProps from '../../../constants/LinearGradientProps';
 import ActionDetails from './ActionDetails';
 import Styles from '../../../constants/Styles';
+import { Image } from 'react-native-expo-image-cache';
 // import graphql from '../components/hoc/graphql';
 
 export default class ActionCardSmall extends React.Component {
@@ -79,27 +79,24 @@ export default class ActionCardSmall extends React.Component {
       transform: [{ rotateY: this.backInterpolate }],
     };
 
+    const preview = { uri: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==" };
+
+
     return (
       <TouchableOpacity
         style={{ flex: 1, height: index % 2 ? 230 : 250, width: 180 }}
         onPress={() => this.flipCard()}
         onLongPress={() => this.setState({ delete: !this.state.delete })}
       >
-        <Animated.View
-          style={[
-            styles.item,
-            frontAnimatedStyle,
-            { height: index % 2 ? 230 : 250 },
-          ]}
-        >
+        <Animated.View style={[styles.item,frontAnimatedStyle, {height: index % 2 ? 230 : 250}]}>
           <Image
-            source={{ uri: item.image }}
             style={{
               flex: 1,
               width: null,
               height: null,
               borderRadius: Styles.borderRadius,
             }}
+            {...{preview, uri:item.image}}
           />
           <LinearGradient
             colors={['rgba(255,255,255,0)', '#000000']}

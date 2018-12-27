@@ -1,15 +1,15 @@
 import React from 'react';
 import { View, Text, Image, Dimensions, ART } from 'react-native';
-import { scaleLinear, scaleTime } from 'd3-scale';
-import { line } from 'd3-shape';
-import d3Array from 'd3-array';
+//import { scaleLinear, scaleTime } from 'd3-scale';
+//import { line } from 'd3-shape';
+//import d3Array from 'd3-array';
 
 /*
 const x = scaleLinear()
   .domain([0, 100])
   .range([0, 100]);
 
-*/
+
 const data = [
   { date: new Date(2000, 1, 1), value: 83.24 },
   { date: new Date(2000, 1, 2), value: 85.35 },
@@ -23,7 +23,7 @@ const data = [
 const lineGraph = line()
   .x(d => d.date)
   .y(d => d.value);
-/*
+
 const d3 = {
   scale,
   shape,
@@ -109,15 +109,18 @@ export default class GraphComponent extends React.Component {
           marginVertical: 5,
         }}
       >
-        <View style={{ flex: 1 }}>
+        {/* <View style={{ flex: 1 }}>
           <Surface width={200} height={100}>
             <Group x={0} y={0}>
               <Shape d={lineGraph(data)} stroke="#fff" strokeWidth={1} />
             </Group>
           </Surface>
-        </View>
+        </View> */}
 
-        <Text style={{ color: '#fff', fontSize: 18 }}>Graph</Text>
+        <Image
+          source={require('./temp/barchart.png')}
+          style={{ height: 100, width: 200 }}
+        />
       </View>
     );
   }

@@ -3,14 +3,14 @@ import {
   Text,
   View,
   StyleSheet,
-  Image,
   SafeAreaView,
   Dimensions,
   Animated,
+  ActivityIndicator,
   PanResponder,
   TouchableOpacity,
 } from 'react-native';
-
+import { Image } from 'react-native-expo-image-cache';
 import { all } from 'rsvp';
 import { LinearGradient } from 'expo';
 
@@ -34,54 +34,84 @@ class CommunityStackScreen extends React.Component {
   state = {
     currentIndex: 0,
     petitions: [],
-  };
-  position = new Animated.ValueXY();
-
-  rotateAndTranslate = {
-    transform: [...this.position.getTranslateTransform()],
+    loading:true
   };
 
-  nextCardOpacity = this.position.x.interpolate({
-    inputRange: [0, SCREEN_HEIGHT / 2, SCREEN_HEIGHT],
-    outputRange: [0.5, 0.8, 1],
-    extrapolate: 'clamp',
-  });
 
-  nextCardScale = this.position.x.interpolate({
-    inputRange: [0, SCREEN_HEIGHT / 2, SCREEN_HEIGHT],
-    outputRange: [1, 1, 1],
-    extrapolate: 'clamp',
-  });
+  constructor(props){
+    super(props)
 
-  imagePanResponder = PanResponder.create({
-    onStartShouldSetPanResponder: () => true,
+    this.position = new Animated.ValueXY();
+    this.rotateAndTranslate = {
+      transform: [...this.position.getTranslateTransform()],
+    };
 
-    onPanResponderMove: (evt, gs) => {
-      this.position.setValue({ x: 0, y: gs.dy });
-    },
+    this.nextCardOpacity = this.position.y.interpolate({
+      inputRange: [-SCREEN_HEIGHT, -SCREEN_HEIGHT / 2, 0],
+      outputRange: [1, 0.8, 0.6],
+      extrapolate: 'clamp',
+    });
 
-    onPanResponderRelease: (evt, gs) => {
-      if (-100 > gs.dy) {
-        Animated.spring(this.position, {
-          toValue: { x: 0, y: SCREEN_HEIGHT - 2000 },
-          tension: 0,
-        }).start(() => {
-          this.position.setValue({ x: 0, y: 0 });
-          this.setState({ currentIndex: this.state.currentIndex + 1 });
-        });
-      } else {
-        Animated.spring(this.position, {
-          toValue: { x: 0, y: 0 },
-          friction: 1,
-        }).start();
-      }
-    },
-  });
+    this.nextCardScale = this.position.y.interpolate({
+      inputRange: [-SCREEN_HEIGHT, -SCREEN_HEIGHT / 2, 0],
+      outputRange: [1.09, 0.95, 0.9],
+      extrapolate: 'clamp',
+    });
+
+    this.nextCardTextScale = this.position.y.interpolate({
+      inputRange: [-SCREEN_HEIGHT, -SCREEN_HEIGHT / 2, 0],
+      outputRange: [0.95, 0.9, 0.85],
+      extrapolate: 'clamp',
+    });
+
+    this.nextCardOffset = this.position.y.interpolate({
+      inputRange: [-SCREEN_HEIGHT, -SCREEN_HEIGHT / 2, 0],
+      outputRange: [40, 80, 100],
+      extrapolate: 'clamp',
+    });
+
+    
+
+  }
+
+  componentWillMount(){
+    this.imagePanResponder = PanResponder.create({
+      onStartShouldSetPanResponder: () => true,
+  
+      onPanResponderMove: (evt, gs) => {
+        this.position.setValue({ x: 0, y: gs.dy });
+      },
+  
+      onPanResponderRelease: (evt, gs) => {
+        if (-100 > gs.dy) {
+          Animated.spring(this.position, {
+            toValue: { x: 0, y: SCREEN_HEIGHT - 2000 },
+            tension: 0,
+          }).start(() => {
+            this.position.setValue({ x: 0, y: 0 });
+            this.setState({ currentIndex: this.state.currentIndex + 1 });
+          });
+        } else {
+          Animated.spring(this.position, {
+            toValue: { x: 0, y: 0 },
+            friction: 1,
+          }).start();
+        }
+      },
+    });
+  }
+
 
   _handleLoading = () => {
+    console.log('handle loading is being called');
     this.setState({ loading: false });
   };
   _renderCards = () => {
+    console.log('this.nextCardScale', this.nextCardScale);
+    const { loading } = this.state;
+    const preview = { uri: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==" };
+
+
     return this.state.petitions
       .map((petition, index) => {
         if (index < this.state.currentIndex) {
@@ -101,6 +131,7 @@ class CommunityStackScreen extends React.Component {
                 },
               ]}
             >
+
               <Animated.View
                 style={[
                   { opacity: this.nextCardOpacity / 1 },
@@ -113,6 +144,7 @@ class CommunityStackScreen extends React.Component {
                   },
                 ]}
               >
+              
                 <Text style={{ color: 'white', fontSize: 24 }}>
                   {petition.title}
                 </Text>
@@ -128,9 +160,9 @@ class CommunityStackScreen extends React.Component {
                   resizeMode: 'cover',
                   borderRadius: 20,
                 }}
-                source={{ uri: petition.image }}
-                onLoad={this._handleLoading}
+                {...{preview, uri: petition.image }}
               />
+
               <View style={styles.headlineViewPlayIcon}>
                 <TouchableOpacity
                   onPress={() =>
@@ -146,21 +178,41 @@ class CommunityStackScreen extends React.Component {
             </Animated.View>
           );
         } else {
-          let offset = index * 1 * 10;
+          let offset = index * 1 * 15;
           return (
             <Animated.View
               key={petition.id}
               style={[
-                {
+                {   
                   opacity: this.nextCardOpacity,
+                  transform:[{scale:this.nextCardScale}],
                   height: SCREEN_HEIGHT - 180,
                   width: SCREEN_WIDTH - 80,
                   padding: 20,
                   position: 'absolute',
-                  top: offset,
+                  top: this.nextCardOffset,
                 },
               ]}
             >
+            <Animated.View
+                style={[
+                  { opacity: this.nextCardOpacity / 1 },
+                  { transform:[{scale:this.nextCardTextScale}]},
+                  {
+                    position: 'absolute',
+                    bottom: 45,
+                    left: 5,
+                    zIndex: 5,
+                    paddingHorizontal: 20,
+                  },
+                ]}
+              >
+                <Text style={{ color: 'white', fontSize: 24 }}>
+                  {petition.title}
+                </Text>
+
+                <Text style={{ color: 'white' }}>{petition.description}</Text>
+              </Animated.View>
               <Image
                 style={{
                   flex: 1,
@@ -169,7 +221,7 @@ class CommunityStackScreen extends React.Component {
                   resizeMode: 'cover',
                   borderRadius: 20,
                 }}
-                source={{ uri: petition.image }}
+                {...{preview, uri: petition.image }}
               />
             </Animated.View>
           );
@@ -185,6 +237,7 @@ class CommunityStackScreen extends React.Component {
     });
   }
   render() {
+   
     return (
       <LinearGradient {...LinearGradientProps.community} style={{ flex: 1 }}>
         <SafeAreaView style={{ flex: 1 }}>
