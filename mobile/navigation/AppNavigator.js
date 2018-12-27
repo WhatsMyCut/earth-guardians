@@ -9,8 +9,8 @@ import ProfileStack from './profileStackNavigation';
 import MainTabNavigator from './MainTabNavigator';
 import EarthGuardiansInfoScreen from '../screens/EarthGuardiansInfoScreen';
 
-//TODO this is just for testing purposes, remove
 import ModalScreen from '../screens/ModalScreen';
+import TestScreen from '../screens/TestScreen';
 
 export default createAppContainer(
   createSwitchNavigator(
@@ -23,6 +23,7 @@ export default createAppContainer(
       PetitionText: PetitionTextScreen,
       Modal: ModalScreen,
       EGInfo: EarthGuardiansInfoScreen,
+      Test: TestScreen,
     },
     {
       initialRouteName: 'Main',
