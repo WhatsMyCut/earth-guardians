@@ -1,13 +1,6 @@
 import React from 'react';
 
-import {
-  SafeAreaView,
-  View,
-  Text,
-  Button,
-  Switch,
-  StyleSheet,
-} from 'react-native';
+import { SafeAreaView, View, Text, Switch, StyleSheet } from 'react-native';
 //import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_categories_query';
 //import graphql from '../components/hoc/graphql';
 
