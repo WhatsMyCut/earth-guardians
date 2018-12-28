@@ -1,26 +1,17 @@
 import React from 'react';
-import { all } from 'rsvp';
 
-import {
-  TouchableOpacity,
-  SafeAreaView,
-  View,
-  Text,
-  Button,
-} from 'react-native';
+import { TouchableOpacity, SafeAreaView, View, Text } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_categories_query';
-import graphql from '../components/hoc/graphql';
-import HeaderNavBar from '../components/shared/navBar/HeaderNavBar';
+//import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_categories_query';
+//import graphql from '../components/hoc/graphql';
 import NavigationService from '../navigation/navigationService';
-import GeneralScreen from './GeneralScreen';
 import GraphComponent from '../components/shared/profile/GraphComponent';
 import ImpactComponent from '../components/shared/profile/ImpactComponent';
 import ReachComponent from '../components/shared/profile/ReachComponent';
 import PointsComponent from '../components/shared/profile/PointsComponent';
 import ProfileComponent from '../components/shared/profile/ProfileComponent';
 
-import { data } from './dummy/actions.json';
+//import { data } from './dummy/actions.json';
 
 // @graphql(ALL_ACTION_CATEGORIES, {
 //   name: 'all_categories',

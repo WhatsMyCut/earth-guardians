@@ -1,5 +1,4 @@
 import React from 'react';
-import { Ionicons } from 'expo';
 import {
   TouchableOpacity,
   SafeAreaView,
@@ -96,20 +95,12 @@ class TestScreen extends React.Component {
       <View
         style={{
           flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
           padding: 20,
-          borderWidth: 3,
-          position: 'absolute',
-          bottom: 6,
-          left: 6,
-          right: 6,
-          top: 6,
         }}
       >
-        <Surface width={300} height={300} style={{}}>
-          <Group x={100} y={100}>
-            <Shape d={() => lineGraph(data)} stroke="#000" strokeWidth={1} />
-          </Group>
-        </Surface>
+        <Text>Hello</Text>
       </View>
     );
   }
