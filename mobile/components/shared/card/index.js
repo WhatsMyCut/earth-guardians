@@ -15,11 +15,15 @@ import LinearGradientProps from '../../../constants/LinearGradientProps';
 import ActionDetails from './ActionDetails';
 import Styles from '../../../constants/Styles';
 import { Image } from 'react-native-expo-image-cache';
+import NavigationService from '../../../navigation/navigationService';
 // import graphql from '../components/hoc/graphql';
 
 export default class ActionCardSmall extends React.Component {
   state = {
     delete: false,
+    canDelete : this.props.canDelete ? true : null,
+    hasGame: this.props.hasGame ? this.props.hasGame : null,
+    currScreen: this.props.currScreen ? this.props.currScreen : 'Main'
   };
   delete = () => {
     //TODO
@@ -72,6 +76,7 @@ export default class ActionCardSmall extends React.Component {
   };
   render() {
     const { item, index } = this.props;
+    const { canDelete, hasGame, currScreen } = this.state;
     const frontAnimatedStyle = {
       transform: [{ rotateY: this.frontInterpolate }],
     };
@@ -81,12 +86,19 @@ export default class ActionCardSmall extends React.Component {
 
     const preview = { uri: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==" };
 
-
+    console.log('curr screen inside of action card', currScreen);
     return (
       <TouchableOpacity
         style={{ flex: 1, height: index % 2 ? 230 : 250, width: 180 }}
         onPress={() => this.flipCard()}
-        onLongPress={() => this.setState({ delete: !this.state.delete })}
+        onLongPress={() => {
+          if(canDelete && !hasGame){
+            this.setState({ delete: !this.state.delete })
+          } else {
+            NavigationService.navigate('Game',{ previousScreen: currScreen});
+          }
+
+        }}
       >
         <Animated.View style={[styles.item,frontAnimatedStyle, {height: index % 2 ? 230 : 250}]}>
           <Image

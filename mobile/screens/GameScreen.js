@@ -1,9 +1,11 @@
 import React from "react";
 
-import { Text, View, StyleSheet, Dimensions } from "react-native";
+import { Text, TouchableOpacity, View, StyleSheet, Dimensions } from "react-native";
 
 import GameControls from "../components/game-stack/GameControls";
 import GameCards from "../components/game-stack";
+import NavigationService from '../navigation/navigationService';
+
 
 const items = [
    {
@@ -80,7 +82,9 @@ const items = [
 
 class GameScreen extends React.Component {
    cardStack;
-
+   state={
+      previousScreen: this.props.previousScreen
+   }
    swipeRight = () => {
       console.log("swiped right");
    };
@@ -96,13 +100,23 @@ class GameScreen extends React.Component {
    handleLeftPress = () => {
       this.cardStack.swipeLeft();
    };
+
+   _navigateBack = () =>{
+      const screen = this.props.navigation.getParam('screen', 'MyActions');
+      console.log('navigating back');
+      NavigationService.navigate(screen);
+   }
+
    render() {
+      console.log('props inside of game stack', this.props);
       return (
          <View style={styles.container}>
-            <Text style={styles.header}>RE-ARCTIC ACTIONS</Text>
+            <TouchableOpacity onPress={this._navigateBack}><Text style={styles.header}>RE-ARCTIC ACTIONS</Text></TouchableOpacity>
             <View style={styles.cardContainer}>
                <GameCards
+                  canDelete={this.props.canDelete || null}
                   items={items}
+                  navigateBack={this._navigateBack}
                   swipeRight={this.swipeRight}
                   swipeLeft={this.swipeLeft}
                   ref={ref => (this.cardStack = ref)}

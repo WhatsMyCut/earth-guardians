@@ -10,6 +10,7 @@ import {
    PanResponder
 } from "react-native";
 import Styles from "../../constants/Styles";
+import NavigationService from '../../navigation/navigationService';
 
 const SCREEN_HEIGHT = Dimensions.get("window").height;
 const SCREEN_WIDTH = Dimensions.get("window").width;
@@ -17,10 +18,13 @@ const SCREEN_WIDTH = Dimensions.get("window").width;
 const CARD_WIDTH = Dimensions.get("window").width * 0.87;
 const CARD_HEIGHT = Dimensions.get("window").height * 0.65;
 
+
+
 export default class GameCards extends React.Component {
    state = {
       currentIndex: 0,
-      CARD_COUNT: 3
+      CARD_COUNT: 3,
+      goBack: this.props.goBack
    };
 
    position;
@@ -87,6 +91,9 @@ export default class GameCards extends React.Component {
 
    moveToNextCard = callback => {
       return () => {
+         if(this.state.currentIndex == this.props.items.length-1){
+            this.props.navigateBack();
+         }
          this.position.setValue({ x: 0, y: 0 });
          this.setState({ currentIndex: this.state.currentIndex + 1 }, callback);
       };
@@ -151,7 +158,8 @@ export default class GameCards extends React.Component {
    };
 
    render() {
-      const { position } = this.state;
+      const { position} = this.state;
+      
       return (
          <View
             style={{
