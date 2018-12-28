@@ -26,7 +26,7 @@ import { data } from './dummy/actions.json';
 //   name: 'all_categories',
 //   fetchPolicy: 'network-only',
 // })
-class ProfileStackScreen extends React.Component {
+class SocialStackScreen extends React.Component {
   static navigationOptions = {
     header: null,
   };
@@ -42,32 +42,60 @@ class ProfileStackScreen extends React.Component {
             backgroundColor: '#333',
           }}
         >
-          <View
+          <TouchableOpacity
+            onPress={() => console.log('Share to Facebook')}
             style={{
-              position: 'absolute',
-              top: 0,
-              left: 5,
-              maxHeight: 30,
+              borderRadius: 10,
+              borderWidth: 1,
+              backgroundColor: '#666',
+              width: 350,
+              paddingVertical: 20,
+              marginVertical: 10,
+              alignItems: 'center',
             }}
           >
-            <TouchableOpacity
-              onPress={() => NavigationService.navigate('MyActions')}
-            >
-              <Ionicons name="ios-arrow-round-back" size={42} color="#ccc" />
-            </TouchableOpacity>
-          </View>
-
-          <GraphComponent />
-          <ImpactComponent />
-          <ReachComponent />
-          <PointsComponent />
-          <ProfileComponent />
+            <Text style={{ color: '#fff', fontSize: 18 }}>
+              Share to Facebook
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => console.log('Share to Twitter')}
+            style={{
+              borderRadius: 10,
+              borderWidth: 1,
+              backgroundColor: '#666',
+              width: 350,
+              paddingVertical: 20,
+              marginVertical: 10,
+              alignItems: 'center',
+            }}
+          >
+            <Text style={{ color: '#fff', fontSize: 18 }}>
+              Share to Twitter
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => console.log('Share to Instagram')}
+            style={{
+              borderRadius: 10,
+              borderWidth: 1,
+              backgroundColor: '#666',
+              width: 350,
+              paddingVertical: 20,
+              marginVertical: 10,
+              alignItems: 'center',
+            }}
+          >
+            <Text style={{ color: '#fff', fontSize: 18 }}>
+              Share to Instagram
+            </Text>
+          </TouchableOpacity>
         </View>
       </SafeAreaView>
     );
   }
 }
-ProfileStackScreen.navigationOptions = {
+SocialStackScreen.navigationOptions = {
   headerTitle: (
     <Text
       style={{
@@ -76,7 +104,7 @@ ProfileStackScreen.navigationOptions = {
         fontFamily: 'Proxima Nova Bold',
       }}
     >
-      MY IMPACT
+      SHARE YOUR IMPACT
     </Text>
   ),
   headerStyle: {
@@ -90,4 +118,4 @@ ProfileStackScreen.navigationOptions = {
   },
 };
 
-export default ProfileStackScreen;
+export default SocialStackScreen;
