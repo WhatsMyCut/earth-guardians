@@ -10,7 +10,7 @@ import ImpactComponent from '../components/shared/profile/ImpactComponent';
 import ReachComponent from '../components/shared/profile/ReachComponent';
 import PointsComponent from '../components/shared/profile/PointsComponent';
 import ProfileComponent from '../components/shared/profile/ProfileComponent';
-
+import CommunityEventModal from '../components/shared/modals/CommunityEventModal';
 //import { data } from './dummy/actions.json';
 
 // @graphql(ALL_ACTION_CATEGORIES, {
@@ -18,10 +18,18 @@ import ProfileComponent from '../components/shared/profile/ProfileComponent';
 //   fetchPolicy: 'network-only',
 // })
 class ImpactStackScreen extends React.Component {
+  state = {
+    openModal: false,
+  };
   static navigationOptions = {
     header: null,
   };
 
+  toggleModal = () => {
+    this.setState({
+      openModal: !this.state.openModal,
+    });
+  };
   render() {
     return (
       <SafeAreaView style={{ flex: 1 }}>
@@ -50,10 +58,26 @@ class ImpactStackScreen extends React.Component {
 
           <GraphComponent />
           <ImpactComponent />
-          <ReachComponent />
+          <ReachComponent toggleModal={this.toggleModal} />
           <PointsComponent />
           <ProfileComponent />
         </View>
+        {this.state.openModal ? (
+          <View
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: 'rgba(0,0,0,.1)',
+              position: 'absolute',
+              top: 0,
+              right: 0,
+              left: 0,
+              bottom: 0,
+            }}
+          >
+            <CommunityEventModal />
+          </View>
+        ) : null}
       </SafeAreaView>
     );
   }
