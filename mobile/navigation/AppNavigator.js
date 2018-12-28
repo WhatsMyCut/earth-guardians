@@ -28,7 +28,7 @@ export default createAppContainer(
     },
     {
       mode: 'modal',
-      initialRouteName: 'Profile',
+      initialRouteName: 'Main',
     }
   )
 );
