@@ -7,9 +7,14 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 
+import NavigationService from '../../../navigation/navigationService';
+
 export default class CommunityEventModal extends React.Component {
   state = { typeOfEvent: '', numberOfPeople: '' };
+  
   render() {
+    console.log('Community Event Modal', this.props);
+    const { goBack } = this.props;
     return (
       <KeyboardAvoidingView
         style={{
@@ -90,14 +95,15 @@ export default class CommunityEventModal extends React.Component {
               alignItems: 'center',
               marginTop: 20,
             }}
-            onPress={() =>
+            onPress={() =>{
               console.log(
                 'The type of event was' +
                   this.state.typeOfEvent +
                   ' and the number of people was ' +
                   this.state.numberOfPeople
               )
-            }
+              NavigationService.navigate(this.props.previousScreen || 'MyActions');
+            }}
           >
             <Text style={{ color: '#333', fontSize: 18, fontWeight: 'bold' }}>
               SUBMIT

@@ -22,7 +22,6 @@ export default class ActionCardSmall extends React.Component {
   state = {
     delete: false,
     canDelete : this.props.canDelete ? true : null,
-    hasGame: this.props.hasGame ? this.props.hasGame : null,
     currScreen: this.props.currScreen ? this.props.currScreen : 'Main'
   };
   delete = () => {
@@ -76,7 +75,7 @@ export default class ActionCardSmall extends React.Component {
   };
   render() {
     const { item, index } = this.props;
-    const { canDelete, hasGame, currScreen } = this.state;
+    const { canDelete, currScreen } = this.state;
     const frontAnimatedStyle = {
       transform: [{ rotateY: this.frontInterpolate }],
     };
@@ -85,17 +84,17 @@ export default class ActionCardSmall extends React.Component {
     };
 
     const preview = { uri: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==" };
-
-    console.log('curr screen inside of action card', currScreen);
     return (
       <TouchableOpacity
         style={{ flex: 1, height: index % 2 ? 230 : 250, width: 180 }}
         onPress={() => this.flipCard()}
         onLongPress={() => {
-          if(canDelete && !hasGame){
+          if(canDelete && !item.hasGame){
             this.setState({ delete: !this.state.delete })
-          } else {
+          } else if(item.hasGame){
             NavigationService.navigate('Game',{ previousScreen: currScreen});
+          } else {
+            NavigationService.navigate('Modal',{ previousScreen: currScreen});
           }
 
         }}

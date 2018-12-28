@@ -102,7 +102,7 @@ class GameScreen extends React.Component {
    };
 
    _navigateBack = () =>{
-      const screen = this.props.navigation.getParam('screen', 'MyActions');
+      const screen = this.props.navigation.getParam('previousScreen', 'MyActions');
       console.log('navigating back');
       NavigationService.navigate(screen);
    }

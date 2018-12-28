@@ -5,7 +5,7 @@ import AuthLoadingScreen from "../screens/AuthLoadingScreen";
 import DefaultScreen from "../screens/DefaultScreen";
 import PetitionScreen from "../screens/PetitionScreen";
 import PetitionTextScreen from "../screens/PetitionTextScreen";
-import ProfileStack from "./profileStackNavigation";
+import ProfileStack from "./ProfileTabNavigator";
 import MainTabNavigator from "./MainTabNavigator";
 import EarthGuardiansInfoScreen from "../screens/EarthGuardiansInfoScreen";
 import GameScreen from "../screens/GameScreen";
@@ -27,6 +27,7 @@ export default createAppContainer(
          Game: GameScreen
       },
       {
+         mode:'modal',
          initialRouteName: "Main"
       }
    )

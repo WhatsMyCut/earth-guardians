@@ -13,7 +13,8 @@
       "points": 2,
       "fact": "Each degree you lower your thermostat in the winter can save the planet as much as 661 pounds of CO2",
       "image": "https://images.unsplash.com/photo-1530389361604-f5fb2936a855?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=675&q=80",
-      "video": ""
+      "video": "",
+      "hasGame": true
     },
     {
 
@@ -30,7 +31,8 @@
       "points": 2,
       "fact": "Raising the temperature 2° F can drop CO2 emissions by 242 lbs.",
       "image": "https://img-aws.ehowcdn.com/350x235p/photos.demandstudios.com/getty/article/211/17/181530805.jpg",
-      "video": ""
+      "video": "",
+      "hasGame": true
     },
     {
       "id": 3,
@@ -78,7 +80,8 @@
       "points": 10,
       "fact": "Using a power strip to turn off electronics and appliances when they aren't in use ensures that they are truly off and not using extra electricity.",
       "image": "https://www.energy.gov/sites/prod/files/styles/borealis_article_hero_respondxl/public/outlet_extension.jpg?itok=nA6awKq-",
-      "video": ""
+      "video": "",
+      "hasGame": true
     },
     {
       "id": 6,
