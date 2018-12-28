@@ -1,26 +1,10 @@
 import React from 'react';
 
-import {
-  TouchableOpacity,
-  SafeAreaView,
-  View,
-  Text,
-  Button,
-  Switch,
-} from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_categories_query';
-import graphql from '../components/hoc/graphql';
-import HeaderNavBar from '../components/shared/navBar/HeaderNavBar';
-import NavigationService from '../navigation/navigationService';
-import GeneralScreen from './GeneralScreen';
-import GraphComponent from '../components/shared/profile/GraphComponent';
-import ImpactComponent from '../components/shared/profile/ImpactComponent';
-import ReachComponent from '../components/shared/profile/ReachComponent';
-import PointsComponent from '../components/shared/profile/PointsComponent';
-import ProfileComponent from '../components/shared/profile/ProfileComponent';
+import { SafeAreaView, View, Text, Switch, StyleSheet } from 'react-native';
+//import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_categories_query';
+//import graphql from '../components/hoc/graphql';
 
-import { data } from './dummy/actions.json';
+//import { data } from './dummy/actions.json';
 // @graphql(ALL_ACTION_CATEGORIES, {
 //   name: 'all_categories',
 //   fetchPolicy: 'network-only',
@@ -43,74 +27,30 @@ class NotificationStackScreen extends React.Component {
   render() {
     return (
       <SafeAreaView style={{ flex: 1 }}>
-        <View
-          style={{
-            flex: 1,
-            alignItems: 'center',
-            justifyContent: 'flex-start',
-            backgroundColor: '#333',
-            paddingTop: 20,
-          }}
-        >
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              width: 300,
-              alignItems: 'center',
-            }}
-          >
-            <Text style={{ color: '#fff', marginVertical: 20 }}>
-              Push Notification
-            </Text>
+        <View style={styles.container}>
+          <View style={styles.notificationWraper}>
+            <Text style={styles.notification}>Push Notification</Text>
             <Switch
               value={this.state.pushNotifications}
               onValueChange={value => this.toggle(value, 'pushNotifications')}
             />
           </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              width: 300,
-              alignItems: 'center',
-            }}
-          >
-            <Text style={{ color: '#fff', marginVertical: 20 }}>
-              Action Reminders
-            </Text>
+          <View style={styles.notificationWraper}>
+            <Text style={styles.notification}>Action Reminders</Text>
             <Switch
               value={this.state.actionReminders}
               onValueChange={value => this.toggle(value, 'actionReminders')}
             />
           </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              width: 300,
-              alignItems: 'center',
-            }}
-          >
-            <Text style={{ color: '#fff', marginVertical: 20 }}>
-              New Hightlights
-            </Text>
+          <View style={styles.notificationWraper}>
+            <Text style={styles.notification}>New Hightlights</Text>
             <Switch
               value={this.state.newHighlights}
               onValueChange={value => this.toggle(value, 'newHighlights')}
             />
           </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              width: 300,
-              alignItems: 'center',
-            }}
-          >
-            <Text style={{ color: '#fff', marginVertical: 20 }}>
-              New Features
-            </Text>
+          <View style={styles.notificationWraper}>
+            <Text style={styles.notification}>New Features</Text>
             <Switch
               value={this.state.newFeatures}
               onValueChange={value => this.toggle(value, 'newFeatures')}
@@ -121,6 +61,24 @@ class NotificationStackScreen extends React.Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    backgroundColor: '#333',
+    paddingTop: 20,
+  },
+  notificationWraper: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: 300,
+    alignItems: 'center',
+  },
+  notification: { color: '#fff', marginVertical: 20 },
+});
+
 NotificationStackScreen.navigationOptions = {
   headerTitle: (
     <Text
