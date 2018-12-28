@@ -46,7 +46,7 @@ class MyActionsStackScreen extends React.Component {
             numColumns={2}
             data={this.state.actions}
             renderItem={({ item, index }) => (
-              <ActionCardSmall item={item} index={index} />
+              <ActionCardSmall item={item} index={index} canDelete={true} />
             )}
           />
         </View>

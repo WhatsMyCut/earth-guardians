@@ -84,7 +84,7 @@ export default class CommunityStackScreen extends React.Component {
               data={this.props.data}
               keyExtractor={(item, index) => item.id}
               renderItem={({ item, index }) => (
-                <ActionCardSmall item={item} index={index} />
+                <ActionCardSmall item={item} index={index} currScreen={this.props.screen} />
               )}
             />
           </ScrollView>

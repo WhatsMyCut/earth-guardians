@@ -1,32 +1,33 @@
-import React from 'react';
-import { createAppContainer, createSwitchNavigator } from 'react-navigation';
+import React from "react";
+import { createAppContainer, createSwitchNavigator } from "react-navigation";
 
-import AuthLoadingScreen from '../screens/AuthLoadingScreen';
-import DefaultScreen from '../screens/DefaultScreen';
-import PetitionScreen from '../screens/PetitionScreen';
-import PetitionTextScreen from '../screens/PetitionTextScreen';
-import ProfileTabNavigator from './ProfileTabNavigator';
-import MainTabNavigator from './MainTabNavigator';
-import EarthGuardiansInfoScreen from '../screens/EarthGuardiansInfoScreen';
+import AuthLoadingScreen from "../screens/AuthLoadingScreen";
+import DefaultScreen from "../screens/DefaultScreen";
+import PetitionScreen from "../screens/PetitionScreen";
+import PetitionTextScreen from "../screens/PetitionTextScreen";
+import ProfileStack from "./profileStackNavigation";
+import MainTabNavigator from "./MainTabNavigator";
+import EarthGuardiansInfoScreen from "../screens/EarthGuardiansInfoScreen";
+import GameScreen from "../screens/GameScreen";
 
-import ModalScreen from '../screens/ModalScreen';
-import TestScreen from '../screens/TestScreen';
+//TODO this is just for testing purposes, remove
+import ModalScreen from "../screens/ModalScreen";
 
 export default createAppContainer(
-  createSwitchNavigator(
-    {
-      AuthLoading: AuthLoadingScreen,
-      Main: MainTabNavigator,
-      Profile: ProfileTabNavigator,
-      Video: DefaultScreen,
-      Petition: PetitionScreen,
-      PetitionText: PetitionTextScreen,
-      Modal: ModalScreen,
-      EGInfo: EarthGuardiansInfoScreen,
-      Test: TestScreen,
-    },
-    {
-      initialRouteName: 'Main',
-    }
-  )
+   createSwitchNavigator(
+      {
+         AuthLoading: AuthLoadingScreen,
+         Main: MainTabNavigator,
+         Profile: ProfileStack,
+         Video: DefaultScreen,
+         Petition: PetitionScreen,
+         PetitionText: PetitionTextScreen,
+         Modal: ModalScreen,
+         EGInfo: EarthGuardiansInfoScreen,
+         Game: GameScreen
+      },
+      {
+         initialRouteName: "Main"
+      }
+   )
 );
