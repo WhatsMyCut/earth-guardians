@@ -1,15 +1,13 @@
 import {
-    createStackNavigator,
-    createMaterialTopTabNavigator,
-  } from 'react-navigation';
+  createStackNavigator,
+  createMaterialTopTabNavigator,
+} from 'react-navigation';
 import React from 'react';
 
-import ProfileStackScreen from '../screens/ProfileStackScreen';
+import ProfileStackScreen from '../screens/ImpactStackScreen';
 
 const ProfileStack = createStackNavigator({
-    Profile: ProfileStackScreen,
+  Profile: ProfileStackScreen,
 });
-
-
 
 export default ProfileStack;

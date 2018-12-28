@@ -5,7 +5,7 @@ import AuthLoadingScreen from '../screens/AuthLoadingScreen';
 import DefaultScreen from '../screens/DefaultScreen';
 import PetitionScreen from '../screens/PetitionScreen';
 import PetitionTextScreen from '../screens/PetitionTextScreen';
-import ProfileStack from './profileStackNavigation';
+import ProfileTabNavigator from './ProfileTabNavigator';
 import MainTabNavigator from './MainTabNavigator';
 import EarthGuardiansInfoScreen from '../screens/EarthGuardiansInfoScreen';
 
@@ -17,7 +17,7 @@ export default createAppContainer(
     {
       AuthLoading: AuthLoadingScreen,
       Main: MainTabNavigator,
-      Profile: ProfileStack,
+      Profile: ProfileTabNavigator,
       Video: DefaultScreen,
       Petition: PetitionScreen,
       PetitionText: PetitionTextScreen,
