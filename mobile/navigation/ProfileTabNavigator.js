@@ -11,40 +11,33 @@ import NotificationStackScreen from '../screens/NotificationStackScreen';
 
 import SocialStackScreen from '../screens/SocialStackScreen';
 
-const Stats = ({ focused, tintColor }) => {
+const Stats = ({ focused }) => {
   return (
-    <Ionicons
-      name="ios-stats"
-      size={25}
-      color={focused ? tintColor : '#3C3B3D'}
-      style={styles.icon}
-    />
+    <Ionicons name="ios-stats" size={25} color={focused ? '#fff' : '#3C3B3D'} />
   );
 };
-const Notification = ({ focused, tintColor }) => {
+const Notification = ({ focused }) => {
   return (
     <Ionicons
       name="ios-notifications"
       size={25}
-      color={focused ? tintColor : '#3C3B3D'}
-      style={styles.icon}
+      color={focused ? '#fff' : '#3C3B3D'}
     />
   );
 };
 
-const Share = ({ focused, tintColor }) => {
+const Share = ({ focused }) => {
   return (
     <Entypo
       name="share-alternative"
       size={25}
-      color={focused ? tintColor : '#3C3B3D'}
-      style={styles.icon}
+      color={focused ? '#fff' : '#3C3B3D'}
     />
   );
 };
 
 const ImpactStack = createStackNavigator({
-  Profile: ImpactStackScreen,
+  Impact: ImpactStackScreen,
 });
 
 ImpactStack.navigationOptions = {
@@ -52,7 +45,7 @@ ImpactStack.navigationOptions = {
 };
 
 const NotificationStack = createStackNavigator({
-  Profile: NotificationStackScreen,
+  Notification: NotificationStackScreen,
 });
 
 NotificationStack.navigationOptions = {
@@ -60,7 +53,7 @@ NotificationStack.navigationOptions = {
 };
 
 const SocialStack = createStackNavigator({
-  Profile: SocialStackScreen,
+  Social: SocialStackScreen,
 });
 
 SocialStack.navigationOptions = {
@@ -73,50 +66,17 @@ const routeConfig = {
   SocialStack,
 };
 
-const styles = {
-  activeLabel: {
-    fontFamily: 'Proxima Nova Bold',
-    fontSize: 15,
-    color: '#ffffff',
-    textAlignVertical: 'center',
-    paddingBottom: 0,
-  },
-  label: {
-    textAlignVertical: 'bottom',
-    fontFamily: 'Proxima Nova Bold',
-    fontSize: 13,
-    color: '#ffffff',
-    paddingBottom: 0,
-  },
-  icon: {
-    lineHeight: 15,
-  },
-};
-
 export default createBottomTabNavigator(routeConfig, {
-  swipeEnabled: true,
-  showIcon: true,
-  showLabel: false,
   animationEnabled: true,
   tabBarOptions: {
-    labelStyle: {
-      fontFamily: 'Proxima Nova Bold',
-      fontSize: 13,
-    },
+    showLabel: false,
     style: {
       justifyContent: 'space-between',
       alignContent: 'center',
       backgroundColor: '#000',
       height: 37,
     },
-    scrollEnabled: true,
-    tabStyle: {
-      // maxWidth: tabWidth,
-    },
-    indicatorStyle: {
-      width: 0,
-    },
   },
   lazy: true,
-  //initialRouteName: 'ImpackStack',
+  initialRouteName: 'ImpactStack',
 });
