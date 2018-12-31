@@ -27,7 +27,6 @@ class DefaultScreen extends BaseScreen {
     console.log('default screen props', props);
   }
 
-  
   changeRate(rate) {
     this._playbackInstance.setStatusAsync({
       rate: rate,
@@ -35,9 +34,9 @@ class DefaultScreen extends BaseScreen {
     });
   }
 
-  _mountVideo = component =>{
+  _mountVideo = component => {
     this.video = component;
-  }
+  };
 
   render() {
     const RateButton = ({ rate }) => (
@@ -56,8 +55,10 @@ class DefaultScreen extends BaseScreen {
     );
 
     const screen = this.props.navigation.getParam('screen', 'MyActions');
-    const videoUrl = this.props.navigation.getParam('video', 'https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8')
-    
+    const videoUrl = this.props.navigation.getParam(
+      'video',
+      'https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8'
+    );
 
     console.ignoredYellowBox = ['Warning:'];
     return (
@@ -70,9 +71,14 @@ class DefaultScreen extends BaseScreen {
               <Ionicons name="ios-arrow-round-back" size={42} color="white" />
             </TouchableOpacity>
           </View>
-          <ScrollView style={styles.container}>
+          <View
+            style={[
+              styles.container,
+              { justifyContent: 'center', alignItems: 'center' },
+            ]}
+          >
             <VideoPlayer
-              ref={this._mountVideo} 
+              ref={this._mountVideo}
               style={{
                 justifyContent: 'flex-start',
               }}
@@ -80,8 +86,7 @@ class DefaultScreen extends BaseScreen {
                 shouldPlay: true,
                 resizeMode: 'cover',
                 source: {
-                  uri:
-                  videoUrl,
+                  uri: videoUrl,
                 },
                 isMuted: false,
                 ref: component => {
@@ -107,7 +112,7 @@ class DefaultScreen extends BaseScreen {
               <RateButton rate={2} style={{ color: '#ffffff' }} />
               <RateButton rate={4} style={{ color: '#ffffff' }} />
             </View>
-          </ScrollView>
+          </View>
         </View>
       </SafeAreaView>
     );
