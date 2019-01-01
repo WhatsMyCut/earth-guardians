@@ -34,12 +34,11 @@ class CommunityStackScreen extends React.Component {
   state = {
     currentIndex: 0,
     petitions: [],
-    loading:true
+    loading: true,
   };
 
-
-  constructor(props){
-    super(props)
+  constructor(props) {
+    super(props);
 
     this.position = new Animated.ValueXY();
     this.rotateAndTranslate = {
@@ -69,19 +68,16 @@ class CommunityStackScreen extends React.Component {
       outputRange: [40, 80, 100],
       extrapolate: 'clamp',
     });
-
-    
-
   }
 
-  componentWillMount(){
+  componentWillMount() {
     this.imagePanResponder = PanResponder.create({
       onStartShouldSetPanResponder: () => true,
-  
+
       onPanResponderMove: (evt, gs) => {
         this.position.setValue({ x: 0, y: gs.dy });
       },
-  
+
       onPanResponderRelease: (evt, gs) => {
         if (-100 > gs.dy) {
           Animated.spring(this.position, {
@@ -101,17 +97,29 @@ class CommunityStackScreen extends React.Component {
     });
   }
 
-
   _handleLoading = () => {
     console.log('handle loading is being called');
     this.setState({ loading: false });
   };
   _renderCards = () => {
-    console.log('this.nextCardScale', this.nextCardScale);
+    // make sure the size is defined first, ensures the petitions are loaded
+    if (
+      this.state.size != undefined &&
+      this.state.currentIndex === this.state.size
+    ) {
+      return (
+        <View style={styles.headlineViewPlayIcon}>
+          <TouchableOpacity onPress={() => this.setState({ currentIndex: 0 })}>
+            <FontAwesome name="undo" size={52} color="white" />
+          </TouchableOpacity>
+        </View>
+      );
+    }
     const { loading } = this.state;
-    const preview = { uri: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==" };
-
-
+    const preview = {
+      uri:
+        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==',
+    };
     return this.state.petitions
       .map((petition, index) => {
         if (index < this.state.currentIndex) {
@@ -131,7 +139,6 @@ class CommunityStackScreen extends React.Component {
                 },
               ]}
             >
-
               <Animated.View
                 style={[
                   { opacity: this.nextCardOpacity / 1 },
@@ -144,7 +151,6 @@ class CommunityStackScreen extends React.Component {
                   },
                 ]}
               >
-              
                 <Text style={{ color: 'white', fontSize: 24 }}>
                   {petition.title}
                 </Text>
@@ -160,7 +166,7 @@ class CommunityStackScreen extends React.Component {
                   resizeMode: 'cover',
                   borderRadius: 20,
                 }}
-                {...{preview, uri: petition.image }}
+                {...{ preview, uri: petition.image }}
               />
 
               <View style={styles.headlineViewPlayIcon}>
@@ -183,9 +189,9 @@ class CommunityStackScreen extends React.Component {
             <Animated.View
               key={petition.id}
               style={[
-                {   
+                {
                   opacity: this.nextCardOpacity,
-                  transform:[{scale:this.nextCardScale}],
+                  transform: [{ scale: this.nextCardScale }],
                   height: SCREEN_HEIGHT - 180,
                   width: SCREEN_WIDTH - 80,
                   padding: 20,
@@ -194,10 +200,10 @@ class CommunityStackScreen extends React.Component {
                 },
               ]}
             >
-            <Animated.View
+              <Animated.View
                 style={[
                   { opacity: this.nextCardOpacity / 1 },
-                  { transform:[{scale:this.nextCardTextScale}]},
+                  { transform: [{ scale: this.nextCardTextScale }] },
                   {
                     position: 'absolute',
                     bottom: 45,
@@ -221,7 +227,7 @@ class CommunityStackScreen extends React.Component {
                   resizeMode: 'cover',
                   borderRadius: 20,
                 }}
-                {...{preview, uri: petition.image }}
+                {...{ preview, uri: petition.image }}
               />
             </Animated.View>
           );
@@ -234,10 +240,10 @@ class CommunityStackScreen extends React.Component {
     const petitions = await community_data();
     this.setState({
       petitions,
+      size: petitions.length,
     });
   }
   render() {
-   
     return (
       <LinearGradient {...LinearGradientProps.community} style={{ flex: 1 }}>
         <SafeAreaView style={{ flex: 1 }}>
