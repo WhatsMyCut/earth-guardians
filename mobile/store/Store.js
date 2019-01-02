@@ -18,6 +18,7 @@ export class StoreProvider extends React.Component {
   };
 
   authenticate = () => {
+    console.log(this.state.user);
     //TODO: make it rigourous
     // for now, turn autheticate to true
     this.setState({ authenticated: true });

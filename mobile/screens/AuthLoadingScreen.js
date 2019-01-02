@@ -6,7 +6,6 @@ import { all } from 'rsvp';
 
 import { StoreConsumer } from '../store/Store';
 import LandingPage from '../components/landing-page';
-
 import { data } from './dummy/actions.json';
 // @graphql(ALL_ACTION_CATEGORIES, {
 //   name: 'all_categories',

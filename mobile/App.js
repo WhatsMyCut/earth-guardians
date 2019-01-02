@@ -14,9 +14,10 @@ import { getFragmentDefinitions, getMainDefinition } from 'apollo-utilities';
 import { HttpLink } from 'apollo-link-http';
 import { onError } from 'apollo-link-error';
 
+import { RetrieveData } from './store/AsyncStore';
 
 const httpLink = new HttpLink({
-  uri: `http://localhost:4000`
+  uri: `http://localhost:4000`,
 });
 
 const errorLink = onError(({ graphQLErrors, networkError, operation }) => {
@@ -37,7 +38,7 @@ const errorLink = onError(({ graphQLErrors, networkError, operation }) => {
 
 const authLink = setContext((_, context) => {
   const headers = { ...context.headers };
-  const token = AsyncStorage.getItem('EARTH_GUARDIANS_TOKEN');
+  const token = RetrieveData('EARTH_GUARDIANS_TOKEN'); // retrieve from asyncstorage
   if (token) {
     headers.authorization = `Bearer ${token}`;
   }
@@ -72,7 +73,6 @@ export default class App extends React.Component {
     this.setState({ fontLoaded: true });
   }
 
-
   render() {
     // console.disableYellowBox = true;
     const { fontLoaded } = this.state;
@@ -82,11 +82,11 @@ export default class App extends React.Component {
     return (
       <StoreProvider>
         <ApolloProvider client={client}>
-        <AppNavigator
-          ref={navigatorRef => {
-            NavigationService.setTopLevelNavigator(navigatorRef);
-          }}
-        />
+          <AppNavigator
+            ref={navigatorRef => {
+              NavigationService.setTopLevelNavigator(navigatorRef);
+            }}
+          />
         </ApolloProvider>
       </StoreProvider>
     );
