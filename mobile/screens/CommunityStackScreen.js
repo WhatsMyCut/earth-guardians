@@ -84,10 +84,10 @@ class CommunityStackScreen extends React.Component {
 
       onPanResponderRelease: (evt, gs) => {
         console.log('gx.dx', gs.dx)
-        if(gs.dx > 200){
+        if(gs.dx > 150){
           this.props.navigation.navigate('MyActions');
         }
-        if(gs.dx < -200){
+        if(gs.dx < -150){
           this.props.navigation.navigate('Energy');
         }
         if (-100 > gs.dy) {

@@ -5,11 +5,10 @@ import {
   SafeAreaView,
   TouchableOpacity,
   View,
-  Image,
   ScrollView,
 } from 'react-native';
 import { LinearGradient } from 'expo';
-
+import { Image } from 'react-native-expo-image-cache';
 import navigationService from '../navigation/navigationService';
 import Layout from '../constants/Layout';
 import Styles from '../constants/Styles';
@@ -21,7 +20,30 @@ import FontAwesome from '@expo/vector-icons/FontAwesome';
 const width = Layout.window.width - 2 * Styles.marginHorizontal;
 const primaryHeight = Styles.primaryHeight;
 export default class CommunityStackScreen extends React.Component {
+  state = {
+    video_url : null,
+    picture_url: null
+  }
+
+  componentDidMount(){
+    console.log('this.props', this.props);
+    if(this.props.primary_video){
+      fetch(`https://api.vimeo.com/videos/${this.props.primary_video}`, {
+        headers: {
+          "authorization":"Bearer 5af014003bea7ca29ec721cc5a7bd34d"
+        }
+      }).then(response => response.json())
+      .then(data => {
+        this.setState({
+          picture_url: data.pictures.sizes[4].link,
+          video_url : data.download[data.download.length-2].link
+        })
+      })
+    }
+  }
   renderPrimaryImage = () => {
+    const preview = { uri: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==" };
+
     return (
       <TouchableOpacity
         style={{
@@ -31,23 +53,28 @@ export default class CommunityStackScreen extends React.Component {
         }}
       >
         <Image
-          source={{ uri: this.props.primary_image }}
           style={styles.primaryMedia}
+          {...{preview, uri: this.props.primary_image }}
         />
       </TouchableOpacity>
     );
   };
 
   renderPrimaryVideo = () => {
+    if(!this.state.picture_url  && !this.state.video_url){
+      return null;
+    }
+    const preview = { uri: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==" };
+
     return (
       <TouchableOpacity
         onPress={() =>
-          navigationService.navigate('Video', { screen: this.props.screen, video:this.props.primary_video })
+          navigationService.navigate('Video', { screen: this.props.screen, video:this.state.video_url })
         }
       >
         <Image
-          source={{ uri: this.props.primary_image }}
           style={styles.primaryMedia}
+          {...{preview, uri: this.state.picture_url }}
         />
         <View style={styles.imageLinearGradient}>
           <LinearGradient
