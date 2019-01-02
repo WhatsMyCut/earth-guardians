@@ -165,7 +165,6 @@ export default createMaterialTopTabNavigator(routeConfig, {
   tabBarPosition: 'bottom',
   showIcon: true,
   showLabel: true,
-  animationEnabled: true,
   tabBarOptions: {
     labelStyle: {
       fontFamily: 'Proxima Nova Bold',
