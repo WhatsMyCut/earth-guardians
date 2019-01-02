@@ -7,6 +7,7 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
+  Image as NativeImage,
   Animated,
   View,
 } from 'react-native';
@@ -17,8 +18,12 @@ import Styles from '../../../constants/Styles';
 import { Image } from 'react-native-expo-image-cache';
 import NavigationService from '../../../navigation/navigationService';
 // import graphql from '../components/hoc/graphql';
+import DoubleClick from 'react-native-double-tap';
+
 
 export default class ActionCardSmall extends React.Component {
+  lastTap=null;
+
   state = {
     delete: false,
     canDelete : this.props.canDelete ? true : null,
@@ -65,17 +70,22 @@ export default class ActionCardSmall extends React.Component {
     if (this.state.delete) {
       return (
         <TouchableOpacity
-          onPress={() => this.delete()}
-          style={{ position: 'absolute', right: -2, top: -15 }}
+          onPress={() =>{
+            console.log('red icon was pressed');
+            this.delete()
+          }}
+          hitSlop={{top: 15, left: 15, right:15, bottom:15}}
+          style={{ position: 'absolute', right: -2, top: -5 }}
         >
-          <Icon.AntDesign name="closecircle" size={32} color="red" />
+          <NativeImage source={require('../../../assets/delete_icon.png')} style={{height:40, width:40}}/>
         </TouchableOpacity>
       );
     }
   };
+
   render() {
-    const { item, index } = this.props;
-    const { canDelete, currScreen } = this.state;
+    const { item, index, canDelete } = this.props;
+    const { currScreen } = this.state;
     const frontAnimatedStyle = {
       transform: [{ rotateY: this.frontInterpolate }],
     };
@@ -85,21 +95,26 @@ export default class ActionCardSmall extends React.Component {
 
     const preview = { uri: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==" };
     return (
-      <TouchableOpacity
+      <DoubleClick
         style={{ flex: 1, height: index % 2 ? 230 : 250, width: 180 }}
-        onPress={() => this.flipCard()}
-        onLongPress={() => {
-          if(canDelete && !item.hasGame){
+        singleTap={() => {
+          console.log("single tap");
+          this.flipCard()
+        }}
+        
+        doubleTap={() => {
+          if(canDelete){  
             this.setState({ delete: !this.state.delete })
-          } else if(item.hasGame){
+          } else if(item.hasGame && !canDelete){
             NavigationService.navigate('Game',{ previousScreen: currScreen});
-          } else {
+          } else if(!canDelete || !item.hasGame){
             NavigationService.navigate('Modal',{ previousScreen: currScreen});
           }
-
         }}
+        delay={200}
+        
       >
-        <Animated.View style={[styles.item,frontAnimatedStyle, {height: index % 2 ? 230 : 250}]}>
+        <Animated.View style={[styles.item,frontAnimatedStyle, {height: 250}]}>
           <Image
             style={{
               flex: 1,
@@ -112,7 +127,7 @@ export default class ActionCardSmall extends React.Component {
           <LinearGradient
             colors={['rgba(255,255,255,0)', '#000000']}
             locations={[0.3, 1]}
-            style={[styles.gradient, { height: index % 2 ? 220 : 240 }]}
+            style={[styles.gradient, { height: 250}]}
           />
           <Text
             style={{
@@ -128,21 +143,21 @@ export default class ActionCardSmall extends React.Component {
             {item.text.length > 50 ? item.text.substring(0, 50) : item.text}
           </Text>
 
-          {this.showDelete()}
+          {this.state.delete && this.showDelete()}
         </Animated.View>
         <Animated.View
           style={[
             backAnimatedStyle,
             styles.item,
             styles.flippedItem,
-            { height: index % 2 ? 220 : 240 },
+            { height: 240 },
           ]}
         >
           <ActionDetails />
 
-          {this.showDelete()}
+          {this.state.delete && this.showDelete()}
         </Animated.View>
-      </TouchableOpacity>
+      </DoubleClick>
     );
   }
 }

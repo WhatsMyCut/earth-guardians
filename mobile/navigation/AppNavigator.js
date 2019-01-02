@@ -28,7 +28,7 @@ export default createAppContainer(
     },
     {
       mode: 'modal',
-      initialRouteName: 'Main',
+      initialRouteName: 'AuthLoading',
     }
   )
 );

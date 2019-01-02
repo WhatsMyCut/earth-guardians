@@ -8,11 +8,13 @@ import {
   StyleSheet,
   Platform,
   Dimensions,
+  StatusBar
 } from 'react-native';
 import { Button } from 'react-native-paper';
 import { all } from 'rsvp';
 import { LinearGradient, Icon } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
+import { withNavigation } from 'react-navigation';
 
 import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_categories_query';
 import graphql from '../components/hoc/graphql';
@@ -26,11 +28,15 @@ const SCREEN_HEIGHT = Dimensions.get('window').height;
 //   name: 'all_categories',
 //   fetchPolicy: 'network-only',
 // })
+
+@withNavigation
 class PetitionScreen extends React.Component {
   state = { in: false }; //TODO, when Database is established, do a componentDidMount to load status
   screen = this.props.navigation.getParam('screen');
   image = this.props.navigation.getParam('image');
   petitionTitle = this.props.navigation.getParam('title');
+  position = this.props.navigation.getParam('position');
+  
   togglePetition = () => {
     // TODO update Database
     this.setState(
@@ -53,15 +59,19 @@ class PetitionScreen extends React.Component {
         {...LinearGradientProps.whiteToBlackcolors}
         style={{ flex: 1 }}
       >
-        <SafeAreaView style={{ flex: 1 }}>
+        <View style={{ flex: 1 }}>
+          {/* <StatusBar
+            hidden={true}
+            barStyle="dark-content"
+          /> */}
           <View style={styles.container}>
             <ImageBackground
-              source={{ uri: this.image }}
+              source={{ uri: this.image.image }}
               style={{ flex: 1, width: null, height: SCREEN_HEIGHT }}
             />
             <View style={styles.topBackNav}>
               <TouchableOpacity
-                onPress={() => this.props.navigation.navigate(this.screen)}
+                onPress={() => this.props.navigation.navigate(this.screen, { position: this.position})}
               >
                 <Ionicons name="ios-arrow-round-back" size={42} color="#ccc" />
               </TouchableOpacity>
@@ -117,7 +127,7 @@ class PetitionScreen extends React.Component {
               <TouchableOpacity
                 onPress={() =>
                   navigationService.navigate('PetitionText', {
-                    image: this.image,
+                    image: this.image.id,
                     title: this.petitionTitle,
                   })
                 }
@@ -135,12 +145,15 @@ class PetitionScreen extends React.Component {
               </TouchableOpacity>
             </View>
           </View>
-        </SafeAreaView>
+        </View>
       </LinearGradient>
     );
   }
 }
 
+PetitionScreen.navigationOptions = {
+  header: null,
+};
 const styles = {
   container: {
     flex: 1,

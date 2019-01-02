@@ -91,7 +91,7 @@ export default class GameCards extends React.Component {
 
    moveToNextCard = callback => {
       return () => {
-         if(this.state.currentIndex == this.props.items.length-1){
+         if(this.state.currentIndex == this.props.items.length-2){
             this.props.navigateBack();
          }
          this.position.setValue({ x: 0, y: 0 });

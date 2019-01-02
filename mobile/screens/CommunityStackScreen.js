@@ -42,6 +42,7 @@ class CommunityStackScreen extends React.Component {
     super(props)
 
     this.position = new Animated.ValueXY();
+
     this.rotateAndTranslate = {
       transform: [...this.position.getTranslateTransform()],
     };
@@ -70,11 +71,13 @@ class CommunityStackScreen extends React.Component {
       extrapolate: 'clamp',
     });
 
-    
 
   }
 
   componentWillMount(){
+    let position = this.props.navigation.getParam('position', 0);
+    console.log('position', position);
+    this.setState({currentIndex : position})
     this.imagePanResponder = PanResponder.create({
       onStartShouldSetPanResponder: () => true,
   
@@ -83,6 +86,13 @@ class CommunityStackScreen extends React.Component {
       },
   
       onPanResponderRelease: (evt, gs) => {
+        console.log('gx.dx', gs.dx)
+        if(gs.dx > 200){
+          this.props.navigation.navigate('MyActions');
+        }
+        if(gs.dx < -200){
+          this.props.navigation.navigate('Energy');
+        }
         if (-100 > gs.dy) {
           Animated.spring(this.position, {
             toValue: { x: 0, y: SCREEN_HEIGHT - 2000 },
@@ -110,15 +120,12 @@ class CommunityStackScreen extends React.Component {
     console.log('this.nextCardScale', this.nextCardScale);
     const { loading } = this.state;
     const preview = { uri: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==" };
-
-
-    return this.state.petitions
-      .map((petition, index) => {
-        if (index < this.state.currentIndex) {
-          return null;
-        } else if (index === this.state.currentIndex) {
-          return (
-            <Animated.View
+    const petition = this.state.petitions[this.state.currentIndex];
+    
+    if(!petition){
+      return null;
+    }
+    return <Animated.View
               {...this.imagePanResponder.panHandlers}
               key={petition.id}
               style={[
@@ -131,7 +138,6 @@ class CommunityStackScreen extends React.Component {
                 },
               ]}
             >
-
               <Animated.View
                 style={[
                   { opacity: this.nextCardOpacity / 1 },
@@ -162,13 +168,23 @@ class CommunityStackScreen extends React.Component {
                 }}
                 {...{preview, uri: petition.image }}
               />
+              <LinearGradient
+            colors={['rgba(255,255,255,0)', '#000000']}
+            locations={[0.3, 1]}
+            style={{ 
+              height: SCREEN_HEIGHT - 180,
+              width: SCREEN_WIDTH - 100, 
+              ...styles.gradient}}
+          />
+
 
               <View style={styles.headlineViewPlayIcon}>
                 <TouchableOpacity
                   onPress={() =>
                     navigationService.navigate('Petition', {
                       screen: 'Community',
-                      image: petition.image,
+                      image: petition,
+                      position: this.state.currentIndex
                     })
                   }
                 >
@@ -176,64 +192,62 @@ class CommunityStackScreen extends React.Component {
                 </TouchableOpacity>
               </View>
             </Animated.View>
-          );
-        } else {
-          let offset = index * 1 * 15;
-          return (
-            <Animated.View
-              key={petition.id}
-              style={[
-                {   
-                  opacity: this.nextCardOpacity,
-                  transform:[{scale:this.nextCardScale}],
-                  height: SCREEN_HEIGHT - 180,
-                  width: SCREEN_WIDTH - 80,
-                  padding: 20,
-                  position: 'absolute',
-                  top: this.nextCardOffset,
-                },
-              ]}
-            >
-            <Animated.View
-                style={[
-                  { opacity: this.nextCardOpacity / 1 },
-                  { transform:[{scale:this.nextCardTextScale}]},
-                  {
-                    position: 'absolute',
-                    bottom: 45,
-                    left: 5,
-                    zIndex: 5,
-                    paddingHorizontal: 20,
-                  },
-                ]}
-              >
-                <Text style={{ color: 'white', fontSize: 24 }}>
-                  {petition.title}
-                </Text>
+         
+        //   let offset = this.currentIndex * 1 * 15;
+        //   return (
+        //     <Animated.View
+        //       key={petition.id}
+        //       style={[
+        //         {   
+        //           opacity: this.nextCardOpacity,
+        //           transform:[{scale:this.nextCardScale}],
+        //           height: SCREEN_HEIGHT - 180,
+        //           width: SCREEN_WIDTH - 80,
+        //           padding: 20,
+        //           position: 'absolute',
+        //           top: this.nextCardOffset,
+        //         },
+        //       ]}
+        //     >
+        //     <Animated.View
+        //         style={[
+        //           { opacity: this.nextCardOpacity / 1 },
+        //           { transform:[{scale:this.nextCardTextScale}]},
+        //           {
+        //             position: 'absolute',
+        //             bottom: 45,
+        //             left: 5,
+        //             zIndex: 5,
+        //             paddingHorizontal: 20,
+        //           },
+        //         ]}
+        //       >
+        //         <Text style={{ color: 'white', fontSize: 24 }}>
+        //           {petition.title}
+        //         </Text>
 
-                <Text style={{ color: 'white' }}>{petition.description}</Text>
-              </Animated.View>
-              <Image
-                style={{
-                  flex: 1,
-                  height: null,
-                  width: null,
-                  resizeMode: 'cover',
-                  borderRadius: 20,
-                }}
-                {...{preview, uri: petition.image }}
-              />
-            </Animated.View>
-          );
-        }
-      })
-      .reverse();
+        //         <Text style={{ color: 'white' }}>{petition.description}</Text>
+        //       </Animated.View>
+        //       <Image
+        //         style={{
+        //           flex: 1,
+        //           height: null,
+        //           width: null,
+        //           resizeMode: 'cover',
+        //           borderRadius: 20,
+        //         }}
+        //         {...{preview, uri: petition.image }}
+        //       />
+        //     </Animated.View>
+        //   );
+        // }
   };
 
   async componentDidMount() {
     const petitions = await community_data();
+    let revpetitions = petitions.reverse();
     this.setState({
-      petitions,
+      petitions:revpetitions,
     });
   }
   render() {
@@ -253,6 +267,13 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  gradient: {
+    position: 'absolute',
+    paddingHorizontal: 10,
+    borderRadius: 20,
+    left: 20,
+    paddingHorizontal: 20,
   },
   headlineViewPlayIcon: {
     position: 'absolute',

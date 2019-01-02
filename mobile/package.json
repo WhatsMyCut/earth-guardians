@@ -26,6 +26,7 @@
     "react-apollo": "^2.3.2",
     "react-native": "https://github.com/expo/react-native/archive/sdk-31.0.0.tar.gz",
     "react-native-cached-image": "^1.4.3",
+    "react-native-double-tap": "^1.0.1",
     "react-native-expo-image-cache": "^3.2.0",
     "react-native-material-cards": "^1.0.9",
     "react-native-material-dropdown": "git+https://github.com/harshitjee/react-native-material-dropdown.git",

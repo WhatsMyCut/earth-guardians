@@ -9,7 +9,7 @@ const Store = React.createContext();
 export class StoreProvider extends React.Component {
   state = {
     isLoading: true,
-    authenticated: true,
+    authenticated: false,
     user: { number: '', country_dial_code: '' },
   };
 

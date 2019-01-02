@@ -11,16 +11,28 @@ import {
   Platform,
   Dimensions,
 } from 'react-native';
-import { LinearGradient } from 'expo';
+import { LinearGradient, Asset, AppLoading } from 'expo';
 
 import PhoneInputComp from '../shared/phone/PhoneInputComp';
 import TabBarIcon from '../shared/icons/TabBarIcon';
+import PasswordModal from '../shared/modals/PasswordModal';
+import { USER_EXISTS_QUERY } from '../graphql/queries/UserExistsQuery';
+import graphql from '../hoc/graphql';
 const HEIGHT = Dimensions.get('window').height;
 const WIDTH = Dimensions.get('window').width;
 
+
+
 export default class PhoneSignup extends React.Component {
+
+  constructor(props){
+    super(props);
+  }
   state = {
     valid_phone: false,
+    username:null,
+    isReady: false,
+    showPasswordModal: false
   };
 
   is_phone_valid = valid => {
@@ -28,12 +40,55 @@ export default class PhoneSignup extends React.Component {
       valid_phone: valid,
     });
   };
+
+  togglePasswordModal =() =>{
+    console.log('toggle password state', this.state.showPasswordModal)
+    this.setState({showPasswordModal: !this.state.showPasswordModal});
+  }
+
   phone_signup = () => {
     if (this.state.valid_phone) {
       this.props.authenticate();
     }
   };
+
+  _setPhone = (number) =>{
+    const {valid_phone, phone} = this.state;
+    if(valid_phone){
+      console.log(number.number);
+      this.setState({phone: number.number});
+    }
+  }
+
+  async _cacheResourcesAsync() {
+    const images = [
+      require('../../assets/earth_guardians_main.gif'),
+    ];
+
+    const cacheImages = images.map((image) => {
+      return Asset.fromModule(image).downloadAsync();
+    });
+    return Promise.all(cacheImages)
+
+  }
+
+  checkIfUserExists =() =>{
+    this.user_exists({variables:{username:this.state.phone}})
+  }
+
+
   render() {
+    if (!this.state.isReady) {
+      return (
+        <AppLoading
+          startAsync={this._cacheResourcesAsync}
+          onFinish={() => this.setState({ isReady: true })}
+          onError={console.warn}
+        />
+      );
+    }
+
+
     return (
       <LinearGradient
         colors={['#ffffff', '#000000']}
@@ -42,7 +97,7 @@ export default class PhoneSignup extends React.Component {
       >
         <SafeAreaView style={{ flex: 1 }}>
           <ImageBackground
-            source={require('../../assets/bg.png')}
+            source={require('../../assets/earth_guardians_main.gif')}
             style={{
               flex: 1,
               width: WIDTH,
@@ -69,13 +124,17 @@ export default class PhoneSignup extends React.Component {
               </Text>
 
               <PhoneInputComp
-                updatePhone={this.props.updatePhone}
+                updatePhone={this._setPhone}
                 validate_phone={this.is_phone_valid}
               />
             </View>
+            {this.state.showPasswordModal && (
+              <PasswordModal isVisible={this.state.showPasswordModal} togglePasswordModal={this.togglePasswordModal}/>
+            )}
+
             {this.state.valid_phone ? (
               <TouchableOpacity
-                onPress={this.phone_signup}
+                onPress={this.togglePasswordModal}
                 style={{
                   color: '#fff',
                   alignSelf: 'center',

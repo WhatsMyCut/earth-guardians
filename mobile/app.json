@@ -12,7 +12,7 @@
     "orientation": "portrait",
     "icon": "./assets/eye_icon.png",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/eye.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },

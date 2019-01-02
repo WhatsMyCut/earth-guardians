@@ -33,7 +33,6 @@ class CustomScreen extends BaseScreen {
         style={{ textAlign: 'center' }}
       />
     );
-    console.log('this.props', this.props);
     let videoUrl = this.props.navigation.state.params.video;
     return (
       <View style={styles.container}>
