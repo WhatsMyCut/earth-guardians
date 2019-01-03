@@ -1,5 +1,6 @@
 import React from 'react';
 import navigationService from '../navigation/navigationService';
+import { StoreData, RetrieveData } from './AsyncStore';
 
 // a store to hold the react context api
 const Store = React.createContext();
@@ -13,15 +14,42 @@ export class StoreProvider extends React.Component {
     user: { number: '', country_dial_code: '' },
   };
 
+  async componentDidMount() {
+    try {
+      // check if async storage has the data
+      const phone = await RetrieveData('phone');
+      const country_dial_code = await RetrieveData('country_dial_code');
+      if (phone && country_dial_code) {
+        const user = { phone, country_dial_code };
+        this.setState({
+          authenticated: true,
+          user,
+        });
+        navigationService.navigate('MyActions', {});
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }
   appReady = () => {
     this.setState({ isLoading: false });
   };
 
-  authenticate = () => {
-    console.log(this.state.user);
-    //TODO: make it rigourous
+  authenticate = async details => {
+    const new_user = {
+      phone: details.phone,
+      country_dial_code: details.dialCode,
+    };
+
+    try {
+      // store to local storage
+      await StoreData('phone', details.phone);
+      await StoreData('country_dial_code', details.dialCode);
+    } catch (e) {
+      console.log(e);
+    }
     // for now, turn autheticate to true
-    this.setState({ authenticated: true });
+    this.setState({ authenticated: true, user: new_user });
     navigationService.navigate('MyActions', {});
   };
 
