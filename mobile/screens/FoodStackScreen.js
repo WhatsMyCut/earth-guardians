@@ -1,6 +1,6 @@
 import React from 'react';
 import { all } from 'rsvp';
-import { LinearGradient } from 'expo';
+import { LinearGradient, AppLoading } from 'expo';
 
 import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_categories_query';
 import graphql from '../components/hoc/graphql';
@@ -9,10 +9,15 @@ import HeaderNavBar from '../components/shared/navBar/HeaderNavBar';
 import LinearGradientProps from '../constants/LinearGradientProps';
 import GeneralScreen from './GeneralScreen';
 import { food_data, primary_food_id } from './dummy/data';
-// @graphql(ALL_ACTION_CATEGORIES, {
-//   name: 'all_categories',
-//   fetchPolicy: 'network-only',
-// })
+@graphql(ALL_ACTION_CATEGORIES, {
+  name: 'all_categories',
+  options: {
+    fetchPolicy: 'network-only',
+    variables: {
+      name: 'Travel',
+    },
+  },
+})
 class FoodStackScreen extends React.Component {
   state = { primary_image: '', primary_video: '', actions: [] };
   async componentDidMount() {
@@ -31,11 +36,18 @@ class FoodStackScreen extends React.Component {
     }
   }
   render() {
-    if(all_categories.loading){
-      return <LinearGradient {...LinearGradientProps.food} style={{ flex: 1 }}>
-      <AppLoading
-        />
-    </LinearGradient>
+    const { all_categories } = this.props;
+    if (all_categories.loading) {
+      return (
+        <LinearGradient {...LinearGradientProps.food} style={{ flex: 1 }}>
+          <AppLoading />
+        </LinearGradient>
+      );
+    }
+
+    const actions = all_categories.actionCategories;
+    if (!this.state.primary_video && !this.state.primary_image) {
+      return null;
     }
     return (
       <LinearGradient {...LinearGradientProps.food} style={{ flex: 1 }}>

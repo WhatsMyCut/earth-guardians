@@ -1,32 +1,26 @@
 import React from 'react';
-import { all } from 'rsvp';
+//import { all } from 'rsvp';
 import {
   SafeAreaView,
-  ScrollView,
   View,
   TouchableHighlight,
   TouchableOpacity,
   Text,
 } from 'react-native';
-import { Video } from 'expo';
+//import { Video } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
 
 import VideoPlayer from '@expo/videoplayer';
 import BaseScreen from './BaseScreen';
 
-import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_categories_query';
+// import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_categories_query';
 
-import HeaderNavBar from '../components/shared/navBar/HeaderNavBar';
+// import HeaderNavBar from '../components/shared/navBar/HeaderNavBar';
 
-import { data } from './dummy/actions.json';
-import navigationService from '../navigation/navigationService';
+// import { data } from './dummy/actions.json';
+// import navigationService from '../navigation/navigationService';
 
 class DefaultScreen extends BaseScreen {
-  constructor(props) {
-    super(props);
-    console.log('default screen props', props);
-  }
-
   changeRate(rate) {
     this._playbackInstance.setStatusAsync({
       rate: rate,

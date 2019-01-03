@@ -1,9 +1,10 @@
 import React from 'react';
+//import { LinearGradient, AppLoading } from 'expo';
 
 import { TouchableOpacity, SafeAreaView, View, Text } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-//import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_categories_query';
-//import graphql from '../components/hoc/graphql';
+import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_categories_query';
+import graphql from '../components/hoc/graphql';
 import NavigationService from '../navigation/navigationService';
 import GraphComponent from '../components/shared/profile/GraphComponent';
 import ImpactComponent from '../components/shared/profile/ImpactComponent';
@@ -11,12 +12,20 @@ import ReachComponent from '../components/shared/profile/ReachComponent';
 import PointsComponent from '../components/shared/profile/PointsComponent';
 import ProfileComponent from '../components/shared/profile/ProfileComponent';
 import CommunityEventModal from '../components/shared/modals/CommunityEventModal';
+
+//import LinearGradientProps from '../constants/LinearGradientProps';
+
 //import { data } from './dummy/actions.json';
 
-// @graphql(ALL_ACTION_CATEGORIES, {
-//   name: 'all_categories',
-//   fetchPolicy: 'network-only',
-// })
+@graphql(ALL_ACTION_CATEGORIES, {
+  name: 'all_categories',
+  options: {
+    fetchPolicy: 'network-only',
+    variables: {
+      name: 'Impact',
+    },
+  },
+})
 class ImpactStackScreen extends React.Component {
   state = {
     openModal: false,
@@ -31,6 +40,20 @@ class ImpactStackScreen extends React.Component {
     });
   };
   render() {
+    // const { all_categories } = this.props;
+    // if (all_categories.loading) {
+    //   return (
+    //     <LinearGradient {...LinearGradientProps.food} style={{ flex: 1 }}>
+    //       <AppLoading />
+    //     </LinearGradient>
+    //   );
+    // }
+
+    // const actions = all_categories.actionCategories;
+    // if (!this.state.primary_video && !this.state.primary_image) {
+    //   return null;
+    // }
+
     return (
       <SafeAreaView style={{ flex: 1 }}>
         <View

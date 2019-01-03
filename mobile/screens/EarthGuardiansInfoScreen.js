@@ -5,23 +5,21 @@ import {
   TouchableOpacity,
   Text,
   StyleSheet,
-  Platform,
   Dimensions,
   ScrollView,
 } from 'react-native';
-import { Button } from 'react-native-paper';
-import { all } from 'rsvp';
+//import { all } from 'rsvp';
 import { LinearGradient, Icon } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
 
-import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_categories_query';
-import graphql from '../components/hoc/graphql';
-import HeaderNavBar from '../components/shared/navBar/HeaderNavBar';
-import TabBarIcon from '../components/shared/icons/TabBarIcon';
-import navigationService from '../navigation/navigationService';
-import LinearGradientProps from '../constants/LinearGradientProps';
-import GeneralScreen from './GeneralScreen';
-const SCREEN_HEIGHT = Dimensions.get('window').height;
+// import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_categories_query';
+// import graphql from '../components/hoc/graphql';
+// import HeaderNavBar from '../components/shared/navBar/HeaderNavBar';
+// import TabBarIcon from '../components/shared/icons/TabBarIcon';
+// import navigationService from '../navigation/navigationService';
+// import LinearGradientProps from '../constants/LinearGradientProps';
+// import GeneralScreen from './GeneralScreen';
+// const SCREEN_HEIGHT = Dimensions.get('window').height;
 // @graphql(ALL_ACTION_CATEGORIES, {
 //   name: 'all_categories',
 //   fetchPolicy: 'network-only',
@@ -145,7 +143,7 @@ class EarthGuardiansInfoScreen extends React.Component {
   }
 }
 
-const styles = {
+const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
@@ -155,6 +153,6 @@ const styles = {
     maxHeight: 30,
     paddingHorizontal: 5,
   },
-};
+});
 
 export default EarthGuardiansInfoScreen;
