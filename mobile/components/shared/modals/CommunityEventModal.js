@@ -7,21 +7,19 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 
-import NavigationService from '../../../navigation/navigationService';
+import { AntDesign } from '@expo/vector-icons';
 
+import NavigationService from '../../../navigation/navigationService';
 export default class CommunityEventModal extends React.Component {
   state = { typeOfEvent: '', numberOfPeople: '' };
 
   render() {
     console.log('Community Event Modal', this.props);
     const { goBack } = this.props;
+
     return (
       <KeyboardAvoidingView
-        style={{
-          flex: 1,
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
+        style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
         behavior="padding"
         enabled
       >
@@ -30,7 +28,6 @@ export default class CommunityEventModal extends React.Component {
             backgroundColor: '#333',
             justifyContent: 'center',
             alignItems: 'center',
-
             borderRadius: 20,
             padding: 30,
             paddingHorizontal: 60,
@@ -110,6 +107,22 @@ export default class CommunityEventModal extends React.Component {
             <Text style={{ color: '#333', fontSize: 18, fontWeight: 'bold' }}>
               SUBMIT
             </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              NavigationService.navigate(
+                this.props.previousScreen || 'MyActions'
+              );
+            }}
+            hitSlop={{ top: 15, left: 15, right: 15, bottom: 15 }}
+            style={{ position: 'absolute', right: -2, top: -5 }}
+          >
+            <AntDesign
+              name="close"
+              size={42}
+              color="white"
+              style={{ padding: 5 }}
+            />
           </TouchableOpacity>
         </View>
       </KeyboardAvoidingView>
