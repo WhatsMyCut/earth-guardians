@@ -31,6 +31,12 @@ class FoodStackScreen extends React.Component {
     }
   }
   render() {
+    if(all_categories.loading){
+      return <LinearGradient {...LinearGradientProps.food} style={{ flex: 1 }}>
+      <AppLoading
+        />
+    </LinearGradient>
+    }
     return (
       <LinearGradient {...LinearGradientProps.food} style={{ flex: 1 }}>
         <GeneralScreen

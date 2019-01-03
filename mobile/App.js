@@ -16,7 +16,7 @@ import { onError } from 'apollo-link-error';
 
 
 const httpLink = new HttpLink({
-  uri: `http://localhost:4000`
+  uri: `https://egdemobackend.herokuapp.com/`
 });
 
 const errorLink = onError(({ graphQLErrors, networkError, operation }) => {

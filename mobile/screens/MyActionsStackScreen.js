@@ -41,14 +41,14 @@ class MyActionsStackScreen extends React.Component {
     return (
       <SafeAreaView style={{ flex: 1 }}>
         <View style={styles.container}>
-          <FlatList
+          {/* <FlatList
             style={{ backgroundColor: '#333' }}
             numColumns={2}
             data={this.state.actions}
             renderItem={({ item, index }) => (
               <ActionCardSmall item={item} index={index} canDelete={true} />
             )}
-          />
+          /> */}
         </View>
       </SafeAreaView>
     );

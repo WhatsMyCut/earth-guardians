@@ -28,7 +28,9 @@ export default class PhoneInputComp extends React.Component {
     this.setState({ countries });
   }
   handlePhoneInputChange = phone_number => {
+    this.props.onChangeUpdatePhone(phone_number);
     this.setState({ phone_number });
+
   };
   handleSelectedCode = (dial_code, index, data) => {
     this.setState({
@@ -37,6 +39,8 @@ export default class PhoneInputComp extends React.Component {
       country_code: data[index].country_code,
     });
   };
+
+
   updateStoreWithPhoneDetails = () => {
     // TODO: only do this if phone is valide, properly
     // TODO: use the app state valid

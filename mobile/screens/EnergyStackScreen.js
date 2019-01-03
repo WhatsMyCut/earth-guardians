@@ -1,6 +1,6 @@
 import React from 'react';
 import { all } from 'rsvp';
-import { LinearGradient } from 'expo';
+import { LinearGradient, AppLoading } from 'expo';
 
 import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_categories_query';
 import graphql from '../components/hoc/graphql';
@@ -9,10 +9,16 @@ import LinearGradientProps from '../constants/LinearGradientProps';
 import GeneralScreen from './GeneralScreen';
 
 import { energy_data, primary_energy_id } from './dummy/data';
-// @graphql(ALL_ACTION_CATEGORIES, {
-//   name: 'all_categories',
-//   fetchPolicy: 'network-only',
-// })
+
+@graphql(ALL_ACTION_CATEGORIES, {
+  name: 'all_categories',
+  options: {
+      fetchPolicy: 'network-only',
+      variables: {
+        name: "Energy"
+      }
+  }
+})
 class EnergyStackScreen extends React.Component {
   state = { primary_image: '', primary_video: '', actions: [] };
   async componentDidMount() {
@@ -32,10 +38,19 @@ class EnergyStackScreen extends React.Component {
   }
 
   render() {
+    const { all_categories } = this.props;
+    if(all_categories.loading){
+      return <LinearGradient {...LinearGradientProps.energy} style={{ flex: 1 }}>
+      <AppLoading
+        />
+    </LinearGradient>
+    }
+    console.log('props again', all_categories.actionCategories);
+    const actions = all_categories.actionCategories;
     return (
       <LinearGradient {...LinearGradientProps.energy} style={{ flex: 1 }}>
         <GeneralScreen
-          data={this.state.actions}
+          data={actions}
           screen={'Energy'}
           primary_image={this.state.primary_image}
           primary_video={this.state.primary_video}

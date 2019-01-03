@@ -2,12 +2,28 @@ import gql from 'graphql-tag';
 
 
 export const ALL_ACTION_CATEGORIES = gql`
-{
-  actionCategories{
+query($name: String!){
+  actionCategories(where:{name:$name}){
     id
-    name
     primary_image
-    video_url
+    video_id
+    actions(where:{isGame: false, active:true}, orderBy:order_ASC){
+      id
+      primary_image
+      title
+      short_description
+      carbon_dioxide
+      water
+      waste
+      video_url
+      related_actions {
+        id
+        primary_image
+        title
+        short_description
+      }
+    }
+    
   }
 }
 

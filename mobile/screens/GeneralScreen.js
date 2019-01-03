@@ -5,6 +5,7 @@ import {
   SafeAreaView,
   TouchableOpacity,
   View,
+  Text,
   Image,
   ScrollView,
 } from 'react-native';
@@ -21,6 +22,10 @@ import FontAwesome from '@expo/vector-icons/FontAwesome';
 const width = Layout.window.width - 2 * Styles.marginHorizontal;
 const primaryHeight = Styles.primaryHeight;
 export default class CommunityStackScreen extends React.Component {
+
+  constructor(props){
+    super(props);
+  }
   renderPrimaryImage = () => {
     return (
       <TouchableOpacity
@@ -73,6 +78,13 @@ export default class CommunityStackScreen extends React.Component {
     }
   };
   render() {
+    if(!this.props.data[0]){
+      return  <SafeAreaView style={styles.container}>
+      <View style={styles.container}>
+        <Text>Nothing available!</Text>
+      </View>
+    </SafeAreaView>
+    }
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.container}>
@@ -81,7 +93,7 @@ export default class CommunityStackScreen extends React.Component {
             <FlatList
               style={styles.container}
               numColumns={2}
-              data={this.props.data}
+              data={this.props.data[0].actions}
               keyExtractor={(item, index) => item.id}
               renderItem={({ item, index }) => (
                 <ActionCardSmall item={item} index={index} currScreen={this.props.screen} />

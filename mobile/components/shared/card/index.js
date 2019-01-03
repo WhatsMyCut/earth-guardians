@@ -19,12 +19,13 @@ import { Image } from 'react-native-expo-image-cache';
 import NavigationService from '../../../navigation/navigationService';
 // import graphql from '../components/hoc/graphql';
 import DoubleClick from 'react-native-double-tap';
-
+import PasswordModal from '../modals/PasswordModal'
 
 export default class ActionCardSmall extends React.Component {
   lastTap=null;
 
   state = {
+    showModal: false,
     delete: false,
     canDelete : this.props.canDelete ? true : null,
     currScreen: this.props.currScreen ? this.props.currScreen : 'Main'
@@ -108,12 +109,15 @@ export default class ActionCardSmall extends React.Component {
           } else if(item.hasGame && !canDelete){
             NavigationService.navigate('Game',{ previousScreen: currScreen});
           } else if(!canDelete || !item.hasGame){
-            NavigationService.navigate('Modal',{ previousScreen: currScreen});
+            this.setState({showModal : true})
+            // NavigationService.navigate('Modal',{ previousScreen: currScreen});
           }
         }}
         delay={200}
         
       >
+        <PasswordModal isVisible={this.state.showModal}/>
+
         <Animated.View style={[styles.item,frontAnimatedStyle, {height: 250}]}>
           <Image
             style={{
@@ -122,7 +126,7 @@ export default class ActionCardSmall extends React.Component {
               height: null,
               borderRadius: Styles.borderRadius,
             }}
-            {...{preview, uri:item.image}}
+            {...{preview, uri:item.primary_image}}
           />
           <LinearGradient
             colors={['rgba(255,255,255,0)', '#000000']}
@@ -140,7 +144,7 @@ export default class ActionCardSmall extends React.Component {
               fontSize: 18,
             }}
           >
-            {item.text.length > 50 ? item.text.substring(0, 50) : item.text}
+            {item.short_description.length > 50 ? item.short_description.substring(0, 50) : item.short_description}
           </Text>
 
           {this.state.delete && this.showDelete()}
@@ -153,7 +157,7 @@ export default class ActionCardSmall extends React.Component {
             { height: 240 },
           ]}
         >
-          <ActionDetails />
+          <ActionDetails data={item}/>
 
           {this.state.delete && this.showDelete()}
         </Animated.View>

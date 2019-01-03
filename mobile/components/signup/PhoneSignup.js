@@ -54,10 +54,8 @@ export default class PhoneSignup extends React.Component {
 
   _setPhone = (number) =>{
     const {valid_phone, phone} = this.state;
-    if(valid_phone){
-      console.log(number.number);
+    console.log('number', number);
       this.setState({phone: number.number});
-    }
   }
 
   async _cacheResourcesAsync() {
@@ -126,10 +124,11 @@ export default class PhoneSignup extends React.Component {
               <PhoneInputComp
                 updatePhone={this._setPhone}
                 validate_phone={this.is_phone_valid}
+                onChangeUpdatePhone = {this._setPhone}
               />
             </View>
             {this.state.showPasswordModal && (
-              <PasswordModal isVisible={this.state.showPasswordModal} togglePasswordModal={this.togglePasswordModal}/>
+              <PasswordModal isVisible={this.state.showPasswordModal} username={this.state.phone} togglePasswordModal={this.togglePasswordModal}/>
             )}
 
             {this.state.valid_phone ? (

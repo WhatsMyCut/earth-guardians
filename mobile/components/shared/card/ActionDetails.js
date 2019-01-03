@@ -4,6 +4,11 @@ import { View, Text } from 'react-native';
 
 export default class ActionDetails extends React.Component {
   render() {
+    const { item } = this.props;
+    if(!item){
+      return <Text>Nothing available</Text>
+    }
+    console.log('item inside of actiondetails', item);
     return (
       <View style={{ flex: 1, margin: 5 }}>
         <View style={{ flex: 1, marginTop: 10, marginBottom: 5 }}>
