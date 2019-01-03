@@ -1,19 +1,23 @@
 import React from 'react';
 import { all } from 'rsvp';
-import { LinearGradient } from 'expo';
+import { LinearGradient, AppLoading } from 'expo';
 
 import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_categories_query';
 import graphql from '../components/hoc/graphql';
 import HeaderNavBar from '../components/shared/navBar/HeaderNavBar';
-
 import LinearGradientProps from '../constants/LinearGradientProps';
 import GeneralScreen from './GeneralScreen';
 
 import { travel_data, primary_travel_id } from './dummy/data';
-// @graphql(ALL_ACTION_CATEGORIES, {
-//   name: 'all_categories',
-//   fetchPolicy: 'network-only',
-// })
+@graphql(ALL_ACTION_CATEGORIES, {
+  name: 'all_categories',
+  options: {
+    fetchPolicy: 'network-only',
+    variables: {
+      name: 'Travel',
+    },
+  },
+})
 class TravelStackScreen extends React.Component {
   state = { primary_image: '', primary_video: '', actions: [] };
   async componentDidMount() {
@@ -32,10 +36,23 @@ class TravelStackScreen extends React.Component {
     }
   }
   render() {
+    const { all_categories } = this.props;
+
+    if (all_categories.loading) {
+      return (
+        <LinearGradient {...LinearGradientProps.travel} style={{ flex: 1 }}>
+          <AppLoading />
+        </LinearGradient>
+      );
+    }
+    const actions = all_categories.actionCategories;
+    if (!this.state.primary_video && !this.state.primary_image) {
+      return null;
+    }
     return (
       <LinearGradient {...LinearGradientProps.travel} style={{ flex: 1 }}>
         <GeneralScreen
-          data={this.state.actions}
+          data={actions}
           primary_image={this.state.primary_image}
           primary_video={this.state.primary_video}
         />

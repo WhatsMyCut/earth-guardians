@@ -21,37 +21,36 @@ import FontAwesome from '@expo/vector-icons/FontAwesome';
 const width = Layout.window.width - 2 * Styles.marginHorizontal;
 const primaryHeight = Styles.primaryHeight;
 
-
-
 export default class CommunityStackScreen extends React.Component {
-
-  constructor(props){
+  constructor(props) {
     super(props);
-
   }
   state = {
-    video_url : null,
-    picture_url: null
-  }
+    video_url: null,
+    picture_url: null,
+  };
 
-  componentDidMount(){
-    console.log('this.props', this.props);
-    if(this.props.primary_video){
+  componentDidMount() {
+    if (this.props.primary_video) {
       fetch(`https://api.vimeo.com/videos/${this.props.primary_video}`, {
         headers: {
-          "authorization":"Bearer 5af014003bea7ca29ec721cc5a7bd34d"
-        }
-      }).then(response => response.json())
-      .then(data => {
-        this.setState({
-          picture_url: data.pictures.sizes[4].link,
-          video_url : data.download[data.download.length-2].link
-        })
+          authorization: 'Bearer 5af014003bea7ca29ec721cc5a7bd34d',
+        },
       })
+        .then(response => response.json())
+        .then(data => {
+          this.setState({
+            picture_url: data.pictures.sizes[4].link,
+            video_url: data.download[data.download.length - 2].link,
+          });
+        });
     }
   }
   renderPrimaryImage = () => {
-    const preview = { uri: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==" };
+    const preview = {
+      uri:
+        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==',
+    };
 
     return (
       <TouchableOpacity
@@ -63,27 +62,33 @@ export default class CommunityStackScreen extends React.Component {
       >
         <Image
           style={styles.primaryMedia}
-          {...{preview, uri: this.props.primary_image }}
+          {...{ preview, uri: this.props.primary_image }}
         />
       </TouchableOpacity>
     );
   };
 
   renderPrimaryVideo = () => {
-    if(!this.state.picture_url  && !this.state.video_url){
+    if (!this.state.picture_url && !this.state.video_url) {
       return null;
     }
-    const preview = { uri: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==" };
+    const preview = {
+      uri:
+        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==',
+    };
 
     return (
       <TouchableOpacity
         onPress={() =>
-          navigationService.navigate('Video', { screen: this.props.screen, video:this.state.video_url })
+          navigationService.navigate('Video', {
+            screen: this.props.screen,
+            video: this.state.video_url,
+          })
         }
       >
         <Image
           style={styles.primaryMedia}
-          {...{preview, uri: this.state.picture_url }}
+          {...{ preview, uri: this.state.picture_url }}
         />
         <View style={styles.imageLinearGradient}>
           <LinearGradient
@@ -109,12 +114,14 @@ export default class CommunityStackScreen extends React.Component {
     }
   };
   render() {
-    if(!this.props.data[0]){
-      return  <SafeAreaView style={styles.container}>
-      <View style={styles.container}>
-        <Text>Nothing available!</Text>
-      </View>
-    </SafeAreaView>
+    if (!this.props.data[0]) {
+      return (
+        <SafeAreaView style={styles.container}>
+          <View style={styles.container}>
+            <Text>Nothing available!</Text>
+          </View>
+        </SafeAreaView>
+      );
     }
     return (
       <SafeAreaView style={styles.container}>
@@ -127,7 +134,11 @@ export default class CommunityStackScreen extends React.Component {
               data={this.props.data[0].actions}
               keyExtractor={(item, index) => item.id}
               renderItem={({ item, index }) => (
-                <ActionCardSmall item={item} index={index} currScreen={this.props.screen} />
+                <ActionCardSmall
+                  item={item}
+                  index={index}
+                  currScreen={this.props.screen}
+                />
               )}
             />
           </ScrollView>
