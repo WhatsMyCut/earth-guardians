@@ -14,11 +14,20 @@ export const RetrieveData = async key => {
     const value = await AsyncStorage.getItem(key);
     if (value !== null) {
       // We have data!!
-      console.log(value);
+      //console.log(value);
       return JSON.parse(value);
     } else {
-      console.log('no data');
+      //console.log('no data');
     }
+  } catch (e) {
+    // Error retrieving data
+    console.log(e);
+  }
+};
+
+export const RemoveData = async key => {
+  try {
+    await AsyncStorage.removeItem(key);
   } catch (e) {
     // Error retrieving data
     console.log(e);
