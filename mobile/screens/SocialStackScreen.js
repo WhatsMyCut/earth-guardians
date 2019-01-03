@@ -7,15 +7,20 @@ import {
   Text,
   StyleSheet,
 } from 'react-native';
-//import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_categories_query';
-//import graphql from '../components/hoc/graphql';
+import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_categories_query';
+import graphql from '../components/hoc/graphql';
 
 //import { data } from './dummy/actions.json';
 
-// @graphql(ALL_ACTION_CATEGORIES, {
-//   name: 'all_categories',
-//   fetchPolicy: 'network-only',
-// })
+@graphql(ALL_ACTION_CATEGORIES, {
+  name: 'all_categories',
+  options: {
+    fetchPolicy: 'network-only',
+    variables: {
+      name: 'Social',
+    },
+  },
+})
 class SocialStackScreen extends React.Component {
   static navigationOptions = {
     header: null,

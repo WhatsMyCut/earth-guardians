@@ -1,14 +1,19 @@
 import React from 'react';
 
 import { SafeAreaView, View, Text, Switch, StyleSheet } from 'react-native';
-//import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_categories_query';
-//import graphql from '../components/hoc/graphql';
+import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_categories_query';
+import graphql from '../components/hoc/graphql';
 
 //import { data } from './dummy/actions.json';
-// @graphql(ALL_ACTION_CATEGORIES, {
-//   name: 'all_categories',
-//   fetchPolicy: 'network-only',
-// })
+@graphql(ALL_ACTION_CATEGORIES, {
+  name: 'all_categories',
+  options: {
+    fetchPolicy: 'network-only',
+    variables: {
+      name: 'Notification',
+    },
+  },
+})
 class NotificationStackScreen extends React.Component {
   static navigationOptions = {
     header: null,
@@ -25,6 +30,17 @@ class NotificationStackScreen extends React.Component {
     });
   };
   render() {
+    // const { all_categories } = this.props;
+    // if (all_categories.loading) {
+    //   return <LinearGradient {...LinearGradientProps.food} style={{ flex: 1 }}>
+    //       <AppLoading />
+    //     </LinearGradient>;
+    // }
+
+    // const actions = all_categories.actionCategories;
+    // if (!this.state.primary_video && !this.state.primary_image) {
+    //   return null;
+    // }
     return (
       <SafeAreaView style={{ flex: 1 }}>
         <View style={styles.container}>
