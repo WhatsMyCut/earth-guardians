@@ -4,8 +4,6 @@ import {
   SafeAreaView,
   View,
   Text,
-  Button,
-  KeyboardAvoidingView,
   ImageBackground,
   TouchableOpacity,
   Platform,
@@ -16,23 +14,22 @@ import { LinearGradient, Asset, AppLoading } from 'expo';
 import PhoneInputComp from '../shared/phone/PhoneInputComp';
 import TabBarIcon from '../shared/icons/TabBarIcon';
 import PasswordModal from '../shared/modals/PasswordModal';
-import { USER_EXISTS_QUERY } from '../graphql/queries/UserExistsQuery';
 import graphql from '../hoc/graphql';
 const HEIGHT = Dimensions.get('window').height;
 const WIDTH = Dimensions.get('window').width;
 
-
-
 export default class PhoneSignup extends React.Component {
-
-  constructor(props){
+  constructor(props) {
     super(props);
   }
   state = {
     valid_phone: false,
-    username:null,
+    username: null,
+    phone: null,
     isReady: false,
-    showPasswordModal: false
+    showPasswordModal: false,
+    dialCode: null,
+    token: null
   };
 
   is_phone_valid = valid => {
@@ -41,39 +38,52 @@ export default class PhoneSignup extends React.Component {
     });
   };
 
-  togglePasswordModal =() =>{
-    console.log('toggle password state', this.state.showPasswordModal)
-    this.setState({showPasswordModal: !this.state.showPasswordModal});
+  togglePasswordModal = () => {
+    this.setState({ showPasswordModal: !this.state.showPasswordModal });
+  };
+
+  setToken = (token) => {
+    this.setState({token})
   }
 
   phone_signup = () => {
     if (this.state.valid_phone) {
-      this.props.authenticate();
+      this.props.authenticate({
+        phone: this.state.phone,
+        dialCode: this.state.dialCode,
+        token: this.state.token
+      });
     }
   };
 
-  _setPhone = (number) =>{
-    const {valid_phone, phone} = this.state;
-    console.log('number', number);
-      this.setState({phone: number.number});
-  }
+  // _setPhone = (number) =>{
+  //   const {valid_phone, phone} = this.state;
+  //   console.log('number', number);
+  //     this.setState({phone: number.number});
+  // }
+  _setPhone = numberAndCode => {
+    const { valid_phone } = this.state;
+    if (valid_phone) {
+      this.setState({
+        phone: numberAndCode.number,
+        username: numberAndCode.number,
+        dialCode: numberAndCode.country_dial_code,
+      });
+    }
+  };
 
   async _cacheResourcesAsync() {
-    const images = [
-      require('../../assets/earth_guardians_main.gif'),
-    ];
+    const images = [require('../../assets/earth_guardians_main.gif')];
 
-    const cacheImages = images.map((image) => {
+    const cacheImages = images.map(image => {
       return Asset.fromModule(image).downloadAsync();
     });
-    return Promise.all(cacheImages)
-
+    return Promise.all(cacheImages);
   }
 
-  checkIfUserExists =() =>{
-    this.user_exists({variables:{username:this.state.phone}})
-  }
-
+  checkIfUserExists = () => {
+    this.user_exists({ variables: { username: this.state.phone } });
+  };
 
   render() {
     if (!this.state.isReady) {
@@ -85,7 +95,6 @@ export default class PhoneSignup extends React.Component {
         />
       );
     }
-
 
     return (
       <LinearGradient
@@ -128,7 +137,7 @@ export default class PhoneSignup extends React.Component {
               />
             </View>
             {this.state.showPasswordModal && (
-              <PasswordModal isVisible={this.state.showPasswordModal} username={this.state.phone} togglePasswordModal={this.togglePasswordModal}/>
+              <PasswordModal phone_signup={this.phone_signup} setToken={this.setToken} isVisible={this.state.showPasswordModal} username={this.state.phone} togglePasswordModal={this.togglePasswordModal}/>
             )}
 
             {this.state.valid_phone ? (

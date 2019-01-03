@@ -8,5 +8,4 @@ export const USER_EXISTS_QUERY = gql`
       username
     }
 }
-
 `

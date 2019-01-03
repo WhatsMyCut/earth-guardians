@@ -19,7 +19,7 @@ import { Image } from 'react-native-expo-image-cache';
 import NavigationService from '../../../navigation/navigationService';
 // import graphql from '../components/hoc/graphql';
 import DoubleClick from 'react-native-double-tap';
-import PasswordModal from '../modals/PasswordModal'
+// import PasswordModal from '../modals/PasswordModal'
 
 export default class ActionCardSmall extends React.Component {
   lastTap=null;
@@ -116,7 +116,7 @@ export default class ActionCardSmall extends React.Component {
         delay={200}
         
       >
-        <PasswordModal isVisible={this.state.showModal}/>
+        {/* <PasswordModal isVisible={this.state.showModal}/> */}
 
         <Animated.View style={[styles.item,frontAnimatedStyle, {height: 250}]}>
           <Image

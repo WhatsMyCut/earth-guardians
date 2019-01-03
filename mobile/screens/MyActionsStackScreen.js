@@ -27,16 +27,12 @@ class MyActionsStackScreen extends React.Component {
     this.setState({ actions: actions });
   }
   render() {
-    // const { all_categories } = this.props;
-    // if (!all_categories.loading) {
-    //   console.log('all persons', all_categories.actionCategories[0].name);
-    // }
-    // if (all_categories.loading) {
-    //   return (
-    //     <SafeAreaView style={{ flex: 1 }}>
-    //       <Text>Loading ...</Text>
-    //     </SafeAreaView>
-    //   );
+
+    // if(all_categories.loading){
+    //   return <LinearGradient {...LinearGradientProps.energy} style={{ flex: 1 }}>
+    //   <AppLoading
+    //     />
+    // </LinearGradient>
     // }
     return (
       <SafeAreaView style={{ flex: 1 }}>

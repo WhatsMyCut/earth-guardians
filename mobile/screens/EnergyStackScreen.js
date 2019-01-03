@@ -29,6 +29,8 @@ class EnergyStackScreen extends React.Component {
       // set the primary image and video
       const primary_image = actions[primary_energy_id].image;
       const primary_video = actions[primary_energy_id].video;
+      console.log('primary_energy id', primary_energy_id);
+      console.log(actions[primary_energy_id].video)
 
       //update the state
       this.setState({ actions, primary_image, primary_video });
@@ -47,6 +49,9 @@ class EnergyStackScreen extends React.Component {
     }
     console.log('props again', all_categories.actionCategories);
     const actions = all_categories.actionCategories;
+    if(!this.state.primary_video && !this.state.primary_image){
+      return null;
+    }
     return (
       <LinearGradient {...LinearGradientProps.energy} style={{ flex: 1 }}>
         <GeneralScreen

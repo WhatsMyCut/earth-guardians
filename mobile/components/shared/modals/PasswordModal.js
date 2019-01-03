@@ -4,21 +4,21 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  Modal, 
+  Modal,
   Alert,
   TouchableHighlight,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
 } from 'react-native';
 import NavigationService from '../../../navigation/navigationService';
 import graphql from '../../hoc/graphql';
 import { SIGNUP } from '../../graphql/mutations/signup_mutation';
 import { LOGIN } from '../../graphql/mutations/login_mutation';
 import { USER_EXISTS_QUERY } from '../../graphql/queries/UserExistsQuery';
-import { } from '../../../store/Store';
+import { StoreData } from '../../../store/AsyncStore';
 
 
 @graphql(SIGNUP, {
-    name:'signup_mutation'
+  name: 'signup_mutation',
 })
 @graphql(LOGIN, {
   name:"login_mutation"
@@ -26,12 +26,13 @@ import { } from '../../../store/Store';
 @graphql(USER_EXISTS_QUERY, {
   name:"user_exists_query",
   options: (props) => {
-    const username = props.username
-    return {
-      variables: {
-        username
+    console.log('this is being called again');
+      const username = props.username ? props.username : null;
+      return {
+        variables: {
+          username
+        }
       }
-    }
   }
 })
 export default class PasswordModal extends React.Component {
@@ -42,26 +43,32 @@ export default class PasswordModal extends React.Component {
       console.log('this.signupmutation', this.props.signup_mutation);
   }
   setModalVisible(visible) {
-    this.setState({modalVisible: visible});
+    this.setState({ modalVisible: visible });
   }
 
-  signup = () =>{
-      const { password, confirmPassword} = this.state;
-      if(password === confirmPassword){
-          console.log('passwords matched');
-          NavigationService.navigate('Main');
-      } else{
-        this.setState({passwordError: "Passwords do not Match"});
-      }
-  }
+  signup = () => {
+    const { password, confirmPassword } = this.state;
+    const { signup_mutation, username } = this.props;
+    if (password === confirmPassword) {
+
+      signup_mutation({variables:{username:username, password: password}}).then(res =>{
+        console.log('response stuffs', res.data);
+        this.props.setToken(res.data.signup.token);
+        this.props.phone_signup();
+      })
+      //NavigationService.navigate('Main');
+    } else {
+      this.setState({ passwordError: 'Passwords do not Match' });
+    }
+  };
 
   signIn = () => {
     const { login_mutation, username } = this.props;
     const { existsPassword } = this.state;
     if(existsPassword && username){
       login_mutation({variables:{username:username, password:existsPassword}}).then(res =>{
-        console.log('you received some data from login', res);
-        this.props.togglePasswordModal();
+        this.props.setToken(res.data.login.token);
+        this.props.phone_signup();
       })
     } else{
       this.setState({standardError: "You must enter your username and password..."})
@@ -239,34 +246,33 @@ export default class PasswordModal extends React.Component {
    
     return (
       <Modal
-          animationType="slide"
-          transparent={true}
-          visible={this.props.isVisible}
-          onRequestClose={() => {
-            Alert.alert('Modal has been closed.');
-          }}
-          
-          >
-          <View 
-                style={{
-                    flex:1,
-                    justifyContent: 'center',
-                    flexDirection:'column',
-                    alignItems: 'center',
-                    paddingHorizontal: 5,
-                }}
-            >
-           <View
+        animationType="slide"
+        transparent={true}
+        visible={this.props.isVisible}
+        onRequestClose={() => {
+          Alert.alert('Modal has been closed.');
+        }}
+      >
+        <View
           style={{
-            backgroundColor: '#333',
+            flex: 1,
+            justifyContent: 'center',
+            flexDirection: 'column',
             alignItems: 'center',
-            height:'50%',
-            width:'75%',
-            borderRadius: 15,
-            paddingTop:20,
+            paddingHorizontal: 5,
           }}
         > 
-        
+        <View
+    style={{
+      backgroundColor: '#333',
+      alignItems: 'center',
+      height:'50%',
+      width:'75%',
+      borderRadius: 15,
+      paddingTop:20,
+    }}
+  > 
+  
          
           <Text
             style={{
@@ -334,33 +340,34 @@ export default class PasswordModal extends React.Component {
             returnKeyType="done"
             // value={this.state.zipCode}
           />
-          <TouchableOpacity
-            style={{
-              backgroundColor: '#fff',
-              width: 130,
-              height: 50,
-              borderRadius: 5,
-              justifyContent: 'center',
-              alignItems: 'center',
-              marginTop: 20,
-              marginBottom:20
-            }}
-            onPress={this.signup}
-          >
-            <Text style={{ color: '#333', fontSize: 18, fontWeight: 'bold' }}>
-              SUBMIT
-            </Text>
-          </TouchableOpacity>
+         
+          
+            <TouchableOpacity
+              style={{
+                backgroundColor: '#fff',
+                width: 130,
+                height: 50,
+                borderRadius: 5,
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginTop: 20,
+                marginBottom: 20,
+              }}
+              onPress={this.signup}
+            >
+              <Text style={{ color: '#333', fontSize: 18, fontWeight: 'bold' }}>
+                SUBMIT
+              </Text>
+            </TouchableOpacity>
 
           <TouchableHighlight
                 onPress={this.props.togglePasswordModal}>
                 <Text style={{color:"white"}}>Go Back</Text>
            </TouchableHighlight>
            
-          
+            </View>
         </View>
-        </View>
-        </Modal>
+      </Modal>
     );
   }
 }

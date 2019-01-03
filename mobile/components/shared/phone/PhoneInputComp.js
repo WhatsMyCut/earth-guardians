@@ -39,19 +39,21 @@ export default class PhoneInputComp extends React.Component {
       country_code: data[index].country_code,
     });
   };
-
-
-  updateStoreWithPhoneDetails = () => {
-    // TODO: only do this if phone is valide, properly
-    // TODO: use the app state valid
-    if (this.state.phone_number.length === 10) {
-      // create a phone object
-      const new_phone = {
-        number: this.state.phone_number,
-        country_dial_code: this.state.dial_code,
-      };
-      this.props.validate_phone(true);
-      this.props.updatePhone(new_phone);
+  updateStoreWithPhoneDetails = async () => {
+    try {
+      // TODO: only do this if phone is valide, properly
+      // TODO: use the app state valid
+      if (this.state.phone_number.length === 10) {
+        // create a phone object
+        const new_phone = {
+          number: this.state.phone_number,
+          country_dial_code: this.state.dial_code,
+        };
+        await this.props.validate_phone(true);
+        await this.props.updatePhone(new_phone);
+      }
+    } catch (e) {
+      console.log(e);
     }
   };
 

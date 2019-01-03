@@ -6,6 +6,10 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
 } from 'react-native';
+
+import { AntDesign } from '@expo/vector-icons';
+
+import NavigationService from '../../../navigation/navigationService';
 //TODO figure out what to do if its a postal code instead of zip code
 export default class CommunityImpactModal extends React.Component {
   state = { zipCode: '' };
@@ -75,6 +79,22 @@ export default class CommunityImpactModal extends React.Component {
             <Text style={{ color: '#333', fontSize: 18, fontWeight: 'bold' }}>
               SUBMIT
             </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              NavigationService.navigate(
+                this.props.previousScreen || 'MyActions'
+              );
+            }}
+            hitSlop={{ top: 15, left: 15, right: 15, bottom: 15 }}
+            style={{ position: 'absolute', right: -2, top: -5 }}
+          >
+            <AntDesign
+              name="close"
+              size={42}
+              color="white"
+              style={{ padding: 5 }}
+            />
           </TouchableOpacity>
         </View>
       </KeyboardAvoidingView>
