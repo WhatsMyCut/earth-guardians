@@ -43,7 +43,7 @@ export class StoreProvider extends React.Component {
     const new_user = {
       phone: details.phone,
       country_dial_code: details.dialCode,
-      token:details.token
+      token: details.token,
     };
 
     try {
