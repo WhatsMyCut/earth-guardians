@@ -36,9 +36,9 @@ const errorLink = onError(({ graphQLErrors, networkError, operation }) => {
   }
 });
 
-const authLink = setContext((_, context) => {
+const authLink = setContext(async (_, context) => {
   const headers = { ...context.headers };
-  const token = RetrieveData('EARTH_GUARDIANS_TOKEN'); // retrieve from asyncstorage
+  const token = await RetrieveData('EARTH_GUARDIANS_TOKEN'); // retrieve from asyncstorage
   if (token) {
     headers.authorization = `Bearer ${token}`;
   }
@@ -52,7 +52,7 @@ const authLink = setContext((_, context) => {
 // For info on how to use navigation service
 // https://reactnavigation.org/docs/en/navigating-without-navigation-prop.html#docsNav
 
-const client = new ApolloClient({
+export const client = new ApolloClient({
   ssrForceFetchDelay: 100,
   link: ApolloLink.from([authLink, errorLink, httpLink]),
   cache: new InMemoryCache(),

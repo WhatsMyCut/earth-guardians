@@ -56,7 +56,7 @@ class DefaultScreen extends BaseScreen {
 
     console.ignoredYellowBox = ['Warning:'];
     return (
-      <SafeAreaView style={{ flex: 1 }}>
+      <View style={{ flex: 1 }}>
         <View style={styles.container}>
           <View style={styles.topBackNav}>
             <TouchableOpacity
@@ -93,7 +93,7 @@ class DefaultScreen extends BaseScreen {
               switchToPortrait={this.switchToPortrait.bind(this)}
               playFromPositionMillis={0}
             />
-            <View
+            {/* <View
               style={{
                 flexDirection: 'row',
                 justifyContent: 'space-between',
@@ -105,10 +105,10 @@ class DefaultScreen extends BaseScreen {
               <RateButton rate={1} style={{ color: '#ffffff' }} />
               <RateButton rate={2} style={{ color: '#ffffff' }} />
               <RateButton rate={4} style={{ color: '#ffffff' }} />
-            </View>
+            </View> */}
           </View>
         </View>
-      </SafeAreaView>
+      </View>
     );
   }
 }

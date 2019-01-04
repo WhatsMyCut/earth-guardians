@@ -20,9 +20,27 @@ import NavigationService from '../../../navigation/navigationService';
 // import graphql from '../components/hoc/graphql';
 import DoubleClick from 'react-native-double-tap';
 // import PasswordModal from '../modals/PasswordModal'
+import { TAKE_ACTION } from '../../graphql/mutations/take_action_mutation';
+import { DELETE_ACTION } from '../../graphql/mutations/delete_action';
 
-export default class ActionCardSmall extends React.Component {
+import { GET_USER } from '../../graphql/queries/get_user';
+import graphql from '../../hoc/graphql';
+
+
+@graphql(GET_USER, {
+  name:'get_user'
+})
+@graphql(TAKE_ACTION, {
+  name: 'take_action'
+})
+@graphql(DELETE_ACTION,{
+  name:"delete_action"
+})
+class ActionCardSmall extends React.Component {
   lastTap=null;
+  constructor(props){
+    super(props);
+  }
 
   state = {
     showModal: false,
@@ -30,9 +48,13 @@ export default class ActionCardSmall extends React.Component {
     canDelete : this.props.canDelete ? true : null,
     currScreen: this.props.currScreen ? this.props.currScreen : 'Main'
   };
+
   delete = () => {
     //TODO
-    console.log('delete');
+    const { item, delete_action } = this.props;
+    delete_action({variables:{id:item.id}}).then(response => {
+      console.log('item was deleted', response);
+    })
   };
 
   componentWillMount() {
@@ -49,6 +71,8 @@ export default class ActionCardSmall extends React.Component {
       inputRange: [0, 180],
       outputRange: ['180deg', '360deg'],
     });
+   
+
   }
 
   flipCard() {
@@ -84,7 +108,20 @@ export default class ActionCardSmall extends React.Component {
     }
   };
 
-  render() {
+  _takeAction = () => {
+    const { take_action, item, get_user } = this.props;
+    console.log('this is working', get_user);
+      let variables = {
+        id: get_user.me.id,
+        action : item.id
+      }
+      console.log('this is firing');
+      take_action({variables}).then(response => {
+        console.log('you took an action', response);
+      })
+  }
+
+  _myActionItem =() =>{
     const { item, index, canDelete } = this.props;
     const { currScreen } = this.state;
     const frontAnimatedStyle = {
@@ -93,76 +130,170 @@ export default class ActionCardSmall extends React.Component {
     const backAnimatedStyle = {
       transform: [{ rotateY: this.backInterpolate }],
     };
+    console.log('item', item);
 
     const preview = { uri: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==" };
-    return (
-      <DoubleClick
-        style={{ flex: 1, height: index % 2 ? 230 : 250, width: 180 }}
-        singleTap={() => {
-          console.log("single tap");
-          this.flipCard()
+
+    return (<TouchableOpacity
+    onPress={() => {
+      console.log("single tap");
+      if(canDelete){
+        this.flipCard()
+      } else{
+        console.log('this is also firing');
+        this._takeAction();
+      }
+    }}
+    
+    onLongPress={() => {
+      if(canDelete){
+        this.setState({ delete: !this.state.delete })
+      }
+    }}
+  >
+    {/* <PasswordModal isVisible={this.state.showModal}/> */}
+    <Animated.View>
+    <Animated.View style={[styles.item,frontAnimatedStyle, {height: 250, width: 181}]}>
+      <Image
+        style={{
+          flex: 1,
+          width: null,
+          height: null,
+          borderRadius: Styles.borderRadius,
         }}
-        
-        doubleTap={() => {
-          if(canDelete){  
-            this.setState({ delete: !this.state.delete })
-          } else if(item.hasGame && !canDelete){
-            NavigationService.navigate('Game',{ previousScreen: currScreen});
-          } else if(!canDelete || !item.hasGame){
-            this.setState({showModal : true})
-            // NavigationService.navigate('Modal',{ previousScreen: currScreen});
-          }
+        {...{preview, uri: item.action.primary_image}}
+      />
+      <LinearGradient
+        colors={['rgba(255,255,255,0)', '#000000']}
+        locations={[0.3, 1]}
+        style={[styles.gradient, { height: 250}]}
+      />
+      <Text
+        style={{
+          position: 'absolute',
+          bottom: 10,
+          left: 15,
+          paddingRight:5,
+          fontWeight: 'bold',
+          fontFamily: 'Proxima Nova Bold',
+          color: '#fff',
+          fontSize: 18,
         }}
-        delay={200}
-        
-      >
-        {/* <PasswordModal isVisible={this.state.showModal}/> */}
+    >
+          {item.action.action_taken_description.length > 48 ? `${item.action.action_taken_description.substring(0, 40)}...` : item.action.action_taken_description}
+ 
+      </Text>
 
-        <Animated.View style={[styles.item,frontAnimatedStyle, {height: 250}]}>
-          <Image
-            style={{
-              flex: 1,
-              width: null,
-              height: null,
-              borderRadius: Styles.borderRadius,
-            }}
-            {...{preview, uri:item.primary_image}}
-          />
-          <LinearGradient
-            colors={['rgba(255,255,255,0)', '#000000']}
-            locations={[0.3, 1]}
-            style={[styles.gradient, { height: 250}]}
-          />
-          <Text
-            style={{
-              position: 'absolute',
-              bottom: 10,
-              left: 15,
-              fontWeight: 'bold',
-              fontFamily: 'Proxima Nova Bold',
-              color: '#fff',
-              fontSize: 18,
-            }}
-          >
-            {item.short_description.length > 50 ? item.short_description.substring(0, 50) : item.short_description}
-          </Text>
+      {this.state.delete && this.showDelete()}
+    </Animated.View>
+    <Animated.View
+      style={[
+        backAnimatedStyle,
+        styles.item,
+        styles.flippedItem,
+        { height: 250 },
+      ]}
+    >
+      <ActionDetails data={item} canDelete={true}/>
 
-          {this.state.delete && this.showDelete()}
-        </Animated.View>
-        <Animated.View
-          style={[
-            backAnimatedStyle,
-            styles.item,
-            styles.flippedItem,
-            { height: 240 },
-          ]}
-        >
-          <ActionDetails data={item}/>
+    </Animated.View>
+    </Animated.View>
+  </TouchableOpacity>)
+  }
 
-          {this.state.delete && this.showDelete()}
-        </Animated.View>
-      </DoubleClick>
-    );
+  _standardItem = () =>{
+    const { item, index, canDelete } = this.props;
+    const { currScreen } = this.state;
+    const frontAnimatedStyle = {
+      transform: [{ rotateY: this.frontInterpolate }],
+    };
+    const backAnimatedStyle = {
+      transform: [{ rotateY: this.backInterpolate }],
+    };
+    console.log('item', item);
+
+    const preview = { uri: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==" };
+
+
+   return  <DoubleClick
+    style={{ flex: 1, height: index % 2 ? 230 : 250, width: 180 }}
+    singleTap={async () => {
+      console.log("single tap");
+      // if(!canDelete){
+        this.flipCard()
+      // } else{
+      //   console.log('this is also firing');
+      //   this._takeAction();
+      // }
+    }}
+    
+    doubleTap={() => {
+     if(!canDelete){
+        NavigationService.navigate('Game',{ previousScreen: currScreen});
+      } else if(!canDelete || !item.hasGame){
+        this.setState({showModal : true})
+        // NavigationService.navigate('Modal',{ previousScreen: currScreen});
+      }
+    }}
+    delay={200}
+    
+  >
+    {/* <PasswordModal isVisible={this.state.showModal}/> */}
+
+    <Animated.View style={[styles.item,frontAnimatedStyle, {height: 250, width: 181}]}>
+      <Image
+        style={{
+          flex: 1,
+          width: null,
+          height: null,
+          borderRadius: Styles.borderRadius,
+        }}
+        {...{preview, uri: canDelete ? item.action.primary_image : item.primary_image}}
+      />
+      <LinearGradient
+        colors={['rgba(255,255,255,0)', '#000000']}
+        locations={[0.3, 1]}
+        style={[styles.gradient, { height: 250}]}
+      />
+      <Text
+        style={{
+          position: 'absolute',
+          bottom: 10,
+          left: 15,
+          paddingRight:5,
+          fontWeight: 'bold',
+          fontFamily: 'Proxima Nova Bold',
+          color: '#fff',
+          fontSize: 18,
+        }}
+      > 
+        {canDelete && (
+          
+          item.action.action_taken_description.length > 48 ? `${item.action.action_taken_description.substring(0, 40)}...` : item.action.action_taken_description
+        )}
+        {!canDelete && (item.short_description.length > 48 ? `${item.short_description.substring(0, 40)}...` : item.short_description)}
+      </Text>
+
+      {this.state.delete && this.showDelete()}
+    </Animated.View>
+    <Animated.View
+      style={[
+        backAnimatedStyle,
+        styles.item,
+        styles.flippedItem,
+        { height: 250 },
+      ]}
+    >
+      <ActionDetails data={item} canDelete={false} takeTheAction={this._takeAction}/>
+
+      {this.state.delete && this.showDelete()}
+    </Animated.View>
+  </DoubleClick>
+  }
+
+  render() {
+    const { canDelete } = this.props;
+    return canDelete ?  this._myActionItem() :this._standardItem()
   }
 }
 
@@ -175,7 +306,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.8,
     width: 180,
     shadowRadius: 2,
-    paddingHorizontal: 10,
+    paddingLeft: 10,
     elevation: 1,
     marginTop: 10,
     borderColor: 'transparent',
@@ -188,13 +319,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     borderRadius: Styles.borderRadius,
     left: 10,
-    width: 160,
+    width: 170,
   },
   flippedItem: {
     backgroundColor: '#ffffff',
     position: 'absolute',
     left: 10,
-    width: 160,
+    width: 170,
     flex: 1,
   },
   imageLinearGradient: {
@@ -206,3 +337,7 @@ const styles = StyleSheet.create({
     borderRadius: Styles.borderRadius,
   },
 });
+
+
+
+export default ActionCardSmall;

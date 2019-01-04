@@ -79,17 +79,17 @@ class CommunityStackScreen extends React.Component {
       onStartShouldSetPanResponder: () => true,
 
       onPanResponderMove: (evt, gs) => {
-        this.position.setValue({ x: 0, y: gs.dy });
-      },
-
-      onPanResponderRelease: (evt, gs) => {
-        console.log('gx.dx', gs.dx)
         if(gs.dx > 150){
           this.props.navigation.navigate('MyActions');
         }
         if(gs.dx < -150){
           this.props.navigation.navigate('Energy');
         }
+        this.position.setValue({ x: 0, y: gs.dy });
+      },
+
+      onPanResponderRelease: (evt, gs) => {
+      
         if (-100 > gs.dy) {
           Animated.spring(this.position, {
             toValue: { x: 0, y: SCREEN_HEIGHT - 2000 },

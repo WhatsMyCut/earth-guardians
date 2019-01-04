@@ -9,6 +9,8 @@ import HeaderNavBar from '../components/shared/navBar/HeaderNavBar';
 import LinearGradientProps from '../constants/LinearGradientProps';
 import GeneralScreen from './GeneralScreen';
 import { food_data, primary_food_id } from './dummy/data';
+
+
 @graphql(ALL_ACTION_CATEGORIES, {
   name: 'all_categories',
   options: {
