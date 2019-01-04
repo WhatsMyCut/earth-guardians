@@ -62,7 +62,7 @@ SocialStack.navigationOptions = {
 
 const routeConfig = {
   ImpactStack,
-  NotificationStack,
+  //NotificationStack,
   SocialStack,
 };
 
