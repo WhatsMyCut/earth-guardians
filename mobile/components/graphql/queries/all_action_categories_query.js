@@ -10,7 +10,7 @@ query($name: String!){
     actions(where:{isGame: false, active:true}, orderBy:order_ASC){
       id
       primary_image
-      title
+   
       short_description
       carbon_dioxide
       water
@@ -19,7 +19,7 @@ query($name: String!){
       related_actions {
         id
         primary_image
-        title
+
         short_description
       }
     }
