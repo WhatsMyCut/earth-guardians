@@ -38,7 +38,7 @@ export class DonutGraph extends React.Component {
                 key={section.index}
                 d={path(section)}
                 stroke="#000"
-                fill={`rgb(${150},${colors(section.index) / 1.5},${colors(
+                fill={`rgb(${20},${colors(section.index) / 1.1},${colors(
                   section.index
                 )})`}
                 strokeWidth={1}
