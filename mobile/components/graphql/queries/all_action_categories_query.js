@@ -17,8 +17,10 @@ query($name: String!){
       water
       waste
       video_url
+      game_title
       related_actions {
         id
+        
         primary_image
         short_description
       }

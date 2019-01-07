@@ -41,7 +41,6 @@ export class DonutGraph extends React.Component {
       { itemName: 'Water', value: parseInt(this.props.water)},
       { itemName: 'Waste', value: parseInt(this.props.waste)}
     ];
-    console.log('donut props', this.props);
     const total = userPurchases.reduce((sum, item) =>{
         return sum+=item.value
     }, 0)

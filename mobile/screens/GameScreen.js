@@ -68,13 +68,13 @@ class GameScreen extends React.Component {
    }
 
    render() {
-      console.log('props inside of game stack', this.props);
       const games = this.props.navigation.getParam('games', [])
-      console.log('games', games);
+      const game_title = this.props.navigation.getParam('game_title', null);
+      console.log('games', game_title);
       return (
          <View style={styles.container}>
-            {/* <TouchableOpacity onPress={this._navigateBack}><Text style={styles.header}>RE-ARCTIC ACTIONS</Text></TouchableOpacity> */}
-            
+            {game_title && <TouchableOpacity onPress={this._navigateBack}><Text style={styles.header}>{game_title.toUpperCase()}</Text></TouchableOpacity>
+            }
                <GameCards
                   canDelete={this.props.canDelete || null}
                   items={games}

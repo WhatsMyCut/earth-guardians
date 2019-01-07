@@ -135,7 +135,7 @@ export default class GameCards extends React.Component {
          .map((item, i) => {
             let offsetStyles = {
                zIndex: (NUM_CARDS_DISPLAYED - i) * 10,
-               top: i * 10
+               top: i * 15
             };
             let scale = { transform: [{ scale: 1 - 0.03 * i }] };
             if (i < currentIndex) {
@@ -156,7 +156,7 @@ export default class GameCards extends React.Component {
                         locations={[0, 1]}
                         style={[styles.gradient, { height: CARD_HEIGHT}]}
                      />
-                     <Text style={{ fontFamily:"Proxima Nova Bold", fontSize:20, position:'absolute',left:15,bottom:2,paddingRight:5,color: 'white' }}>{item.short_description}</Text>
+                     <Text style={{ fontFamily:"Proxima Nova Bold", fontSize:20,left:15, right:15, position:'absolute',bottom:5,color: 'white' }}>{item.short_description}</Text>
                   </Animated.View>
                );
             } else if (i > currentIndex + NUM_CARDS_DISPLAYED) {
@@ -185,7 +185,6 @@ export default class GameCards extends React.Component {
          <View style={{
             flex: 1,
             width: Dimensions.get("window").width - 48,
-            paddingTop:30,
             marginBottom: 12
          }}>
          <View

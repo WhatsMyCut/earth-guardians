@@ -118,9 +118,9 @@ class ActionCardSmall extends React.Component {
       }
       console.log('this is firing');
       take_action({variables}).then(response => {
-        console.log('you took an action', response);
+        console.log('you took an action', item);
         if(item.related_actions.length > 0){
-          NavigationService.navigate('Game',{ previousScreen: currScreen, games:item.related_actions});
+          NavigationService.navigate('Game',{ previousScreen: currScreen, games:item.related_actions, game_title:item.game_title ? item.game_title : null});
         }
 
         this.flipCard()
