@@ -47,14 +47,14 @@ class FoodStackScreen extends React.Component {
       );
     }
 
-    const actions = all_categories.actionCategories;
+    const actions = all_categories.sectorActionsByName;
     if (!this.state.primary_video && !this.state.primary_image) {
       return null;
     }
     return (
       <LinearGradient {...LinearGradientProps.food} style={{ flex: 1 }}>
         <GeneralScreen
-          data={this.state.actions}
+          data={actions}
           primary_image={this.state.primary_image}
           primary_video={this.state.primary_video}
         />

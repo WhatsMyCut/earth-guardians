@@ -1,41 +1,42 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet, Dimensions } from 'react-native';
+import { View, Text, TextInput, Image, StyleSheet, Dimensions, TouchableHighlight } from 'react-native';
 const SCREEN_WIDTH = Dimensions.get('window').width;
 export default class Profileomponent extends React.Component {
   render() {
     return (
+      <TouchableHighlight onPress={this.props.onPress}>
       <View style={styles.container}>
-        <Image
-          source={require('../../../assets/user_w.png')}
-          style={styles.profileImage}
-        />
+        <Image source={require('../../../assets/Group_427.png')} style={styles.profileImage} />
         <View style={{ width: SCREEN_WIDTH * 0.9 }}>
           <View style={styles.info}>
             <View style={styles.labelWrapper}>
-              <Text style={styles.label}>First Name</Text>
+              <TextInput style={styles.label} value="Name"/>
             </View>
-            <View style={styles.labelWrapper}>
-              <Text style={styles.label}>Last Name</Text>
-            </View>
-          </View>
-          <View style={styles.info}>
             <View style={styles.labelWrapper}>
               <Text style={styles.label}>80302</Text>
             </View>
-            <View style={styles.labelWrapper}>
-              <Text style={styles.label}>Crew</Text>
-            </View>
+            {/* <View style={styles.labelWrapper}>
+              <Text style={styles.label}>Last Name</Text>
+            </View> */}
           </View>
           <View style={styles.info}>
+            
             <View style={styles.labelWrapper}>
-              <Text style={styles.label}>Cell Number</Text>
+              <Text style={styles.label}>Crew</Text>
             </View>
             <View style={styles.labelWrapper}>
               <Text style={styles.label}>Email</Text>
             </View>
           </View>
+          <View style={styles.info}>
+            <View style={styles.labelWrapper}>
+              <TextInput style={styles.label} value="Cell Number"/>
+            </View>
+            
+          </View>
         </View>
       </View>
+      </TouchableHighlight>
     );
   }
 }
@@ -44,16 +45,11 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
     alignItems: 'center',
-    width: SCREEN_WIDTH * 0.9,
+    width: SCREEN_WIDTH * 0.9
   },
   profileImage: {
-    width: 30,
-    height: 30,
-    borderColor: '#666',
-    borderWidth: 1,
-    padding: 20,
-    borderRadius: 20,
-    backgroundColor: '#666',
+    width: 40,
+    height: 40,
     marginVertical: 10,
   },
   info: {

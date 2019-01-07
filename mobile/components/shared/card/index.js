@@ -110,6 +110,7 @@ class ActionCardSmall extends React.Component {
 
   _takeAction = () => {
     const { take_action, item, get_user } = this.props;
+    const { currScreen } = this.state;
     console.log('this is working', get_user);
       let variables = {
         id: get_user.me.id,
@@ -118,6 +119,11 @@ class ActionCardSmall extends React.Component {
       console.log('this is firing');
       take_action({variables}).then(response => {
         console.log('you took an action', response);
+        if(item.related_actions.length > 0){
+          NavigationService.navigate('Game',{ previousScreen: currScreen, games:item.related_actions});
+        }
+
+        this.flipCard()
       })
   }
 
@@ -194,7 +200,7 @@ class ActionCardSmall extends React.Component {
         { height: 250 },
       ]}
     >
-      <ActionDetails data={item} canDelete={true}/>
+      <ActionDetails data={item} canDelete={true} takeTheAction={this._takeAction}/>
 
     </Animated.View>
     </Animated.View>

@@ -126,7 +126,7 @@ LandStack.navigationOptions = {
 
 const routeConfig = {
   MyActionsStack,
-  CommunityStack,
+  // CommunityStack,
   EnergyStack,
   TravelStack,
   //FashionStack,

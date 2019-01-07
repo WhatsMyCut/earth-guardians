@@ -1,6 +1,7 @@
 import React from 'react';
 import navigationService from '../navigation/navigationService';
 import { StoreData, RetrieveData } from './AsyncStore';
+import { Permissions, Notifications } from 'expo';
 
 // a store to hold the react context api
 const Store = React.createContext();
@@ -15,6 +16,7 @@ export class StoreProvider extends React.Component {
   };
 
   async componentDidMount() {
+    
     try {
       // check if async storage has the data
       // await StoreData('phone', null);
@@ -29,6 +31,7 @@ export class StoreProvider extends React.Component {
           authenticated: true,
           user,
         });
+
         navigationService.navigate('MyActions', {});
       }
     } catch (e) {
@@ -40,6 +43,11 @@ export class StoreProvider extends React.Component {
   };
 
   authenticate = async details => {
+    const { status: existingStatus } = await Permissions.getAsync(
+      Permissions.NOTIFICATIONS
+    );
+    let finalStatus = existingStatus;
+    console.log('final status stuff', finalStatus);
     const new_user = {
       phone: details.phone,
       country_dial_code: details.dialCode,
@@ -54,8 +62,14 @@ export class StoreProvider extends React.Component {
       console.log(e);
     }
     // for now, turn autheticate to true
+    if (finalStatus !== 'granted') {
+      
+      
+    }
+    // registerForPushNotificationsAsync
+
     StoreData('EARTH_GUARDIANS_TOKEN', details.token);
-    console.log('details token', details.token);
+    
     this.setState({ authenticated: true, user: new_user });
     navigationService.navigate('MyActions', {});
   };

@@ -36,7 +36,7 @@ export default class ActionDetails extends React.Component {
       ? 'circle-slice-8'
       : 'circle-outline';
     const color = this.state.in ? 'green' : '#aaa';
-    console.log('item inside of actiondetails', data);
+
     let item = data.action ? data.action : data;
     return (
       <View style={{ flex: 1, margin: 5 }}>
@@ -49,11 +49,11 @@ export default class ActionDetails extends React.Component {
               color: '#666',
             }}
           >
-            METRICS
+            {this.props.canDelete ? "METRICS EARNED":"METRICS" }
           </Text>
         </View>
         <View style={{ flex: 1, flexDirection: 'row', marginLeft:-16}}>
-          <View style={{ flex: 1, justifyContent:"space-between"}}>
+          <View style={{ flex: 1}}>
             <Text style={{ fontFamily: 'Proxima Nova', color: '#666', textAlign:"center"  }}>
               CO2
             </Text>
@@ -135,7 +135,7 @@ export default class ActionDetails extends React.Component {
           </Text>
           
         </View> 
-        <View style={{ flex: 1, marginBottom: 10 }}>
+        {/* <View style={{ flex: 1, marginBottom: 10 }}>
           <Text
             style={{
               fontSize: 10,
@@ -145,19 +145,17 @@ export default class ActionDetails extends React.Component {
           >
             You’ve offset the equivalent of 50 showers.
           </Text>
-        </View>
-        {!this.props.canDelete && (
+        </View> */}
         <TouchableOpacity
                   onPress={() => this._takeInAction()}
                   style={{flexDirection:'row', justifyContent:'flex-end', alignContent:"center"}}
                 >
-                  <Text style={{fontSize: 18,fontWeight: '700', fontFamily: 'Proxima Nova Bold',color:'#000000', paddingRight:10}}>I'm in!</Text>
+                  <Text style={{fontSize: 18,fontWeight: '700', fontFamily: 'Proxima Nova Bold',color:'#000000', paddingRight:10}}>{this.props.canDelete ? "Do it again!" : "I'm in!"}</Text>
                   <Icon.MaterialCommunityIcons
                     name={status_icon_name}
                     style={{ color: color, fontSize: 18 }}
                   />
         </TouchableOpacity>
-        )}
       </View>
     );
   }

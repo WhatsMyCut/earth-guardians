@@ -49,11 +49,14 @@ class EnergyStackScreen extends React.Component {
       );
     }
     //console.log('props again', all_categories.actionCategories);
-    const actions = all_categories.actionCategories;
+    const actions = all_categories.sectorActionsByName;
     if (!this.state.primary_video && !this.state.primary_image) {
       return null;
     }
-    return (
+
+    console.log('actions and stuff', all_categories.sectorActionsByName);
+
+    return ( 
       <LinearGradient {...LinearGradientProps.energy} style={{ flex: 1 }}>
         <GeneralScreen
           data={actions}

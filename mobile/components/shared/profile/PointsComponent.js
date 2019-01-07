@@ -16,7 +16,7 @@ export default class PointsComponent extends React.Component {
         }}
       >
         <Text style={{ color: '#fff', fontSize: 30, fontWeight: 'bold' }}>
-          3,807 POINTS
+          {this.props.points} Points
         </Text>
       </View>
     );

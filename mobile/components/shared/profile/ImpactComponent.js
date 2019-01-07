@@ -1,8 +1,12 @@
 import React from 'react';
 import { View, Text, Image, Dimensions } from 'react-native';
+
 const SCREEN_WIDTH = Dimensions.get('window').width;
+
 export default class ImpactComponent extends React.Component {
+
   render() {
+
     return (
       <View
         style={{
@@ -38,7 +42,7 @@ export default class ImpactComponent extends React.Component {
               fontWeight: 'bold',
             }}
           >
-            125
+            {this.props.carbon_dioxide}
           </Text>
           <Text
             style={{
@@ -48,7 +52,7 @@ export default class ImpactComponent extends React.Component {
               fontWeight: 'bold',
             }}
           >
-            471
+            {this.props.water}
           </Text>
           <Text
             style={{
@@ -58,10 +62,10 @@ export default class ImpactComponent extends React.Component {
               fontWeight: 'bold',
             }}
           >
-            801
+            {this.props.waste}
           </Text>
         </View>
-        <View>
+        {/* <View>
           <Text style={{ color: '#fff', marginBottom: 10, fontSize: 10 }}>
             Community
           </Text>
@@ -83,7 +87,7 @@ export default class ImpactComponent extends React.Component {
               fontWeight: 'bold',
             }}
           >
-            103,720
+            {this.state.points}
           </Text>
           <Text
             style={{
@@ -95,7 +99,7 @@ export default class ImpactComponent extends React.Component {
           >
             27,940
           </Text>
-        </View>
+        </View> */}
       </View>
     );
   }

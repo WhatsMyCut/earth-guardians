@@ -6,11 +6,17 @@ import {
    StyleSheet,
    Dimensions,
    Animated,
-   Image,
    PanResponder
 } from "react-native";
+
+import { LinearGradient } from 'expo';
+
+import { Image } from 'react-native-expo-image-cache'
 import Styles from "../../constants/Styles";
 import NavigationService from '../../navigation/navigationService';
+import graphql from '../hoc/graphql';
+import { TAKE_ACTION } from '../graphql/mutations/take_action_mutation';
+import GameControls from '../game-stack/GameControls';
 
 const SCREEN_HEIGHT = Dimensions.get("window").height;
 const SCREEN_WIDTH = Dimensions.get("window").width;
@@ -19,11 +25,14 @@ const CARD_WIDTH = Dimensions.get("window").width * 0.87;
 const CARD_HEIGHT = Dimensions.get("window").height * 0.65;
 
 
-
+@graphql(TAKE_ACTION, {
+   name:"take_action"
+})
 export default class GameCards extends React.Component {
    state = {
       currentIndex: 0,
       CARD_COUNT: 3,
+      loading:false,
       goBack: this.props.goBack
    };
 
@@ -92,23 +101,27 @@ export default class GameCards extends React.Component {
 
    moveToNextCard = callback => {
       return () => {
-         if(this.state.currentIndex == this.props.items.length-2){
+         if(this.state.currentIndex >= this.props.items.length-1){
             this.props.navigateBack();
          }
          this.position.setValue({ x: 0, y: 0 });
-         this.setState({ currentIndex: this.state.currentIndex + 1 }, callback);
+         
+         callback(this.state.currentIndex);
+         this.setState({ currentIndex: this.state.currentIndex + 1, loading:false }, callback);
       };
    };
 
-   swipeRight = (y = 0) => {
+   swipeRight = () => {
+      this.setState({loading: true});
       Animated.spring(this.position, {
-         toValue: { x: SCREEN_WIDTH + 100, y }
+         toValue: { x: SCREEN_WIDTH + 100, y:0 }
       }).start(this.moveToNextCard(this.props.swipeRight));
    };
 
-   swipeLeft = (y = 0) => {
+   swipeLeft = () => {
+      this.setState({loading: true});
       Animated.spring(this.position, {
-         toValue: { x: -SCREEN_WIDTH - 100, y }
+         toValue: { x: -SCREEN_WIDTH - 100, y:0 }
       }).start(this.moveToNextCard(this.props.swipeLeft));
    };
 
@@ -116,6 +129,7 @@ export default class GameCards extends React.Component {
       const { currentIndex, NUM_CARDS_DISPLAYED } = this.state;
 
       // items.map((item, i) => console.log(`item ${i}: `, item));
+      const preview = { uri: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==" };
 
       return items
          .map((item, i) => {
@@ -135,8 +149,14 @@ export default class GameCards extends React.Component {
                   >
                      <Image
                         style={styles.cardImage}
-                        source={{ uri: item.uri }}
+                        {...{preview, uri: item.primary_image}}
                      />
+                     <LinearGradient
+                        colors={['rgba(255,255,255,0)', '#000000']}
+                        locations={[0, 1]}
+                        style={[styles.gradient, { height: CARD_HEIGHT}]}
+                     />
+                     <Text style={{ fontFamily:"Proxima Nova Bold", fontSize:20, position:'absolute',left:15,bottom:2,paddingRight:5,color: 'white' }}>{item.short_description}</Text>
                   </Animated.View>
                );
             } else if (i > currentIndex + NUM_CARDS_DISPLAYED) {
@@ -149,7 +169,7 @@ export default class GameCards extends React.Component {
                   >
                      <Image
                         style={styles.cardImage}
-                        source={{ uri: item.uri }}
+                        {...{preview, uri: item.primary_image}}
                      />
                   </Animated.View>
                );
@@ -162,6 +182,12 @@ export default class GameCards extends React.Component {
       const { position} = this.state;
       
       return (
+         <View style={{
+            flex: 1,
+            width: Dimensions.get("window").width - 48,
+            paddingTop:30,
+            marginBottom: 12
+         }}>
          <View
             style={{
                flexGrow: 1,
@@ -171,7 +197,14 @@ export default class GameCards extends React.Component {
             }}
          >
             {this.renderCards(this.props.items)}
+            
          </View>
+         <GameControls
+            rightPress={this.swipeRight}
+            leftPress={this.swipeLeft}
+            loading={this.state.loading}
+         />
+      </View>
       );
    }
 }
@@ -193,6 +226,12 @@ const styles = StyleSheet.create({
       },
       backgroundColor: "white"
    },
+   gradient: {
+      position: 'absolute',
+      borderRadius: Styles.borderRadius,
+      
+      width: CARD_WIDTH,
+    },
    cardImage: {
       flex: 1,
       height: null,

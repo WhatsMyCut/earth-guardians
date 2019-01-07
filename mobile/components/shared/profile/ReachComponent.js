@@ -2,6 +2,19 @@ import React from 'react';
 import { View, Text, TouchableOpacity, Dimensions } from 'react-native';
 const SCREEN_WIDTH = Dimensions.get('window').width;
 export default class ReachComponent extends React.Component {
+
+  _returnPeopleReached(){
+    let reach = 0
+    if(this.props.communityEvents.length > 0){
+      this.props.communityEvents.map(event=>{
+        reach+=parseInt(event.number_of_people);
+      })
+    }
+
+
+    return `${reach} PEOPLE REACHED`;
+  }
+
   render() {
     return (
       <TouchableOpacity onPress={() => this.props.toggleModal()}>
@@ -17,7 +30,7 @@ export default class ReachComponent extends React.Component {
           }}
         >
           <Text style={{ color: '#fff', fontSize: 18, fontWeight: 'bold' }}>
-            260 PEOPLE REACHED
+            {this._returnPeopleReached()}
           </Text>
         </View>
       </TouchableOpacity>

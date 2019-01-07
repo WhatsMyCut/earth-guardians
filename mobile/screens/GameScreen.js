@@ -5,100 +5,60 @@ import { Text, TouchableOpacity, View, StyleSheet, Dimensions } from "react-nati
 import GameControls from "../components/game-stack/GameControls";
 import GameCards from "../components/game-stack";
 import NavigationService from '../navigation/navigationService';
+import graphql from '../components/hoc/graphql';
+import { TAKE_ACTION } from '../components/graphql/mutations/take_action_mutation';
+import { GET_USER } from '../components/graphql/queries/get_user';
 
-
-const items = [
-   {
-      id: 1,
-      // uri: "https://unsplash.com/photos/N_0Wi_OrucE",
-      uri:
-         "https://images.unsplash.com/photo-1507290439931-a861b5a38200?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=4e49f0b66341702171b119d4578a05ff&auto=format&fit=crop&w=1790&q=80",
-      question: "Are you vegan?",
-      points: 15,
-      frequency: "month",
-      metric: {
-         co2: 250,
-         h20: 6500,
-         waste: 0
-      }
-   },
-   {
-      id: 2,
-      // uri: "https://unsplash.com/photos/KUZnfk-2DSQ",
-      uri:
-         "https://images.unsplash.com/photo-1507290439931-a861b5a38200?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=4e49f0b66341702171b119d4578a05ff&auto=format&fit=crop&w=1790&q=80",
-      question: "Are you vegetarian?",
-      points: 10,
-      frequency: "month",
-      metric: {
-         co2: 4.5,
-         h20: 441,
-         waste: 0
-      }
-   },
-   {
-      id: 3,
-      // uri: "https://unsplash.com/photos/IGfIGP5ONV0",
-      uri:
-         "https://images.unsplash.com/photo-1507290439931-a861b5a38200?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=4e49f0b66341702171b119d4578a05ff&auto=format&fit=crop&w=1790&q=80",
-      question: "Eat vegetarian for one week?",
-      points: 10,
-      frequency: "week",
-      metric: {
-         co2: 4.5,
-         h20: 441,
-         waste: 0
-      }
-   },
-   {
-      id: 4,
-      // uri: "https://unsplash.com/photos/Y8Rp1X6psC4",
-      uri:
-         "https://images.unsplash.com/photo-1507290439931-a861b5a38200?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=4e49f0b66341702171b119d4578a05ff&auto=format&fit=crop&w=1790&q=80",
-      question: "Eat vegetarian for one day?",
-      points: 8,
-      frequency: "day",
-      metric: {
-         co2: 4.5,
-         h20: 441,
-         waste: 0
-      }
-   },
-   {
-      id: 5,
-      // uri: "https://unsplash.com/photos/OgmaA8CkwHA",
-      uri:
-         "https://images.unsplash.com/photo-1507290439931-a861b5a38200?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=4e49f0b66341702171b119d4578a05ff&auto=format&fit=crop&w=1790&q=80",
-      question: "Eat one vegetarian meal per day?",
-      points: 8,
-      frequency: "week",
-      metric: {
-         co2: 1.5,
-         h20: 137,
-         waste: 0
-      }
-   }
-];
-
+@graphql( TAKE_ACTION,{
+   name:"take_action"
+})
+@graphql(GET_USER, {
+   name:'get_user'
+ })
 class GameScreen extends React.Component {
    cardStack;
    state={
-      previousScreen: this.props.previousScreen
+      previousScreen: this.props.previousScreen,
+      mounted:false
    }
-   swipeRight = () => {
-      console.log("swiped right");
+
+   componentDidMount(){
+      this.setState({mounted: true})
+   }
+
+   swipeRight = (index) => {
+      const { take_action, get_user } = this.props;
+      const games = this.props.navigation.getParam('games', [])
+      console.log("swiped right", index);
+      if(games[index]){
+         let variables = {
+            id: get_user.me.id,
+            action :games[index].id
+         }
+
+         take_action({variables}).then(res =>{
+            console.log('took action', res);
+         })
+      }
    };
 
-   swipeLeft = () => {
-      console.log("swiped left");
+   swipeLeft = (index) => {
+      console.log("swiped left", index);
    };
 
    handleRightPress = () => {
-      this.cardStack.swipeRight();
+      console.log('tried to swipe right');
+      if(this.state.mounted){
+         console.log('card stack', this.cardStack)
+         this.cardStack.swipeRight();
+      }
    };
 
    handleLeftPress = () => {
-      this.cardStack.swipeLeft();
+      console.log('tried to swipe left');
+      if(this.state.mounted){
+         this.cardStack.swipeLeft();
+      }
    };
 
    _navigateBack = () =>{
@@ -109,23 +69,25 @@ class GameScreen extends React.Component {
 
    render() {
       console.log('props inside of game stack', this.props);
+      const games = this.props.navigation.getParam('games', [])
+      console.log('games', games);
       return (
          <View style={styles.container}>
-            <TouchableOpacity onPress={this._navigateBack}><Text style={styles.header}>RE-ARCTIC ACTIONS</Text></TouchableOpacity>
-            <View style={styles.cardContainer}>
+            {/* <TouchableOpacity onPress={this._navigateBack}><Text style={styles.header}>RE-ARCTIC ACTIONS</Text></TouchableOpacity> */}
+            
                <GameCards
                   canDelete={this.props.canDelete || null}
-                  items={items}
+                  items={games}
                   navigateBack={this._navigateBack}
                   swipeRight={this.swipeRight}
                   swipeLeft={this.swipeLeft}
-                  ref={ref => (this.cardStack = ref)}
+                  ref={ref => (this.cardStack  = ref)}
                />
-            </View>
-            <GameControls
+           
+            {/* <GameControls
                rightPress={this.handleRightPress}
                leftPress={this.handleLeftPress}
-            />
+            /> */}
          </View>
       );
    }

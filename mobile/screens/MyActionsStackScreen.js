@@ -39,9 +39,9 @@ class MyActionsStackScreen extends React.Component {
         </View>
   }
 
-  _renderActions(id){
-    console.log('this is loading')
-    return <Query query={MY_ACTIONS_QUERY} variables={{id}} pollInterval={500}>
+  _renderActions(){
+
+    return <Query query={MY_ACTIONS_QUERY} pollInterval={500}>
                 {({ loading,error, data }) => {
                 if (loading) return this._loading();
                 if (error) {
@@ -49,11 +49,22 @@ class MyActionsStackScreen extends React.Component {
                   return this._loading();
                 }
 
-                const actions = data.eventActions.map(event =>{
+                console.log(data.myAvailableActions);
+                if(data.myAvailableActions.length == 0){
+                  console.log('my actions finished loading', my_actions.me);
+                  return <SafeAreaView style={{ flex: 1 }}>
+                  <View style={{...styles.container, justifyContent:'center', alignContent:'center'}}>
+                    <Text style={{color:"white", textAlign:"center"}}>You should start taking action!</Text>
+                  </View>
+                </SafeAreaView>
+                }
+
+
+
+                const actions = data.myAvailableActions.map(event =>{
                   return { id: event.id, action:event.action}
                 });
 
-                console.log('data from my_action_data', data)
                       return (
                         <View style={styles.container}>
                         <FlatList
@@ -61,7 +72,7 @@ class MyActionsStackScreen extends React.Component {
                           numColumns={2}
                           data={actions}
                           renderItem={({ item, index }) => (
-                            <ActionCardSmall item={item} index={index} canDelete={true} user_id={id}/>
+                            <ActionCardSmall item={item} index={index} canDelete={true}/>
                           )}
                         />
                       </View>
@@ -83,27 +94,7 @@ class MyActionsStackScreen extends React.Component {
 
     return (
       <SafeAreaView style={{ flex: 1 }}>
-        <Query query={GET_USER}>
-        {({ loading, error, data }) => {
-          if (loading) return this._loading();
-          if (error) {
-            console.log('error', error);
-            return this._loading();
-          }
-          if(!data.me){
-            NavigationService.navigate('AuthLoading')
-          }
-
-          if(!data.me.id){
-      
-              NavigationService.navigate('AuthLoading')
-
-          }
-          console.log('data from me.user', data.me);
-          return this._renderActions(data.me.id);
-        }}
-      </Query>
-
+        {this._renderActions()}
       </SafeAreaView>
     );
   }

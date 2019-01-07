@@ -9,12 +9,13 @@ import {
   Platform,
   Dimensions,
 } from 'react-native';
-import { LinearGradient, Asset, AppLoading } from 'expo';
+import { LinearGradient, Asset, AppLoading, BlurView } from 'expo';
 
 import PhoneInputComp from '../shared/phone/PhoneInputComp';
 import TabBarIcon from '../shared/icons/TabBarIcon';
 import PasswordModal from '../shared/modals/PasswordModal';
 import graphql from '../hoc/graphql';
+import registerForPushNotificationsAsync from '../../services/registerForPushNotifications';
 const HEIGHT = Dimensions.get('window').height;
 const WIDTH = Dimensions.get('window').width;
 
@@ -46,7 +47,7 @@ export default class PhoneSignup extends React.Component {
     this.setState({token})
   }
 
-  phone_signup = () => {
+  phone_signup = async () => {
     if (this.state.valid_phone) {
       this.props.authenticate({
         phone: this.state.phone,
@@ -137,7 +138,13 @@ export default class PhoneSignup extends React.Component {
               />
             </View>
             {this.state.showPasswordModal && (
-              <PasswordModal phone_signup={this.phone_signup} setToken={this.setToken} isVisible={this.state.showPasswordModal} username={this.state.phone} togglePasswordModal={this.togglePasswordModal}/>
+              <BlurView
+              tint="dark" 
+              intensity={80}
+              style={{height:HEIGHT, width:WIDTH, position:"absolute"}}
+              >
+                <PasswordModal phone_signup={this.phone_signup} setToken={this.setToken} isVisible={this.state.showPasswordModal} username={this.state.phone} togglePasswordModal={this.togglePasswordModal}/>
+              </BlurView>
             )}
 
             {this.state.valid_phone ? (

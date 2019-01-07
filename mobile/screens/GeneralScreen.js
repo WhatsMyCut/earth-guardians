@@ -21,7 +21,7 @@ import FontAwesome from '@expo/vector-icons/FontAwesome';
 const width = Layout.window.width - 2 * Styles.marginHorizontal;
 const primaryHeight = Styles.primaryHeight;
 
-export default class CommunityStackScreen extends React.Component {
+export default class GeneralScreen extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -114,7 +114,7 @@ export default class CommunityStackScreen extends React.Component {
     }
   };
   render() {
-    if (!this.props.data[0]) {
+    if (!this.props.data) {
       return (
         <SafeAreaView style={styles.container}>
           <View style={styles.container}>

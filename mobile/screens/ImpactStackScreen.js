@@ -1,8 +1,9 @@
 import React from 'react';
 //import { LinearGradient, AppLoading } from 'expo';
 
-import { TouchableOpacity, SafeAreaView, View, Text } from 'react-native';
+import { TouchableOpacity, SafeAreaView, View, Text, KeyboardAvoidingView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { BlurView } from 'expo';
 import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_categories_query';
 import graphql from '../components/hoc/graphql';
 import NavigationService from '../navigation/navigationService';
@@ -12,11 +13,17 @@ import ReachComponent from '../components/shared/profile/ReachComponent';
 import PointsComponent from '../components/shared/profile/PointsComponent';
 import ProfileComponent from '../components/shared/profile/ProfileComponent';
 import CommunityEventModal from '../components/shared/modals/CommunityEventModal';
+import {ALL_MY_METRICS} from '../components/graphql/queries/all_my_metrics_query';
+import UpdateUserModal from '../components/shared/modals/updateUserModal';
 
-//import LinearGradientProps from '../constants/LinearGradientProps';
 
-//import { data } from './dummy/actions.json';
 
+@graphql(ALL_MY_METRICS, {
+  name:"all_metrics",
+  options: {
+    fetchPolicy: 'network-only'
+  },
+})
 @graphql(ALL_ACTION_CATEGORIES, {
   name: 'all_categories',
   options: {
@@ -29,6 +36,13 @@ import CommunityEventModal from '../components/shared/modals/CommunityEventModal
 class ImpactStackScreen extends React.Component {
   state = {
     openModal: false,
+    points:0,
+    waste: 0,
+    water: 0,
+    carbon_dioxide: 0,
+    loading: true,
+    openUserModal: false,
+    communityEvents:0
   };
   static navigationOptions = {
     header: null,
@@ -39,6 +53,38 @@ class ImpactStackScreen extends React.Component {
       openModal: !this.state.openModal,
     });
   };
+
+  async _aggregateImpact(recent_actions, community_events){
+    const { points, water, waste, carbon_dioxide, loading} = this.state;
+    if(!loading){
+      return;
+    }
+    let newPoints = 0;
+    let newWater = 0;
+    let newWaste = 0;
+    let newCarbonDioxide = 0;
+
+    await Promise.all([recent_actions.map(item =>{
+      newPoints+=item.action.points;
+      newWater+=item.action.water;
+      newWaste+=item.action.waste;
+      newCarbonDioxide+=item.action.carbon_dioxide;
+    })])
+
+    
+    let additionalPoints = community_events.length * 100;
+
+    this.setState({
+      points: points != newPoints ? (newPoints+additionalPoints):points,
+      water: water != newWater ? newWater : water,
+      waste : waste != newWaste ? newWaste : waste,
+      carbon_dioxide: carbon_dioxide != newCarbonDioxide ? newCarbonDioxide : carbon_dioxide,
+      communityEvents: community_events,
+      loading: false
+    })
+  }
+
+
   render() {
     // const { all_categories } = this.props;
     // if (all_categories.loading) {
@@ -54,8 +100,17 @@ class ImpactStackScreen extends React.Component {
     //   return null;
     // }
 
+    if(this.props.all_metrics.loading){
+    } else{
+      if(this.props.all_metrics.me.recent_actions.length !== 0){
+        this._aggregateImpact(this.props.all_metrics.me.recent_actions, this.props.all_metrics.me.community_events);
+      }
+    }
+
     return (
+      
       <SafeAreaView style={{ flex: 1 }}>
+      
         <View
           style={{
             flex: 1,
@@ -64,29 +119,39 @@ class ImpactStackScreen extends React.Component {
             backgroundColor: '#333',
           }}
         >
-          <View
-            style={{
-              position: 'absolute',
-              top: 0,
-              left: 5,
-              maxHeight: 30,
-            }}
-          >
-            <TouchableOpacity
-              onPress={() => NavigationService.navigate('MyActions')}
-            >
-              <Ionicons name="ios-arrow-round-back" size={42} color="#ccc" />
-            </TouchableOpacity>
-          </View>
 
-          <GraphComponent />
-          <ImpactComponent />
-          <ReachComponent toggleModal={this.toggleModal} />
-          <PointsComponent />
-          <ProfileComponent />
+          <GraphComponent carbon_dioxide={this.state.carbon_dioxide} water={this.state.water} waste={this.state.waste} />
+          <ImpactComponent carbon_dioxide={this.state.carbon_dioxide} water={this.state.water} waste={this.state.waste}/>
+          <ReachComponent toggleModal={this.toggleModal} communityEvents={this.state.communityEvents}/>
+          <PointsComponent points={this.state.points}/>
+          <ProfileComponent onPress={() => this.setState({openUserModal: true})}/>
         </View>
+       
         {this.state.openModal ? (
-          <View
+          <BlurView
+          tint="dark" 
+          intensity={80}
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: 'rgba(0,0,0,.1)',
+            position: 'absolute',
+            top: 0,
+            right: 0,
+            left: 0,
+            bottom: 0,
+          }}
+        >
+            <CommunityEventModal onClose={() => {
+              this.setState({openModal: false, loading:true})
+             }}/>
+          </BlurView>
+        ) : null}
+        {this.state.openUserModal ? (
+          
+          <BlurView
+            tint="dark" 
+            intensity={80}
             style={{
               justifyContent: 'center',
               alignItems: 'center',
@@ -98,10 +163,12 @@ class ImpactStackScreen extends React.Component {
               bottom: 0,
             }}
           >
-            <CommunityEventModal />
-          </View>
+            <UpdateUserModal onClose={() =>this.setState({openUserModal: false})}/>
+          </BlurView>
         ) : null}
+       
       </SafeAreaView>
+      
     );
   }
 }
@@ -117,6 +184,11 @@ ImpactStackScreen.navigationOptions = {
       MY IMPACT
     </Text>
   ),
+  headerLeft:<TouchableOpacity
+  onPress={() => NavigationService.navigate('MyActions')}
+>
+  <Ionicons name="ios-arrow-round-back" size={42} color="#ccc" />
+</TouchableOpacity>,
   headerStyle: {
     backgroundColor: '#333',
     borderBottomWidth: 0,

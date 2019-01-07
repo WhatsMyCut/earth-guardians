@@ -26,7 +26,6 @@ import { StoreData } from '../../../store/AsyncStore';
 @graphql(USER_EXISTS_QUERY, {
   name:"user_exists_query",
   options: (props) => {
-    console.log('this is being called again');
       const username = props.username ? props.username : null;
       return {
         variables: {
@@ -40,7 +39,7 @@ export default class PasswordModal extends React.Component {
   
   constructor(props){
       super(props);
-      console.log('this.signupmutation', this.props.signup_mutation);
+
   }
   setModalVisible(visible) {
     this.setState({ modalVisible: visible });
@@ -232,7 +231,7 @@ export default class PasswordModal extends React.Component {
   }
 
   render() {
-    console.log('Community Event Modal', this.props, this.state);
+
     const { goBack, user_exists_query } = this.props;
     if(user_exists_query.loading) {
       return this.loadingModalContent()
