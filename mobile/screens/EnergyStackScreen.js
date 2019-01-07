@@ -13,7 +13,7 @@ import { energy_data, primary_energy_id } from './dummy/data';
 @graphql(ALL_ACTION_CATEGORIES, {
   name: 'all_categories',
   options: {
-    fetchPolicy: 'network-only',
+    pollInterval: 300,
     variables: {
       name: 'Energy',
     },
@@ -21,26 +21,10 @@ import { energy_data, primary_energy_id } from './dummy/data';
 })
 class EnergyStackScreen extends React.Component {
   state = { primary_image: '', primary_video: '', actions: [] };
-  async componentDidMount() {
-    try {
-      // get the data
-      const actions = await energy_data();
-
-      // set the primary image and video
-      const primary_image = actions[primary_energy_id].image;
-      const primary_video = actions[primary_energy_id].video;
-      // console.log('primary_energy id', primary_energy_id);
-      // console.log(actions[primary_energy_id].video)
-
-      //update the state
-      this.setState({ actions, primary_image, primary_video });
-    } catch (e) {
-      console.log(e);
-    }
-  }
 
   render() {
     const { all_categories } = this.props;
+    console.log('all cats', all_categories)
     if (all_categories.loading) {
       return (
         <LinearGradient {...LinearGradientProps.energy} style={{ flex: 1 }}>
@@ -50,8 +34,10 @@ class EnergyStackScreen extends React.Component {
     }
     //console.log('props again', all_categories.actionCategories);
     const actions = all_categories.sectorActionsByName;
-    if (!this.state.primary_video && !this.state.primary_image) {
-      return null;
+    if (!actions[0].video_id && !actions[0].primary_image) {
+      return <LinearGradient {...LinearGradientProps.energy} style={{ flex: 1 }}>
+      
+    </LinearGradient>;
     }
 
     console.log('actions and stuff', all_categories.sectorActionsByName);
@@ -61,8 +47,8 @@ class EnergyStackScreen extends React.Component {
         <GeneralScreen
           data={actions}
           screen={'Energy'}
-          primary_image={this.state.primary_image}
-          primary_video={this.state.primary_video}
+          primary_image={actions[0].primary_image}
+          primary_video={actions[0].video_id}
         />
       </LinearGradient>
     );

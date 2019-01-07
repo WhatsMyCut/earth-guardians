@@ -51,7 +51,6 @@ class MyActionsStackScreen extends React.Component {
 
                 console.log(data.myAvailableActions);
                 if(data.myAvailableActions.length == 0){
-                  console.log('my actions finished loading', my_actions.me);
                   return <SafeAreaView style={{ flex: 1 }}>
                   <View style={{...styles.container, justifyContent:'center', alignContent:'center'}}>
                     <Text style={{color:"white", textAlign:"center"}}>You should start taking action!</Text>

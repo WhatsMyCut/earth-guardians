@@ -45,6 +45,7 @@ class ActionCardSmall extends React.Component {
   state = {
     showModal: false,
     delete: false,
+    takingAction: false,
     canDelete : this.props.canDelete ? true : null,
     currScreen: this.props.currScreen ? this.props.currScreen : 'Main'
   };
@@ -109,21 +110,28 @@ class ActionCardSmall extends React.Component {
   };
 
   _takeAction = () => {
-    const { take_action, item, get_user } = this.props;
+    const { take_action, item, get_user, canDelete } = this.props;
     const { currScreen } = this.state;
     console.log('this is working', get_user);
+      
       let variables = {
         id: get_user.me.id,
         action : item.id
       }
+      if(!canDelete){
+        this.setState({takingAction: true});
+      }
       console.log('this is firing');
       take_action({variables}).then(response => {
         console.log('you took an action', response);
+        
         if(item.related_actions.length > 0){
           NavigationService.navigate('Game',{ previousScreen: currScreen, games:item.related_actions});
         }
-
-        this.flipCard()
+        if(canDelete){
+          this.flipCard()
+        }
+        
       })
   }
 
@@ -136,7 +144,6 @@ class ActionCardSmall extends React.Component {
     const backAnimatedStyle = {
       transform: [{ rotateY: this.backInterpolate }],
     };
-    console.log('item', item);
 
     const preview = { uri: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==" };
 
@@ -209,7 +216,7 @@ class ActionCardSmall extends React.Component {
 
   _standardItem = () =>{
     const { item, index, canDelete } = this.props;
-    const { currScreen } = this.state;
+    const { currScreen, takingAction } = this.state;
     const frontAnimatedStyle = {
       transform: [{ rotateY: this.frontInterpolate }],
     };
@@ -235,10 +242,7 @@ class ActionCardSmall extends React.Component {
     
     doubleTap={() => {
      if(!canDelete){
-        NavigationService.navigate('Game',{ previousScreen: currScreen});
-      } else if(!canDelete || !item.hasGame){
-        this.setState({showModal : true})
-        // NavigationService.navigate('Modal',{ previousScreen: currScreen});
+        this._takeAction()
       }
     }}
     delay={200}
@@ -246,7 +250,7 @@ class ActionCardSmall extends React.Component {
   >
     {/* <PasswordModal isVisible={this.state.showModal}/> */}
 
-    <Animated.View style={[styles.item,frontAnimatedStyle, {height: 250, width: 181}]}>
+    <Animated.View style={[styles.item,frontAnimatedStyle, {height: 250, width: 181, opacity:takingAction ? 0 : 1}]}>
       <Image
         style={{
           flex: 1,
