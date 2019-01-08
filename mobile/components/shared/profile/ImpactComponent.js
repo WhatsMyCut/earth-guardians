@@ -26,7 +26,7 @@ export default class ImpactComponent extends React.Component {
             CO2 (lbs)
           </Text>
           <Text style={{ color: '#fff', marginBottom: 10, fontSize: 11 }}>
-            H2O (lbs)
+            H2O (gal)
           </Text>
           <Text style={{ color: '#fff', fontSize: 11 }}>Waste (lbs)</Text>
         </View>

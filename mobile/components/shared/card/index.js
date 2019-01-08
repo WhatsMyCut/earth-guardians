@@ -11,8 +11,7 @@ import {
   Animated,
   View,
 } from 'react-native';
-import { LinearGradient, Icon } from 'expo';
-import LinearGradientProps from '../../../constants/LinearGradientProps';
+import { LinearGradient } from 'expo';
 import ActionDetails from './ActionDetails';
 import Styles from '../../../constants/Styles';
 import { Image } from 'react-native-expo-image-cache';
@@ -22,6 +21,9 @@ import DoubleClick from 'react-native-double-tap';
 // import PasswordModal from '../modals/PasswordModal'
 import { TAKE_ACTION } from '../../graphql/mutations/take_action_mutation';
 import { DELETE_ACTION } from '../../graphql/mutations/delete_action';
+import WasteModal from '../modals/NotWasteReduceModal';
+import WaterModal from '../modals/NotH2OConsumptionModal';
+import CarbonModal from '../modals/NotCO2EmissionModal';
 
 import { GET_USER } from '../../graphql/queries/get_user';
 import graphql from '../../hoc/graphql';
@@ -46,6 +48,10 @@ class ActionCardSmall extends React.Component {
     showModal: false,
     delete: false,
     takingAction: false,
+    congratulationsModal: false,
+    showWasteModal: false,
+    showWaterModal: false,
+    showCarbonModal: false,
     canDelete : this.props.canDelete ? true : null,
     currScreen: this.props.currScreen ? this.props.currScreen : 'Main'
   };
@@ -112,37 +118,59 @@ class ActionCardSmall extends React.Component {
   _takeAction = () => {
     const { take_action, item, get_user, canDelete } = this.props;
     const { currScreen } = this.state;
-      
+   
       let variables = {
         id: get_user.me.id,
-        action : item.id
+        action : item.action ? item.action.id : item.id
       }
-      if(!canDelete){
-        this.setState({takingAction: true});
+
+      let waste = item.action ? item.action.waste : item.waste;
+      let water = item.action ? item.action.water : item.water;
+      let carbon_dioxide = item.action ? item.action.carbon_dioxide : item.carbon_dioxide;
+      console.log('this is being called', waste, water, carbon_dioxide);
+      if(waste > water && waste > carbon_dioxide){
+        this.setState({showWasteModal:true})
+      }else if(water > waste && water > carbon_dioxide){
+        this.setState({showWaterModal:true})
+      }else{
+        this.setState({showCarbonModal:true})
       }
+
+     
       take_action({variables}).then(response => {
-        if(item.related_actions.length > 0){
-          NavigationService.navigate('Game',{ previousScreen: currScreen, games:item.related_actions, game_title:item.game_title ? item.game_title : null});
+        if(item.related_actions){
+          if(item.related_actions.length > 0){
+            NavigationService.navigate('Game',{ previousScreen: currScreen, games:item.related_actions, game_title:item.game_title ? item.game_title : null});
+          }
         }
-        if(canDelete){
-          this.flipCard()
-        }
+        this.flipCard();
         
       })
   }
 
+  onModalClose = () => {
+    this.setState({showWasteModal: false, showWaterModal : false, showCarbonModal: false});
+  }
+
+
   _myActionItem =() =>{
     const { item, index, canDelete } = this.props;
-    const { currScreen } = this.state;
+    const { currScreen, congratulationsModal } = this.state;
     const frontAnimatedStyle = {
       transform: [{ rotateY: this.frontInterpolate }],
     };
     const backAnimatedStyle = {
       transform: [{ rotateY: this.backInterpolate }],
     };
+    if(!item.action){
+      return <View></View>
+    }
+    let waste = item.action ? item.action.waste : item.waste;
+      let water = item.action ? item.action.water : item.water;
+      let carbon_dioxide = item.action ? item.action.carbon_dioxide : item.carbon_dioxide;
 
     const preview = { uri: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==" };
-
+    
     return (<TouchableOpacity
     onPress={() => {
 
@@ -172,7 +200,7 @@ class ActionCardSmall extends React.Component {
         {...{preview, uri: item.action.primary_image}}
       />
       <LinearGradient
-        colors={['rgba(255,255,255,0)', '#000000']}
+        colors={['rgba(255,255,255,0)', 'rgba(0,0,0,0.5)']}
         locations={[0.3, 1]}
         style={[styles.gradient, { height: 250}]}
       />
@@ -192,7 +220,7 @@ class ActionCardSmall extends React.Component {
  
       </Text>
 
-      {this.state.delete && this.showDelete()}
+      {this.state.delete && <WasteModal waste={15} onClose={this.onModalClose} />}
     </Animated.View>
     <Animated.View
       style={[
@@ -205,13 +233,16 @@ class ActionCardSmall extends React.Component {
       <ActionDetails data={item} canDelete={true} takeTheAction={this._takeAction}/>
 
     </Animated.View>
+    <WasteModal waste={waste} onClose={this.onModalClose} visible={this.state.showWasteModal}/>
+    <WaterModal water={water} onClose={this.onModalClose} visible={this.state.showWaterModal}/>
+    <CarbonModal carbon_dioxide={carbon_dioxide} onClose={this.onModalClose} visible={this.state.showCarbonModal}/>
     </Animated.View>
   </TouchableOpacity>)
   }
 
   _standardItem = () =>{
     const { item, index, canDelete } = this.props;
-    const { currScreen, takingAction } = this.state;
+    const { currScreen, takingAction, congratulationsModal } = this.state;
     const frontAnimatedStyle = {
       transform: [{ rotateY: this.frontInterpolate }],
     };
@@ -220,7 +251,13 @@ class ActionCardSmall extends React.Component {
     };
 
     const preview = { uri: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==" };
-
+    if(!item){
+      return <View></View>
+    }
+    
+    let waste = item.waste;
+    let water = item.water;
+    let carbon_dioxide = item.carbon_dioxide;
 
    return  <DoubleClick
     style={{ flex: 1, height: index % 2 ? 230 : 250, width: 180 }}
@@ -254,7 +291,7 @@ class ActionCardSmall extends React.Component {
         {...{preview, uri: canDelete ? item.action.primary_image : item.primary_image}}
       />
       <LinearGradient
-        colors={['rgba(255,255,255,0)', '#000000']}
+        colors={['rgba(255,255,255,0)', 'rgba(0,0,0,0.5)']}
         locations={[0.3, 1]}
         style={[styles.gradient, { height: 250}]}
       />
@@ -288,7 +325,9 @@ class ActionCardSmall extends React.Component {
       ]}
     >
       <ActionDetails data={item} canDelete={false} takeTheAction={this._takeAction}/>
-
+      <WasteModal waste={waste} onClose={this.onModalClose} visible={this.state.showWasteModal}/>
+      <WaterModal water={water} onClose={this.onModalClose} visible={this.state.showWaterModal}/>
+      <CarbonModal carbon_dioxide={carbon_dioxide} onClose={this.onModalClose} visible={this.state.showCarbonModal}/>
       {this.state.delete && this.showDelete()}
     </Animated.View>
   </DoubleClick>

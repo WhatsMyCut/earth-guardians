@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, Modal } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
-
+import { WebBrowser } from 'expo';
 import NavigationService from '../../../navigation/navigationService';
 export default class RedirectModal extends React.Component {
   state = { modalVisible: true };
@@ -48,7 +48,7 @@ export default class RedirectModal extends React.Component {
                 textAlign: 'center',
               }}
             >
-              EARTH GUARDIANS WILL REDIRECT YOU TO WWW.CHOOSE.TODAY
+              EARTH GUARDIANS WILL REDIRECT YOU TO {this.props.external_url}
             </Text>
 
             <TouchableOpacity
@@ -61,7 +61,10 @@ export default class RedirectModal extends React.Component {
                 alignItems: 'center',
                 marginTop: 20,
               }}
-              onPress={() => console.log('button pressed')}
+              onPress={() => {
+                WebBrowser.openBrowserAsync(this.props.external_url)
+                this.props.onClose();
+              }}
             >
               <Text style={{ color: '#333', fontSize: 18, fontWeight: 'bold' }}>
                 REDIRECT
@@ -69,7 +72,7 @@ export default class RedirectModal extends React.Component {
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => {
-                this.toggleModalVisible();
+                this.props.onClose();
               }}
               hitSlop={{ top: 15, left: 15, right: 15, bottom: 15 }}
               style={{ position: 'absolute', right: -2, top: -5 }}

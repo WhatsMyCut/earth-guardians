@@ -6,48 +6,66 @@ import {
   View,
   Text,
   StyleSheet,
+  Share
 } from 'react-native';
 import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_categories_query';
 import graphql from '../components/hoc/graphql';
 
 //import { data } from './dummy/actions.json';
 
-@graphql(ALL_ACTION_CATEGORIES, {
-  name: 'all_categories',
-  options: {
-    fetchPolicy: 'network-only',
-    variables: {
-      name: 'Social',
-    },
-  },
-})
+// @graphql(ALL_ACTION_CATEGORIES, {
+//   name: 'all_categories',
+//   options: {
+//     fetchPolicy: 'network-only',
+//     variables: {
+//       name: 'Social',
+//     },
+//   },
+// })
 class SocialStackScreen extends React.Component {
   static navigationOptions = {
     header: null,
   };
+
+  _shareMetrics= async()=>{
+    const result = await Share.share({
+      message: 'I love this app EarthTracks by Earth Guardians! The actions I take make a difference. Check it out. Are you in? #earthguardians #earthtracks',
+      url: 'https://www.earthguardians.org/',
+      title: 'Share EarthTracks App!'
+    }, {
+      // Android only:
+      dialogTitle: 'Share EarthTracks App',
+    })
+  }
+
+  _shareApp = async()=>{
+    const result = await Share.share({
+      message: 'I love this app EarthTracks by Earth Guardians! The actions I take make a difference. Check it out. Are you in? #earthguardians #earthtracks',
+      url: 'https://www.earthguardians.org/',
+      title: 'Share EarthTracks App!'
+    }, {
+      // Android only:
+      dialogTitle: 'Share EarthTracks App',
+    })
+  }
 
   render() {
     return (
       <SafeAreaView style={{ flex: 1 }}>
         <View style={styles.container}>
           <TouchableOpacity
-            onPress={() => console.log('Share to Facebook')}
+            onPress={() => this._shareApp()}
             style={styles.social}
           >
-            <Text style={styles.socialItem}>Share to Facebook</Text>
+            <Text style={styles.socialItem}>Share your Metrics!</Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => console.log('Share to Twitter')}
             style={styles.social}
           >
-            <Text style={styles.socialItem}>Share to Twitter</Text>
+            <Text style={styles.socialItem}>Share the EarthTracks App!</Text>
           </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => console.log('Share to Instagram')}
-            style={styles.social}
-          >
-            <Text style={styles.socialItem}>Share to Instagram</Text>
-          </TouchableOpacity>
+          
         </View>
       </SafeAreaView>
     );

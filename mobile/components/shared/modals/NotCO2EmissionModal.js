@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, TouchableOpacity, Modal, Image } from 'react-native';
 import { AntDesign, MaterialCommunityIcons } from '@expo/vector-icons';
 
-export default class NotCO2EmissionModal extends React.Component {
+export default class CarbonModal extends React.Component {
   state = { modalVisible: true };
   toggleModalVisible = () => {
     this.setState({
@@ -14,9 +14,10 @@ export default class NotCO2EmissionModal extends React.Component {
       <Modal
         animationType="slide"
         transparent={true}
-        visible={this.state.modalVisible}
+        visible={this.props.visible}
+        onDismiss={this.props.onClose}
         onRequestClose={() => {
-          Alert.alert('Modal has been closed.');
+          this.props.onClose()
         }}
         style={{
           backgroundColor: '#333',
@@ -52,32 +53,12 @@ export default class NotCO2EmissionModal extends React.Component {
                 textAlign: 'center',
               }}
             >
-              YOU'VE REDUCED YOUR CO2 EMMISION BY 1234 lbs
+              YOU'VE REDUCED YOUR CO2 EMMISION BY {this.props.carbon_dioxide} POUNDS!
             </Text>
 
-            <Text
-              style={{
-                color: '#fff',
-                fontSize: 12,
-                paddingTop: 10,
-                textAlign: 'center',
-              }}
-            >
-              You've offset the equivalent of
-            </Text>
-            <Text
-              style={{
-                color: '#fff',
-                fontSize: 12,
-                paddingBottom: 10,
-                textAlign: 'center',
-              }}
-            >
-              driving a car for 100 miles
-            </Text>
             <TouchableOpacity
               onPress={() => {
-                this.toggleModalVisible();
+                this.props.onClose()
               }}
               hitSlop={{ top: 15, left: 15, right: 15, bottom: 15 }}
               style={{ position: 'absolute', right: -2, top: -5 }}

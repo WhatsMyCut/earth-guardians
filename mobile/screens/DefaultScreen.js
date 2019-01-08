@@ -49,6 +49,8 @@ class DefaultScreen extends BaseScreen {
     );
 
     const screen = this.props.navigation.getParam('screen', 'MyActions');
+    const petition = this.props.navigation.getParam('petition');
+
     const videoUrl = this.props.navigation.getParam(
       'video',
       'https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8'
@@ -60,7 +62,15 @@ class DefaultScreen extends BaseScreen {
         <View style={styles.container}>
           <View style={styles.topBackNav}>
             <TouchableOpacity
-              onPress={() => this.props.navigation.navigate(screen)}
+              onPress={() => {
+                
+                if(petition){
+                  this.props.navigation.navigate(screen, {screen:"CommunityStack", image:petition, petitionTitle:petition.title});
+                } else{
+                  this.props.navigation.navigate(screen)
+                }
+                
+              }}
             >
               <Ionicons name="ios-arrow-round-back" size={42} color="white" />
             </TouchableOpacity>

@@ -75,19 +75,17 @@ export default class GameCards extends React.Component {
         if (gestureState.dx > 120) {
           Animated.spring(this.position, {
             toValue: { x: SCREEN_WIDTH + 100, y: gestureState.dy }
-          }).start(() => {
-            this.position.setValue({ x: 0, y: 0 })
-            this.setState({ currentIndex: this.state.currentIndex + 1 })
-          })
+          }).start()
+         this.position.setValue({ x: 0, y: 0 })
+         this.setState({ currentIndex: this.state.currentIndex + 1 })
         }
         else if (gestureState.dx < -120) {
           Animated.spring(this.position, {
             toValue: { x: -SCREEN_WIDTH - 100, y: gestureState.dy }
-          }).start(() => {
-            this.position.setValue({ x: 0, y: 0 })
-            this.setState({ currentIndex: this.state.currentIndex + 1 })
+          }).start();
+          this.position.setValue({ x: 0, y: 0 })
+         this.setState({ currentIndex: this.state.currentIndex + 1 })
             
-          })
         }
         else {
           Animated.spring(this.position, {
@@ -152,7 +150,7 @@ export default class GameCards extends React.Component {
                         {...{preview, uri: item.primary_image}}
                      />
                      <LinearGradient
-                        colors={['rgba(255,255,255,0)', '#000000']}
+                        colors={['rgba(255,255,255,0)', 'rgba(0,0,0,0.5)']}
                         locations={[0, 1]}
                         style={[styles.gradient, { height: CARD_HEIGHT}]}
                      />

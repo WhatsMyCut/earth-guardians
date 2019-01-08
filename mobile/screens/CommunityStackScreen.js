@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import { Image } from 'react-native-expo-image-cache';
 import { all } from 'rsvp';
-import { LinearGradient } from 'expo';
+import { LinearGradient, BlurView } from 'expo';
 
 import { ALL_PETITIONS } from '../components/graphql/queries/all_petitions';
 import graphql from '../components/hoc/graphql';
@@ -21,6 +21,8 @@ import LinearGradientProps from '../constants/LinearGradientProps';
 import navigationService from '../navigation/navigationService';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import client from '../Apollo';
+import RedirectModal from '../components/shared/modals/RedirectModal';
+
 //import { petitions } from './dummy/community_data.json';
 import { community_data } from './dummy/data';
 // get the device dimensions
@@ -42,9 +44,22 @@ class CommunityStackScreen extends React.Component {
   async componentDidMount() {
     const all_petitions = await client.query({query: ALL_PETITIONS});
     console.log('all_petitions', all_petitions);
+    const previousPosition = this.props.navigation.getParam('position');
+    let all_available_petitions = all_petitions.data.petitions;
+    if(previousPosition){
+      let formerLength = all_available_petitions.length;
+      for(var i = 0; i<formerLength*1; i++){
+        if(all_available_petitions[i].id !==  previousPosition){
+          let item = all_available_petitions.shift();
+          petitions[petitions.length] = item;
+        }
+      }
+    }
     this.setState({
       petitions:all_petitions.data.petitions,
-      loading:false
+      loading:false,
+      showRedirectModal:false,
+      redirectModalPetition: null
     });
   }
 
@@ -191,7 +206,7 @@ class CommunityStackScreen extends React.Component {
                 {...{ preview, uri: petition.primary_image }}
               />
               <LinearGradient
-            colors={['rgba(255,255,255,0)', '#000000']}
+            colors={['rgba(255,255,255,0)', 'rgba(0,0,0,0.5)']}
             locations={[0.1, 1]}
             style={{ 
               height: SCREEN_HEIGHT - 180,
@@ -202,11 +217,16 @@ class CommunityStackScreen extends React.Component {
 
               <View style={styles.headlineViewPlayIcon}>
                 <TouchableOpacity
-                  onPress={() =>
-                    navigationService.navigate('Petition', {
-                      screen: 'Community',
-                      image: petition
-                    })
+                  onPress={() =>{
+                    if(petition.external_url){
+                      this._openRedirectWithUrl(petition.external_url);
+                    } else{
+                      navigationService.navigate('Petition', {
+                        screen: 'Community',
+                        image: petition
+                      })
+                    }
+                  }
                   }
                 >
                   <FontAwesome name="play" size={52} color="white" />
@@ -214,6 +234,11 @@ class CommunityStackScreen extends React.Component {
               </View>
             </Animated.View>
     }
+
+  _openRedirectWithUrl=(url)=>{
+    this.setState({showRedirectModal:true, redirectModalPetition:url})
+  }
+
   _renderCard = (petition) => {
     // make sure the size is defined first, ensures the petitions are loaded
     if (
@@ -281,7 +306,7 @@ class CommunityStackScreen extends React.Component {
                 {...{ preview, uri: petition.primary_image }}
               />
               <LinearGradient
-            colors={['rgba(255,255,255,0)', '#000000']}
+            colors={['rgba(255,255,255,0)', 'rgba(0,0,0,0.8)']}
             locations={[0.3, 1]}
             style={{ 
               height: SCREEN_HEIGHT - 180,
@@ -292,11 +317,16 @@ class CommunityStackScreen extends React.Component {
 
               <View style={styles.headlineViewPlayIcon}>
                 <TouchableOpacity
-                  onPress={() =>
-                    navigationService.navigate('Petition', {
-                      screen: 'Community',
-                      image: petition
-                    })
+                  onPress={() =>{
+                    if(petition.external_url){
+                      this._openRedirectWithUrl(petition.external_url);
+                    } else{
+                      navigationService.navigate('Petition', {
+                        screen: 'Community',
+                        image: petition
+                      })
+                    }
+                  }
                   }
                 >
                   <FontAwesome name="play" size={52} color="white" />
@@ -361,9 +391,14 @@ class CommunityStackScreen extends React.Component {
     this.setState({petitions:petitions, loading:false})
   }
 
+  _modalOnClose =()=>{
+    this.setState({showRedirectModal:false, redirectModalPetition: null});
+  }
+
+
 
   render() {
-    const {petitions, loading} = this.state;
+    const {petitions, loading, redirectModalPetition, showRedirectModal} = this.state;
 
     if(!petitions){
       return <View> 
@@ -382,13 +417,20 @@ class CommunityStackScreen extends React.Component {
 
     return (
       <LinearGradient {...LinearGradientProps.community} style={{ flex: 1 }}>
-        <SafeAreaView style={{ flex: 1}}>
+        <View style={{ flex: 1}}>
           <View styles={styles.container}>
             {this._renderCard(petitions[0])}
             {this._renderOtherCard(petitions[1], 2)}
             {this._renderOtherCard(petitions[2], 1)}
           </View>
-        </SafeAreaView>
+          {showRedirectModal && <BlurView
+              tint="dark" 
+              intensity={80}
+              style={{height:SCREEN_HEIGHT, width:SCREEN_WIDTH, position:"absolute"}}
+              >
+              <RedirectModal onClose={this._modalOnClose} external_url={redirectModalPetition ? redirectModalPetition : null} />
+              </BlurView>}
+        </View>
       </LinearGradient>
     );
   }

@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, TouchableOpacity, Modal, Image } from 'react-native';
 import { AntDesign, Ionicons } from '@expo/vector-icons';
 
-export default class NotEarnedPointsModals extends React.Component {
+export default class PointsModal extends React.Component {
   state = { modalVisible: true };
   toggleModalVisible = () => {
     this.setState({
@@ -14,9 +14,10 @@ export default class NotEarnedPointsModals extends React.Component {
       <Modal
         animationType="slide"
         transparent={true}
-        visible={this.state.modalVisible}
+        visible={this.props.visible}
+        onDismiss={this.props.onClose}
         onRequestClose={() => {
-          Alert.alert('Modal has been closed.');
+          this.props.onClose()
         }}
         style={{
           backgroundColor: '#333',
@@ -70,7 +71,7 @@ export default class NotEarnedPointsModals extends React.Component {
             </Text>
             <TouchableOpacity
               onPress={() => {
-                this.toggleModalVisible();
+                this.props.onClose()
               }}
               hitSlop={{ top: 15, left: 15, right: 15, bottom: 15 }}
               style={{ position: 'absolute', right: -2, top: -5 }}

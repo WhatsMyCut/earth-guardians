@@ -28,6 +28,11 @@ import GeneralScreen from './GeneralScreen';
 import { fromPromise } from 'apollo-link';
 import { MY_ACTIONS_QUERY } from '../components/graphql/queries/my_actions_query';
 const SCREEN_HEIGHT = Dimensions.get('window').height;
+const SCREEN_WIDTH = Dimensions.get('window').width;
+
+
+import FontAwesome from '@expo/vector-icons/FontAwesome';
+import navigationService from '../navigation/navigationService';
 // @graphql(ALL_ACTION_CATEGORIES, {
 //   name: 'all_categories',
 //   fetchPolicy: 'network-only',
@@ -47,12 +52,29 @@ const SCREEN_HEIGHT = Dimensions.get('window').height;
   name: 'unsign_petition'
 })
 class PetitionScreen extends React.Component {
-  state = { in: false }; //TODO, when Database is established, do a componentDidMount to load status
+  state = { in: false, video_url: null }; //TODO, when Database is established, do a componentDidMount to load status
   screen = this.props.navigation.getParam('screen');
   image = this.props.navigation.getParam('image');
   petitionTitle = this.props.navigation.getParam('title');
   position = this.props.navigation.getParam('position');
   
+  componentDidMount() {
+    if (this.image.video_url) {
+      fetch(`https://api.vimeo.com/videos/${this.image.video_url}`, {
+        headers: {
+          authorization: 'Bearer 5af014003bea7ca29ec721cc5a7bd34d',
+        },
+      })
+        .then(response => response.json())
+        .then(data => {
+          this.setState({
+            video_url: data.download[data.download.length - 2].link,
+          });
+        });
+    }
+  }
+
+
   togglePetition = () => {
     // TODO update Database
     const { sign_petition,my_user, unsign_petition } = this.props;
@@ -117,15 +139,18 @@ class PetitionScreen extends React.Component {
           <View style={styles.container}>
             <ImageBackground
               source={{ uri: this.image.primary_image }}
-              style={{ flex: 1, width: null, height: SCREEN_HEIGHT }}
+              style={{ flex: 1, width: SCREEN_WIDTH, height: SCREEN_HEIGHT }}
             />
+           
+           
             <View style={styles.topBar}>
               <TouchableOpacity
-                onPress={() => NavigationService.navigate(this.screen)}
+                onPress={() => NavigationService.navigate(this.screen,{position:this.image.Dimensions})}
               >
                 <Ionicons name="ios-arrow-round-back" size={42} color="#000000" />
               </TouchableOpacity>
             </View>
+            
             <View
               style={{
                 flex: 1,
@@ -134,6 +159,20 @@ class PetitionScreen extends React.Component {
                 padding: 20,
               }}
             >
+            {this.image.video_url && (
+          
+          <TouchableOpacity style={{opacity:0.9, position:"absolute", top:0, left:SCREEN_WIDTH/2.2}} onPress={()=>{
+            navigationService.navigate('Video', {
+              screen: 'Petition',
+              video: this.state.video_url,
+              petition: this.image
+            })
+          }}>
+              <FontAwesome name="play" size={52} color="white" />
+          </TouchableOpacity>
+  
+      )}
+            
               <Text style={{ color: 'white', fontSize: 30 }}>
                 {this.image.title}
               </Text>

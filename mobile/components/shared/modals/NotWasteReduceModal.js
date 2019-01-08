@@ -2,21 +2,23 @@ import React from 'react';
 import { View, Text, TouchableOpacity, Modal, Image } from 'react-native';
 import { AntDesign, Entypo } from '@expo/vector-icons';
 
-export default class NotWasteReduceModal extends React.Component {
+export default class WasteModal extends React.Component {
   state = { modalVisible: true };
   toggleModalVisible = () => {
     this.setState({
       modalVisible: !this.state.modalVisible,
     });
   };
+
   render() {
     return (
       <Modal
         animationType="slide"
         transparent={true}
-        visible={this.state.modalVisible}
+        visible={this.props.visible}
+        onDismiss={this.props.onClose}
         onRequestClose={() => {
-          Alert.alert('Modal has been closed.');
+          this.props.onClose()
         }}
         style={{
           backgroundColor: '#333',
@@ -48,10 +50,10 @@ export default class NotWasteReduceModal extends React.Component {
                 textAlign: 'center',
               }}
             >
-              YOU'VE REDUCED YOUR WASTE BY 1234 lbs
+              YOU'VE REDUCED YOUR WASTE BY {this.props.waste} POUNDS!
             </Text>
 
-            <Text
+            {/* <Text
               style={{
                 color: '#fff',
                 fontSize: 12,
@@ -70,10 +72,10 @@ export default class NotWasteReduceModal extends React.Component {
               }}
             >
               buying 3000 water bottles
-            </Text>
+            </Text> */}
             <TouchableOpacity
               onPress={() => {
-                this.toggleModalVisible();
+                this.props.onClose()
               }}
               hitSlop={{ top: 15, left: 15, right: 15, bottom: 15 }}
               style={{ position: 'absolute', right: -2, top: -5 }}
