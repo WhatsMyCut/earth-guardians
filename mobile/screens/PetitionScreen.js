@@ -13,32 +13,23 @@ import {
 } from 'react-native';
 import { Button } from 'react-native-paper';
 import { all } from 'rsvp';
-import { LinearGradient, Icon } from 'expo';
+import { LinearGradient, Icon, BlurView } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
-import { withNavigation } from 'react-navigation';
 
 import { GET_USER } from '../components/graphql/queries/get_user';
 import { SIGN_PETITION, UNSIGN_PETITION } from '../components/graphql/mutations/sign_petition';
 import graphql from '../components/hoc/graphql';
-import HeaderNavBar from '../components/shared/navBar/HeaderNavBar';
 import TabBarIcon from '../components/shared/icons/TabBarIcon';
 import NavigationService from '../navigation/navigationService';
-import LinearGradientProps from '../constants/LinearGradientProps';
-import GeneralScreen from './GeneralScreen';
-import { fromPromise } from 'apollo-link';
-import { MY_ACTIONS_QUERY } from '../components/graphql/queries/my_actions_query';
+import CommunitySignedModal from '../components/shared/modals/communitySignedModal';
+import RedirectModal from '../components/shared/modals/RedirectModal';
+import FontAwesome from '@expo/vector-icons/FontAwesome';
+import navigationService from '../navigation/navigationService';
+
+
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
-
-import FontAwesome from '@expo/vector-icons/FontAwesome';
-import navigationService from '../navigation/navigationService';
-// @graphql(ALL_ACTION_CATEGORIES, {
-//   name: 'all_categories',
-//   fetchPolicy: 'network-only',
-// })
-
-@withNavigation
 @graphql(GET_USER, {
   name:"my_user",
   options:{
@@ -52,7 +43,15 @@ import navigationService from '../navigation/navigationService';
   name: 'unsign_petition'
 })
 class PetitionScreen extends React.Component {
-  state = { in: false, video_url: null }; //TODO, when Database is established, do a componentDidMount to load status
+  state = { 
+    in: false, 
+    video_url: null,
+    showRedirectModal:false, 
+    showCommunitySignedModal: false,
+    redirectModalPetition:null
+  
+  };
+  
   screen = this.props.navigation.getParam('screen');
   image = this.props.navigation.getParam('image');
   petitionTitle = this.props.navigation.getParam('title');
@@ -95,6 +94,7 @@ class PetitionScreen extends React.Component {
       sign_petition({variables}).then(response =>{
         this.setState({
           in: true,
+          showCommunitySignedModal: true
         })
       })
     }
@@ -104,17 +104,30 @@ class PetitionScreen extends React.Component {
    
   };
 
+  // _openCommunitySignedModal = () =>{
+  //   this.setState({showCommunitySignedModal: true});
+  // }
+
+
+  _openRedirectWithUrl=(url)=>{
+    this.setState({showRedirectModal:true, redirectModalPetition:url})
+  }
+
+
+  _modalOnClose =()=>{
+    this.setState({showRedirectModal:false, redirectModalPetition: null, showCommunitySignedModal:false});
+  }
+
+
+
   render() {
     const { my_user } = this.props;
-    
+    const { showRedirectModal,redirectModalPetition, showCommunitySignedModal } = this.state;
     let status_icon_name;
-      
-   
     if(my_user.loading){
-      return  <LinearGradient
-      {...LinearGradientProps.whiteToBlackcolors}
-      style={{ flex: 1 }}
-    > </LinearGradient>
+      return<View
+      style={{width: SCREEN_WIDTH, height: SCREEN_HEIGHT }}
+    ><Text>Loading...</Text></View>
     }
 
     let color = '#aaa';
@@ -125,11 +138,10 @@ class PetitionScreen extends React.Component {
       : 'circle-outline';
     }
 
+    console.log('got this far', this.image);
+
+
     return (
-      <LinearGradient
-        {...LinearGradientProps.whiteToBlackcolors}
-        style={{ flex: 1 }}
-      >
         <View style={{ flex: 1 }}>
           {/* <StatusBar
             hidden={true}
@@ -142,6 +154,11 @@ class PetitionScreen extends React.Component {
               style={{ flex: 1, width: SCREEN_WIDTH, height: SCREEN_HEIGHT }}
             />
            
+           <LinearGradient
+        colors={['rgba(255,255,255,0)', 'rgba(0,0,0,0.5)']}
+        locations={[0.3, 1]}
+        style={{ position:"absolute",width: SCREEN_WIDTH, height: SCREEN_HEIGHT }}
+      ></LinearGradient>
            
             <View style={styles.topBar}>
               <TouchableOpacity
@@ -160,7 +177,7 @@ class PetitionScreen extends React.Component {
               }}
             >
             {this.image.video_url && (
-          
+         
           <TouchableOpacity style={{opacity:0.9, position:"absolute", top:0, left:SCREEN_WIDTH/2.2}} onPress={()=>{
             navigationService.navigate('Video', {
               screen: 'Petition',
@@ -172,13 +189,13 @@ class PetitionScreen extends React.Component {
           </TouchableOpacity>
   
       )}
-            
+           
               <Text style={{ color: 'white', fontSize: 30 }}>
                 {this.image.title}
               </Text>
-              <Text style={{ color: 'white', fontSize: 16 }}>
+             <Text style={{ color: 'white', fontSize: 16 }}>
                 {this.image.short_description}
-              </Text>
+              </Text> 
               <View
                 style={{
                   flexDirection: 'row',
@@ -212,14 +229,28 @@ class PetitionScreen extends React.Component {
                   4K took action
                 </Text> */}
               </View>
-              {/* <TouchableOpacity
-                onPress={() =>
-                  navigationService.navigate('PetitionText', {
-                    image: this.image.id,
-                    title: this.image.title,
-                    body: this.image.body,
-                  })
-                }
+              {showRedirectModal && <BlurView
+              tint="dark" 
+              intensity={80}
+              style={{height:SCREEN_HEIGHT, width:SCREEN_WIDTH, position:"absolute"}}
+              >
+                  <RedirectModal onClose={this._modalOnClose} external_url={redirectModalPetition ? redirectModalPetition : null} />
+              </BlurView>
+            
+              }
+              { showCommunitySignedModal && <BlurView
+                  tint="dark" 
+                  intensity={80}
+                  style={{height:SCREEN_HEIGHT, width:SCREEN_WIDTH, position:"absolute"}}
+                  >
+               <CommunitySignedModal onClose={this._modalOnClose}/>
+               </BlurView>
+              }
+
+          {this.image.external_url ? (<TouchableOpacity
+                onPress={() =>{
+                  this._openRedirectWithUrl(this.image.external_url); 
+                }}
                 style={{
                   color: '#fff',
                   alignSelf: 'center',
@@ -231,11 +262,11 @@ class PetitionScreen extends React.Component {
                     Platform.OS === 'ios' ? `ios-arrow-down` : 'md-arrow-down'
                   }
                 />
-              </TouchableOpacity> */}
+    </TouchableOpacity> ): null
+              }
             </View>
           </View>
         </View>
-      </LinearGradient>
     );
   }
 }

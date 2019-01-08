@@ -56,6 +56,7 @@ class ShoppingStackScreen extends React.Component {
       <LinearGradient {...LinearGradientProps.shopping} style={{ flex: 1 }}>
         <GeneralScreen
           data={actions}
+          screen={"Shopping"}
           primary_image={actions[0].primary_image}
           primary_video={actions[0].video_id}
         />

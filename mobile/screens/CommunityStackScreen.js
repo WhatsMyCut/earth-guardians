@@ -206,7 +206,7 @@ class CommunityStackScreen extends React.Component {
                 {...{ preview, uri: petition.primary_image }}
               />
               <LinearGradient
-            colors={['rgba(255,255,255,0)', 'rgba(0,0,0,0.5)']}
+            colors={['rgba(255,255,255,0)', 'rgba(0,0,0,0.4)']}
             locations={[0.1, 1]}
             style={{ 
               height: SCREEN_HEIGHT - 180,
@@ -218,14 +218,12 @@ class CommunityStackScreen extends React.Component {
               <View style={styles.headlineViewPlayIcon}>
                 <TouchableOpacity
                   onPress={() =>{
-                    if(petition.external_url){
-                      this._openRedirectWithUrl(petition.external_url);
-                    } else{
+                    
                       navigationService.navigate('Petition', {
                         screen: 'Community',
                         image: petition
                       })
-                    }
+                 
                   }
                   }
                 >
@@ -306,7 +304,7 @@ class CommunityStackScreen extends React.Component {
                 {...{ preview, uri: petition.primary_image }}
               />
               <LinearGradient
-            colors={['rgba(255,255,255,0)', 'rgba(0,0,0,0.8)']}
+            colors={['rgba(255,255,255,0)', 'rgba(0,0,0,0.6)']}
             locations={[0.3, 1]}
             style={{ 
               height: SCREEN_HEIGHT - 180,
@@ -318,14 +316,11 @@ class CommunityStackScreen extends React.Component {
               <View style={styles.headlineViewPlayIcon}>
                 <TouchableOpacity
                   onPress={() =>{
-                    if(petition.external_url){
-                      this._openRedirectWithUrl(petition.external_url);
-                    } else{
                       navigationService.navigate('Petition', {
                         screen: 'Community',
                         image: petition
                       })
-                    }
+                  
                   }
                   }
                 >
@@ -402,7 +397,7 @@ class CommunityStackScreen extends React.Component {
 
     if(!petitions){
       return <View> 
-        <ActivityIndicator size="large"/>
+        <Text>There are currently no community items!</Text>
       </View>
     }
 

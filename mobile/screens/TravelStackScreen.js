@@ -55,6 +55,7 @@ class TravelStackScreen extends React.Component {
       <LinearGradient {...LinearGradientProps.travel} style={{ flex: 1 }}>
         <GeneralScreen
           data={actions}
+          screen={"Travel"}
           primary_image={actions[0].primary_image}
           primary_video={actions[0].video_id}
         />

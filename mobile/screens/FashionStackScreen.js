@@ -38,6 +38,7 @@ class FashionStackScreen extends React.Component {
       <LinearGradient {...LinearGradientProps.default} style={{ flex: 1 }}>
         <GeneralScreen
           data={this.state.actions}
+          screen={"Fashion"}
           primary_image={this.state.primary_image}
           primary_video={this.state.primary_video}
         />

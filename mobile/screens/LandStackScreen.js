@@ -40,6 +40,7 @@ class LandStackScreen extends React.Component {
       <LinearGradient {...LinearGradientProps.default} style={{ flex: 1 }}>
         <GeneralScreen
           data={actions}
+          screen={"Land"}
           primary_image={actions[0].primary_image}
           primary_video={actions[0].video_id}
         />

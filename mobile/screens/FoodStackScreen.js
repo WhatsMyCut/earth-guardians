@@ -18,7 +18,7 @@ import { food_data, primary_food_id } from './dummy/data';
   options: {
     fetchPolicy: 'network-only',
     variables: {
-      name: 'Travel',
+      name: 'Food',
     },
   },
 })
@@ -59,6 +59,7 @@ class FoodStackScreen extends React.Component {
       <LinearGradient {...LinearGradientProps.food} style={{ flex: 1 }}>
         <GeneralScreen
           data={actions}
+          screen={"Food"}
           primary_image={actions[0].primary_image}
           primary_video={actions[0].video_id}
         />
