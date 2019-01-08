@@ -8,6 +8,7 @@ import {
   Alert,
   TouchableHighlight,
   KeyboardAvoidingView,
+  ScrollView
 } from 'react-native';
 import NavigationService from '../../../navigation/navigationService';
 import graphql from '../../hoc/graphql';
@@ -51,7 +52,7 @@ export default class UpdateUserModal extends React.Component {
   };
 
   loadingModalContent(){
-    return <KeyboardAvoidingView>
+    return <KeyboardAvoidingView behavior="padding">
     <Modal
     animationType="slide"
     transparent={true}
@@ -109,7 +110,6 @@ export default class UpdateUserModal extends React.Component {
     const { me } = this.props.my_user;
     console.log('me', me);
     return (
-        
       <Modal
         animationType="slide"
         transparent={true}
@@ -119,17 +119,28 @@ export default class UpdateUserModal extends React.Component {
         }}
       >
      
-        <View
-          style={{
-            flex: 1,
-            justifyContent: 'center',
-            flexDirection: 'column',
-            alignItems: 'center',
-            borderRadius: 15,
-            backgroundColor: '#333',
-          }}
+        <ScrollView
+            contentContainerStyle={{
+                flex: 1,
+                justifyContent: 'center',
+                flexDirection: 'column',
+                alignItems: 'center',
+                borderRadius: 15,
+                backgroundColor: '#333',
+            }}
+          
         > 
-         <KeyboardAvoidingView behavior="position" enabled>
+         <KeyboardAvoidingView 
+         behavior="padding"
+            style={{
+                flex: 1,
+                justifyContent: 'center',
+                flexDirection: 'column',
+                alignItems: 'center',
+                borderRadius: 15,
+                backgroundColor: '#333',
+            }}
+        >
         <View
             style={{
             backgroundColor: '#333',
@@ -270,7 +281,7 @@ export default class UpdateUserModal extends React.Component {
            
             </View>
             </KeyboardAvoidingView>
-        </View>
+        </ScrollView>
       </Modal>
     );
   }

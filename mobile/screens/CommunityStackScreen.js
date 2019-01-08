@@ -14,28 +14,40 @@ import { Image } from 'react-native-expo-image-cache';
 import { all } from 'rsvp';
 import { LinearGradient } from 'expo';
 
-// import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_categories_query';
-// import graphql from '../components/hoc/graphql';
+import { ALL_PETITIONS } from '../components/graphql/queries/all_petitions';
+import graphql from '../components/hoc/graphql';
 import HeaderNavBar from '../components/shared/navBar/HeaderNavBar';
 import LinearGradientProps from '../constants/LinearGradientProps';
 import navigationService from '../navigation/navigationService';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
+import client from '../Apollo';
 //import { petitions } from './dummy/community_data.json';
 import { community_data } from './dummy/data';
 // get the device dimensions
 SCREEN_HEIGHT = Dimensions.get('window').height;
 SCREEN_WIDTH = Dimensions.get('window').width;
 
-// @graphql(ALL_ACTION_CATEGORIES, {
-//   name: 'all_categories',
-//   fetchPolicy: 'network-only',
-// })
+@graphql(ALL_PETITIONS, {
+  name: 'all_petitions',
+  fetchPolicy: 'network-only',
+})
 class CommunityStackScreen extends React.Component {
   state = {
     currentIndex: 0,
     petitions: [],
     loading: true,
   };
+  
+  
+  async componentDidMount() {
+    const all_petitions = await client.query({query: ALL_PETITIONS});
+    console.log('all_petitions', all_petitions);
+    this.setState({
+      petitions:all_petitions.data.petitions,
+      loading:false
+    });
+  }
+
 
   constructor(props) {
     super(props);
@@ -94,10 +106,13 @@ class CommunityStackScreen extends React.Component {
           Animated.spring(this.position, {
             toValue: { x: 0, y: SCREEN_HEIGHT - 2000 },
             tension: 0,
-          }).start(() => {
+          }).start();
+          let { petitions } = this.state;
+            let item = petitions.shift();
+            petitions[petitions.length] = item;
+
             this.position.setValue({ x: 0, y: 0 });
-            this.setState({ currentIndex: this.state.currentIndex + 1 });
-          });
+            this.setState({ petitions: petitions });
         } else {
           Animated.spring(this.position, {
             toValue: { x: 0, y: 0 },
@@ -109,10 +124,9 @@ class CommunityStackScreen extends React.Component {
   }
 
   _handleLoading = () => {
-    console.log('handle loading is being called');
     this.setState({ loading: false });
   };
-  _renderCards = () => {
+  _renderOtherCard = (petition, index) => {
     // make sure the size is defined first, ensures the petitions are loaded
     if (
       this.state.size != undefined &&
@@ -126,13 +140,101 @@ class CommunityStackScreen extends React.Component {
         </View>
       );
     }
-    const { loading } = this.state;
+
     const preview = { uri: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==" };
-    const petition = this.state.petitions[this.state.currentIndex];
+    
+    if(!petition){
+      return <View></View>;
+    }
+
+
+    return <Animated.View
+              key={petition.id}
+              style={[
+                {
+                  height: SCREEN_HEIGHT - 180,
+                  width: SCREEN_WIDTH - 60,
+                  paddingHorizontal: 20,
+                  position: 'absolute',
+                  top:20  + (20 / index),
+                  left:SCREEN_WIDTH /10,
+                  zIndex:index * 10
+                },
+              ]}
+            >
+              <View
+                style={[
+                  {
+                    position: 'absolute',
+                    bottom: 50,
+                    left: 10,
+                    zIndex: 1000,
+                    paddingHorizontal: 20,
+                  },
+                ]}
+              >
+                <Text style={{ color: 'white', fontSize: 24 }}>
+                  {petition.title}
+                </Text>
+
+                <Text style={{ color: 'white' }}>{petition.short_description}</Text>
+              </View>
+
+              <Image
+                style={{
+                  flex: 1,
+                  height: null,
+                  width: null,
+                  resizeMode: 'cover',
+                  borderRadius: 20,
+                }}
+                {...{ preview, uri: petition.primary_image }}
+              />
+              <LinearGradient
+            colors={['rgba(255,255,255,0)', '#000000']}
+            locations={[0.1, 1]}
+            style={{ 
+              height: SCREEN_HEIGHT - 180,
+              width: SCREEN_WIDTH - 100, 
+              ...styles.gradient}}
+          />
+
+
+              <View style={styles.headlineViewPlayIcon}>
+                <TouchableOpacity
+                  onPress={() =>
+                    navigationService.navigate('Petition', {
+                      screen: 'Community',
+                      image: petition
+                    })
+                  }
+                >
+                  <FontAwesome name="play" size={52} color="white" />
+                </TouchableOpacity>
+              </View>
+            </Animated.View>
+    }
+  _renderCard = (petition) => {
+    // make sure the size is defined first, ensures the petitions are loaded
+    if (
+      this.state.size != undefined &&
+      this.state.currentIndex === this.state.size
+    ) {
+      return (
+        <View style={styles.headlineViewPlayIcon}>
+          <TouchableOpacity onPress={() => this.setState({ currentIndex: 0 })}>
+            <FontAwesome name="undo" size={52} color="white" />
+          </TouchableOpacity>
+        </View>
+      );
+    }
+    const preview = { uri: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==" };
     
     if(!petition){
       return null;
     }
+
+
     return <Animated.View
               {...this.imagePanResponder.panHandlers}
               key={petition.id}
@@ -141,8 +243,11 @@ class CommunityStackScreen extends React.Component {
                 {
                   height: SCREEN_HEIGHT - 180,
                   width: SCREEN_WIDTH - 60,
+                  left:SCREEN_WIDTH /10,
                   paddingHorizontal: 20,
-                  position: 'absolute',
+                  zIndex:999,
+                  top:20,
+                  position: 'absolute'
                 },
               ]}
             >
@@ -162,7 +267,7 @@ class CommunityStackScreen extends React.Component {
                   {petition.title}
                 </Text>
 
-                <Text style={{ color: 'white' }}>{petition.description}</Text>
+                <Text style={{ color: 'white' }}>{petition.short_description}</Text>
               </Animated.View>
 
               <Image
@@ -173,7 +278,7 @@ class CommunityStackScreen extends React.Component {
                   resizeMode: 'cover',
                   borderRadius: 20,
                 }}
-                {...{ preview, uri: petition.image }}
+                {...{ preview, uri: petition.primary_image }}
               />
               <LinearGradient
             colors={['rgba(255,255,255,0)', '#000000']}
@@ -190,8 +295,7 @@ class CommunityStackScreen extends React.Component {
                   onPress={() =>
                     navigationService.navigate('Petition', {
                       screen: 'Community',
-                      image: petition,
-                      position: this.state.currentIndex
+                      image: petition
                     })
                   }
                 >
@@ -199,6 +303,8 @@ class CommunityStackScreen extends React.Component {
                 </TouchableOpacity>
               </View>
             </Animated.View>
+
+           
          
         //   let offset = this.currentIndex * 1 * 15;
         //   return (
@@ -250,21 +356,38 @@ class CommunityStackScreen extends React.Component {
         // }
   };
 
-  async componentDidMount() {
-    const petitions = await community_data();
-    let revpetitions = petitions.reverse();
-    let position = this.props.navigation.getParam('position', 0);
-  
-    this.setState({
-      petitions:revpetitions,
-      currentIndex : position
-    });
+ 
+  _setPetitionsInitial(petitions){
+    this.setState({petitions:petitions, loading:false})
   }
+
+
   render() {
+    const {petitions, loading} = this.state;
+
+    if(!petitions){
+      return <View> 
+        <ActivityIndicator size="large"/>
+      </View>
+    }
+
+    if(loading){
+      return <LinearGradient {...LinearGradientProps.community} style={{ flex: 1 }}>
+      <SafeAreaView style={{ flex: 1}}>
+        <ActivityIndicator size="large"/>
+        </SafeAreaView>
+      </LinearGradient>
+    }
+    console.log('petitions', petitions);
+
     return (
       <LinearGradient {...LinearGradientProps.community} style={{ flex: 1 }}>
-        <SafeAreaView style={{ flex: 1 }}>
-          <View style={styles.container}>{this._renderCards()}</View>
+        <SafeAreaView style={{ flex: 1}}>
+          <View styles={styles.container}>
+            {this._renderCard(petitions[0])}
+            {this._renderOtherCard(petitions[1], 2)}
+            {this._renderOtherCard(petitions[2], 1)}
+          </View>
         </SafeAreaView>
       </LinearGradient>
     );
@@ -274,8 +397,10 @@ class CommunityStackScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    flexDirection:'column',
     alignItems: 'center',
     justifyContent: 'center',
+    alignContent: 'center'
   },
   gradient: {
     position: 'absolute',

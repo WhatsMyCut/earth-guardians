@@ -30,16 +30,18 @@ class LandStackScreen extends React.Component {
       );
     }
 
-    const actions = all_categories.actionCategories;
-    if (!this.state.primary_video && !this.state.primary_image) {
-      return null;
+    const actions = all_categories.sectorActionsByName;
+    if (!actions[0].video_id && !actions[0].primary_image) {
+      return <LinearGradient {...LinearGradientProps.travel} style={{ flex: 1 }}>
+      
+    </LinearGradient>;
     }
     return (
       <LinearGradient {...LinearGradientProps.default} style={{ flex: 1 }}>
         <GeneralScreen
-          data={this.state.actions}
-          primary_image={this.state.primary_image}
-          primary_video={this.state.primary_video}
+          data={actions}
+          primary_image={actions[0].primary_image}
+          primary_video={actions[0].video_id}
         />
       </LinearGradient>
     );

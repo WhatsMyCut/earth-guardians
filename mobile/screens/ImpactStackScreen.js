@@ -1,7 +1,7 @@
 import React from 'react';
 //import { LinearGradient, AppLoading } from 'expo';
 
-import { TouchableOpacity, SafeAreaView, View, Text, KeyboardAvoidingView } from 'react-native';
+import { TouchableOpacity, SafeAreaView, View, Text, KeyboardAvoidingView, ActivityIndicator } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { BlurView } from 'expo';
 import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_categories_query';
@@ -21,7 +21,7 @@ import UpdateUserModal from '../components/shared/modals/updateUserModal';
 @graphql(ALL_MY_METRICS, {
   name:"all_metrics",
   options: {
-    fetchPolicy: 'network-only'
+    pollInterval:500
   },
 })
 @graphql(ALL_ACTION_CATEGORIES, {
@@ -101,6 +101,19 @@ class ImpactStackScreen extends React.Component {
     // }
 
     if(this.props.all_metrics.loading){
+      return  <SafeAreaView style={{ flex: 1 }}>
+      
+      <View
+        style={{
+          flex: 1,
+          alignItems: 'center',
+          justifyContent: 'center',
+          backgroundColor: '#333',
+        }}
+      >
+      <ActivityIndicator size={"large"} />
+      </View>
+      </SafeAreaView>
     } else{
       if(this.props.all_metrics.me.recent_actions.length !== 0){
         this._aggregateImpact(this.props.all_metrics.me.recent_actions, this.props.all_metrics.me.community_events);
@@ -186,6 +199,9 @@ ImpactStackScreen.navigationOptions = {
   ),
   headerLeft:<TouchableOpacity
   onPress={() => NavigationService.navigate('MyActions')}
+  style={{
+    paddingLeft:5
+  }}
 >
   <Ionicons name="ios-arrow-round-back" size={42} color="#ccc" />
 </TouchableOpacity>,

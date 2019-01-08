@@ -45,16 +45,18 @@ class TravelStackScreen extends React.Component {
         </LinearGradient>
       );
     }
-    const actions = all_categories.actionCategories;
+    const actions = all_categories.sectorActionsByName;
     if (!this.state.primary_video && !this.state.primary_image) {
-      return null;
+      return <LinearGradient {...LinearGradientProps.travel} style={{ flex: 1 }}>
+      
+    </LinearGradient>;
     }
     return (
       <LinearGradient {...LinearGradientProps.travel} style={{ flex: 1 }}>
         <GeneralScreen
           data={actions}
-          primary_image={this.state.primary_image}
-          primary_video={this.state.primary_video}
+          primary_image={actions[0].primary_image}
+          primary_video={actions[0].video_id}
         />
       </LinearGradient>
     );

@@ -74,17 +74,6 @@ class EarthGuardiansInfoScreen extends React.Component {
                     fontSize: 16,
                     paddingBottom: 20,
                     color: '#ffffff',
-                    fontWeight: 'bold',
-                  }}
-                >
-                  History
-                </Text>
-                <Text
-                  style={{
-                    textAlign: 'center',
-                    fontSize: 16,
-                    paddingBottom: 20,
-                    color: '#ffffff',
                     lineHeight: 25,
                   }}
                 >

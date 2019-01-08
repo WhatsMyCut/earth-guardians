@@ -6,6 +6,7 @@ import {
   Text,
   ImageBackground,
   StyleSheet,
+  WebView,
   Platform,
   Dimensions,
   StatusBar
@@ -16,13 +17,16 @@ import { LinearGradient, Icon } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
 import { withNavigation } from 'react-navigation';
 
-import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_categories_query';
+import { GET_USER } from '../components/graphql/queries/get_user';
+import { SIGN_PETITION, UNSIGN_PETITION } from '../components/graphql/mutations/sign_petition';
 import graphql from '../components/hoc/graphql';
 import HeaderNavBar from '../components/shared/navBar/HeaderNavBar';
 import TabBarIcon from '../components/shared/icons/TabBarIcon';
-import navigationService from '../navigation/navigationService';
+import NavigationService from '../navigation/navigationService';
 import LinearGradientProps from '../constants/LinearGradientProps';
 import GeneralScreen from './GeneralScreen';
+import { fromPromise } from 'apollo-link';
+import { MY_ACTIONS_QUERY } from '../components/graphql/queries/my_actions_query';
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 // @graphql(ALL_ACTION_CATEGORIES, {
 //   name: 'all_categories',
@@ -30,6 +34,18 @@ const SCREEN_HEIGHT = Dimensions.get('window').height;
 // })
 
 @withNavigation
+@graphql(GET_USER, {
+  name:"my_user",
+  options:{
+    pollInterval: 500
+  }
+})
+@graphql(SIGN_PETITION, {
+  name: 'sign_petition'
+})
+@graphql(UNSIGN_PETITION, {
+  name: 'unsign_petition'
+})
 class PetitionScreen extends React.Component {
   state = { in: false }; //TODO, when Database is established, do a componentDidMount to load status
   screen = this.props.navigation.getParam('screen');
@@ -39,21 +55,54 @@ class PetitionScreen extends React.Component {
   
   togglePetition = () => {
     // TODO update Database
-    this.setState(
-      prevState => ({
-        in: !prevState.in,
-      }),
-      () => {
-        console.log(`The state is ${this.state.in}`);
-      }
-    );
+    const { sign_petition,my_user, unsign_petition } = this.props;
+    const petitionids = my_user.me.petitions_signed.map(x => x.id);
+    let variables ={
+      id: my_user.me.id,
+      petition_id: this.image.id
+    }
+
+    if(petitionids.indexOf(this.image.id) > -1){
+      
+      unsign_petition({variables}).then(response =>{
+        this.setState({
+          in: false,
+        })
+      })
+    } else{
+      sign_petition({variables}).then(response =>{
+        this.setState({
+          in: true,
+        })
+      })
+    }
+
+    
+
+   
   };
 
   render() {
-    const status_icon_name = this.state.in
-      ? 'circle-slice-8'
+    const { my_user } = this.props;
+    
+    let status_icon_name;
+      
+   
+    if(my_user.loading){
+      return  <LinearGradient
+      {...LinearGradientProps.whiteToBlackcolors}
+      style={{ flex: 1 }}
+    > </LinearGradient>
+    }
+
+    let color = '#aaa';
+    const petitionids = my_user.me.petitions_signed.map(x => x.id);
+    if(petitionids){
+      color = petitionids.indexOf(this.image.id) > -1 ? 'green' : '#aaa';
+      status_icon_name = petitionids.indexOf(this.image.id) > -1 ? 'circle-slice-8'
       : 'circle-outline';
-    const color = this.state.in ? 'green' : '#aaa';
+    }
+
     return (
       <LinearGradient
         {...LinearGradientProps.whiteToBlackcolors}
@@ -64,16 +113,17 @@ class PetitionScreen extends React.Component {
             hidden={true}
             barStyle="dark-content"
           /> */}
+          
           <View style={styles.container}>
             <ImageBackground
-              source={{ uri: this.image.image }}
+              source={{ uri: this.image.primary_image }}
               style={{ flex: 1, width: null, height: SCREEN_HEIGHT }}
             />
-            <View style={styles.topBackNav}>
+            <View style={styles.topBar}>
               <TouchableOpacity
-                onPress={() => this.props.navigation.navigate(this.screen, { position: this.position})}
+                onPress={() => NavigationService.navigate(this.screen)}
               >
-                <Ionicons name="ios-arrow-round-back" size={42} color="#ccc" />
+                <Ionicons name="ios-arrow-round-back" size={42} color="#000000" />
               </TouchableOpacity>
             </View>
             <View
@@ -85,11 +135,10 @@ class PetitionScreen extends React.Component {
               }}
             >
               <Text style={{ color: 'white', fontSize: 30 }}>
-                {this.petitionTitle}
+                {this.image.title}
               </Text>
               <Text style={{ color: 'white', fontSize: 16 }}>
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard
+                {this.image.short_description}
               </Text>
               <View
                 style={{
@@ -109,7 +158,7 @@ class PetitionScreen extends React.Component {
                     style={{ color: color, fontSize: 20 }}
                   />
                 </Button>
-
+{/* 
                 <Icon.AntDesign
                   name="eyeo"
                   style={{
@@ -119,16 +168,17 @@ class PetitionScreen extends React.Component {
                     fontSize: 20,
                     marginHorizontal: 10,
                   }}
-                />
-                <Text style={{ color: '#fff', alignSelf: 'center' }}>
+                /> */}
+                {/* <Text style={{ color: '#fff', alignSelf: 'center' }}>
                   4K took action
-                </Text>
+                </Text> */}
               </View>
-              <TouchableOpacity
+              {/* <TouchableOpacity
                 onPress={() =>
                   navigationService.navigate('PetitionText', {
                     image: this.image.id,
-                    title: this.petitionTitle,
+                    title: this.image.title,
+                    body: this.image.body,
                   })
                 }
                 style={{
@@ -142,7 +192,7 @@ class PetitionScreen extends React.Component {
                     Platform.OS === 'ios' ? `ios-arrow-down` : 'md-arrow-down'
                   }
                 />
-              </TouchableOpacity>
+              </TouchableOpacity> */}
             </View>
           </View>
         </View>
@@ -151,10 +201,12 @@ class PetitionScreen extends React.Component {
   }
 }
 
-PetitionScreen.navigationOptions = {
-  header: null,
-};
 const styles = {
+  topBar:{
+    position:"absolute",
+    top:8,
+    left:15
+  },
   container: {
     flex: 1,
   },

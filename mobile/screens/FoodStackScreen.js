@@ -1,5 +1,7 @@
 import React from 'react';
 import { all } from 'rsvp';
+
+import { ActivityIndicator } from 'react-native';
 import { LinearGradient, AppLoading } from 'expo';
 
 import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_categories_query';
@@ -22,41 +24,43 @@ import { food_data, primary_food_id } from './dummy/data';
 })
 class FoodStackScreen extends React.Component {
   state = { primary_image: '', primary_video: '', actions: [] };
-  async componentDidMount() {
-    try {
-      // get the data
-      const actions = await food_data();
+  // async componentDidMount() {
+  //   try {
+  //     // get the data
+  //     const actions = await food_data();
 
-      // set the primary image and video
-      const primary_image = actions[primary_food_id].image;
-      const primary_video = actions[primary_food_id].video;
+  //     // set the primary image and video
+  //     const primary_image = actions[primary_food_id].image;
+  //     const primary_video = actions[primary_food_id].video;
 
-      //update the state
-      this.setState({ actions, primary_image, primary_video });
-    } catch (e) {
-      console.log(e);
-    }
-  }
+  //     //update the state
+  //     this.setState({ actions, primary_image, primary_video });
+  //   } catch (e) {
+  //     console.log(e);
+  //   }
+  // }
   render() {
     const { all_categories } = this.props;
     if (all_categories.loading) {
       return (
         <LinearGradient {...LinearGradientProps.food} style={{ flex: 1 }}>
-          <AppLoading />
+         <ActivityIndicator size={"large"} />
         </LinearGradient>
       );
     }
 
     const actions = all_categories.sectorActionsByName;
-    if (!this.state.primary_video && !this.state.primary_image) {
-      return null;
+    if (!actions[0].video_id && !actions[0].primary_image) {
+      return <LinearGradient {...LinearGradientProps.food} style={{ flex: 1 }}>
+      
+    </LinearGradient>;
     }
     return (
       <LinearGradient {...LinearGradientProps.food} style={{ flex: 1 }}>
         <GeneralScreen
           data={actions}
-          primary_image={this.state.primary_image}
-          primary_video={this.state.primary_video}
+          primary_image={actions[0].primary_image}
+          primary_video={actions[0].video_id}
         />
       </LinearGradient>
     );

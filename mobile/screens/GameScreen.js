@@ -29,7 +29,7 @@ class GameScreen extends React.Component {
    swipeRight = (index) => {
       const { take_action, get_user } = this.props;
       const games = this.props.navigation.getParam('games', [])
-      console.log("swiped right", index);
+
       if(games[index]){
          let variables = {
             id: get_user.me.id,

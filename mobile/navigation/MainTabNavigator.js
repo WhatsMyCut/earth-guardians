@@ -126,7 +126,7 @@ LandStack.navigationOptions = {
 
 const routeConfig = {
   MyActionsStack,
-  // CommunityStack,
+  CommunityStack,
   EnergyStack,
   TravelStack,
   //FashionStack,
@@ -165,6 +165,7 @@ export default createMaterialTopTabNavigator(routeConfig, {
   tabBarPosition: 'bottom',
   showIcon: true,
   showLabel: true,
+  animationEnabled: false,
   tabBarOptions: {
     labelStyle: {
       fontFamily: 'Proxima Nova Bold',
@@ -184,6 +185,5 @@ export default createMaterialTopTabNavigator(routeConfig, {
       width: 0,
     },
   },
-  lazy: true,
   initialRouteName: 'MyActionsStack',
 });

@@ -37,33 +37,31 @@ export default class CommunityEventModal extends React.Component {
         number_of_people: parseInt(this.state.numberOfPeople)
       }
 
-      console.log('variables', me, variables);
       community_mutation({variables}).then(response =>{
-        console.log('response', response);
         this.props.onClose()
       })
 
     }
   }
   render() {
-
+    
     const { goBack } = this.props;
     const typesOfEvents = [
-      {value:"Organized a Rally"},
-      {value:"Organized a March"},
-      {value:"Organized a Climate Action Fundraiser"},
-      {value:"Organized/Performed at a Concert"},
-      {value:"Organized an Educational Film Night"},
-      {value:"Gave a Climate Workshop"},
-      {value:"Organized a Clean Up"},
-      {value:"Organized a Tree Planting"},
-      {value:"Organized a Climate Action Gathering"},
-      {value:"Organized a Zero Waste Event"}
+      {value:"Rally"},
+      {value:"March"},
+      {value:"Climate Action Fundraiser"},
+      {value:"Climate Action Gathering"},
+      {value:"Concert"},
+      {value:"Educational Film Night"},
+      {value:"Climate Workshop"},
+      {value:"Clean Up"},
+      {value:"Tree Planting"},
+      {value:"Zero Waste Event"}
     ]
 
     return (
       <KeyboardAvoidingView
-        style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
+        // style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
         behavior="padding"
         enabled
       >

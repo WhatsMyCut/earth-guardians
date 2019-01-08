@@ -9,7 +9,7 @@ import {
   Platform,
   Dimensions,
 } from 'react-native';
-import { LinearGradient, Asset, AppLoading, BlurView } from 'expo';
+import { LinearGradient, Asset, AppLoading, BlurView, Video } from 'expo';
 
 import PhoneInputComp from '../shared/phone/PhoneInputComp';
 import TabBarIcon from '../shared/icons/TabBarIcon';
@@ -30,7 +30,8 @@ export default class PhoneSignup extends React.Component {
     isReady: false,
     showPasswordModal: false,
     dialCode: null,
-    token: null
+    token: null,
+    video_url: null
   };
 
   is_phone_valid = valid => {
@@ -68,18 +69,26 @@ export default class PhoneSignup extends React.Component {
       this.setState({
         phone: numberAndCode.number,
         username: numberAndCode.number,
-        dialCode: numberAndCode.country_dial_code,
+        dialCode: numberAndCode.country_dial_code
+       
       });
     }
   };
 
-  async _cacheResourcesAsync() {
-    const images = [require('../../assets/earth_guardians_main.gif')];
 
-    const cacheImages = images.map(image => {
-      return Asset.fromModule(image).downloadAsync();
-    });
-    return Promise.all(cacheImages);
+  componentDidMount(){
+    fetch(`https://api.vimeo.com/videos/309965359`, {
+      headers: {
+        authorization: 'Bearer 5af014003bea7ca29ec721cc5a7bd34d',
+      },
+    })
+      .then(response => response.json())
+      .then(data => {
+        this.setState({
+          picture_url: data.pictures.sizes[4].link,
+          video_url: data.download[data.download.length - 2].link,
+        });
+      });
   }
 
   checkIfUserExists = () => {
@@ -87,15 +96,16 @@ export default class PhoneSignup extends React.Component {
   };
 
   render() {
-    if (!this.state.isReady) {
+    const { video_url } = this.state;
+    if (!video_url) {
       return (
         <AppLoading
-          startAsync={this._cacheResourcesAsync}
-          onFinish={() => this.setState({ isReady: true })}
-          onError={console.warn}
         />
       );
     }
+
+
+
 
     return (
       <LinearGradient
@@ -104,7 +114,22 @@ export default class PhoneSignup extends React.Component {
         style={styles.linearGradient}
       >
         <SafeAreaView style={{ flex: 1 }}>
-          <ImageBackground
+  
+         <Video 
+          source={{uri: video_url}}
+          rate={1.0}
+          volume={1.0}
+          isMuted={true}
+          resizeMode="cover"
+          shouldPlay
+          isLooping
+          style={{ flex: 1,
+            width: WIDTH,
+            height: HEIGHT,
+            position: 'absolute', }} 
+        />
+
+          {/* <ImageBackground
             source={require('../../assets/earth_guardians_main.gif')}
             style={{
               flex: 1,
@@ -113,7 +138,7 @@ export default class PhoneSignup extends React.Component {
               position: 'absolute',
             }}
             resizeMode="cover"
-          >
+          > */}
             <View
               style={{
                 flex: 1,
@@ -122,14 +147,17 @@ export default class PhoneSignup extends React.Component {
                 paddingBottom: 60,
 
                 paddingLeft: 30,
-                paddingRight: 130,
+                paddingRight: 90,
               }}
             >
-              <Text style={styles.title}>Take Action</Text>
-              <Text style={styles.promo}>
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                Eveniet veritatis consectetur
-              </Text>
+              <Text style={styles.title}>Welcome to EarthTracks!</Text>
+              <Text style={styles.promo}>Fitness Tracker for the Planet</Text>
+              <Text style={styles.promo}>The change we need for a</Text>
+              <Text style={styles.promo}>regenerative shift starts with you.</Text>
+              <Text style={styles.promo}>Are you in?</Text>
+              
+              
+              
 
               <PhoneInputComp
                 updatePhone={this._setPhone}
@@ -163,7 +191,7 @@ export default class PhoneSignup extends React.Component {
                 />
               </TouchableOpacity>
             ) : null}
-          </ImageBackground>
+          {/* </ImageBackground> */}
         </SafeAreaView>
       </LinearGradient>
     );
