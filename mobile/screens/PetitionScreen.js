@@ -155,7 +155,7 @@ class PetitionScreen extends React.Component {
               style={{
                 flex: 1,
                 justifyContent: 'flex-end',
-                alignItems: 'Flex-start',
+                alignItems: 'flex-start',
                 padding: 20,
               }}
             >

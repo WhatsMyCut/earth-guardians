@@ -10,10 +10,10 @@
     ],
     "version": "1.0.1",
     "orientation": "portrait",
-    "icon": "./assets/eye_icon.png",
+    "icon": "./assets/EG_AppIcon_2.png",
     "splash": {
-      "image": "./assets/eye.png",
-      "resizeMode": "contain",
+      "image": "./assets/EG_AppIcon_2.png",
+      "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },
     "updates": {
@@ -25,7 +25,10 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.ofashandfire.earthguardians",
-      "buildNumber":"9"
+      "buildNumber":"12"
+    },
+    "android": {
+      "package": "com.earthguardians.EarthTracks"
     },
     "description": ""
   }

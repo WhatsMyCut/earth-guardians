@@ -78,7 +78,8 @@ class ActionCardSmall extends React.Component {
       inputRange: [0, 180],
       outputRange: ['180deg', '360deg'],
     });
-   
+    this.backOpacity = this.animatedValue.interpolate({ inputRange: [89, 90], outputRange: [0, 1] })
+
 
   }
 
@@ -228,6 +229,7 @@ class ActionCardSmall extends React.Component {
         styles.item,
         styles.flippedItem,
         { height: 250 },
+        { opacity: this.backOpacity}
       ]}
     >
       <ActionDetails data={item} canDelete={true} takeTheAction={this._takeAction}/>
@@ -322,6 +324,7 @@ class ActionCardSmall extends React.Component {
         styles.item,
         styles.flippedItem,
         { height: 250 },
+        { opacity: this.backOpacity}
       ]}
     >
       <ActionDetails data={item} canDelete={false} takeTheAction={this._takeAction}/>

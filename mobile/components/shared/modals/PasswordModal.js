@@ -146,10 +146,10 @@ export default class PasswordModal extends React.Component {
     style={{
       backgroundColor: '#333',
       alignItems: 'center',
-      height:'50%',
-      width:'75%',
       borderRadius: 15,
       paddingTop:20,
+      paddingHorizontal:15,
+      paddingBottom:10
     }}
   > 
   
@@ -252,23 +252,24 @@ export default class PasswordModal extends React.Component {
           Alert.alert('Modal has been closed.');
         }}
       >
-        <View
+       
+       <View 
           style={{
-            flex: 1,
-            justifyContent: 'center',
-            flexDirection: 'column',
-            alignItems: 'center',
-            paddingHorizontal: 5,
+              flex:1,
+              justifyContent: 'center',
+              flexDirection:'column',
+              alignItems: 'center',
+              paddingHorizontal: 5,
           }}
-        > 
-        <View
+      >
+     <View
     style={{
       backgroundColor: '#333',
       alignItems: 'center',
-      height:'50%',
-      width:'75%',
       borderRadius: 15,
       paddingTop:20,
+      paddingHorizontal:15,
+      paddingBottom:10
     }}
   > 
   
@@ -345,12 +346,11 @@ export default class PasswordModal extends React.Component {
               style={{
                 backgroundColor: '#fff',
                 width: 130,
-                height: 50,
                 borderRadius: 5,
                 justifyContent: 'center',
                 alignItems: 'center',
-                marginTop: 20,
-                marginBottom: 20,
+                paddingTop: 20,
+                paddingBottom: 20,
               }}
               onPress={this.signup}
             >
@@ -365,7 +365,7 @@ export default class PasswordModal extends React.Component {
            </TouchableHighlight>
            
             </View>
-        </View>
+            </View>
       </Modal>
     );
   }

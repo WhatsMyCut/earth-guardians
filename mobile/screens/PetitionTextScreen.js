@@ -92,7 +92,7 @@ class PetitionTextScreen extends React.Component {
             style={{
               flex: 1,
               justifyContent: 'flex-start',
-              alignItems: 'Flex-start',
+              alignItems: 'fles-start',
               paddingRight: 10,
               paddingLeft: 20,
             }}

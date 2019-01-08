@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   Platform,
   Dimensions,
+  KeyboardAvoidingView
 } from 'react-native';
 import { LinearGradient, Asset, AppLoading, BlurView, Video } from 'expo';
 
@@ -171,7 +172,9 @@ export default class PhoneSignup extends React.Component {
               intensity={80}
               style={{height:HEIGHT, width:WIDTH, position:"absolute"}}
               >
+              <KeyboardAvoidingView behavior="padding" >
                 <PasswordModal phone_signup={this.phone_signup} setToken={this.setToken} isVisible={this.state.showPasswordModal} username={this.state.phone} togglePasswordModal={this.togglePasswordModal}/>
+              </KeyboardAvoidingView>
               </BlurView>
             )}
 
