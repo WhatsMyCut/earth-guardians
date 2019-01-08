@@ -43,7 +43,6 @@ class CommunityStackScreen extends React.Component {
   
   async componentDidMount() {
     const all_petitions = await client.query({query: ALL_PETITIONS});
-    console.log('all_petitions', all_petitions);
     const previousPosition = this.props.navigation.getParam('position');
     let all_available_petitions = all_petitions.data.petitions;
     if(previousPosition){
@@ -51,12 +50,40 @@ class CommunityStackScreen extends React.Component {
       for(var i = 0; i<formerLength*1; i++){
         if(all_available_petitions[i].id !==  previousPosition){
           let item = all_available_petitions.shift();
-          petitions[petitions.length] = item;
+            fetch(`https://api.vimeo.com/videos/${item.video_url}`, {
+              headers: {
+                authorization: 'Bearer 5af014003bea7ca29ec721cc5a7bd34d',
+              },
+            })
+              .then(response => response.json())
+              .then(data => {
+                console.log('this is being called');
+                all_available_petitions[i].primary_image = data.download[data.download.length - 2].link;
+              });
+            all_available_petitions[petitions.length] = item;
         }
       }
     }
+
+    await all_available_petitions.forEach(petition => {
+      if(petition.video_url){
+      return fetch(`https://api.vimeo.com/videos/${petition.video_url}`, {
+              headers: {
+                authorization: 'Bearer 5af014003bea7ca29ec721cc5a7bd34d',
+              },
+            })
+              .then(response => response.json())
+              .then(data => {
+                console.log('this is being called');
+                petition.primary_image = data.pictures.sizes[4].link;
+                return petition;
+              });
+      }
+      return petition
+    })
+
     this.setState({
-      petitions:all_petitions.data.petitions,
+      petitions:all_available_petitions,
       loading:false,
       showRedirectModal:false,
       redirectModalPetition: null
@@ -188,7 +215,7 @@ class CommunityStackScreen extends React.Component {
                   },
                 ]}
               >
-                <Text style={{ color: 'white', fontSize: 24 }}>
+                <Text style={{ color: 'white', fontSize: 18 }}>
                   {petition.title}
                 </Text>
 
@@ -286,7 +313,7 @@ class CommunityStackScreen extends React.Component {
                   },
                 ]}
               >
-                <Text style={{ color: 'white', fontSize: 24 }}>
+                <Text style={{ color: 'white', fontSize: 18 }}>
                   {petition.title}
                 </Text>
 
