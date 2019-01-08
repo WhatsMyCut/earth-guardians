@@ -27,20 +27,9 @@ class SocialStackScreen extends React.Component {
     header: null,
   };
 
-  _shareMetrics= async()=>{
+  _shareApp= async()=>{
     const result = await Share.share({
-      message: 'I love this app EarthTracks by Earth Guardians! The actions I take make a difference. Check it out. Are you in? #earthguardians #earthtracks',
-      url: 'https://www.earthguardians.org/',
-      title: 'Share EarthTracks App!'
-    }, {
-      // Android only:
-      dialogTitle: 'Share EarthTracks App',
-    })
-  }
-
-  _shareApp = async()=>{
-    const result = await Share.share({
-      message: 'I love this app EarthTracks by Earth Guardians! The actions I take make a difference. Check it out. Are you in? #earthguardians #earthtracks',
+      message: 'I love #EarthTracks by #EarthGuardians. It shows me the actions I take make a difference. Check it out in the App Store. Are you in?',
       url: 'https://www.earthguardians.org/',
       title: 'Share EarthTracks App!'
     }, {
@@ -59,12 +48,12 @@ class SocialStackScreen extends React.Component {
           >
             <Text style={styles.socialItem}>Share your Metrics!</Text>
           </TouchableOpacity>
-          <TouchableOpacity
+          {/* <TouchableOpacity
             onPress={() => console.log('Share to Twitter')}
             style={styles.social}
           >
             <Text style={styles.socialItem}>Share the EarthTracks App!</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
           
         </View>
       </SafeAreaView>
