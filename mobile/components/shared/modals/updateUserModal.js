@@ -10,6 +10,8 @@ import {
   KeyboardAvoidingView,
   ScrollView
 } from 'react-native';
+
+import { Dropdown} from 'react-native-material-dropdown';
 import NavigationService from '../../../navigation/navigationService';
 import graphql from '../../hoc/graphql';
 import { UPDATE_USER } from '../../graphql/mutations/update_user_mutation';
@@ -24,7 +26,7 @@ import { fromPromise } from 'apollo-link';
   fetchPolicy: 'network-only',
 })
 export default class UpdateUserModal extends React.Component {
-    state = { phone:null, zipcode:'000000', crew: null, name:null, email:null };
+    state = { phone:null, zipcode:'000000', crew: null, name:null, email:null, crew_type: null };
   
   constructor(props){
       super(props);
@@ -41,7 +43,7 @@ export default class UpdateUserModal extends React.Component {
         zipcode: this.state.zipcode ? this.state.zipcode : my_user.me.zipcode,
         crew: this.state.crew ? this.state.crew : my_user.me.crew,
         email: this.state.email ? this.state.email : my_user.me.email,
-        
+        crew_type: this.state.crew_type ? this.state.crew_type : my_user.me.crew_type
         
     }
       update_user_mutation({variables}).then(res =>{
@@ -106,6 +108,12 @@ export default class UpdateUserModal extends React.Component {
     if(my_user.loading) {
       return this.loadingModalContent()
     } 
+
+    const typesOfCrews = [
+        {value:"School"},
+        {value:"Business"},
+        {value:"Crew"}
+      ]
 
     const { me } = this.props.my_user;
     console.log('me', me);
@@ -203,7 +211,7 @@ export default class UpdateUserModal extends React.Component {
               height: 30,
               width: 200,
               textAlign: 'left',
-              marginTop:10,
+              marginTop:5,
               marginBottom:10,
               borderColor: 'gray',
               borderBottomWidth: 1,
@@ -216,6 +224,23 @@ export default class UpdateUserModal extends React.Component {
             returnKeyType="done"
             // value={this.state.zipCode}
           />
+          <Dropdown
+              label='Crew Type'
+              data={typesOfCrews}
+              containerStyle={{
+                // height: 10,
+                width: 200,
+                marginBottom: 10,
+              }}
+              
+              baseColor={'#ffffff'}
+              textColor={'#000000'}
+              itemColor={'#000000'}
+              value={this.state.crew_type || my_user.me.crew_type}
+              onChangeText={arg => {
+                this.setState({crew_type:arg})
+              }}
+            />
           <TextInput
             style={{
               color: '#fff',

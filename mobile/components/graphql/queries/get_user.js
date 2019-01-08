@@ -10,6 +10,7 @@ export const GET_USER = gql`
     email
     username
     crew
+    crew_type
     zipcode
     petitions_signed{
       id

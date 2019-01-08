@@ -1,8 +1,28 @@
 import React from 'react';
-import { View, Text, TextInput, Image, StyleSheet, Dimensions, TouchableHighlight } from 'react-native';
+import { View, Text, TextInput,ActivityIndicator, Image, StyleSheet, Dimensions, TouchableHighlight } from 'react-native';
+import graphql from '../../hoc/graphql';
 const SCREEN_WIDTH = Dimensions.get('window').width;
+import { GET_USER } from '../../graphql/queries/get_user';
+
+
+
+@graphql(GET_USER,{
+  name:"my_user",
+  options:{
+    pollInterval:500
+  }
+})
 export default class Profileomponent extends React.Component {
   render() {
+    const { my_user } = this.props;
+
+    if(my_user.loading){
+      return <View style={styles.container}>
+        <ActivityIndicator size="large"/>
+      </View>
+      
+    }
+
     return (
       <TouchableHighlight onPress={this.props.onPress}>
       <View style={styles.container}>
@@ -10,27 +30,32 @@ export default class Profileomponent extends React.Component {
         <View style={{ width: SCREEN_WIDTH * 0.9 }}>
           <View style={styles.info}>
             <View style={styles.labelWrapper}>
-              <TextInput style={styles.label} value="Name"/>
+            <Text style={styles.label}>{my_user.me.name}</Text>
             </View>
             <View style={styles.labelWrapper}>
-              <Text style={styles.label}>80302</Text>
+              <Text style={styles.label}>{my_user.me.zipcode}</Text>
             </View>
             {/* <View style={styles.labelWrapper}>
               <Text style={styles.label}>Last Name</Text>
             </View> */}
           </View>
           <View style={styles.info}>
+            <View style={styles.labelWrapper}>
+              <Text style={styles.label}>{my_user.me.phone}</Text>
+            </View>
+            <View style={styles.labelWrapper}>
+              <Text style={styles.label}>{my_user.me.email.length > 15 ? `${my_user.me.email.substring(0, 15)}...` :my_user.me.email }</Text>
+            </View>
             
-            <View style={styles.labelWrapper}>
-              <Text style={styles.label}>Crew</Text>
-            </View>
-            <View style={styles.labelWrapper}>
-              <Text style={styles.label}>Email</Text>
-            </View>
           </View>
           <View style={styles.info}>
+            
+
             <View style={styles.labelWrapper}>
-              <TextInput style={styles.label} value="Cell Number"/>
+              <Text style={styles.label}>{my_user.me.crew}</Text>
+            </View>
+            <View style={styles.labelWrapper}>
+              <Text style={styles.label}>{my_user.me.crew_type}</Text>
             </View>
             
           </View>

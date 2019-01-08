@@ -9,6 +9,7 @@ export const ALL_MY_METRICS = gql`
     name
     phone
     crew
+    crew_type
     email
     zipcode
     community_events{
