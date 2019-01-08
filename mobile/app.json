@@ -10,9 +10,9 @@
     ],
     "version": "1.0.1",
     "orientation": "portrait",
-    "icon": "./assets/EG_AppIcon_2.png",
+    "icon": "./assets/eg_app_icon_ios_120_120.png",
     "splash": {
-      "image": "./assets/EG_AppIcon_2.png",
+      "image": "./assets/eye_icon.png",
       "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },
