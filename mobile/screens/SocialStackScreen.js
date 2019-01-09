@@ -6,8 +6,10 @@ import {
   View,
   Text,
   StyleSheet,
-  Share
+  Share,
 } from 'react-native';
+
+import { Analytics, PageHit } from 'expo-analytics';
 import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_categories_query';
 import graphql from '../components/hoc/graphql';
 
@@ -27,15 +29,33 @@ class SocialStackScreen extends React.Component {
     header: null,
   };
 
-  _shareApp= async()=>{
-    const result = await Share.share({
-      message: 'I love #EarthTracks by #EarthGuardians. It shows me the actions I take make a difference. Check it out in the App Store. Are you in?',
-      url: 'https://www.earthguardians.org/',
-      title: 'Share EarthTracks App!'
-    }, {
-      // Android only:
-      dialogTitle: 'Share EarthTracks App',
-    })
+  _shareApp = async () => {
+    const result = await Share.share(
+      {
+        message:
+          'I love #EarthTracks by #EarthGuardians. It shows me the actions I take make a difference. Check it out in the App Store. Are you in?',
+        url: 'https://www.earthguardians.org/',
+        title: 'Share EarthTracks App!',
+      },
+      {
+        // Android only:
+        dialogTitle: 'Share EarthTracks App',
+      }
+    );
+  };
+  componentDidMount() {
+    // Analytics
+    () => {
+      try {
+        const analytics = new Analytics('UA-131896215-1');
+        analytics
+          .hit(new PageHit('SocialScreen'))
+          .then(() => console.log('success '))
+          .catch(e => console.log(e.message));
+      } catch (e) {
+        console.log(e);
+      }
+    };
   }
 
   render() {
@@ -54,7 +74,6 @@ class SocialStackScreen extends React.Component {
           >
             <Text style={styles.socialItem}>Share the EarthTracks App!</Text>
           </TouchableOpacity> */}
-          
         </View>
       </SafeAreaView>
     );
