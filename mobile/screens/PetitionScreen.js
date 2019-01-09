@@ -17,7 +17,7 @@ import { Button } from 'react-native-paper';
 import { all } from 'rsvp';
 import { LinearGradient, Icon, BlurView } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
-import { Analytics, Event } from 'expo-analytics';
+import { Analytics, Event, PageHit } from 'expo-analytics';
 
 import { GET_USER } from '../components/graphql/queries/get_user';
 import {
@@ -71,9 +71,22 @@ class PetitionScreen extends React.Component {
       })
         .then(response => response.json())
         .then(data => {
-          this.setState({
-            video_url: data.download[data.download.length - 2].link,
-          });
+          this.setState(
+            {
+              video_url: data.download[data.download.length - 2].link,
+            },
+            () => {
+              try {
+                const analytics = new Analytics('UA-131896215-1');
+                analytics
+                  .hit(new PageHit('Petition'))
+                  .then(() => console.log('success '))
+                  .catch(e => console.log(e.message));
+              } catch (e) {
+                console.log(e);
+              }
+            }
+          );
         });
     }
   }
@@ -151,7 +164,8 @@ class PetitionScreen extends React.Component {
   // }
 
   _openRedirectWithUrl = url => {
-    this.setState({ showRedirectModal: true, redirectModalPetition: url },
+    this.setState(
+      { showRedirectModal: true, redirectModalPetition: url },
       async () => {
         try {
           const phone = await RetrieveData('phone');
@@ -163,7 +177,8 @@ class PetitionScreen extends React.Component {
         } catch (e) {
           console.log(e);
         }
-      });
+      }
+    );
   };
 
   _modalOnClose = () => {
