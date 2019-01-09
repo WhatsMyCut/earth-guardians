@@ -225,7 +225,7 @@ export default class UpdateUserModal extends React.Component {
             // value={this.state.zipCode}
           />
           <Dropdown
-              label='Crew Type'
+              label='Affiliation Type'
               data={typesOfCrews}
               containerStyle={{
                 // height: 10,
@@ -236,7 +236,7 @@ export default class UpdateUserModal extends React.Component {
               baseColor={'#ffffff'}
               textColor={'#000000'}
               itemColor={'#000000'}
-              value={this.state.crew_type || my_user.me.crew_type}
+              // value={this.state.crew_type ? this.state.crew_type : my_user.me.crew_type ? my_user.me.crew_type : null}
               onChangeText={arg => {
                 this.setState({crew_type:arg})
               }}
@@ -253,7 +253,7 @@ export default class UpdateUserModal extends React.Component {
               borderBottomWidth: 1,
             }}
             onChangeText={crew => this.setState({crew})}
-            placeholder={this.props.my_user.me.crew || 'Crew'}
+            placeholder={this.props.my_user.me.crew || 'Affiliation'}
             placeholderTextColor="#fff"
             keyboardType="default"
             secureTextEntry={true}
