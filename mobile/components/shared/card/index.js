@@ -129,14 +129,15 @@ class ActionCardSmall extends React.Component {
       let water = item.action ? item.action.water : item.water;
       let carbon_dioxide = item.action ? item.action.carbon_dioxide : item.carbon_dioxide;
       console.log('this is being called', waste, water, carbon_dioxide);
-      if(waste > water && waste > carbon_dioxide){
-        this.setState({showWasteModal:true})
-      }else if(water > waste && water > carbon_dioxide){
-        this.setState({showWaterModal:true})
-      }else{
-        this.setState({showCarbonModal:true})
+      if(!this.props.canDelete){
+        if(waste > water && waste > carbon_dioxide){
+          this.setState({showWasteModal:true})
+        }else if(water > waste && water > carbon_dioxide){
+          this.setState({showWaterModal:true})
+        }else{
+          this.setState({showCarbonModal:true})
+        }
       }
-
      
       take_action({variables}).then(response => {
         if(item.related_actions){
@@ -174,15 +175,11 @@ class ActionCardSmall extends React.Component {
     
     return (<TouchableOpacity
     onPress={() => {
-
-      if(canDelete){
         this.flipCard()
-      } else{
-        this._takeAction();
-      }
     }}
-    
+  
     onLongPress={() => {
+      
       if(canDelete){
         this.setState({ delete: !this.state.delete })
       }
@@ -221,7 +218,7 @@ class ActionCardSmall extends React.Component {
  
       </Text>
 
-      {this.state.delete && <WasteModal waste={15} onClose={this.onModalClose} />}
+      {this.state.delete && this.showDelete()}
     </Animated.View>
     <Animated.View
       style={[
