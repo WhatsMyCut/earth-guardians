@@ -4,40 +4,56 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient, Icon } from 'expo';
 import { TouchableRipple, Button } from 'react-native-paper';
-
+import { Analytics, Event } from 'expo-analytics';
+import { RetrieveData } from '../../../store/AsyncStore';
 export default class ActionDetails extends React.Component {
-  state ={
+  state = {};
 
-  }
+  _takeInAction = async () => {
+    try {
+      // TODO update Database
 
-  _takeInAction = () => {
-    // TODO update Database
+      this.setState(
+        prevState => ({
+          in: !prevState.in,
+        }),
+        () => {
+          console.log(`The state is ${this.state.in}`);
+        }
+      );
 
-    this.setState(
-      prevState => ({
-        in: !prevState.in,
-      }),
-      () => {
-        console.log(`The state is ${this.state.in}`);
-      }
-    );
-
-    this.props.takeTheAction();
+      this.props.takeTheAction();
+      const item_id = await this.props.data.id;
+      const phone = await RetrieveData('phone');
+      const analytics = new Analytics('UA-131896215-1');
+      analytics
+        .event(new Event('MyAction', 'Press', phone, item_id))
+        .then(() => console.log('success '))
+        .catch(e => console.log(e.message));
+    } catch (e) {
+      console.log(e);
+    }
   };
-
 
   render() {
     const { data } = this.props;
-    if(!data){
-      return <Text>Nothing available</Text>
+    if (!data) {
+      return <Text>Nothing available</Text>;
     }
 
     const status_icon_name = this.props.canDelete
       ? 'circle-slice-8'
-      : this.state.in ? 'circle-slice-8' : 'circle-outline';
-    const color = this.props.canDelete ? 'green' : this.state.in ? 'green' : '#aaa';
+      : this.state.in
+      ? 'circle-slice-8'
+      : 'circle-outline';
+    const color = this.props.canDelete
+      ? 'green'
+      : this.state.in
+      ? 'green'
+      : '#aaa';
 
     let item = data.action ? data.action : data;
+
     return (
       <View style={{ flex: 1, margin: 5 }}>
         <View style={{ flex: 1, marginTop: 10, marginBottom: 3 }}>
@@ -49,15 +65,28 @@ export default class ActionDetails extends React.Component {
               color: '#666',
             }}
           >
-            {this.props.canDelete ? "METRICS EARNED":"METRICS" }
+            {this.props.canDelete ? 'METRICS EARNED' : 'METRICS'}
           </Text>
         </View>
-        <View style={{ flex: 1, flexDirection: 'row', marginLeft:-16}}>
-          <View style={{ flex: 1}}>
-            <Text style={{ fontFamily: 'Proxima Nova', color: '#666', textAlign:"center"  }}>
+        <View style={{ flex: 1, flexDirection: 'row', marginLeft: -16 }}>
+          <View style={{ flex: 1 }}>
+            <Text
+              style={{
+                fontFamily: 'Proxima Nova',
+                color: '#666',
+                textAlign: 'center',
+              }}
+            >
               CO2
             </Text>
-            <Text style={{ fontFamily: 'Proxima Nova', color: '#666', fontSize:8, textAlign:"center" }}>
+            <Text
+              style={{
+                fontFamily: 'Proxima Nova',
+                color: '#666',
+                fontSize: 8,
+                textAlign: 'center',
+              }}
+            >
               (lbs)
             </Text>
             <Text
@@ -66,17 +95,30 @@ export default class ActionDetails extends React.Component {
                 fontWeight: 'bold',
                 fontFamily: 'Proxima Nova Bold',
                 color: '#666',
-                textAlign:"center" 
+                textAlign: 'center',
               }}
             >
               {item.carbon_dioxide}
             </Text>
           </View>
           <View style={{ flex: 1 }}>
-            <Text style={{ fontFamily: 'Proxima Nova', color: '#666', textAlign:"center"  }}>
+            <Text
+              style={{
+                fontFamily: 'Proxima Nova',
+                color: '#666',
+                textAlign: 'center',
+              }}
+            >
               Water
             </Text>
-            <Text style={{ fontFamily: 'Proxima Nova', color: '#666', fontSize:8, textAlign:"center" }}>
+            <Text
+              style={{
+                fontFamily: 'Proxima Nova',
+                color: '#666',
+                fontSize: 8,
+                textAlign: 'center',
+              }}
+            >
               (gal)
             </Text>
             <Text
@@ -85,18 +127,30 @@ export default class ActionDetails extends React.Component {
                 fontWeight: 'bold',
                 fontFamily: 'Proxima Nova Bold',
                 color: '#666',
-                textAlign:"center" 
+                textAlign: 'center',
               }}
             >
               {item.water}
-
             </Text>
           </View>
           <View style={{ flex: 1 }}>
-            <Text style={{ fontFamily: 'Proxima Nova', color: '#666', textAlign:"center"  }}>
+            <Text
+              style={{
+                fontFamily: 'Proxima Nova',
+                color: '#666',
+                textAlign: 'center',
+              }}
+            >
               Waste
             </Text>
-            <Text style={{ fontFamily: 'Proxima Nova', color: '#666', fontSize:8, textAlign:"center"}}>
+            <Text
+              style={{
+                fontFamily: 'Proxima Nova',
+                color: '#666',
+                fontSize: 8,
+                textAlign: 'center',
+              }}
+            >
               (lbs)
             </Text>
             <Text
@@ -105,7 +159,7 @@ export default class ActionDetails extends React.Component {
                 fontWeight: 'bold',
                 fontFamily: 'Proxima Nova Bold',
                 color: '#666',
-                textAlign:"center" 
+                textAlign: 'center',
               }}
             >
               {item.waste}
@@ -113,15 +167,15 @@ export default class ActionDetails extends React.Component {
           </View>
         </View>
 
-    
-       
-       <View style={{ flex: 1 }}>
+        <View style={{ flex: 1 }}>
           <Text
             style={{ fontFamily: 'Proxima Nova', color: '#666', marginTop: 20 }}
-          > COMMUNITY
+          >
+            {' '}
+            COMMUNITY
           </Text>
         </View>
-        
+
         <View style={{ flex: 1 }}>
           <Text
             style={{
@@ -133,8 +187,7 @@ export default class ActionDetails extends React.Component {
           >
             Zip Code
           </Text>
-          
-        </View> 
+        </View>
         {/* <View style={{ flex: 1, marginBottom: 10 }}>
           <Text
             style={{
@@ -147,18 +200,32 @@ export default class ActionDetails extends React.Component {
           </Text>
         </View> */}
         <TouchableOpacity
-                  onPress={() => {
-                    if(!this.props.canDelete){
-                      this._takeInAction()
-                    }
-                  }}
-                  style={{flexDirection:'row', justifyContent:'flex-end', alignContent:"center"}}
-                >
-                  <Text style={{fontSize: 18,fontWeight: '700', fontFamily: 'Proxima Nova Bold',color:'#000000', paddingRight:10}}>{this.props.canDelete ? "Do it again!" : "I'm in!"}</Text>
-                  <Icon.MaterialCommunityIcons
-                    name={status_icon_name}
-                    style={{ color: color, fontSize: 18 }}
-                  />
+          onPress={() => {
+            if (!this.props.canDelete) {
+              this._takeInAction(this);
+            }
+          }}
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'flex-end',
+            alignContent: 'center',
+          }}
+        >
+          <Text
+            style={{
+              fontSize: 18,
+              fontWeight: '700',
+              fontFamily: 'Proxima Nova Bold',
+              color: '#000000',
+              paddingRight: 10,
+            }}
+          >
+            {this.props.canDelete ? 'Do it again!' : "I'm in!"}
+          </Text>
+          <Icon.MaterialCommunityIcons
+            name={status_icon_name}
+            style={{ color: color, fontSize: 18 }}
+          />
         </TouchableOpacity>
       </View>
     );
