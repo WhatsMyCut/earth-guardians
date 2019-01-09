@@ -78,7 +78,7 @@ export default class PointsModal extends React.Component {
             >
               <AntDesign
                 name="close"
-                size={42}
+                size={32}
                 color="white"
                 style={{ padding: 5 }}
               />
