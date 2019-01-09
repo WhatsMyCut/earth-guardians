@@ -79,9 +79,20 @@ export class StoreProvider extends React.Component {
   };
 
   logout = async () => {
-    await StoreData('phone', null);
-    await StoreData('country_dial_code', null);
-    await StoreData('EARTH_GUARDIANS_TOKEN', null);
+    try {
+      const phone = await RetrieveData('phone');
+      const analytics = new Analytics('UA-131896215-1');
+      analytics
+        .event(new Event('Logout', 'Press', phone))
+        .then(() => console.log('success '))
+        .catch(e => console.log(e.message));
+
+      await StoreData('phone', null);
+      await StoreData('country_dial_code', null);
+      await StoreData('EARTH_GUARDIANS_TOKEN', null);
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   updatePhone = phone => {
