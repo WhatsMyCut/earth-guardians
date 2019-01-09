@@ -44,7 +44,6 @@ export default class Profileomponent extends React.Component {
       ? my_user.me.crew_type
       : 'Affiliation Type';
 
-    console.log('HEREREREREE', my_user.me);
     return (
       <TouchableHighlight onPress={this.props.onPress}>
         <View style={styles.container}>
