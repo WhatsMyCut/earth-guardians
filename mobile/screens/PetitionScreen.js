@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   SafeAreaView,
+  Animated,
   View,
   TouchableOpacity,
   Text,
@@ -9,6 +10,7 @@ import {
   WebView,
   Platform,
   Dimensions,
+  PanResponder,
   StatusBar
 } from 'react-native';
 import { Button } from 'react-native-paper';
@@ -71,6 +73,19 @@ class PetitionScreen extends React.Component {
           });
         });
     }
+  }
+
+  componentWillMount(){
+    this.viewResponder = PanResponder.create({
+      onStartShouldSetPanResponder: () => true,
+
+      onPanResponderMove: (evt, gs) => {
+        if( -200 > gs.dy){
+          console.log('navigate back')
+          NavigationService.navigate(this.screen,{position:this.image.Dimensions})
+        }
+      }
+    })
   }
 
 
@@ -142,7 +157,7 @@ class PetitionScreen extends React.Component {
 
 
     return (
-        <View style={{ flex: 1 }}>
+        <Animated.View style={{ flex: 1 }} {...this.viewResponder.panHandlers}>
           {/* <StatusBar
             hidden={true}
             barStyle="dark-content"
@@ -160,14 +175,6 @@ class PetitionScreen extends React.Component {
         style={{ position:"absolute",width: SCREEN_WIDTH, height: SCREEN_HEIGHT }}
       ></LinearGradient>
            
-            <View style={styles.topBar}>
-              <TouchableOpacity
-                onPress={() => NavigationService.navigate(this.screen,{position:this.image.Dimensions})}
-              >
-                <Ionicons name="ios-arrow-round-back" size={42} color="#000000" />
-              </TouchableOpacity>
-            </View>
-            
             <View
               style={{
                 flex: 1,
@@ -266,7 +273,7 @@ class PetitionScreen extends React.Component {
               }
             </View>
           </View>
-        </View>
+        </Animated.View>
     );
   }
 }

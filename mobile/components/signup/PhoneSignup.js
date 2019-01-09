@@ -16,7 +16,7 @@ import PhoneInputComp from '../shared/phone/PhoneInputComp';
 import TabBarIcon from '../shared/icons/TabBarIcon';
 import PasswordModal from '../shared/modals/PasswordModal';
 import graphql from '../hoc/graphql';
-import registerForPushNotificationsAsync from '../../services/registerForPushNotifications';
+// import registerForPushNotificationsAsync from '../../services/registerForPushNotifications';
 const HEIGHT = Dimensions.get('window').height;
 const WIDTH = Dimensions.get('window').width;
 
