@@ -21,12 +21,16 @@ import DoubleClick from 'react-native-double-tap';
 // import PasswordModal from '../modals/PasswordModal'
 import { TAKE_ACTION } from '../../graphql/mutations/take_action_mutation';
 import { DELETE_ACTION } from '../../graphql/mutations/delete_action';
+import { UPDATE_ZIPCODE } from '../../graphql/mutations/update_zipcode_mutation';
 import WasteModal from '../modals/NotWasteReduceModal';
 import WaterModal from '../modals/NotH2OConsumptionModal';
 import CarbonModal from '../modals/NotCO2EmissionModal';
 
+import ZipCodeModal from '../modals/ZipCodeModal';
+
 import { GET_USER } from '../../graphql/queries/get_user';
 import graphql from '../../hoc/graphql';
+import { MY_ACTIONS_QUERY } from '../../graphql/queries/my_actions_query';
 
 
 @graphql(GET_USER, {
@@ -37,6 +41,9 @@ import graphql from '../../hoc/graphql';
 })
 @graphql(DELETE_ACTION,{
   name:"delete_action"
+})
+@graphql(UPDATE_ZIPCODE,{
+  name:"update_zipcode"
 })
 class ActionCardSmall extends React.Component {
   lastTap=null;
@@ -52,6 +59,7 @@ class ActionCardSmall extends React.Component {
     showWasteModal: false,
     showWaterModal: false,
     showCarbonModal: false,
+    showZipcodeModal: false,
     canDelete : this.props.canDelete ? true : null,
     currScreen: this.props.currScreen ? this.props.currScreen : 'Main'
   };
@@ -97,6 +105,25 @@ class ActionCardSmall extends React.Component {
         tension: 10,
       }).start();
     }
+  }
+
+  updateZipCode =(zipcode)=>{
+    const { get_user, update_zipcode} = this.props;
+    if(zipcode){
+      let variables={
+        id:get_user.me.id,
+        zipcode:zipcode
+      }
+      update_zipcode({variables}).then(()=>{
+          console.log('updated zipcode');
+          this.onModalClose();
+      })
+    }
+  }
+
+  openZipCodeModal = () =>{
+    console.log('openzipcodemodal is being called ')
+    this.setState({showZipcodeModal: true});
   }
 
   showDelete = () => {
@@ -151,13 +178,13 @@ class ActionCardSmall extends React.Component {
   }
 
   onModalClose = () => {
-    this.setState({showWasteModal: false, showWaterModal : false, showCarbonModal: false});
+    this.setState({showWasteModal: false, showWaterModal : false, showCarbonModal: false, showZipcodeModal:false});
   }
 
 
   _myActionItem =() =>{
-    const { item, index, canDelete } = this.props;
-    const { currScreen, congratulationsModal } = this.state;
+    const { item, index, get_user, canDelete } = this.props;
+    const { currScreen, congratulationsModal, takingAction } = this.state;
     const frontAnimatedStyle = {
       transform: [{ rotateY: this.frontInterpolate }],
     };
@@ -173,7 +200,9 @@ class ActionCardSmall extends React.Component {
 
     const preview = { uri: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==" };
     
-    return (<TouchableOpacity
+    return (
+    <View style={{flex:1, height:250, marginVertical:10}}>
+    <TouchableOpacity
     onPress={() => {
         this.flipCard()
     }}
@@ -187,7 +216,7 @@ class ActionCardSmall extends React.Component {
   >
     {/* <PasswordModal isVisible={this.state.showModal}/> */}
     <Animated.View>
-    <Animated.View style={[styles.item,frontAnimatedStyle, {height: 250, width:180}]}>
+    <Animated.View style={[styles.item,frontAnimatedStyle, , {height: 250, opacity:takingAction ? 0 : 1}]}>
       <Image
         style={{
           flex: 1,
@@ -214,8 +243,10 @@ class ActionCardSmall extends React.Component {
           fontSize: 18,
         }}
     >
-          {item.action.action_taken_description.length > 48 ? `${item.action.action_taken_description.substring(0, 40)}...` : item.action.action_taken_description}
- 
+        {canDelete && (
+          item.action.action_taken_description.length > 48 ? `${item.action.action_taken_description.substring(0, 40)}...` : item.action.action_taken_description
+        )}
+        {!canDelete && (item.short_description.length > 48 ? `${item.short_description.substring(0, 40)}...` : item.short_description)}
       </Text>
 
       {this.state.delete && this.showDelete()}
@@ -229,18 +260,21 @@ class ActionCardSmall extends React.Component {
         { opacity: this.backOpacity}
       ]}
     >
-      <ActionDetails data={item} canDelete={true} takeTheAction={this._takeAction}/>
+      <ActionDetails data={item} canDelete={true} takeTheAction={this._takeAction} zipcode={get_user.me.zipcode} openZipCodeModal={this.openZipCodeModal}/>
 
     </Animated.View>
     <WasteModal waste={waste} onClose={this.onModalClose} visible={this.state.showWasteModal}/>
     <WaterModal water={water} onClose={this.onModalClose} visible={this.state.showWaterModal}/>
+    <ZipCodeModal updateZipcode={this.updateZipCode} onClose={this.onModalClose} visible={this.state.showZipcodeModal} />
+
     <CarbonModal carbon_dioxide={carbon_dioxide} onClose={this.onModalClose} visible={this.state.showCarbonModal}/>
     </Animated.View>
-  </TouchableOpacity>)
+  </TouchableOpacity>
+  </View>)
   }
 
   _standardItem = () =>{
-    const { item, index, canDelete } = this.props;
+    const { item, index, canDelete, get_user } = this.props;
     const { currScreen, takingAction, congratulationsModal } = this.state;
     const frontAnimatedStyle = {
       transform: [{ rotateY: this.frontInterpolate }],
@@ -257,7 +291,6 @@ class ActionCardSmall extends React.Component {
     let waste = item.waste;
     let water = item.water;
     let carbon_dioxide = item.carbon_dioxide;
-
     return <View style={{flex:1, height:250, marginVertical:10}}>
     
     <DoubleClick
@@ -326,11 +359,13 @@ class ActionCardSmall extends React.Component {
         { opacity: this.backOpacity}
       ]}
     >
-      <ActionDetails data={item} canDelete={false} takeTheAction={this._takeAction}/>
+      <ActionDetails data={item} canDelete={false} takeTheAction={this._takeAction} zipcode={get_user.me.zipcode} openZipCodeModal={this.openZipCodeModal}/>
       <WasteModal waste={waste} onClose={this.onModalClose} visible={this.state.showWasteModal}/>
       <WaterModal water={water} onClose={this.onModalClose} visible={this.state.showWaterModal}/>
       <CarbonModal carbon_dioxide={carbon_dioxide} onClose={this.onModalClose} visible={this.state.showCarbonModal}/>
+      <ZipCodeModal updateZipcode={this.updateZipCode} onClose={this.onModalClose} visible={this.state.showZipcodeModal} />
       {this.state.delete && this.showDelete()}
+      
     </Animated.View>
   </DoubleClick>
     
@@ -340,7 +375,10 @@ class ActionCardSmall extends React.Component {
   }
 
   render() {
-    const { canDelete } = this.props;
+    const { canDelete, get_user } = this.props;
+    if(get_user.loading){
+      return <View></View>
+    }
     return canDelete ?  this._myActionItem() :this._standardItem()
   }
 }
@@ -352,9 +390,8 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.8,
     shadowRadius: 2,
-    paddingLeft: 10,
-    elevation: 1,
     marginTop: 10,
+    paddingLeft:10,
     borderColor: 'transparent',
     borderWidth: 1,
     borderRadius: Styles.borderRadius,
@@ -377,7 +414,7 @@ const styles = StyleSheet.create({
     top:0,
     bottom:0,
     left:0,
-    right:0,
+    right:-5,
     height:250
   },
   imageLinearGradient: {
