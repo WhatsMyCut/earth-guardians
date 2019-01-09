@@ -184,7 +184,6 @@ export default class UpdateUserModal extends React.Component {
                 placeholder={this.props.my_user.me.username || 'Phone'}
                 placeholderTextColor="#fff"
                 keyboardType="default"
-                secureTextEntry={true}
                 returnKeyType="done"
                 value={this.state.phone}
               />
@@ -203,7 +202,6 @@ export default class UpdateUserModal extends React.Component {
                 placeholder={this.props.my_user.me.name || 'Name'}
                 placeholderTextColor="#fff"
                 keyboardType="default"
-                secureTextEntry={true}
                 returnKeyType="done"
                 value={this.state.name}
               />
@@ -222,7 +220,6 @@ export default class UpdateUserModal extends React.Component {
                 placeholder={this.props.my_user.me.email || 'Email'}
                 placeholderTextColor="#fff"
                 keyboardType="email-address"
-                secureTextEntry={false}
                 returnKeyType="done"
                 value={this.state.email}
               />
@@ -257,7 +254,6 @@ export default class UpdateUserModal extends React.Component {
                 placeholder={this.props.my_user.me.crew || 'Affiliation'}
                 placeholderTextColor="#fff"
                 keyboardType="default"
-                secureTextEntry={false}
                 returnKeyType="done"
                 value={this.state.crew}
               />

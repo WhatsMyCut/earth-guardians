@@ -67,7 +67,7 @@ class MyActionsStackScreen extends React.Component {
                       return (
                         <View style={styles.container}>
                         <FlatList
-                          style={{ backgroundColor: '#333' }}
+                          style={{ backgroundColor: '#333', paddingRight:10 }}
                           numColumns={2}
                           data={actions}
                           renderItem={({ item, index }) => (
