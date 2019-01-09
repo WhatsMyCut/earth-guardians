@@ -66,7 +66,13 @@ export default class Profileomponent extends React.Component {
               <Text style={styles.label}>{phone}</Text>
             </View>
             <View style={styles.labelWrapper}>
-              <Text style={styles.label}>{email}</Text>
+              <Text style={styles.label}>
+                {my_user.me.email
+                  ? my_user.me.email.length > 15
+                    ? `${my_user.me.email.substring(0, 15)}...`
+                    : my_user.me.email
+                  : 'None'}
+              </Text>
             </View>
           </View>
           <View style={styles.info}>
