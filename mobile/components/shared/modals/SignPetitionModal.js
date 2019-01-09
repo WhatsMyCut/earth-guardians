@@ -176,7 +176,7 @@ export default class CommunityEventModal extends React.Component {
               >
                 <AntDesign
                   name="close"
-                  size={42}
+                  size={32}
                   color="white"
                   style={{ padding: 5 }}
                 />

@@ -131,6 +131,9 @@ export default class GeneralScreen extends React.Component {
             <FlatList
               style={styles.container}
               numColumns={2}
+              style={{
+                paddingRight:10
+              }}
               data={this.props.data[0].actions}
               keyExtractor={(item, index) => item.id}
               renderItem={({ item, index }) => (
@@ -153,7 +156,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   container: {
-    flex: 1,
+    flex: 1
   },
   headlineView: {
     height: primaryHeight,

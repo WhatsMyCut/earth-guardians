@@ -1,7 +1,7 @@
 import React from 'react';
 //import { LinearGradient, AppLoading } from 'expo';
 
-import { TouchableOpacity, SafeAreaView, View, Text, KeyboardAvoidingView, ActivityIndicator } from 'react-native';
+import { Animated, PanResponder, TouchableOpacity, SafeAreaView, View, Text, KeyboardAvoidingView, ActivityIndicator } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { BlurView } from 'expo';
 import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_categories_query';
@@ -53,6 +53,18 @@ class ImpactStackScreen extends React.Component {
       openModal: !this.state.openModal,
     });
   };
+
+  componentWillMount(){
+    this.viewResponder = PanResponder.create({
+      onStartShouldSetPanResponder: () => true,
+
+      onPanResponderMove: (evt, gs) => {
+        if( 200 < gs.dy){
+          NavigationService.navigate('MyActions');
+        }
+      }
+    })
+  }
 
   async _aggregateImpact(recent_actions, community_events){
     const { points, water, waste, carbon_dioxide, loading} = this.state;
@@ -124,7 +136,8 @@ class ImpactStackScreen extends React.Component {
       
       <SafeAreaView style={{ flex: 1 }}>
       
-        <View
+        <Animated.View
+          {...this.viewResponder.panHandlers}
           style={{
             flex: 1,
             alignItems: 'center',
@@ -138,7 +151,7 @@ class ImpactStackScreen extends React.Component {
           <ReachComponent toggleModal={this.toggleModal} communityEvents={this.state.communityEvents}/>
           <PointsComponent points={this.state.points}/>
           <ProfileComponent onPress={() => this.setState({openUserModal: true})}/>
-        </View>
+        </Animated.View>
        
         {this.state.openModal ? (
           <BlurView
@@ -197,14 +210,6 @@ ImpactStackScreen.navigationOptions = {
       MY IMPACT
     </Text>
   ),
-  headerLeft:<TouchableOpacity
-  onPress={() => NavigationService.navigate('MyActions')}
-  style={{
-    paddingLeft:5
-  }}
->
-  <Ionicons name="ios-arrow-round-back" size={42} color="#ccc" />
-</TouchableOpacity>,
   headerStyle: {
     backgroundColor: '#333',
     borderBottomWidth: 0,

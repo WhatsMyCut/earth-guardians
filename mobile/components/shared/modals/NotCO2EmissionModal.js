@@ -17,7 +17,7 @@ export default class CarbonModal extends React.Component {
         visible={this.props.visible}
         onDismiss={this.props.onClose}
         onRequestClose={() => {
-          this.props.onClose()
+          this.props.onClose();
         }}
         style={{
           backgroundColor: '#333',
@@ -53,19 +53,20 @@ export default class CarbonModal extends React.Component {
                 textAlign: 'center',
               }}
             >
-              YOU'VE REDUCED YOUR CO2 EMMISION BY {this.props.carbon_dioxide} POUNDS!
+              YOU'VE REDUCED YOUR CO2 EMMISION BY {this.props.carbon_dioxide}{' '}
+              POUNDS!
             </Text>
 
             <TouchableOpacity
               onPress={() => {
-                this.props.onClose()
+                this.props.onClose();
               }}
               hitSlop={{ top: 15, left: 15, right: 15, bottom: 15 }}
               style={{ position: 'absolute', right: -2, top: -5 }}
             >
               <AntDesign
                 name="close"
-                size={42}
+                size={32}
                 color="white"
                 style={{ padding: 5 }}
               />

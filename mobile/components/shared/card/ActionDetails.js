@@ -32,10 +32,10 @@ export default class ActionDetails extends React.Component {
       return <Text>Nothing available</Text>
     }
 
-    const status_icon_name = this.state.in
+    const status_icon_name = this.props.canDelete
       ? 'circle-slice-8'
-      : 'circle-outline';
-    const color = this.state.in ? 'green' : '#aaa';
+      : this.state.in ? 'circle-slice-8' : 'circle-outline';
+    const color = this.props.canDelete ? 'green' : this.state.in ? 'green' : '#aaa';
 
     let item = data.action ? data.action : data;
     return (
@@ -147,7 +147,11 @@ export default class ActionDetails extends React.Component {
           </Text>
         </View> */}
         <TouchableOpacity
-                  onPress={() => this._takeInAction()}
+                  onPress={() => {
+                    if(!this.props.canDelete){
+                      this._takeInAction()
+                    }
+                  }}
                   style={{flexDirection:'row', justifyContent:'flex-end', alignContent:"center"}}
                 >
                   <Text style={{fontSize: 18,fontWeight: '700', fontFamily: 'Proxima Nova Bold',color:'#000000', paddingRight:10}}>{this.props.canDelete ? "Do it again!" : "I'm in!"}</Text>
