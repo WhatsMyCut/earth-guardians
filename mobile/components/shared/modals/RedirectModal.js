@@ -62,7 +62,7 @@ export default class RedirectModal extends React.Component {
                 marginTop: 20,
               }}
               onPress={() => {
-                WebBrowser.openBrowserAsync(this.props.external_url)
+                WebBrowser.openBrowserAsync(this.props.external_url);
                 this.props.onClose();
               }}
             >
@@ -79,7 +79,7 @@ export default class RedirectModal extends React.Component {
             >
               <AntDesign
                 name="close"
-                size={42}
+                size={32}
                 color="white"
                 style={{ padding: 5 }}
               />

@@ -16,23 +16,20 @@ export class StoreProvider extends React.Component {
   };
 
   async componentDidMount() {
-    
     try {
       // check if async storage has the data
-      // await StoreData('phone', null);
-      // await StoreData('country_dial_code', null);
-      // await StoreData('EARTH_GUARDIANS_TOKEN', null);
-
       const phone = await RetrieveData('phone');
       const country_dial_code = await RetrieveData('country_dial_code');
-      if (phone && country_dial_code) {
+      const store_data = await RetrieveData('EARTH_GUARDIANS_TOKEN');
+      if (phone && country_dial_code && store_data) {
         const user = { phone, country_dial_code };
-        this.setState({
-          authenticated: true,
-          user,
-        });
+        this.setState({ authenticated: true, user });
 
         navigationService.navigate('MyActions', {});
+      } else {
+        await StoreData('phone', null);
+        await StoreData('country_dial_code', null);
+        await StoreData('EARTH_GUARDIANS_TOKEN', null);
       }
     } catch (e) {
       console.log(e);
@@ -63,13 +60,11 @@ export class StoreProvider extends React.Component {
     }
     // for now, turn autheticate to true
     if (finalStatus !== 'granted') {
-      
-      
     }
     // registerForPushNotificationsAsync
 
     StoreData('EARTH_GUARDIANS_TOKEN', details.token);
-    
+
     this.setState({ authenticated: true, user: new_user });
     navigationService.navigate('MyActions', {});
   };
