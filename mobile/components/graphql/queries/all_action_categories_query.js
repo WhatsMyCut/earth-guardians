@@ -20,7 +20,6 @@ query($name: String!){
       game_title
       related_actions {
         id
-        
         primary_image
         short_description
       }

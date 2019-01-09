@@ -23,7 +23,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.ofashandfire.earthguardians",
-      "buildNumber":"13"
+      "buildNumber":"15"
     },
     "android": {
       "package": "com.earthguardians.EarthTracks",
