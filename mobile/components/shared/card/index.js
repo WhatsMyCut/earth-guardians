@@ -190,7 +190,7 @@ class ActionCardSmall extends React.Component {
   >
     {/* <PasswordModal isVisible={this.state.showModal}/> */}
     <Animated.View>
-    <Animated.View style={[styles.item,frontAnimatedStyle, {height: 250}]}>
+    <Animated.View style={[styles.item,frontAnimatedStyle, {height: 250, width:180}]}>
       <Image
         style={{
           flex: 1,
@@ -261,7 +261,7 @@ class ActionCardSmall extends React.Component {
     let water = item.water;
     let carbon_dioxide = item.carbon_dioxide;
 
-    return <View style={{flex:1, margin:10, height:250}}>
+    return <View style={{flex:1, height:250, marginVertical:10}}>
     
     <DoubleClick
     style={{ flex: 1}}

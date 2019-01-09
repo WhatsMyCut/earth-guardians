@@ -49,6 +49,7 @@ class MyActionsStackScreen extends React.Component {
                   return this._loading();
                 }
 
+                console.log('my available actions', data.myAvailableActions);
                 if(data.myAvailableActions.length == 0){
                   return <SafeAreaView style={{ flex: 1 }}>
                   <View style={{...styles.container, justifyContent:'center', alignContent:'center'}}>

@@ -214,7 +214,7 @@ export default class UpdateUserModal extends React.Component {
                   width: 200,
                   textAlign: 'left',
                   marginTop: 5,
-                  marginBottom: 10,
+                  marginBottom: 8,
                   borderColor: 'gray',
                   borderBottomWidth: 1,
                 }}
@@ -238,13 +238,6 @@ export default class UpdateUserModal extends React.Component {
                 textColor={'#ffffff'}
                 itemColor={'#000000'}
                 selectedItemColor="rgba(0, 0, 0, .87)"
-                value={
-                  this.state.crew_type
-                    ? this.state.crew_type
-                    : my_user.me.crew_type
-                    ? my_user.me.crew_type
-                    : null
-                }
                 onChangeText={arg => {
                   this.setState({ crew_type: arg });
                 }}

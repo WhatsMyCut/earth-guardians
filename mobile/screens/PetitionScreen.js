@@ -80,7 +80,7 @@ class PetitionScreen extends React.Component {
       onStartShouldSetPanResponder: () => true,
 
       onPanResponderMove: (evt, gs) => {
-        if( -200 > gs.dy){
+        if( 200 < gs.dy){
           console.log('navigate back')
           NavigationService.navigate(this.screen,{position:this.image.Dimensions})
         }
