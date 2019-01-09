@@ -188,77 +188,60 @@ class CommunityStackScreen extends React.Component {
       return <View />;
     }
 
-    
-    return <Animated.View
-              key={petition.id}
-              style={[
-                {
-                  height: SCREEN_HEIGHT - 180,
-                  width: SCREEN_WIDTH - 60,
-                  paddingHorizontal: 20,
-                  position: 'absolute',
-                  top:20  + (20 / index),
-                  left:SCREEN_WIDTH /10,
-                  zIndex:index * 10
-                },
-              ]}
-            >
-              <View
-                style={[
-                  {
-                    position: 'absolute',
-                    bottom: 50,
-                    left: 10,
-                    zIndex: 1000,
-                    paddingHorizontal: 20,
-                  },
-                ]}
-              >
-                <Text style={{ color: 'white', fontSize: 18, paddingBottom:10 }}>
-                  {petition.title}
-                </Text>
+    return (
+      <Animated.View
+        key={petition.id}
+        style={[
+          {
+            height: SCREEN_HEIGHT - 180,
+            width: SCREEN_WIDTH - 60,
+            paddingHorizontal: 20,
+            position: 'absolute',
+            top: 20 + 20 / index,
+            left: SCREEN_WIDTH / 10,
+            zIndex: index * 10,
+          },
+        ]}
+      >
+        <View
+          style={[
+            {
+              position: 'absolute',
+              bottom: 50,
+              left: 10,
+              zIndex: 1000,
+              paddingHorizontal: 20,
+            },
+          ]}
+        >
+          <Text style={{ color: 'white', fontSize: 18, paddingBottom: 10 }}>
+            {petition.title}
+          </Text>
 
-                <Text style={{ color: 'white', paddingBottom:10 }}>{petition.short_description}</Text>
-              </View>
+          <Text style={{ color: 'white', paddingBottom: 10 }}>
+            {petition.short_description}
+          </Text>
+        </View>
 
-              <Image
-                style={{
-                  flex: 1,
-                  height: null,
-                  width: null,
-                  resizeMode: 'contain',
-                  borderRadius: 20,
-                }}
-                {...{ preview, uri: petition.primary_image }}
-              />
-              <LinearGradient
-            colors={['rgba(255,255,255,0)', 'rgba(0,0,0,0.4)']}
-            locations={[0.1, 1]}
-            style={{ 
-              height: SCREEN_HEIGHT - 180,
-              width: SCREEN_WIDTH - 100, 
-              ...styles.gradient}}
-          />
-
-
-              <View style={styles.headlineViewPlayIcon}>
-                <TouchableOpacity
-                  onPress={() =>{
-                    
-                      navigationService.navigate('Petition', {
-                        screen: 'Community',
-                        image: petition
-                      })
-                 
-                  }
-                  }
-                >
-                  <FontAwesome name="play" size={52} color="white" />
-                </TouchableOpacity>
-              </View>
-            </Animated.View>
-    }
-
+        <Image
+          style={{
+            flex: 1,
+            height: null,
+            width: null,
+            resizeMode: 'contain',
+            borderRadius: 20,
+          }}
+          {...{ preview, uri: petition.primary_image }}
+        />
+        <LinearGradient
+          colors={['rgba(255,255,255,0)', 'rgba(0,0,0,0.4)']}
+          locations={[0.1, 1]}
+          style={{
+            height: SCREEN_HEIGHT - 180,
+            width: SCREEN_WIDTH - 100,
+            ...styles.gradient,
+          }}
+        />
 
         <View style={styles.headlineViewPlayIcon}>
           <TouchableOpacity
@@ -303,130 +286,78 @@ class CommunityStackScreen extends React.Component {
       return null;
     }
 
-   
-    return <Animated.View
-              {...this.imagePanResponder.panHandlers}
-              key={petition.id}
-              style={[
-                this.rotateAndTranslate,
-                {
-                  height: SCREEN_HEIGHT - 180,
-                  width: SCREEN_WIDTH - 60,
-                  left:SCREEN_WIDTH /10,
-                  paddingHorizontal: 20,
-                  zIndex:999,
-                  top:20,
-                  position: 'absolute'
-                },
-              ]}
-            >
-              <Animated.View
-                style={[
-                  { opacity: this.nextCardOpacity / 1 },
-                  {
-                    position: 'absolute',
-                    bottom: 50,
-                    left: 10,
-                    zIndex: 1000,
-                    paddingHorizontal: 20,
-                  },
-                ]}
-              >
-                <Text style={{ color: 'white', fontSize: 18, paddingBottom:10 }}>
-                  {petition.title}
-                </Text>
+    return (
+      <Animated.View
+        {...this.imagePanResponder.panHandlers}
+        key={petition.id}
+        style={[
+          this.rotateAndTranslate,
+          {
+            height: SCREEN_HEIGHT - 180,
+            width: SCREEN_WIDTH - 60,
+            left: SCREEN_WIDTH / 10,
+            paddingHorizontal: 20,
+            zIndex: 999,
+            top: 20,
+            position: 'absolute',
+          },
+        ]}
+      >
+        <Animated.View
+          style={[
+            { opacity: this.nextCardOpacity / 1 },
+            {
+              position: 'absolute',
+              bottom: 50,
+              left: 10,
+              zIndex: 1000,
+              paddingHorizontal: 20,
+            },
+          ]}
+        >
+          <Text style={{ color: 'white', fontSize: 18, paddingBottom: 10 }}>
+            {petition.title}
+          </Text>
 
-                <Text style={{ color: 'white', paddingBottom:10 }}>{petition.short_description}</Text>
-              </Animated.View>
+          <Text style={{ color: 'white', paddingBottom: 10 }}>
+            {petition.short_description}
+          </Text>
+        </Animated.View>
 
-              <Image
-                style={{
-                  flex: 1,
-                  height: null,
-                  width: null,
-                  resizeMode: 'contain',
-                  borderRadius: 20,
-                }}
-                {...{ preview, uri: petition.primary_image }}
-              />
-              <LinearGradient
-            colors={['rgba(255,255,255,0)', 'rgba(0,0,0,0.6)']}
-            locations={[0.3, 1]}
-            style={{ 
-              height: SCREEN_HEIGHT - 180,
-              width: SCREEN_WIDTH - 100, 
-              ...styles.gradient}}
-          />
+        <Image
+          style={{
+            flex: 1,
+            height: null,
+            width: null,
+            resizeMode: 'contain',
+            borderRadius: 20,
+          }}
+          {...{ preview, uri: petition.primary_image }}
+        />
+        <LinearGradient
+          colors={['rgba(255,255,255,0)', 'rgba(0,0,0,0.6)']}
+          locations={[0.3, 1]}
+          style={{
+            height: SCREEN_HEIGHT - 180,
+            width: SCREEN_WIDTH - 100,
+            ...styles.gradient,
+          }}
+        />
 
-
-              <View style={styles.headlineViewPlayIcon}>
-                <TouchableOpacity
-                  onPress={() =>{
-                      navigationService.navigate('Petition', {
-                        screen: 'Community',
-                        image: petition
-                      })
-                  
-                  }
-                  }
-                >
-                  <FontAwesome name="play" size={52} color="white" />
-                </TouchableOpacity>
-              </View>
-            </Animated.View>
-
-           
-         
-        //   let offset = this.currentIndex * 1 * 15;
-        //   return (
-        //     <Animated.View
-        //       key={petition.id}
-        //       style={[
-        //         {   
-        //           opacity: this.nextCardOpacity,
-        //           transform:[{scale:this.nextCardScale}],
-        //           height: SCREEN_HEIGHT - 180,
-        //           width: SCREEN_WIDTH - 80,
-        //           padding: 20,
-        //           position: 'absolute',
-        //           top: this.nextCardOffset,
-        //         },
-        //       ]}
-        //     >
-        //     <Animated.View
-        //         style={[
-        //           { opacity: this.nextCardOpacity / 1 },
-        //           { transform:[{scale:this.nextCardTextScale}]},
-        //           {
-        //             position: 'absolute',
-        //             bottom: 45,
-        //             left: 5,
-        //             zIndex: 5,
-        //             paddingHorizontal: 20,
-        //           },
-        //         ]}
-        //       >
-        //         <Text style={{ color: 'white', fontSize: 24 }}>
-        //           {petition.title}
-        //         </Text>
-
-        //         <Text style={{ color: 'white' }}>{petition.description}</Text>
-        //       </Animated.View>
-        //       <Image
-        //         style={{
-        //           flex: 1,
-        //           height: null,
-        //           width: null,
-        //           resizeMode: 'cover',
-        //           borderRadius: 20,
-        //         }}
-        //         {...{preview, uri: petition.image }}
-        //       />
-        //     </Animated.View>
-        //   );
-        // }
-  };
-
+        <View style={styles.headlineViewPlayIcon}>
+          <TouchableOpacity
+            onPress={() => {
+              navigationService.navigate('Petition', {
+                screen: 'Community',
+                image: petition,
+              });
+            }}
+          >
+            <FontAwesome name="play" size={52} color="white" />
+          </TouchableOpacity>
+        </View>
+      </Animated.View>
+    );
 
     //   let offset = this.currentIndex * 1 * 15;
     //   return (
