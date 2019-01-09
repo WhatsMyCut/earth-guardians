@@ -50,8 +50,8 @@ class PetitionScreen extends React.Component {
     video_url: null,
     showRedirectModal:false, 
     showCommunitySignedModal: false,
-    redirectModalPetition:null
-  
+    redirectModalPetition:null,
+    youinverbiage: "I'm In!"
   };
   
   screen = this.props.navigation.getParam('screen');
@@ -60,6 +60,7 @@ class PetitionScreen extends React.Component {
   position = this.props.navigation.getParam('position');
   
   componentDidMount() {
+    const { my_user } = this.props;
     if (this.image.video_url) {
       fetch(`https://api.vimeo.com/videos/${this.image.video_url}`, {
         headers: {
@@ -73,6 +74,18 @@ class PetitionScreen extends React.Component {
           });
         });
     }
+
+    const petitionids = my_user.me.petitions_signed.map(x => x.id);
+    if(petitionids){
+      if(petitionids.indexOf(this.image.id) > -1 ){
+        this.setState({
+          youinverbiage:"You're In!"
+        })
+      }
+    }
+
+
+
   }
 
   componentWillMount(){
@@ -103,13 +116,15 @@ class PetitionScreen extends React.Component {
       unsign_petition({variables}).then(response =>{
         this.setState({
           in: false,
+          youinverbiage:"I'm In!"
         })
       })
     } else{
       sign_petition({variables}).then(response =>{
         this.setState({
           in: true,
-          showCommunitySignedModal: true
+          showCommunitySignedModal: true,
+          youinverbiage:"You're In!"
         })
       })
     }
@@ -137,14 +152,14 @@ class PetitionScreen extends React.Component {
 
   render() {
     const { my_user } = this.props;
-    const { showRedirectModal,redirectModalPetition, showCommunitySignedModal } = this.state;
+  
+    const { showRedirectModal,youinverbiage, redirectModalPetition, showCommunitySignedModal } = this.state;
     let status_icon_name;
     if(my_user.loading){
       return<View
       style={{width: SCREEN_WIDTH, height: SCREEN_HEIGHT }}
     ><Text>Loading...</Text></View>
     }
-
     let color = '#aaa';
     const petitionids = my_user.me.petitions_signed.map(x => x.id);
     if(petitionids){
@@ -197,10 +212,10 @@ class PetitionScreen extends React.Component {
   
       )}
            
-              <Text style={{ color: 'white', fontSize: 30 }}>
+              <Text style={{ color: 'white', fontSize: 30, paddingBottom:10 }}>
                 {this.image.title}
               </Text>
-             <Text style={{ color: 'white', fontSize: 16 }}>
+             <Text style={{ color: 'white', fontSize: 16, paddingBottom:15 }}>
                 {this.image.short_description}
               </Text> 
               <View
@@ -215,7 +230,7 @@ class PetitionScreen extends React.Component {
                   color="#fff"
                   onPress={() => this.togglePetition()}
                 >
-                  <Text>I'm in!</Text>
+                  <Text>{youinverbiage}</Text>
                   <Icon.MaterialCommunityIcons
                     name={status_icon_name}
                     style={{ color: color, fontSize: 20 }}
