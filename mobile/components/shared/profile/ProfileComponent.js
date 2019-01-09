@@ -60,21 +60,21 @@ export default class Profileomponent extends React.Component {
                 <Text style={styles.label}>{zipcode}</Text>
               </View>
             </View>
-            <View style={styles.info}>
-              <View style={styles.labelWrapper}>
-                <Text style={styles.label}>{phone}</Text>
-              </View>
-              <View style={styles.labelWrapper}>
-                <Text style={styles.label}>{email}</Text>
-              </View>
+          </View>
+          <View style={styles.info}>
+            <View style={styles.labelWrapper}>
+              <Text style={styles.label}>{phone}</Text>
             </View>
-            <View style={styles.info}>
-              <View style={styles.labelWrapper}>
-                <Text style={styles.label}>{crew}</Text>
-              </View>
-              <View style={styles.labelWrapper}>
-                <Text style={styles.label}>{crew_type}</Text>
-              </View>
+            <View style={styles.labelWrapper}>
+              <Text style={styles.label}>{email}</Text>
+            </View>
+          </View>
+          <View style={styles.info}>
+            <View style={styles.labelWrapper}>
+              <Text style={styles.label}>{crew}</Text>
+            </View>
+            <View style={styles.labelWrapper}>
+              <Text style={styles.label}>{crew_type}</Text>
             </View>
           </View>
         </View>

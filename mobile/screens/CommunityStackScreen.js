@@ -47,40 +47,13 @@ class CommunityStackScreen extends React.Component {
     let all_available_petitions = all_petitions.data.petitions;
     if(previousPosition){
       let formerLength = all_available_petitions.length;
-      for(var i = 0; i<formerLength*1; i++){
+      for(var i = 0; i<formerLength-1; i++){
         if(all_available_petitions[i].id !==  previousPosition){
           let item = all_available_petitions.shift();
-            fetch(`https://api.vimeo.com/videos/${item.video_url}`, {
-              headers: {
-                authorization: 'Bearer 5af014003bea7ca29ec721cc5a7bd34d',
-              },
-            })
-              .then(response => response.json())
-              .then(data => {
-                console.log('this is being called');
-                all_available_petitions[i].primary_image = data.download[data.download.length - 2].link;
-              });
-            all_available_petitions[petitions.length] = item;
+           all_available_petitions[petitions.length] = item;
         }
       }
     }
-
-    await all_available_petitions.forEach(petition => {
-      if(petition.video_url){
-      return fetch(`https://api.vimeo.com/videos/${petition.video_url}`, {
-              headers: {
-                authorization: 'Bearer 5af014003bea7ca29ec721cc5a7bd34d',
-              },
-            })
-              .then(response => response.json())
-              .then(data => {
-                console.log('this is being called');
-                petition.primary_image = data.pictures.sizes[4].link;
-                return petition;
-              });
-      }
-      return petition
-    })
 
     this.setState({
       petitions:all_available_petitions,
@@ -145,17 +118,34 @@ class CommunityStackScreen extends React.Component {
       onPanResponderRelease: (evt, gs) => {
       
         if (-100 > gs.dy) {
-          Animated.spring(this.position, {
-            toValue: { x: 0, y: SCREEN_HEIGHT - 2000 },
-            tension: 0,
-          }).start();
-          let { petitions } = this.state;
+            let { petitions } = this.state;
+            
+            Animated.spring(this.position, {
+              toValue: { x: 0, y: SCREEN_HEIGHT - 2000 },
+              tension: 0,
+            }).start();
+          
             let item = petitions.shift();
             petitions[petitions.length] = item;
 
             this.position.setValue({ x: 0, y: 0 });
             this.setState({ petitions: petitions });
-        } else {
+        } else if(200 < gs.dy){
+            let { petitions } = this.state;
+            
+            Animated.spring(this.position, {
+              toValue: { x: 0, y: SCREEN_HEIGHT + 2000 },
+              tension: 0,
+            }).start();
+            
+            let item = petitions.pop();
+            petitions.unshift(item);
+
+            this.position.setValue({ x: 0, y: 0 });
+            this.setState({ petitions: petitions });
+
+        } 
+        else {
           Animated.spring(this.position, {
             toValue: { x: 0, y: 0 },
             friction: 1,
@@ -227,7 +217,7 @@ class CommunityStackScreen extends React.Component {
                   flex: 1,
                   height: null,
                   width: null,
-                  resizeMode: 'cover',
+                  resizeMode: 'contain',
                   borderRadius: 20,
                 }}
                 {...{ preview, uri: petition.primary_image }}
@@ -325,7 +315,7 @@ class CommunityStackScreen extends React.Component {
                   flex: 1,
                   height: null,
                   width: null,
-                  resizeMode: 'cover',
+                  resizeMode: 'contain',
                   borderRadius: 20,
                 }}
                 {...{ preview, uri: petition.primary_image }}
