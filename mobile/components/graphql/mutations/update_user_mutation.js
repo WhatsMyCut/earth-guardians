@@ -3,7 +3,7 @@ import gql from 'graphql-tag';
 
 
 export const UPDATE_USER = gql`
- mutation($id:ID!, $username: String, $email: String, $name:String, $crew: String,$crew_type:String, $zipcode:String!){
+ mutation($id:ID!, $username: String, $email: String, $name:String, $crew: String,$crew_type:String, $zipcode:String){
   updateUser(
         where:{
             id:$id

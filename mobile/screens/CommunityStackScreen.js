@@ -205,11 +205,11 @@ class CommunityStackScreen extends React.Component {
                   },
                 ]}
               >
-                <Text style={{ color: 'white', fontSize: 18 }}>
+                <Text style={{ color: 'white', fontSize: 18, paddingBottom:10 }}>
                   {petition.title}
                 </Text>
 
-                <Text style={{ color: 'white' }}>{petition.short_description}</Text>
+                <Text style={{ color: 'white', paddingBottom:10 }}>{petition.short_description}</Text>
               </View>
 
               <Image
@@ -303,11 +303,11 @@ class CommunityStackScreen extends React.Component {
                   },
                 ]}
               >
-                <Text style={{ color: 'white', fontSize: 18 }}>
+                <Text style={{ color: 'white', fontSize: 18, paddingBottom:10 }}>
                   {petition.title}
                 </Text>
 
-                <Text style={{ color: 'white' }}>{petition.short_description}</Text>
+                <Text style={{ color: 'white', paddingBottom:10 }}>{petition.short_description}</Text>
               </Animated.View>
 
               <Image

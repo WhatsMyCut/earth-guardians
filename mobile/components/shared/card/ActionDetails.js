@@ -36,7 +36,6 @@ export default class ActionDetails extends React.Component {
       ? 'circle-slice-8'
       : this.state.in ? 'circle-slice-8' : 'circle-outline';
     const color = this.props.canDelete ? 'green' : this.state.in ? 'green' : '#aaa';
-
     let item = data.action ? data.action : data;
     return (
       <View style={{ flex: 1, margin: 5 }}>
@@ -52,7 +51,8 @@ export default class ActionDetails extends React.Component {
             {this.props.canDelete ? "METRICS EARNED":"METRICS" }
           </Text>
         </View>
-        <View style={{ flex: 1, flexDirection: 'row', marginLeft:-16}}>
+
+        <View style={{ flex: 1, flexDirection: 'row', marginLeft:-16, alignContent:"flex-start"}}>
           <View style={{ flex: 1}}>
             <Text style={{ fontFamily: 'Proxima Nova', color: '#666', textAlign:"center"  }}>
               CO2
@@ -113,16 +113,30 @@ export default class ActionDetails extends React.Component {
           </View>
         </View>
 
-    
-       
+      
+         <View style={{flex:1}}>
        <View style={{ flex: 1 }}>
           <Text
             style={{ fontFamily: 'Proxima Nova', color: '#666', marginTop: 20 }}
           > COMMUNITY
           </Text>
         </View>
-        
-        <View style={{ flex: 1 }}>
+        {this.props.zipcode && (
+        <View style={{flex:1}}>
+        <Text
+            style={{
+              fontSize: 22,
+              fontWeight: 'bold',
+              fontFamily: 'Proxima Nova Bold',
+              color: '#eee',
+            }}
+          >
+            {this.props.zipcode}
+          </Text>
+          </View>
+        )}
+        {!this.props.zipcode && (
+        <TouchableOpacity style={{ flex: 1 }} onPress={this.props.openZipCodeModal}>
           <Text
             style={{
               fontSize: 22,
@@ -134,7 +148,10 @@ export default class ActionDetails extends React.Component {
             Zip Code
           </Text>
           
-        </View> 
+        </TouchableOpacity> 
+          )}
+        </View>
+      
         {/* <View style={{ flex: 1, marginBottom: 10 }}>
           <Text
             style={{
@@ -154,7 +171,7 @@ export default class ActionDetails extends React.Component {
                   }}
                   style={{flexDirection:'row', justifyContent:'flex-end', alignContent:"center"}}
                 >
-                  <Text style={{fontSize: 18,fontWeight: '700', fontFamily: 'Proxima Nova Bold',color:'#000000', paddingRight:10}}>{this.props.canDelete ? "Do it again!" : "I'm in!"}</Text>
+                  <Text style={{fontSize: 18,fontWeight: '700', fontFamily: 'Proxima Nova Bold',color:'#000000', paddingRight:10}}>{this.props.canDelete ? "You did this!" : "I'm in!"}</Text>
                   <Icon.MaterialCommunityIcons
                     name={status_icon_name}
                     style={{ color: color, fontSize: 18 }}
