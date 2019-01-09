@@ -190,7 +190,7 @@ class ActionCardSmall extends React.Component {
   >
     {/* <PasswordModal isVisible={this.state.showModal}/> */}
     <Animated.View>
-    <Animated.View style={[styles.item,frontAnimatedStyle, {height: 250, width: 181}]}>
+    <Animated.View style={[styles.item,frontAnimatedStyle, {height: 250}]}>
       <Image
         style={{
           flex: 1,
@@ -261,8 +261,10 @@ class ActionCardSmall extends React.Component {
     let water = item.water;
     let carbon_dioxide = item.carbon_dioxide;
 
-   return  <DoubleClick
-    style={{ flex: 1, height: index % 2 ? 230 : 250, width: 180 }}
+    return <View style={{flex:1, margin:10, height:250}}>
+    
+    <DoubleClick
+    style={{ flex: 1}}
     singleTap={async () => {
       // if(!canDelete){
         this.flipCard()
@@ -282,7 +284,7 @@ class ActionCardSmall extends React.Component {
   >
     {/* <PasswordModal isVisible={this.state.showModal}/> */}
 
-    <Animated.View style={[styles.item,frontAnimatedStyle, {height: 250, width: 181, opacity:takingAction ? 0 : 1}]}>
+    <Animated.View style={[styles.item,frontAnimatedStyle, {height: 250, opacity:takingAction ? 0 : 1}]}>
       <Image
         style={{
           flex: 1,
@@ -308,7 +310,7 @@ class ActionCardSmall extends React.Component {
           color: '#fff',
           fontSize: 18,
         }}
-      > 
+      >   
         {canDelete && (
           
           item.action.action_taken_description.length > 48 ? `${item.action.action_taken_description.substring(0, 40)}...` : item.action.action_taken_description
@@ -334,6 +336,10 @@ class ActionCardSmall extends React.Component {
       {this.state.delete && this.showDelete()}
     </Animated.View>
   </DoubleClick>
+    
+    </View>
+
+  
   }
 
   render() {
@@ -344,12 +350,10 @@ class ActionCardSmall extends React.Component {
 
 const styles = StyleSheet.create({
   item: {
-    flex: 1,
     alignContent: 'space-between',
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 3 },
+    shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.8,
-    width: 180,
     shadowRadius: 2,
     paddingLeft: 10,
     elevation: 1,
@@ -361,17 +365,23 @@ const styles = StyleSheet.create({
   },
   gradient: {
     position: 'absolute',
-    paddingHorizontal: 10,
     borderRadius: Styles.borderRadius,
-    left: 10,
-    width: 170,
+    marginLeft:10,
+    top:0,
+    bottom:0,
+    left:0,
+    right:0,
+    height:250
   },
   flippedItem: {
     backgroundColor: '#ffffff',
     position: 'absolute',
-    left: 10,
-    width: 170,
-    flex: 1,
+    marginLeft: 10,
+    top:0,
+    bottom:0,
+    left:0,
+    right:0,
+    height:250
   },
   imageLinearGradient: {
     position: 'absolute',

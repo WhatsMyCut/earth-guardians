@@ -12,8 +12,6 @@
     "orientation": "portrait",
     "icon": "./assets/eg_app_icon_ios_120_120.png",
     "splash": {
-      "image": "./assets/eye_icon.png",
-      "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },
     "updates": {
