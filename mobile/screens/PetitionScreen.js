@@ -151,7 +151,19 @@ class PetitionScreen extends React.Component {
   // }
 
   _openRedirectWithUrl = url => {
-    this.setState({ showRedirectModal: true, redirectModalPetition: url });
+    this.setState({ showRedirectModal: true, redirectModalPetition: url },
+      async () => {
+        try {
+          const phone = await RetrieveData('phone');
+          const analytics = new Analytics('UA-131896215-1');
+          analytics
+            .event(new Event('OpenRedirectModal', 'Press', phone))
+            .then(() => console.log('success '))
+            .catch(e => console.log(e.message));
+        } catch (e) {
+          console.log(e);
+        }
+      });
   };
 
   _modalOnClose = () => {
