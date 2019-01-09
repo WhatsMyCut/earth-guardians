@@ -28,7 +28,8 @@
       "buildNumber":"13"
     },
     "android": {
-      "package": "com.earthguardians.EarthTracks"
+      "package": "com.earthguardians.EarthTracks",
+      "versionCode": 3
     },
     "description": ""
   }
