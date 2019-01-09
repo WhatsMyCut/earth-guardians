@@ -2,6 +2,8 @@ import React from 'react';
 import { all } from 'rsvp';
 import { LinearGradient, AppLoading } from 'expo';
 
+import { Analytics, PageHit } from 'expo-analytics';
+
 import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_categories_query';
 import graphql from '../components/hoc/graphql';
 import HeaderNavBar from '../components/shared/navBar/HeaderNavBar';
@@ -30,7 +32,21 @@ class TravelStackScreen extends React.Component {
       const primary_video = actions[primary_travel_id].video;
 
       //update the state
-      this.setState({ actions, primary_image, primary_video });
+      this.setState(
+        { actions, primary_image, primary_video },
+        // Analytics
+        () => {
+          try {
+            const analytics = new Analytics('UA-131896215-1');
+            analytics
+              .hit(new PageHit('TravelScreen'))
+              .then(() => console.log('success '))
+              .catch(e => console.log(e.message));
+          } catch (e) {
+            console.log(e);
+          }
+        }
+      );
     } catch (e) {
       console.log(e);
     }
@@ -47,15 +63,15 @@ class TravelStackScreen extends React.Component {
     }
     const actions = all_categories.sectorActionsByName;
     if (!this.state.primary_video && !this.state.primary_image) {
-      return <LinearGradient {...LinearGradientProps.travel} style={{ flex: 1 }}>
-      
-    </LinearGradient>;
+      return (
+        <LinearGradient {...LinearGradientProps.travel} style={{ flex: 1 }} />
+      );
     }
     return (
       <LinearGradient {...LinearGradientProps.travel} style={{ flex: 1 }}>
         <GeneralScreen
           data={actions}
-          screen={"Travel"}
+          screen={'Travel'}
           primary_image={actions[0].primary_image}
           primary_video={actions[0].video_id}
         />
