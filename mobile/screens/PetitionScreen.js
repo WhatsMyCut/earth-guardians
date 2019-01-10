@@ -2,6 +2,7 @@ import React from 'react';
 import {
   SafeAreaView,
   Animated,
+  PanResponder,
   View,
   TouchableOpacity,
   Text,
@@ -10,7 +11,6 @@ import {
   WebView,
   Platform,
   Dimensions,
-  PanResponder,
   StatusBar
 } from 'react-native';
 import { Button } from 'react-native-paper';
@@ -120,6 +120,9 @@ class PetitionScreen extends React.Component {
         })
       })
     } else{
+      if(this.image.external_url){
+        this._openRedirectWithUrl(this.image.external_url); 
+      }
       sign_petition({variables}).then(response =>{
         this.setState({
           in: true,
@@ -269,7 +272,7 @@ class PetitionScreen extends React.Component {
                </BlurView>
               }
 
-          {this.image.external_url ? (<TouchableOpacity
+          {/* {this.image.external_url ? (<TouchableOpacity
                 onPress={() =>{
                   this._openRedirectWithUrl(this.image.external_url); 
                 }}
@@ -285,7 +288,7 @@ class PetitionScreen extends React.Component {
                   }
                 />
     </TouchableOpacity> ): null
-              }
+              } */}
             </View>
           </View>
         </Animated.View>

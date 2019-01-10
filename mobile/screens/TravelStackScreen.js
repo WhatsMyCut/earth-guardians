@@ -12,7 +12,7 @@ import { travel_data, primary_travel_id } from './dummy/data';
 @graphql(ALL_ACTION_CATEGORIES, {
   name: 'all_categories',
   options: {
-    fetchPolicy: 'network-only',
+    pollInterval: 500,
     variables: {
       name: 'Travel',
     },

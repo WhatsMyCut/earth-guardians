@@ -14,7 +14,7 @@ import { energy_data, primary_energy_id } from './dummy/data';
 @graphql(ALL_ACTION_CATEGORIES, {
   name: 'all_categories',
   options: {
-    pollInterval: 300,
+    pollInterval: 500,
     variables: {
       name: 'Energy',
     },

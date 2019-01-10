@@ -185,5 +185,5 @@ export default createMaterialTopTabNavigator(routeConfig, {
       width: 0,
     },
   },
-  initialRouteName: 'MyActionsStack',
+  initialRouteName: 'CommunityStack',
 });

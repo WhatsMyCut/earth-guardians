@@ -3,6 +3,7 @@ import { View, Text } from 'react-native';
 import { ART } from 'react-native';
 const { Surface, Group, Shape } = ART;
 import * as d3 from 'd3';
+import WaterModal from '../modals/NotH2OConsumptionModal';
 
 
 
@@ -55,9 +56,29 @@ export class DonutGraph extends React.Component {
       .outerRadius(smallerLength / 2 - 10)
       .padAngle(0.05)
       .innerRadius(smallerLength / 5);
+
+    let waterPercent = Math.floor((parseFloat(this.props.water, 2) / total)*100);
+    let wastePercent =Math.floor((parseFloat(this.props.waste, 2) / total)*100);
+    let carbonDioxidePercent =Math.floor((parseFloat(this.props.carbon_dioxide, 2) / total)*100);
+    if(this.props.water ==0 ){
+      waterPercent = 0
+    }
+    if(this.props.waste == 0){
+      wastePercent = 0;
+    }
+    if(this.props.carbon_dioxide == 0){
+      carbonDioxidePercent = 0;
+    }
+
+    let showGraph = false;
+
+    if(waterPercent != 0 || carbonDioxidePercent != 0 || wastePercent != 0){
+      showGraph = true
+    }
   
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      {showGraph && (
         <Surface width={width} height={height}>
           <Group x={width / 2} y={height / 2}>
             {sectionAngles.map(section => (
@@ -73,10 +94,18 @@ export class DonutGraph extends React.Component {
             ))}
           </Group>
         </Surface>
-        <View style={{flex:1, flexDirection:'row', alignContent:"space-between"}}>
-            <Text style={{color:"white", fontFamily:"Proxima Nova", fontSize:14, paddingRight:10}}>CO2 {Math.floor((parseFloat(this.props.carbon_dioxide, 2) / total)*100)} %</Text>
-            <Text style={{color:"white", fontFamily:"Proxima Nova", fontSize:14, paddingRight:10}}>Water {Math.floor((parseFloat(this.props.water, 2) / total)*100)} %</Text>
-            <Text style={{color:"white", fontFamily:"Proxima Nova", fontSize:14, paddingRight:10}}>Waste {Math.floor((parseFloat(this.props.waste, 2) / total)*100)} %</Text>
+        )}
+        {!showGraph && (
+          <View style={{flex:1, justifyContent:"center", alignContent:"center", paddingTop:30}}>
+            <Text style={{color:"white", fontSize:24, textAlign:"center"}}>You should take some actions</Text>
+            <Text style={{color:"white", fontSize:24, textAlign:"center"}}> and earn some points!</Text>
+          </View>
+
+        )}
+        <View style={{flex:1, flexDirection:'row', alignContent:"space-between", justifyContent:"flex-end", paddingTop: showGraph ? 0 : 20}}>
+            <Text style={{color:"white", fontFamily:"Proxima Nova", fontSize:14, paddingRight:10}}>CO2 {typeof carbonDioxidePercent !== 'NaN' ? carbonDioxidePercent : 0} %</Text>
+            <Text style={{color:"white", fontFamily:"Proxima Nova", fontSize:14, paddingRight:10}}>Water {typeof waterPercent !== 'NaN' ? waterPercent : 0} %</Text>
+            <Text style={{color:"white", fontFamily:"Proxima Nova", fontSize:14, paddingRight:10}}>Waste {typeof wastePercent !== 'NaN' ? wastePercent : 0} %</Text>
 
         </View>
       </View>

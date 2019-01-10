@@ -15,7 +15,7 @@ export default class RedirectModal extends React.Component {
         transparent={true}
         visible={this.state.modalVisible}
         onRequestClose={() => {
-          Alert.alert('Modal has been closed.');
+          
         }}
         style={{
           backgroundColor: '#333',
@@ -25,8 +25,8 @@ export default class RedirectModal extends React.Component {
       >
         <View
           style={{
-            marginTop: 200,
-            marginHorizontal: 20,
+            paddingTop: 200,
+            paddingHorizontal: 20,
           }}
         >
           <View
@@ -59,7 +59,7 @@ export default class RedirectModal extends React.Component {
                 borderRadius: 5,
                 justifyContent: 'center',
                 alignItems: 'center',
-                marginTop: 20,
+                marginTop: 80,
               }}
               onPress={() => {
                 WebBrowser.openBrowserAsync(this.props.external_url);

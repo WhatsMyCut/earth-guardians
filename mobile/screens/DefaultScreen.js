@@ -3,15 +3,17 @@ import React from 'react';
 import {
   SafeAreaView,
   View,
+  Animated,
+  PanResponder,
   TouchableHighlight,
   TouchableOpacity,
   Text,
 } from 'react-native';
 //import { Video } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
-
 import VideoPlayer from '@expo/videoplayer';
 import BaseScreen from './BaseScreen';
+
 
 // import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_categories_query';
 
@@ -21,6 +23,37 @@ import BaseScreen from './BaseScreen';
 // import navigationService from '../navigation/navigationService';
 
 class DefaultScreen extends BaseScreen {
+  
+  
+  async componentWillMount(){
+
+    const screen = this.props.navigation.getParam('screen', 'MyActions');
+    const petition = this.props.navigation.getParam('petition');
+
+
+    this.viewResponder = PanResponder.create({
+      onStartShouldSetPanResponder: () => true,
+
+      onPanResponderMove: (evt, gs) => {
+        if( 200 < gs.dy){
+          console.log('navigate back')
+          if(petition){
+            this.props.navigation.navigate(screen, {screen:"CommunityStack", image:petition, petitionTitle:petition.title});
+          } else{
+            this.props.navigation.navigate(screen)
+          }
+        }
+        if( -100 > gs.dy){
+          console.log('navigate back')
+          if(petition){
+            this.props.navigation.navigate(screen, {screen:"CommunityStack", image:petition, petitionTitle:petition.title});
+          } else{
+            this.props.navigation.navigate(screen)
+          }
+        }
+      }
+    })
+  }
   changeRate(rate) {
     this._playbackInstance.setStatusAsync({
       rate: rate,
@@ -58,23 +91,9 @@ class DefaultScreen extends BaseScreen {
 
     console.ignoredYellowBox = ['Warning:'];
     return (
-      <View style={{ flex: 1 }}>
+      <Animated.View {...this.viewResponder.panHandlers} style={{ flex: 1 }}>
         <View style={styles.container}>
-          <View style={styles.topBackNav}>
-            <TouchableOpacity
-              onPress={() => {
-                
-                if(petition){
-                  this.props.navigation.navigate(screen, {screen:"CommunityStack", image:petition, petitionTitle:petition.title});
-                } else{
-                  this.props.navigation.navigate(screen)
-                }
-                
-              }}
-            >
-              <Ionicons name="ios-arrow-round-back" size={42} color="white" />
-            </TouchableOpacity>
-          </View>
+         
           <View
             style={[
               styles.container,
@@ -118,7 +137,7 @@ class DefaultScreen extends BaseScreen {
             </View> */}
           </View>
         </View>
-      </View>
+      </Animated.View>
     );
   }
 }

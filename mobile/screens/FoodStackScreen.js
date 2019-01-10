@@ -16,7 +16,7 @@ import { food_data, primary_food_id } from './dummy/data';
 @graphql(ALL_ACTION_CATEGORIES, {
   name: 'all_categories',
   options: {
-    fetchPolicy: 'network-only',
+    pollInterval: 500,
     variables: {
       name: 'Food',
     },

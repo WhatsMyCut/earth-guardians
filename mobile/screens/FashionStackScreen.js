@@ -12,7 +12,7 @@ import GeneralScreen from './GeneralScreen';
 @graphql(ALL_ACTION_CATEGORIES, {
   name: 'all_categories',
   options: {
-    fetchPolicy: 'network-only',
+    pollInterval: 500,
     variables: {
       name: 'Fashion',
     },

@@ -9,10 +9,12 @@ import HeaderNavBar from '../components/shared/navBar/HeaderNavBar';
 import LinearGradientProps from '../constants/LinearGradientProps';
 import GeneralScreen from './GeneralScreen';
 import { water_data, primary_water_id } from './dummy/data';
+
+
 @graphql(ALL_ACTION_CATEGORIES, {
   name: 'all_categories',
   options: {
-    fetchPolicy: 'network-only',
+    pollInterval: 500,
     variables: {
       name: 'Water',
     },

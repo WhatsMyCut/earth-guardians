@@ -67,6 +67,7 @@ class ActionCardSmall extends React.Component {
   delete = () => {
     //TODO
     const { item, delete_action } = this.props;
+    this.setState({delete:false});
     delete_action({variables:{id:item.id}}).then(response => {
       
     })

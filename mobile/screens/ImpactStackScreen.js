@@ -15,8 +15,9 @@ import ProfileComponent from '../components/shared/profile/ProfileComponent';
 import CommunityEventModal from '../components/shared/modals/CommunityEventModal';
 import {ALL_MY_METRICS} from '../components/graphql/queries/all_my_metrics_query';
 import UpdateUserModal from '../components/shared/modals/updateUserModal';
-
-
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import client from '../Apollo';
+import { StoreData, RetrieveData } from '../store/AsyncStore';
 
 @graphql(ALL_MY_METRICS, {
   name:"all_metrics",
@@ -60,7 +61,7 @@ class ImpactStackScreen extends React.Component {
 
       onPanResponderMove: (evt, gs) => {
         if( 200 < gs.dy){
-          NavigationService.navigate('MyActions');
+          NavigationService.navigate('CommunityStack');
         }
       }
     })
@@ -200,15 +201,33 @@ class ImpactStackScreen extends React.Component {
 }
 ImpactStackScreen.navigationOptions = {
   headerTitle: (
+    <View style={{flex:1, justifyContent:"center"}}>
     <Text
       style={{
         color: '#ffffff',
         fontSize: 28,
         fontFamily: 'Proxima Nova Bold',
+        textAlign:"center"
       }}
     >
       MY IMPACT
     </Text>
+    </View>
+  ),
+  headerRight:(
+    <TouchableOpacity onPress={async()=>{
+      await StoreData('phone', null);
+      await StoreData('country_dial_code', null);
+      await StoreData('EARTH_GUARDIANS_TOKEN', null);
+      client.resetStore();
+    }}>
+        <MaterialCommunityIcons
+              name="logout"
+              size={22}
+              color="white"
+              style={{ paddingRight: 10 }}
+            />
+    </TouchableOpacity>
   ),
   headerStyle: {
     backgroundColor: '#333',
