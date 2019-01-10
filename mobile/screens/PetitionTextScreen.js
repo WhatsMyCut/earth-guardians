@@ -10,9 +10,9 @@ import {
   WebView,
   Dimensions,
 } from 'react-native';
-import { Button } from 'react-native-paper';
+import { Button, Searchbar } from 'react-native-paper';
 import { all } from 'rsvp';
-import { LinearGradient, Icon } from 'expo';
+import { LinearGradient, Icon, WebBrowser } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
 
 import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_categories_query';
@@ -65,93 +65,127 @@ class PetitionTextScreen extends React.Component {
 
         p {
           font-family: Roboto;
-          font-size:12px;
+          font-size:14px;
         }
 
       </style>
     `
-    // console.log('this.body', this.body);
-    // let renderBody = styles + this.body;
-    return (
-      <SafeAreaView style={{ flex: 1 }}>
-        <View style={styles.container}>
-          <View style={styles.topBackNav}>
-            <TouchableOpacity
-              onPress={() =>
+    let renderBody = styles + body;
+
+    return <SafeAreaView style={{flex:1, justifyContent:"center"}}>
+          <View style={{flex:0.1, height:30, paddingHorizontal:15, paddingTop:50}}>
+            <Text
+              style={{
+              fontSize: 30,
+                fontWeight: 'bold',
+                paddingBottom: 10,
+                paddingLeft:5,
+                color: 'blue',
+                textAlign:'left'
+               }}
+             >
+               {this.title}
+            </Text>
+          </View>
+    <View style={{flex:1, paddingHorizontal:15}}>
+            <WebView 
+              // style={{height:600, width:480}}
+              style={{backgroundColor: 'transparent'}}
+              originWhitelist={['*']} 
+              source={{ html: renderBody}} 
+              scalesPageToFit={false}
+              onNavigationStateChange={(event) => {
+                console.log('url stuff',event);
+                
+                if(event.url !== 'about:blank'){
+                  let url = event.url.indexOf('https://') !== -1 ? event.url : `https://${event.url}`
+                  WebBrowser.openBrowserAsync(url);
+                }
+              }}
+              />
+             </View>
+             <TouchableOpacity
+               onPress={() =>
                 this.props.navigation.navigate('Petition', {
                   screen: 'Community',
                   image: this.image,
                   title: this.title,
                 })
               }
-            >
-              <Ionicons name="ios-arrow-round-back" size={42} color="#ccc" />
-            </TouchableOpacity>
-          </View>
-          <View
-            style={{
-              flex: 1,
-              justifyContent: 'flex-start',
-              alignItems: 'fles-start',
-              paddingRight: 10,
-              paddingLeft: 20,
-            }}
-          >
-            <Text
-              style={{
-                fontSize: 30,
-                fontWeight: 'bold',
-                paddingBottom: 10,
-                paddingTop: 30,
-                color: 'blue',
-              }}
-            >
-              {this.title}
-            </Text>
-            <WebView 
-              style={{height:600, width:480}}
-              originWhitelist={['*']} 
-              source={{ html: `${body}`}} 
-              scalesPageToFit={false}
-              />
-          </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          >
-            <TouchableOpacity
-              onPress={() =>
-                navigationService.navigate('TODOAnotherPetitionTextScreen', {
-                  screen: 'Petition',
-                  image: this.image,
-                })
-              }
-              style={{ color: '#fff', alignSelf: 'center', paddingBottom: 10 }}
-            >
-              <TabBarIcon
-                name={
-                  Platform.OS === 'ios' ? `ios-arrow-down` : 'md-arrow-down'
-                }
-              />
-            </TouchableOpacity>
-          </View>
-        </View>
-      </SafeAreaView>
-    );
+               style={{ color: '#fff', alignSelf: 'center', paddingBottom: 10 }}
+             >
+               <TabBarIcon
+                 name={
+                   Platform.OS === 'ios' ? `ios-arrow-down` : 'md-arrow-down'
+                 }
+               />
+             </TouchableOpacity>
+        </SafeAreaView>
+
+    // return (
+    //   <View style={{ flex: 1 }}>
+    //     <View style={styles.container}>
+        
+          
+    //       <View
+    //         style={{
+    //           flex: 1,
+    //           paddingRight: 10,
+    //           paddingLeft: 20,
+    //         }}
+    //       >
+    //         <Text
+    //           style={{
+    //             fontSize: 30,
+    //             fontWeight: 'bold',
+    //             paddingBottom: 10,
+    //             paddingTop: 30,
+    //             color: 'blue',
+    //           }}
+    //         >
+    //           {this.title}
+    //         </Text>
+
+    //         <WebView 
+    //           // style={{height:600, width:480}}
+    //           originWhitelist={['*']} 
+    //           source={{ html: body}} 
+    //           scalesPageToFit={false}
+    //           />
+    //       </View>
+    //       <View
+    //         style={{
+    //           flex:1
+    //         }}
+    //       >
+    //         <TouchableOpacity
+    //           onPress={() =>
+    //             navigationService.navigate('TODOAnotherPetitionTextScreen', {
+    //               screen: 'Petition',
+    //               image: this.image,
+    //             })
+    //           }
+    //           style={{ color: '#fff', alignSelf: 'center', paddingBottom: 10 }}
+    //         >
+    //           <TabBarIcon
+    //             name={
+    //               Platform.OS === 'ios' ? `ios-arrow-down` : 'md-arrow-down'
+    //             }
+    //           />
+    //         </TouchableOpacity>
+    //       </View>
+    //     </View>
+    //   </View>
+    // );
   }
 }
 
 const styles = {
   container: {
-    flex: 1,
+    flex: 1
   },
   topBackNav: {
     flex: 1,
-    justifyContent: 'flex-start',
-    maxHeight: 30,
     paddingHorizontal: 5,
   },
 };

@@ -161,7 +161,6 @@ class ActionCardSmall extends React.Component {
       let waste = item.action ? item.action.waste : item.waste;
       let water = item.action ? item.action.water : item.water;
       let carbon_dioxide = item.action ? item.action.carbon_dioxide : item.carbon_dioxide;
-      console.log('this is being called', waste, water, carbon_dioxide);
       if(!this.props.canDelete){
         if(waste > water && waste > carbon_dioxide){
           this.setState({showWasteModal:true})

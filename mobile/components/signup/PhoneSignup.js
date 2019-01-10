@@ -152,10 +152,10 @@ export default class PhoneSignup extends React.Component {
               }}
             >
               <Text style={styles.title}>Welcome to EarthTracks!</Text>
-              <Text style={styles.promo}>Fitness Tracker for the Planet</Text>
+              <Text style={{...styles.promo, fontWeight:'bold',paddingBottom:5}}>Fitness Tracker for the Planet</Text>
               <Text style={styles.promo}>The change we need for a</Text>
-              <Text style={styles.promo}>regenerative shift starts with you.</Text>
-              <Text style={styles.promo}>Are you in?</Text>
+              <Text style={{...styles.promo,paddingBottom:5}}>regenerative shift starts with you.</Text>
+              <Text style={{...styles.promo,paddingBottom:5}}>ARE YOU IN?</Text>
               
               
               

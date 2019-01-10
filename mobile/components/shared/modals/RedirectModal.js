@@ -15,7 +15,7 @@ export default class RedirectModal extends React.Component {
         transparent={true}
         visible={this.state.modalVisible}
         onRequestClose={() => {
-          
+
         }}
         style={{
           backgroundColor: '#333',
@@ -48,9 +48,19 @@ export default class RedirectModal extends React.Component {
                 textAlign: 'center',
               }}
             >
-              EARTH GUARDIANS WILL REDIRECT YOU TO {this.props.external_url}
+              YOU HAVE CHOSEN TO COMMIT TO THIS! {this.props.external_url}
             </Text>
-
+            <Text
+            style={{
+              color: '#fff',
+              marginHorizontal: 20,
+              fontSize: 14,
+              textAlign: 'center',
+              marginTop:10
+            }}
+            >
+               Visit our page to take the next step
+            </Text>
             <TouchableOpacity
               style={{
                 backgroundColor: '#fff',
@@ -59,7 +69,7 @@ export default class RedirectModal extends React.Component {
                 borderRadius: 5,
                 justifyContent: 'center',
                 alignItems: 'center',
-                marginTop: 80,
+                marginTop: 40,
               }}
               onPress={() => {
                 WebBrowser.openBrowserAsync(this.props.external_url);

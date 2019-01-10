@@ -7,7 +7,9 @@ import { TouchableRipple, Button } from 'react-native-paper';
 import { Analytics, Event } from 'expo-analytics';
 import { RetrieveData } from '../../../store/AsyncStore';
 export default class ActionDetails extends React.Component {
-  state = {};
+  state = {
+    in: false
+  };
 
   _takeInAction = async () => {
     try {
@@ -28,7 +30,9 @@ export default class ActionDetails extends React.Component {
       const analytics = new Analytics('UA-131896215-1');
       analytics
         .event(new Event('MyAction', 'Press', phone, item_id))
-        .then(() => console.log('success '))
+        .then(() => {
+          this.setState({in:false})
+        })
         .catch(e => console.log(e.message));
     } catch (e) {
       console.log(e);
@@ -41,11 +45,8 @@ export default class ActionDetails extends React.Component {
       return <Text>Nothing available</Text>;
     }
 
-    const status_icon_name = this.props.canDelete
-      ? 'circle-slice-8'
-
-      : this.state.in ? 'circle-slice-8' : 'circle-outline';
-    const color = this.props.canDelete ? 'green' : this.state.in ? 'green' : '#aaa';
+    const status_icon_name = this.state.in ? 'circle-slice-8' : 'circle-outline';
+    const color = this.state.in ? 'green' : '#aaa';
 
     let item = data.action ? data.action : data;
 
@@ -218,13 +219,12 @@ export default class ActionDetails extends React.Component {
         <TouchableOpacity
 
                   onPress={() => {
-                    if(!this.props.canDelete){
+                    
                       this._takeInAction()
-                    }
                   }}
                   style={{flexDirection:'row', justifyContent:'flex-end', alignContent:"center"}}
                 >
-                  <Text style={{fontSize: 18,fontWeight: '700', fontFamily: 'Proxima Nova Bold',color:'#000000', paddingRight:10}}>{this.props.canDelete ? "You did this!" : "I'm in!"}</Text>
+                  <Text style={{fontSize: 18,fontWeight: '700', fontFamily: 'Proxima Nova Bold',color:'#000000', paddingRight:10}}>I'm In!</Text>
                   <Icon.MaterialCommunityIcons
                     name={status_icon_name}
                     style={{ color: color, fontSize: 18 }}

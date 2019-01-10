@@ -16,7 +16,7 @@ import {
 import { Button } from 'react-native-paper';
 import { all } from 'rsvp';
 import { LinearGradient, Icon, BlurView } from 'expo';
-import { Ionicons } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
 import { Analytics, Event, PageHit } from 'expo-analytics';
 
 import { GET_USER } from '../components/graphql/queries/get_user';
@@ -30,8 +30,8 @@ import NavigationService from '../navigation/navigationService';
 import CommunitySignedModal from '../components/shared/modals/communitySignedModal';
 import RedirectModal from '../components/shared/modals/RedirectModal';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import navigationService from '../navigation/navigationService';
 import { RetrieveData } from '../store/AsyncStore';
+import PetitionTextScreen from './PetitionTextScreen';
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
@@ -274,7 +274,7 @@ class PetitionScreen extends React.Component {
                   left: SCREEN_WIDTH / 2.2,
                 }}
                 onPress={() => {
-                  navigationService.navigate('Video', {
+                  NavigationService.navigate('Video', {
                     screen: 'Petition',
                     video: this.state.video_url,
                     petition: this.image,
@@ -317,17 +317,8 @@ class PetitionScreen extends React.Component {
                     style={{ color: color, fontSize: 20 }}
                   />
                 </Button>
-{/* 
-                <Icon.AntDesign
-                  name="eyeo"
-                  style={{
-                    color: '#fff',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    fontSize: 20,
-                    marginHorizontal: 10,
-                  }}
-                /> */}
+
+               
               {/* <Text style={{ color: '#fff', alignSelf: 'center' }}>
                   4K took action
                 </Text> */}
@@ -365,6 +356,29 @@ class PetitionScreen extends React.Component {
                 <CommunitySignedModal onClose={this._modalOnClose} />
               </BlurView>
             )}
+            {this.image.body.length>0 &&
+            <View style={{flex:0.15, flexDirection:"row", justifyContent:"center", alignContent:'center'}}>
+            <TouchableOpacity 
+              style={{
+                flex:1, flexDirection:"row", justifyContent:"center", alignContent:'center'
+              }}
+            onPress={()=>{
+              console.log('this is working')
+              NavigationService.navigate('PetitionText', {image:this.image, title:this.image.title, body:this.image.body})
+            }}>
+                <AntDesign
+                  name="down"
+                  style={{
+                  color: '#fff',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    fontSize: 20,
+                    marginHorizontal: 10,
+                 }}
+               />
+               </TouchableOpacity>
+               </View>
+            }
           
           </View>
         </View>

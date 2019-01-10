@@ -28,6 +28,7 @@ import UpdateUserModal from '../components/shared/modals/updateUserModal';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import client from '../Apollo';
 import { StoreData } from '../store/AsyncStore';
+import navigationService from '../navigation/navigationService';
 
 @graphql(ALL_MY_METRICS, {
   name: 'all_metrics',
@@ -260,6 +261,7 @@ ImpactStackScreen.navigationOptions = {
       await StoreData('country_dial_code', null);
       await StoreData('EARTH_GUARDIANS_TOKEN', null);
       client.resetStore();
+      navigationService.navigate('AuthLoading')
     }}>
         <MaterialCommunityIcons
               name="logout"
