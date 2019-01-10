@@ -6,6 +6,7 @@ import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_
 import graphql from '../components/hoc/graphql';
 import HeaderNavBar from '../components/shared/navBar/HeaderNavBar';
 
+import { Analytics, PageHit } from 'expo-analytics';
 import LinearGradientProps from '../constants/LinearGradientProps';
 import GeneralScreen from './GeneralScreen';
 import { water_data, primary_water_id } from './dummy/data';
@@ -37,6 +38,21 @@ class WaterStackScreen extends React.Component {
   //     console.log(e);
   //   }
   // }
+  componentDidMount() {
+    // Analytics
+    () => {
+      try {
+        const analytics = new Analytics('UA-131896215-1');
+        analytics
+          .hit(new PageHit('WaterScreen'))
+          .then(() => console.log('success '))
+          .catch(e => console.log(e.message));
+      } catch (e) {
+        console.log(e);
+      }
+    };
+  }
+
   render() {
     const { all_categories } = this.props;
     if (all_categories.loading) {
@@ -50,15 +66,15 @@ class WaterStackScreen extends React.Component {
     const actions = all_categories.sectorActionsByName;
 
     if (!actions[0].video_id && !actions[0].primary_image) {
-      return <LinearGradient {...LinearGradientProps.water} style={{ flex: 1 }}>
-
-    </LinearGradient>;
+      return (
+        <LinearGradient {...LinearGradientProps.water} style={{ flex: 1 }} />
+      );
     }
     return (
       <LinearGradient {...LinearGradientProps.water} style={{ flex: 1 }}>
         <GeneralScreen
           data={actions}
-          screen={"Water"}
+          screen={'Water'}
           primary_image={actions[0].primary_image}
           primary_video={actions[0].video_id}
         />

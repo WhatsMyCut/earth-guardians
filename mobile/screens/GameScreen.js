@@ -1,115 +1,139 @@
-import React from "react";
+import React from 'react';
 
-import { Text, TouchableOpacity, View, StyleSheet, Dimensions } from "react-native";
+import {
+  Text,
+  TouchableOpacity,
+  View,
+  StyleSheet,
+  Dimensions,
+} from 'react-native';
 
-import GameControls from "../components/game-stack/GameControls";
-import GameCards from "../components/game-stack";
+import { Analytics, PageHit } from 'expo-analytics';
+
+import GameControls from '../components/game-stack/GameControls';
+import GameCards from '../components/game-stack';
 import NavigationService from '../navigation/navigationService';
 import graphql from '../components/hoc/graphql';
 import { TAKE_ACTION } from '../components/graphql/mutations/take_action_mutation';
 import { GET_USER } from '../components/graphql/queries/get_user';
 
-@graphql( TAKE_ACTION,{
-   name:"take_action"
+@graphql(TAKE_ACTION, {
+  name: 'take_action',
 })
 @graphql(GET_USER, {
-   name:'get_user'
- })
+  name: 'get_user',
+})
 class GameScreen extends React.Component {
-   cardStack;
-   state={
-      previousScreen: this.props.previousScreen,
-      mounted:false
-   }
+  cardStack;
+  state = {
+    previousScreen: this.props.previousScreen,
+    mounted: false,
+  };
 
-   componentDidMount(){
-      this.setState({mounted: true})
-   }
-
-   swipeRight = (index) => {
-      const { take_action, get_user } = this.props;
-      const games = this.props.navigation.getParam('games', [])
-
-      if(games[index]){
-         let variables = {
-            id: get_user.me.id,
-            action :games[index].id
-         }
-
-         take_action({variables}).then(res =>{
-            console.log('took action', res);
-         })
+  componentDidMount() {
+    this.setState({ mounted: true }, () => {
+      try {
+        const analytics = new Analytics('UA-131896215-1');
+        analytics
+          .hit(new PageHit('GameScreen'))
+          .then(() => console.log('success '))
+          .catch(e => console.log(e.message));
+      } catch (e) {
+        console.log(e);
       }
-   };
+    });
+  }
 
-   swipeLeft = (index) => {
-      console.log("swiped left", index);
-   };
+  swipeRight = index => {
+    const { take_action, get_user } = this.props;
+    const games = this.props.navigation.getParam('games', []);
 
-   handleRightPress = () => {
-      console.log('tried to swipe right');
-      if(this.state.mounted){
-         console.log('card stack', this.cardStack)
-         this.cardStack.swipeRight();
-      }
-   };
+    if (games[index]) {
+      let variables = {
+        id: get_user.me.id,
+        action: games[index].id,
+      };
 
-   handleLeftPress = () => {
-      console.log('tried to swipe left');
-      if(this.state.mounted){
-         this.cardStack.swipeLeft();
-      }
-   };
+      take_action({ variables }).then(res => {
+        console.log('took action', res);
+      });
+    }
+  };
 
-   _navigateBack = () =>{
-      const screen = this.props.navigation.getParam('previousScreen', 'MyActions');
-      console.log('navigating back');
-      NavigationService.navigate(screen);
-   }
+  swipeLeft = index => {
+    console.log('swiped left', index);
+  };
 
-   render() {
-      const games = this.props.navigation.getParam('games', [])
-      const game_title = this.props.navigation.getParam('game_title', null);
-      console.log('games', game_title);
-      return (
-         <View style={styles.container}>
-            {game_title && <TouchableOpacity onPress={this._navigateBack}><Text style={styles.header}>{game_title.toUpperCase()}</Text></TouchableOpacity>
-            }
-               <GameCards
-                  canDelete={this.props.canDelete || null}
-                  items={games}
-                  navigateBack={this._navigateBack}
-                  swipeRight={this.swipeRight}
-                  swipeLeft={this.swipeLeft}
-                  ref={ref => (this.cardStack  = ref)}
-               />
-           
-            {/* <GameControls
+  handleRightPress = () => {
+    console.log('tried to swipe right');
+    if (this.state.mounted) {
+      console.log('card stack', this.cardStack);
+      this.cardStack.swipeRight();
+    }
+  };
+
+  handleLeftPress = () => {
+    console.log('tried to swipe left');
+    if (this.state.mounted) {
+      this.cardStack.swipeLeft();
+    }
+  };
+
+  _navigateBack = () => {
+    const screen = this.props.navigation.getParam(
+      'previousScreen',
+      'MyActions'
+    );
+    console.log('navigating back');
+    NavigationService.navigate(screen);
+  };
+
+  render() {
+    const games = this.props.navigation.getParam('games', []);
+    const game_title = this.props.navigation.getParam('game_title', null);
+    console.log('games', game_title);
+    return (
+      <View style={styles.container}>
+        {game_title && (
+          <TouchableOpacity onPress={this._navigateBack}>
+            <Text style={styles.header}>{game_title.toUpperCase()}</Text>
+          </TouchableOpacity>
+        )}
+        <GameCards
+          canDelete={this.props.canDelete || null}
+          items={games}
+          navigateBack={this._navigateBack}
+          swipeRight={this.swipeRight}
+          swipeLeft={this.swipeLeft}
+          ref={ref => (this.cardStack = ref)}
+        />
+
+        {/* <GameControls
                rightPress={this.handleRightPress}
                leftPress={this.handleLeftPress}
             /> */}
-         </View>
-      );
-   }
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
-   container: {
-      flex: 1,
-      alignItems: "center",
-      justifyContent: "space-between",
-      padding: 24
-   },
-   cardContainer: {
-      flex: 1,
-      width: Dimensions.get("window").width - 48,
-      marginBottom: 12
-   },
-   header: {
-      fontSize: 24,
-      paddingVertical: 12,
-      fontFamily: "Proxima Nova Bold"
-   }
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: 24,
+  },
+  cardContainer: {
+    flex: 1,
+    width: Dimensions.get('window').width - 48,
+    marginBottom: 12,
+  },
+  header: {
+    fontSize: 24,
+    paddingVertical: 12,
+    fontFamily: 'Proxima Nova Bold',
+  },
 });
 
 export default GameScreen;

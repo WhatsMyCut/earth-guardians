@@ -1,6 +1,7 @@
 import React from 'react';
 import { all } from 'rsvp';
 import { LinearGradient, AppLoading } from 'expo';
+import { Analytics, PageHit } from 'expo-analytics';
 
 import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_categories_query';
 import graphql from '../components/hoc/graphql';
@@ -8,7 +9,7 @@ import HeaderNavBar from '../components/shared/navBar/HeaderNavBar';
 
 import LinearGradientProps from '../constants/LinearGradientProps';
 import GeneralScreen from './GeneralScreen';
-import { waste_data, primary_waste_id } from './dummy/data';
+//import { waste_data, primary_waste_id } from './dummy/data';
 
 @graphql(ALL_ACTION_CATEGORIES, {
   name: 'all_categories',
@@ -36,6 +37,21 @@ class WasteStackScreen extends React.Component {
   //     console.log(e);
   //   }
   // }
+  componentDidMount() {
+    // Analytics
+    () => {
+      try {
+        const analytics = new Analytics('UA-131896215-1');
+        analytics
+          .hit(new PageHit('WasteScreen'))
+          .then(() => console.log('success '))
+          .catch(e => console.log(e.message));
+      } catch (e) {
+        console.log(e);
+      }
+    };
+  }
+
   render() {
     const { all_categories } = this.props;
     if (all_categories.loading) {
@@ -48,15 +64,13 @@ class WasteStackScreen extends React.Component {
 
     const actions = all_categories.sectorActionsByName;
     if (!actions[0].video_id && !actions[0].primary_image) {
-      <LinearGradient {...LinearGradientProps.waste} style={{ flex: 1 }}>
-       
-      </LinearGradient>
+      <LinearGradient {...LinearGradientProps.waste} style={{ flex: 1 }} />;
     }
     return (
       <LinearGradient {...LinearGradientProps.waste} style={{ flex: 1 }}>
         <GeneralScreen
           data={actions}
-          screen={"Waste"}
+          screen={'Waste'}
           primary_image={actions[0].primary_image}
           primary_video={actions[0].video_id}
         />

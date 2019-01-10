@@ -1,9 +1,19 @@
 import React from 'react';
 //import { LinearGradient, AppLoading } from 'expo';
 
-import { Animated, PanResponder, TouchableOpacity, SafeAreaView, View, Text, KeyboardAvoidingView, ActivityIndicator } from 'react-native';
+import {
+  Animated,
+  PanResponder,
+  TouchableOpacity,
+  SafeAreaView,
+  View,
+  Text,
+  KeyboardAvoidingView,
+  ActivityIndicator,
+} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { BlurView } from 'expo';
+import { Analytics, PageHit } from 'expo-analytics';
 import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_categories_query';
 import graphql from '../components/hoc/graphql';
 import NavigationService from '../navigation/navigationService';
@@ -13,16 +23,16 @@ import ReachComponent from '../components/shared/profile/ReachComponent';
 import PointsComponent from '../components/shared/profile/PointsComponent';
 import ProfileComponent from '../components/shared/profile/ProfileComponent';
 import CommunityEventModal from '../components/shared/modals/CommunityEventModal';
-import {ALL_MY_METRICS} from '../components/graphql/queries/all_my_metrics_query';
+import { ALL_MY_METRICS } from '../components/graphql/queries/all_my_metrics_query';
 import UpdateUserModal from '../components/shared/modals/updateUserModal';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import client from '../Apollo';
-import { StoreData, RetrieveData } from '../store/AsyncStore';
+import { StoreData } from '../store/AsyncStore';
 
 @graphql(ALL_MY_METRICS, {
-  name:"all_metrics",
+  name: 'all_metrics',
   options: {
-    pollInterval:500
+    pollInterval: 500,
   },
 })
 @graphql(ALL_ACTION_CATEGORIES, {
@@ -37,13 +47,13 @@ import { StoreData, RetrieveData } from '../store/AsyncStore';
 class ImpactStackScreen extends React.Component {
   state = {
     openModal: false,
-    points:0,
+    points: 0,
     waste: 0,
     water: 0,
     carbon_dioxide: 0,
     loading: true,
     openUserModal: false,
-    communityEvents:0
+    communityEvents: 0,
   };
   static navigationOptions = {
     header: null,
@@ -55,7 +65,7 @@ class ImpactStackScreen extends React.Component {
     });
   };
 
-  componentWillMount(){
+  componentWillMount() {
     this.viewResponder = PanResponder.create({
       onStartShouldSetPanResponder: () => true,
 
@@ -63,13 +73,27 @@ class ImpactStackScreen extends React.Component {
         if( 200 < gs.dy){
           NavigationService.navigate('CommunityStack');
         }
-      }
-    })
+      },
+    });
   }
 
-  async _aggregateImpact(recent_actions, community_events){
-    const { points, water, waste, carbon_dioxide, loading} = this.state;
-    if(!loading){
+  componentDidMount() {
+    () => {
+      try {
+        const analytics = new Analytics('UA-131896215-1');
+        analytics
+          .hit(new PageHit('ImpactScreen'))
+          .then(() => console.log('success '))
+          .catch(e => console.log(e.message));
+      } catch (e) {
+        console.log(e);
+      }
+    };
+  }
+
+  async _aggregateImpact(recent_actions, community_events) {
+    const { points, water, waste, carbon_dioxide, loading } = this.state;
+    if (!loading) {
       return;
     }
     let newPoints = 0;
@@ -77,26 +101,27 @@ class ImpactStackScreen extends React.Component {
     let newWaste = 0;
     let newCarbonDioxide = 0;
 
-    await Promise.all([recent_actions.map(item =>{
-      newPoints+=item.action.points;
-      newWater+=item.action.water;
-      newWaste+=item.action.waste;
-      newCarbonDioxide+=item.action.carbon_dioxide;
-    })])
+    await Promise.all([
+      recent_actions.map(item => {
+        newPoints += item.action.points;
+        newWater += item.action.water;
+        newWaste += item.action.waste;
+        newCarbonDioxide += item.action.carbon_dioxide;
+      }),
+    ]);
 
-    
     let additionalPoints = community_events.length * 100;
 
     this.setState({
-      points: points != newPoints ? (newPoints+additionalPoints):points,
+      points: points != newPoints ? newPoints + additionalPoints : points,
       water: water != newWater ? newWater : water,
-      waste : waste != newWaste ? newWaste : waste,
-      carbon_dioxide: carbon_dioxide != newCarbonDioxide ? newCarbonDioxide : carbon_dioxide,
+      waste: waste != newWaste ? newWaste : waste,
+      carbon_dioxide:
+        carbon_dioxide != newCarbonDioxide ? newCarbonDioxide : carbon_dioxide,
       communityEvents: community_events,
-      loading: false
-    })
+      loading: false,
+    });
   }
-
 
   render() {
     // const { all_categories } = this.props;
@@ -113,30 +138,32 @@ class ImpactStackScreen extends React.Component {
     //   return null;
     // }
 
-    if(this.props.all_metrics.loading){
-      return  <SafeAreaView style={{ flex: 1 }}>
-      
-      <View
-        style={{
-          flex: 1,
-          alignItems: 'center',
-          justifyContent: 'center',
-          backgroundColor: '#333',
-        }}
-      >
-      <ActivityIndicator size={"large"} />
-      </View>
-      </SafeAreaView>
-    } else{
-      if(this.props.all_metrics.me.recent_actions.length !== 0){
-        this._aggregateImpact(this.props.all_metrics.me.recent_actions, this.props.all_metrics.me.community_events);
+    if (this.props.all_metrics.loading) {
+      return (
+        <SafeAreaView style={{ flex: 1 }}>
+          <View
+            style={{
+              flex: 1,
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundColor: '#333',
+            }}
+          >
+            <ActivityIndicator size={'large'} />
+          </View>
+        </SafeAreaView>
+      );
+    } else {
+      if (this.props.all_metrics.me.recent_actions.length !== 0) {
+        this._aggregateImpact(
+          this.props.all_metrics.me.recent_actions,
+          this.props.all_metrics.me.community_events
+        );
       }
     }
 
     return (
-      
       <SafeAreaView style={{ flex: 1 }}>
-      
         <Animated.View
           {...this.viewResponder.panHandlers}
           style={{
@@ -146,38 +173,29 @@ class ImpactStackScreen extends React.Component {
             backgroundColor: '#333',
           }}
         >
-
-          <GraphComponent carbon_dioxide={this.state.carbon_dioxide} water={this.state.water} waste={this.state.waste} />
-          <ImpactComponent carbon_dioxide={this.state.carbon_dioxide} water={this.state.water} waste={this.state.waste}/>
-          <ReachComponent toggleModal={this.toggleModal} communityEvents={this.state.communityEvents}/>
-          <PointsComponent points={this.state.points}/>
-          <ProfileComponent onPress={() => this.setState({openUserModal: true})}/>
+          <GraphComponent
+            carbon_dioxide={this.state.carbon_dioxide}
+            water={this.state.water}
+            waste={this.state.waste}
+          />
+          <ImpactComponent
+            carbon_dioxide={this.state.carbon_dioxide}
+            water={this.state.water}
+            waste={this.state.waste}
+          />
+          <ReachComponent
+            toggleModal={this.toggleModal}
+            communityEvents={this.state.communityEvents}
+          />
+          <PointsComponent points={this.state.points} />
+          <ProfileComponent
+            onPress={() => this.setState({ openUserModal: true })}
+          />
         </Animated.View>
-       
+
         {this.state.openModal ? (
           <BlurView
-          tint="dark" 
-          intensity={80}
-          style={{
-            justifyContent: 'center',
-            alignItems: 'center',
-            backgroundColor: 'rgba(0,0,0,.1)',
-            position: 'absolute',
-            top: 0,
-            right: 0,
-            left: 0,
-            bottom: 0,
-          }}
-        >
-            <CommunityEventModal onClose={() => {
-              this.setState({openModal: false, loading:true})
-             }}/>
-          </BlurView>
-        ) : null}
-        {this.state.openUserModal ? (
-          
-          <BlurView
-            tint="dark" 
+            tint="dark"
             intensity={80}
             style={{
               justifyContent: 'center',
@@ -190,12 +208,34 @@ class ImpactStackScreen extends React.Component {
               bottom: 0,
             }}
           >
-            <UpdateUserModal onClose={() =>this.setState({openUserModal: false})}/>
+            <CommunityEventModal
+              onClose={() => {
+                this.setState({ openModal: false, loading: true });
+              }}
+            />
           </BlurView>
         ) : null}
-       
+        {this.state.openUserModal ? (
+          <BlurView
+            tint="dark"
+            intensity={80}
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: 'rgba(0,0,0,.1)',
+              position: 'absolute',
+              top: 0,
+              right: 0,
+              left: 0,
+              bottom: 0,
+            }}
+          >
+            <UpdateUserModal
+              onClose={() => this.setState({ openUserModal: false })}
+            />
+          </BlurView>
+        ) : null}
       </SafeAreaView>
-      
     );
   }
 }

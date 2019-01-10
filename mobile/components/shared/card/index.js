@@ -93,18 +93,23 @@ class ActionCardSmall extends React.Component {
   }
 
   flipCard() {
-    if (this.value >= 90) {
-      Animated.spring(this.animatedValue, {
-        toValue: 0,
-        friction: 8,
-        tension: 10,
-      }).start();
-    } else {
-      Animated.spring(this.animatedValue, {
-        toValue: 180,
-        friction: 8,
-        tension: 10,
-      }).start();
+    if(this.state.delete){
+      this.delete();
+    }
+    if(!this.state.delete){
+      if (this.value >= 90) {
+        Animated.spring(this.animatedValue, {
+          toValue: 0,
+          friction: 8,
+          tension: 10,
+        }).start();
+      } else {
+        Animated.spring(this.animatedValue, {
+          toValue: 180,
+          friction: 8,
+          tension: 10,
+        }).start();
+      }
     }
   }
 

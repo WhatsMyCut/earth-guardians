@@ -1,5 +1,5 @@
 import React from 'react';
-import { getMainDefinition } from 'apollo-utilities';
+import { getMainDefinition, getOperationDefinition } from 'apollo-utilities';
 import { graphql } from 'react-apollo';
 import { withNavigation } from 'react-navigation';
 import NavigationService from '../../navigation/navigationService';
@@ -27,7 +27,8 @@ export default function(document, operationOptions = {}) {
       render() {
         const data = this.props[name];
         if (data && data.error) {
-          NavigationService.navigate("AuthLoading")
+          console.log('there was an error', data.error);
+          return <Component {...this.props}/>;
         }
         return <Component {...this.props}/>;
       }

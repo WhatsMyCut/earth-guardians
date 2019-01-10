@@ -2,6 +2,7 @@ import React from 'react';
 import navigationService from '../navigation/navigationService';
 import { StoreData, RetrieveData } from './AsyncStore';
 import { Permissions, Notifications } from 'expo';
+import { Analytics, Event } from 'expo-analytics';
 
 // a store to hold the react context api
 const Store = React.createContext();
@@ -21,6 +22,9 @@ export class StoreProvider extends React.Component {
       const phone = await RetrieveData('phone');
       const country_dial_code = await RetrieveData('country_dial_code');
       const store_data = await RetrieveData('EARTH_GUARDIANS_TOKEN');
+      // await StoreData('phone', null);
+      // await StoreData('country_dial_code', null);
+      // await StoreData('EARTH_GUARDIANS_TOKEN', null);
       if (phone && country_dial_code && store_data) {
         console.log('user exists');
         const user = { phone, country_dial_code };
@@ -56,6 +60,14 @@ export class StoreProvider extends React.Component {
       // store to local storage
       await StoreData('phone', details.phone);
       await StoreData('country_dial_code', details.dialCode);
+
+      // analytics
+      const phone = details.phone;
+      const analytics = new Analytics('UA-131896215-1');
+      analytics
+        .event(new Event('Signup', 'Press', phone))
+        .then(() => console.log('success '))
+        .catch(e => console.log(e.message));
     } catch (e) {
       console.log(e);
     }
@@ -68,6 +80,23 @@ export class StoreProvider extends React.Component {
 
     this.setState({ authenticated: true, user: new_user });
     navigationService.navigate('CommunityStack', {});
+  };
+
+  logout = async () => {
+    try {
+      const phone = await RetrieveData('phone');
+      const analytics = new Analytics('UA-131896215-1');
+      analytics
+        .event(new Event('Logout', 'Press', phone))
+        .then(() => console.log('success '))
+        .catch(e => console.log(e.message));
+
+      await StoreData('phone', null);
+      await StoreData('country_dial_code', null);
+      await StoreData('EARTH_GUARDIANS_TOKEN', null);
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   updatePhone = phone => {
@@ -93,6 +122,7 @@ export class StoreProvider extends React.Component {
           appReady: this.appReady,
           authenticate: this.authenticate,
           updatePhone: this.updatePhone,
+          logout: this.logout,
         }}
       >
         {this.props.children}

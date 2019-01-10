@@ -11,6 +11,7 @@ import {
 //import { all } from 'rsvp';
 import { LinearGradient, Icon } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
+import { Analytics, PageHit } from 'expo-analytics';
 
 // import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_categories_query';
 // import graphql from '../components/hoc/graphql';
@@ -26,6 +27,21 @@ import { Ionicons } from '@expo/vector-icons';
 // })
 class EarthGuardiansInfoScreen extends React.Component {
   //TODO, navigate back to the previos screen
+  componentDidMount() {
+    // Analytics
+    () => {
+      try {
+        const analytics = new Analytics('UA-131896215-1');
+        analytics
+          .hit(new PageHit('EarthGuardianScreen'))
+          .then(() => console.log('success '))
+          .catch(e => console.log(e.message));
+      } catch (e) {
+        console.log(e);
+      }
+    };
+  }
+
   render() {
     return (
       <LinearGradient colors={['#333333', '#1a1a1a']} style={{ flex: 1 }}>
