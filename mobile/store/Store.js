@@ -18,6 +18,7 @@ export class StoreProvider extends React.Component {
 
   async componentDidMount() {
     try {
+
       // check if async storage has the data
       const phone = await RetrieveData('phone');
       const country_dial_code = await RetrieveData('country_dial_code');

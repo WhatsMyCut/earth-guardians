@@ -12,7 +12,7 @@ import GeneralScreen from './GeneralScreen';
 @graphql(ALL_ACTION_CATEGORIES, {
   name: 'all_categories',
   options: {
-    pollInterval: 500,
+    pollInterval: 1000,
     variables: {
       name: 'Land',
     },

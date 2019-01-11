@@ -14,7 +14,8 @@ export default class ImpactComponent extends React.Component {
           justifyContent: 'space-around',
           alignItems: 'center',
           width: SCREEN_WIDTH * 0.9,
-          borderRadius: 20,
+          borderRadius: 5,
+          elevation:1,
           height: 120,
           marginVertical: 5,
           flexDirection: 'row',
@@ -39,7 +40,7 @@ export default class ImpactComponent extends React.Component {
               color: '#fff',
               marginBottom: 5,
               fontSize: 18,
-              fontWeight: 'bold',
+              fontWeight: '900',
             }}
           >
             {this.props.carbon_dioxide}
@@ -49,7 +50,7 @@ export default class ImpactComponent extends React.Component {
               color: '#fff',
               marginBottom: 5,
               fontSize: 18,
-              fontWeight: 'bold',
+              fontWeight: '900',
             }}
           >
             {this.props.water}
@@ -59,7 +60,7 @@ export default class ImpactComponent extends React.Component {
               color: '#fff',
               marginBottom: 5,
               fontSize: 18,
-              fontWeight: 'bold',
+              fontWeight: '900',
             }}
           >
             {this.props.waste}

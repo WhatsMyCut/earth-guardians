@@ -161,7 +161,7 @@ class ActionCardSmall extends React.Component {
       let waste = item.action ? item.action.waste : item.waste;
       let water = item.action ? item.action.water : item.water;
       let carbon_dioxide = item.action ? item.action.carbon_dioxide : item.carbon_dioxide;
-      if(!this.props.canDelete){
+      if(this.props.canDelete){
         if(waste > water && waste > carbon_dioxide){
           this.setState({showWasteModal:true})
         }else if(water > waste && water > carbon_dioxide){
@@ -232,8 +232,8 @@ class ActionCardSmall extends React.Component {
         {...{preview, uri: item.action.primary_image}}
       />
       <LinearGradient
-        colors={['rgba(255,255,255,0)', 'rgba(0,0,0,0.5)']}
-        locations={[0.3, 1]}
+        colors={['rgba(255,255,255,0)', 'rgba(0,0,0,0.7)']}
+        locations={[0.0, 1]}
         style={[styles.gradient, { height: 250}]}
       />
       <Text
@@ -330,8 +330,8 @@ class ActionCardSmall extends React.Component {
         {...{preview, uri: canDelete ? item.action.primary_image : item.primary_image}}
       />
       <LinearGradient
-        colors={['rgba(255,255,255,0)', 'rgba(0,0,0,0.5)']}
-        locations={[0.3, 1]}
+        colors={['rgba(255,255,255,0)', 'rgba(0,0,0,0.7)']}
+        locations={[0, 1]}
         style={[styles.gradient, { height: 250}]}
       />
       <Text

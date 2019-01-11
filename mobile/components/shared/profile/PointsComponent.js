@@ -10,7 +10,8 @@ export default class PointsComponent extends React.Component {
           justifyContent: 'center',
           alignItems: 'center',
           width: SCREEN_WIDTH * 0.9,
-          borderRadius: 10,
+          borderRadius: 5,
+          elevation:1,
           padding: 20,
           marginVertical: 5,
         }}

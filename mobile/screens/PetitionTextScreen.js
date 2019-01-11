@@ -87,7 +87,7 @@ class PetitionTextScreen extends React.Component {
                {this.title}
             </Text>
           </View>
-    <View style={{flex:1, paddingHorizontal:15}}>
+          <View style={{flex:1, paddingHorizontal:15}}>
             <WebView 
               // style={{height:600, width:480}}
               style={{backgroundColor: 'transparent'}}

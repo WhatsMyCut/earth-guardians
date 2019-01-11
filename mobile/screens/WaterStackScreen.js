@@ -15,7 +15,7 @@ import { water_data, primary_water_id } from './dummy/data';
 @graphql(ALL_ACTION_CATEGORIES, {
   name: 'all_categories',
   options: {
-    pollInterval: 500,
+    pollInterval: 1000,
     variables: {
       name: 'Water',
     },

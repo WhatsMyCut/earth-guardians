@@ -15,7 +15,8 @@ export default class GraphComponent extends React.Component {
           justifyContent: 'center',
           alignItems: 'center',
           width: SCREEN_WIDTH * 0.9,
-          borderRadius: 20,
+          borderRadius: 5,
+          elevation:1,
           height: 150,
           marginVertical: 5,
         }}

@@ -154,7 +154,8 @@ class CommunityStackScreen extends React.Component {
         } else {
           Animated.spring(this.position, {
             toValue: { x: 0, y: 0 },
-            friction: 1,
+            speed: 2,
+            bounciness:2
           }).start();
         }
       },
@@ -198,7 +199,7 @@ class CommunityStackScreen extends React.Component {
             paddingHorizontal: 20,
             position: 'absolute',
             top: 20 + 20 / index,
-            left: SCREEN_WIDTH / 10,
+            left: SCREEN_WIDTH / 12,
             zIndex: index * 10,
           },
         ]}
@@ -234,7 +235,7 @@ class CommunityStackScreen extends React.Component {
           {...{ preview, uri: petition.primary_image }}
         />
         <LinearGradient
-          colors={['rgba(255,255,255,0)', 'rgba(0,0,0,0.4)']}
+          colors={['rgba(255,255,255,0)', 'rgba(0,0,0,0.7)']}
           locations={[0.1, 1]}
           style={{
             height: SCREEN_HEIGHT - 180,
@@ -295,7 +296,7 @@ class CommunityStackScreen extends React.Component {
           {
             height: SCREEN_HEIGHT - 180,
             width: SCREEN_WIDTH - 60,
-            left: SCREEN_WIDTH / 10,
+            left: SCREEN_WIDTH / 12,
             paddingHorizontal: 20,
             zIndex: 999,
             top: 20,
@@ -335,7 +336,7 @@ class CommunityStackScreen extends React.Component {
           {...{ preview, uri: petition.primary_image }}
         />
         <LinearGradient
-          colors={['rgba(255,255,255,0)', 'rgba(0,0,0,0.6)']}
+          colors={['rgba(255,255,255,0)', 'rgba(0,0,0,0.7)']}
           locations={[0.3, 1]}
           style={{
             height: SCREEN_HEIGHT - 180,

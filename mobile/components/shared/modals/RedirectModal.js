@@ -48,7 +48,7 @@ export default class RedirectModal extends React.Component {
                 textAlign: 'center',
               }}
             >
-              YOU HAVE CHOSEN TO COMMIT TO THIS! {this.props.external_url}
+              YOU HAVE CHOSEN TO COMMIT TO THIS!
             </Text>
             <Text
             style={{

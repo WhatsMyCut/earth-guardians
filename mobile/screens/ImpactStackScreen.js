@@ -246,7 +246,7 @@ ImpactStackScreen.navigationOptions = {
     <Text
       style={{
         color: '#ffffff',
-        fontSize: 28,
+        fontSize: 24,
         fontFamily: 'Proxima Nova Bold',
         textAlign:"center"
       }}
@@ -267,7 +267,7 @@ ImpactStackScreen.navigationOptions = {
               name="logout"
               size={22}
               color="white"
-              style={{ paddingRight: 10 }}
+              style={{ paddingRight: 10, opacity:0.7 }}
             />
     </TouchableOpacity>
   ),

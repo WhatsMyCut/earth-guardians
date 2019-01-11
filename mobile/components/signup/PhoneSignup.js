@@ -109,13 +109,16 @@ export default class PhoneSignup extends React.Component {
 
 
     return (
-      <LinearGradient
-        colors={['#ffffff', '#000000']}
-        locations={[0.7, 1]}
-        style={styles.linearGradient}
-      >
         <SafeAreaView style={{ flex: 1 }}>
-  
+        <LinearGradient
+            colors={['rgba(255,255,255,0)', 'rgba(0,0,0,0.7)']}
+            locations={[0, 1]}
+            style={{
+              position: 'absolute',
+              width: WIDTH,
+              height: HEIGHT,
+            }}
+          />
          <Video 
           source={{uri: video_url}}
           rate={1.0}
@@ -196,7 +199,6 @@ export default class PhoneSignup extends React.Component {
             ) : null}
           {/* </ImageBackground> */}
         </SafeAreaView>
-      </LinearGradient>
     );
   }
 }

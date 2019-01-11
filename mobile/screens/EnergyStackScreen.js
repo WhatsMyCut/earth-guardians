@@ -15,7 +15,7 @@ import { Analytics, PageHit } from 'expo-analytics';
 @graphql(ALL_ACTION_CATEGORIES, {
   name: 'all_categories',
   options: {
-    pollInterval: 500,
+    pollInterval: 1000,
     variables: {
       name: 'Energy',
     },

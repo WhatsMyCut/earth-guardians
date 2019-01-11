@@ -223,7 +223,7 @@ class PetitionScreen extends React.Component {
       );
     }
     let color = '#aaa';
-    const petitionids = my_user.me.petitions_signed.map(x => x.id);
+    const petitionids = my_user.me.petitions_signed ? my_user.me.petitions_signed.map(x => x.id) : null;
     if (petitionids) {
       color = petitionids.indexOf(this.image.id) > -1 ? 'green' : '#aaa';
       status_icon_name =
@@ -248,8 +248,8 @@ class PetitionScreen extends React.Component {
           />
 
           <LinearGradient
-            colors={['rgba(255,255,255,0)', 'rgba(0,0,0,0.5)']}
-            locations={[0.3, 1]}
+            colors={['rgba(255,255,255,0)', 'rgba(0,0,0,0.7)']}
+            locations={[0, 1]}
             style={{
               position: 'absolute',
               width: SCREEN_WIDTH,
@@ -338,7 +338,7 @@ class PetitionScreen extends React.Component {
                 <RedirectModal
                   onClose={this._modalOnClose}
                   external_url={
-                    redirectModalPetition ? redirectModalPetition : null
+                    this.image.external_url ? this.image.external_url : null
                   }
                 />
               </BlurView>
@@ -357,7 +357,7 @@ class PetitionScreen extends React.Component {
               </BlurView>
             )}
             {this.image.body.length>0 &&
-            <View style={{flex:0.15, flexDirection:"row", justifyContent:"center", alignContent:'center'}}>
+            <View style={{position:"absolute", bottom:0, width:SCREEN_WIDTH}}>
             <TouchableOpacity 
               style={{
                 flex:1, flexDirection:"row", justifyContent:"center", alignContent:'center'

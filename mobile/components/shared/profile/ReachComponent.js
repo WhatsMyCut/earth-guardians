@@ -24,7 +24,8 @@ export default class ReachComponent extends React.Component {
             justifyContent: 'center',
             alignItems: 'center',
             width: SCREEN_WIDTH * 0.9,
-            borderRadius: 10,
+            borderRadius: 5,
+          elevation:1,
             padding: 10,
             marginVertical: 5,
           }}

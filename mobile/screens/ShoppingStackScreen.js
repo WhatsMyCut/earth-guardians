@@ -13,7 +13,7 @@ import { shopping_data, primary_shopping_id } from './dummy/data';
 @graphql(ALL_ACTION_CATEGORIES, {
   name: 'all_categories',
   options: {
-    pollInterval: 500,
+    pollInterval: 1000,
     variables: {
       name: 'Shopping',
     },
