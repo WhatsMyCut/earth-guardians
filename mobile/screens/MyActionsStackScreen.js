@@ -41,7 +41,7 @@ class MyActionsStackScreen extends React.Component {
 
   _renderActions(){
 
-    return <Query query={MY_ACTIONS_QUERY} pollInterval={500}>
+    return <Query query={MY_ACTIONS_QUERY} pollInterval={1000}>
                 {({ loading,error, data }) => {
                 if (loading) return this._loading();
                 if (error) {
