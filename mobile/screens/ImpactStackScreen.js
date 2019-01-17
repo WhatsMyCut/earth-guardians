@@ -68,15 +68,14 @@ class ImpactStackScreen extends React.Component {
   };
 
   componentWillMount() {
-    this.viewResponder = PanResponder.create({
-      onStartShouldSetPanResponder: () => true,
-
-      onPanResponderMove: (evt, gs) => {
-        if (200 < gs.dy) {
-          NavigationService.navigate('CommunityStack');
-        }
-      },
-    });
+    // this.viewResponder = PanResponder.create({
+    //   onStartShouldSetPanResponder: () => true,
+    //   onPanResponderMove: (evt, gs) => {
+    //     if (200 < gs.dy) {
+    //       NavigationService.navigate('CommunityStack');
+    //     }
+    //   },
+    // });
   }
 
   componentDidMount() {
@@ -167,8 +166,7 @@ class ImpactStackScreen extends React.Component {
     return (
       <SafeAreaView style={{ flex: 1, backgroundColor: '#333' }}>
         <ScrollView contentContainerStyle={{}}>
-          <Animated.View
-            {...this.viewResponder.panHandlers}
+          <View
             style={{
               flex: 1,
               alignItems: 'center',
@@ -198,7 +196,7 @@ class ImpactStackScreen extends React.Component {
                 })
               }
             />
-          </Animated.View>
+          </View>
 
           {this.state.openModal ? (
             <BlurView
