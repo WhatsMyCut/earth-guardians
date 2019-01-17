@@ -16,6 +16,8 @@ export default class GraphComponent extends React.Component {
           flex: 1,
           borderRadius: 5,
           elevation: 1,
+
+          marginVertical: 5,
         }}
       >
         <View
@@ -26,7 +28,6 @@ export default class GraphComponent extends React.Component {
             width: SCREEN_WIDTH * 0.9,
 
             height: 150,
-            marginVertical: 5,
           }}
         >
           <DonutGraph
