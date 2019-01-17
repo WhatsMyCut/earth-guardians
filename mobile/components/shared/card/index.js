@@ -19,6 +19,7 @@ import NavigationService from '../../../navigation/navigationService';
 // import graphql from '../components/hoc/graphql';
 import DoubleClick from 'react-native-double-tap';
 // import PasswordModal from '../modals/PasswordModal'
+import moment from 'moment';
 import { TAKE_ACTION } from '../../graphql/mutations/take_action_mutation';
 import { DELETE_ACTION } from '../../graphql/mutations/delete_action';
 import { UPDATE_ZIPCODE } from '../../graphql/mutations/update_zipcode_mutation';
@@ -72,6 +73,61 @@ class ActionCardSmall extends React.Component {
       
     })
   };
+
+  canTakeAgain(item){
+    let momentDate = moment(item.createdAt);
+    let originalDate = moment(item.createdAt);
+    let today = moment(new Date());
+    let canGoThrough = false;
+    let nextDate = moment();
+    let schedule = item.action ? item.action.schedule : item.schedule;
+    console.log('item', item);
+    switch(schedule){
+        case 'ANNUALLY' :
+            if(momentDate.add(1,'years').diff(today,'years') < 0) canGoThrough = true;
+            nextDate = originalDate.add(1, 'years').fromNow();
+            break;
+        case 'ANYTIME' :
+            canGoThrough = true;
+            nextDate = moment();
+            break;
+        case 'ONCE' :
+            canGoThrough = false;
+            nextDate = 'never'
+            break;
+        case 'DAILY' :
+            if(momentDate.add(1,'days').diff(today,'days') < 0) canGoThrough = true;
+            nextDate = originalDate.add(1, 'days').fromNow();
+            break;
+        case 'BIWEEKLY' :
+            if(momentDate.add(4,'days').diff(today,'days') < 0) canGoThrough = true;
+            nextDate = originalDate.add(4, 'days').fromNow();
+            break;
+        case 'WEEKLY' :
+            if(momentDate.add(7,'days').diff(today,'days') < 0) canGoThrough = true;
+            nextDate = originalDate.add(7, 'days').fromNow();
+            break;
+        case 'TWOWEEKS' :
+            if(momentDate.add(14,'days').diff(today,'days') < 0) canGoThrough = true;
+            nextDate = originalDate.add(14, 'days').fromNow();
+            break;
+        case 'MONTHLY' :
+            if(momentDate.add(1,'months').diff(today,'months') < 0) canGoThrough = true;
+            nextDate = originalDate.add(1, 'months').fromNow();
+            break;
+        case 'QUARTERLY' :
+            if(momentDate.add(4,'months').diff(today,'months') < 0) canGoThrough = true;
+            nextDate = originalDate.add(4, 'months').fromNow();
+            break;
+        case 'SEMIANNUALLY' :
+            if(momentDate.add(6,'months').diff(today,'months') < 0) canGoThrough = true;
+            nextDate = originalDate.add(6, 'months').fromNow();
+            break;
+    }
+    console.log('nextDate', nextDate, item.action ? item.action.schedule : item.schedule)
+    console.log('difference between days', originalDate.diff(today,'months'))
+    return  { canGoThrough : canGoThrough, nextDate:nextDate ? nextDate : null};
+  }
 
   componentWillMount() {
     this.animatedValue = new Animated.Value(0);
@@ -204,7 +260,10 @@ class ActionCardSmall extends React.Component {
       let carbon_dioxide = item.action ? item.action.carbon_dioxide : item.carbon_dioxide;
 
     const preview = { uri: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==" };
-    
+    let timeInfo = this.canTakeAgain(item);
+    console.log('timeInfo', timeInfo);
+
+
     return (
     <View style={{flex:1, height:250, marginVertical:10}}>
     <TouchableOpacity
@@ -251,10 +310,34 @@ class ActionCardSmall extends React.Component {
         {canDelete && (
           item.action.action_taken_description.length > 48 ? `${item.action.action_taken_description.substring(0, 40)}...` : item.action.action_taken_description
         )}
-        {!canDelete && (item.short_description.length > 48 ? `${item.short_description.substring(0, 40)}...` : item.short_description)}
       </Text>
-
       {this.state.delete && this.showDelete()}
+      {!timeInfo.canGoThrough && (
+        
+      <LinearGradient
+        colors={['rgba(0,0,0,0.8)', 'rgba(0,0,0,0.8)']}
+        locations={[0.0, 1]}
+        style={[styles.gradient, { height: 250}]}
+      />
+      )}
+
+      {!timeInfo.canGoThrough && (
+      <Text
+      style={{
+          position: 'absolute',
+          top: 10,
+          left: 15,
+          paddingRight:5,
+          fontWeight: 'bold',
+          fontFamily: 'Proxima Nova Bold',
+          color: '#fff',
+          fontSize: 18,
+        }}
+    >
+        Take action again {timeInfo.nextDate}
+        
+      </Text>
+      )} 
     </Animated.View>
     <Animated.View
       style={[
@@ -265,7 +348,7 @@ class ActionCardSmall extends React.Component {
         { opacity: this.backOpacity}
       ]}
     >
-      <ActionDetails data={item} canDelete={true} takeTheAction={this._takeAction} zipcode={get_user.me.zipcode} openZipCodeModal={this.openZipCodeModal}/>
+      <ActionDetails data={item} canDelete={true} canGoThrough={timeInfo.canGoThrough} takeTheAction={this._takeAction} zipcode={get_user.me.zipcode} openZipCodeModal={this.openZipCodeModal}/>
 
     </Animated.View>
     <WasteModal waste={waste} onClose={this.onModalClose} visible={this.state.showWasteModal}/>
@@ -296,6 +379,7 @@ class ActionCardSmall extends React.Component {
     let waste = item.waste;
     let water = item.water;
     let carbon_dioxide = item.carbon_dioxide;
+
     return <View style={{flex:1, height:250, marginVertical:10}}>
     
     <DoubleClick
@@ -384,7 +468,7 @@ class ActionCardSmall extends React.Component {
     if(get_user.loading){
       return <View></View>
     }
-    return canDelete ?  this._myActionItem() :this._standardItem()
+    return canDelete ?  this._myActionItem() : this._standardItem()
   }
 }
 

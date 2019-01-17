@@ -222,9 +222,10 @@ export default class ActionDetails extends React.Component {
                     
                       this._takeInAction()
                   }}
+                  disabled={this.props.canDelete ? !this.props.canGoThrough : false}
                   style={{flexDirection:'row', justifyContent:'flex-end', alignContent:"center"}}
                 >
-                  <Text style={{fontSize: 18,fontWeight: '700', fontFamily: 'Proxima Nova Bold',color:'#000000', paddingRight:10}}>I'm In!</Text>
+                  <Text style={{fontSize: 18,fontWeight: '700', fontFamily: 'Proxima Nova Bold',color:'#000000', paddingRight:10}}>{!this.props.canDelete || this.props.canGoThrough ? "I'm In!":"Can't Take Yet!"}</Text>
                   <Icon.MaterialCommunityIcons
                     name={status_icon_name}
                     style={{ color: color, fontSize: 18 }}

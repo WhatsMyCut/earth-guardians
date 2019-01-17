@@ -12,7 +12,9 @@ export const MY_ACTIONS_QUERY = gql`
       carbon_dioxide
       water
       waste
+      schedule
     }
+   createdAt
   }
   
 }

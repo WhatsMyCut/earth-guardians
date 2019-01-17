@@ -61,7 +61,7 @@ class MyActionsStackScreen extends React.Component {
 
 
                 const actions = data.myAvailableActions.map(event =>{
-                  return { id: event.id, action:event.action}
+                  return { id: event.id, action:event.action, createdAt:event.createdAt}
                 });
 
                       return (
@@ -70,9 +70,12 @@ class MyActionsStackScreen extends React.Component {
                           style={{ backgroundColor: '#333', paddingRight:10 }}
                           numColumns={2}
                           data={actions}
-                          renderItem={({ item, index }) => (
-                            <ActionCardSmall item={item} index={index} canDelete={true}/>
-                          )}
+                          renderItem={(prop) => {
+                            console.log('my actions prop',prop);
+                          return (
+                              <ActionCardSmall item={prop.item} index={prop.index} canDelete={true}/>
+                            )} 
+                          }
                         />
                       </View>
                       );
