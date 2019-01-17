@@ -6,6 +6,7 @@ import {
   PanResponder,
   TouchableOpacity,
   SafeAreaView,
+  ScrollView,
   View,
   Text,
   KeyboardAvoidingView,
@@ -165,6 +166,7 @@ class ImpactStackScreen extends React.Component {
 
     return (
       <SafeAreaView style={{ flex: 1 }}>
+        <ScrollView contentContainerStyle={{}}>
         <Animated.View
           {...this.viewResponder.panHandlers}
           style={{
@@ -236,6 +238,7 @@ class ImpactStackScreen extends React.Component {
             />
           </BlurView>
         ) : null}
+        </ScrollView>
       </SafeAreaView>
     );
   }
