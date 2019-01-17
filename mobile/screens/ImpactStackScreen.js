@@ -72,7 +72,7 @@ class ImpactStackScreen extends React.Component {
       onStartShouldSetPanResponder: () => true,
 
       onPanResponderMove: (evt, gs) => {
-        if( 200 < gs.dy){
+        if (200 < gs.dy) {
           NavigationService.navigate('CommunityStack');
         }
       },
@@ -165,79 +165,87 @@ class ImpactStackScreen extends React.Component {
     }
 
     return (
-      <SafeAreaView style={{ flex: 1 }}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: '#333' }}>
         <ScrollView contentContainerStyle={{}}>
-        <Animated.View
-          {...this.viewResponder.panHandlers}
-          style={{
-            flex: 1,
-            alignItems: 'center',
-            justifyContent: 'center',
-            backgroundColor: '#333',
-          }}
-        >
-          <GraphComponent
-            carbon_dioxide={this.state.carbon_dioxide}
-            water={this.state.water}
-            waste={this.state.waste}
-          />
-          <ImpactComponent
-            carbon_dioxide={this.state.carbon_dioxide}
-            water={this.state.water}
-            waste={this.state.waste}
-          />
-          <ReachComponent
-            toggleModal={this.toggleModal}
-            communityEvents={this.state.communityEvents}
-          />
-          <PointsComponent points={this.state.points} />
-          <ProfileComponent
-            onPress={() => this.setState({ openUserModal: true })}
-          />
-        </Animated.View>
+          <Animated.View
+            {...this.viewResponder.panHandlers}
+            style={{
+              flex: 1,
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundColor: '#333',
+            }}
+          >
+            <GraphComponent
+              carbon_dioxide={this.state.carbon_dioxide}
+              water={this.state.water}
+              waste={this.state.waste}
+            />
+            <ImpactComponent
+              carbon_dioxide={this.state.carbon_dioxide}
+              water={this.state.water}
+              waste={this.state.waste}
+            />
+            <ReachComponent
+              toggleModal={this.toggleModal}
+              communityEvents={this.state.communityEvents}
+            />
+            <PointsComponent points={this.state.points} />
+            <ProfileComponent
+              onPress={() =>
+                this.setState({
+                  openUserModal: true,
+                })
+              }
+            />
+          </Animated.View>
 
-        {this.state.openModal ? (
-          <BlurView
-            tint="dark"
-            intensity={80}
-            style={{
-              justifyContent: 'center',
-              alignItems: 'center',
-              backgroundColor: 'rgba(0,0,0,.1)',
-              position: 'absolute',
-              top: 0,
-              right: 0,
-              left: 0,
-              bottom: 0,
-            }}
-          >
-            <CommunityEventModal
-              onClose={() => {
-                this.setState({ openModal: false, loading: true });
+          {this.state.openModal ? (
+            <BlurView
+              tint="dark"
+              intensity={80}
+              style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+                backgroundColor: 'rgba(0,0,0,.1)',
+                position: 'absolute',
+                top: 0,
+                right: 0,
+                left: 0,
+                bottom: 0,
               }}
-            />
-          </BlurView>
-        ) : null}
-        {this.state.openUserModal ? (
-          <BlurView
-            tint="dark"
-            intensity={80}
-            style={{
-              justifyContent: 'center',
-              alignItems: 'center',
-              backgroundColor: 'rgba(0,0,0,.1)',
-              position: 'absolute',
-              top: 0,
-              right: 0,
-              left: 0,
-              bottom: 0,
-            }}
-          >
-            <UpdateUserModal
-              onClose={() => this.setState({ openUserModal: false })}
-            />
-          </BlurView>
-        ) : null}
+            >
+              <CommunityEventModal
+                onClose={() => {
+                  this.setState({ openModal: false, loading: true });
+                }}
+              />
+            </BlurView>
+          ) : null}
+          {this.state.openUserModal ? (
+            <BlurView
+              tint="dark"
+              intensity={80}
+              style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+                backgroundColor: 'rgba(0,0,0,.1)',
+                position: 'absolute',
+                top: 0,
+                right: 0,
+                left: 0,
+                bottom: 0,
+              }}
+            >
+              <UpdateUserModal
+                onClose={() =>
+                  this.setState({
+                    openUserModal: false,
+                  })
+                }
+              />
+            </BlurView>
+          ) : null}
         </ScrollView>
       </SafeAreaView>
     );
@@ -245,33 +253,35 @@ class ImpactStackScreen extends React.Component {
 }
 ImpactStackScreen.navigationOptions = {
   headerTitle: (
-    <View style={{flex:1, justifyContent:"center"}}>
-    <Text
-      style={{
-        color: '#ffffff',
-        fontSize: 24,
-        fontFamily: 'Proxima Nova Bold',
-        textAlign:"center"
-      }}
-    >
-      MY IMPACT
-    </Text>
+    <View style={{ flex: 1, justifyContent: 'center' }}>
+      <Text
+        style={{
+          color: '#ffffff',
+          fontSize: 24,
+          fontFamily: 'Proxima Nova Bold',
+          textAlign: 'center',
+        }}
+      >
+        MY IMPACT
+      </Text>
     </View>
   ),
-  headerRight:(
-    <TouchableOpacity onPress={async()=>{
-      await StoreData('phone', null);
-      await StoreData('country_dial_code', null);
-      await StoreData('EARTH_GUARDIANS_TOKEN', null);
-      client.resetStore();
-      navigationService.navigate('AuthLoading')
-    }}>
-        <MaterialCommunityIcons
-              name="logout"
-              size={22}
-              color="white"
-              style={{ paddingRight: 10, opacity:0.7 }}
-            />
+  headerRight: (
+    <TouchableOpacity
+      onPress={async () => {
+        await StoreData('phone', null);
+        await StoreData('country_dial_code', null);
+        await StoreData('EARTH_GUARDIANS_TOKEN', null);
+        client.resetStore();
+        navigationService.navigate('AuthLoading');
+      }}
+    >
+      <MaterialCommunityIcons
+        name="logout"
+        size={22}
+        color="white"
+        style={{ paddingRight: 10, opacity: 0.7 }}
+      />
     </TouchableOpacity>
   ),
   headerStyle: {
