@@ -12,7 +12,7 @@ import {
   KeyboardAvoidingView,
   ActivityIndicator,
 } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { BlurView } from 'expo';
 import { Analytics, PageHit } from 'expo-analytics';
 import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_categories_query';
@@ -26,7 +26,6 @@ import ProfileComponent from '../components/shared/profile/ProfileComponent';
 import CommunityEventModal from '../components/shared/modals/CommunityEventModal';
 import { ALL_MY_METRICS } from '../components/graphql/queries/all_my_metrics_query';
 import UpdateUserModal from '../components/shared/modals/updateUserModal';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 import client from '../Apollo';
 import { StoreData } from '../store/AsyncStore';
 import navigationService from '../navigation/navigationService';
@@ -250,6 +249,16 @@ class ImpactStackScreen extends React.Component {
   }
 }
 ImpactStackScreen.navigationOptions = {
+  headerLeft: (
+    <TouchableOpacity onPress={() => navigationService.navigate('MyActions')}>
+      <Ionicons
+        name="ios-arrow-round-back"
+        size={42}
+        color="white"
+        style={{ paddingLeft: 15, opacity: 0.7 }}
+      />
+    </TouchableOpacity>
+  ),
   headerTitle: (
     <View style={{ flex: 1, justifyContent: 'center' }}>
       <Text
