@@ -61,6 +61,7 @@ class ActionCardSmall extends React.Component {
     showWaterModal: false,
     showCarbonModal: false,
     showZipcodeModal: false,
+    backVisible: false,
     canDelete : this.props.canDelete ? true : null,
     currScreen: this.props.currScreen ? this.props.currScreen : 'Main'
   };
@@ -81,10 +82,10 @@ class ActionCardSmall extends React.Component {
     let canGoThrough = false;
     let nextDate = moment();
     let schedule = item.action ? item.action.schedule : item.schedule;
-    console.log('item', item);
+  
     switch(schedule){
         case 'ANNUALLY' :
-            if(momentDate.add(1,'years').diff(today,'years') < 0) canGoThrough = true;
+            if(momentDate.add(1,'years').diff(today,'years') <= 0) canGoThrough = true;
             nextDate = originalDate.add(1, 'years').fromNow();
             break;
         case 'ANYTIME' :
@@ -96,19 +97,19 @@ class ActionCardSmall extends React.Component {
             nextDate = 'never'
             break;
         case 'DAILY' :
-            if(momentDate.add(1,'days').diff(today,'days') < 0) canGoThrough = true;
+            if(momentDate.add(1,'days').diff(today,'days') <= 0) canGoThrough = true;
             nextDate = originalDate.add(1, 'days').fromNow();
             break;
         case 'BIWEEKLY' :
-            if(momentDate.add(4,'days').diff(today,'days') < 0) canGoThrough = true;
+            if(momentDate.add(4,'days').diff(today,'days') <= 0) canGoThrough = true;
             nextDate = originalDate.add(4, 'days').fromNow();
             break;
         case 'WEEKLY' :
-            if(momentDate.add(7,'days').diff(today,'days') < 0) canGoThrough = true;
+            if(momentDate.add(7,'days').diff(today,'days') <= 0) canGoThrough = true;
             nextDate = originalDate.add(7, 'days').fromNow();
             break;
         case 'TWOWEEKS' :
-            if(momentDate.add(14,'days').diff(today,'days') < 0) canGoThrough = true;
+            if(momentDate.add(14,'days').diff(today,'days') <= 0) canGoThrough = true;
             nextDate = originalDate.add(14, 'days').fromNow();
             break;
         case 'MONTHLY' :
@@ -116,16 +117,17 @@ class ActionCardSmall extends React.Component {
             nextDate = originalDate.add(1, 'months').fromNow();
             break;
         case 'QUARTERLY' :
-            if(momentDate.add(4,'months').diff(today,'months') < 0) canGoThrough = true;
+            if(momentDate.add(4,'months').diff(today,'months') <= 0) canGoThrough = true;
             nextDate = originalDate.add(4, 'months').fromNow();
             break;
         case 'SEMIANNUALLY' :
-            if(momentDate.add(6,'months').diff(today,'months') < 0) canGoThrough = true;
+            if(momentDate.add(6,'months').diff(today,'months') <= 0) canGoThrough = true;
             nextDate = originalDate.add(6, 'months').fromNow();
             break;
     }
-    console.log('nextDate', nextDate, item.action ? item.action.schedule : item.schedule)
-    console.log('difference between days', originalDate.diff(today,'months'))
+    // console.log('nextDate', nextDate, item.action ? item.action.schedule : item.schedule)
+    // console.log('difference between days', originalDate.diff(today,'months'))
+    // console.log('can go through', canGoThrough, nextDate)
     return  { canGoThrough : canGoThrough, nextDate:nextDate ? nextDate : null};
   }
 
@@ -149,6 +151,7 @@ class ActionCardSmall extends React.Component {
   }
 
   flipCard() {
+    this.setState({backVisible:!this.state.backVisible})
     if(this.state.delete){
       this.delete();
     }
@@ -311,7 +314,7 @@ class ActionCardSmall extends React.Component {
           item.action.action_taken_description.length > 48 ? `${item.action.action_taken_description.substring(0, 40)}...` : item.action.action_taken_description
         )}
       </Text>
-      {this.state.delete && this.showDelete()}
+      
       {!timeInfo.canGoThrough && (
         
       <LinearGradient
@@ -338,6 +341,7 @@ class ActionCardSmall extends React.Component {
         
       </Text>
       )} 
+      {this.state.delete && this.showDelete()}
     </Animated.View>
     <Animated.View
       style={[
@@ -348,7 +352,7 @@ class ActionCardSmall extends React.Component {
         { opacity: this.backOpacity}
       ]}
     >
-      <ActionDetails data={item} canDelete={true} canGoThrough={timeInfo.canGoThrough} takeTheAction={this._takeAction} zipcode={get_user.me.zipcode} openZipCodeModal={this.openZipCodeModal}/>
+      <ActionDetails visible={this.state.backVisible} data={item} canDelete={true} canGoThrough={timeInfo.canGoThrough} takeTheAction={this._takeAction} zipcode={get_user.me.zipcode} openZipCodeModal={this.openZipCodeModal}/>
 
     </Animated.View>
     <WasteModal waste={waste} onClose={this.onModalClose} visible={this.state.showWasteModal}/>
@@ -448,7 +452,7 @@ class ActionCardSmall extends React.Component {
         { opacity: this.backOpacity}
       ]}
     >
-      <ActionDetails data={item} canDelete={false} takeTheAction={this._takeAction} zipcode={get_user.me.zipcode} openZipCodeModal={this.openZipCodeModal}/>
+      <ActionDetails visible={this.state.backVisible} data={item} canDelete={false} takeTheAction={this._takeAction} zipcode={get_user.me.zipcode} openZipCodeModal={this.openZipCodeModal}/>
       <WasteModal waste={waste} onClose={this.onModalClose} visible={this.state.showWasteModal}/>
       <WaterModal water={water} onClose={this.onModalClose} visible={this.state.showWaterModal}/>
       <CarbonModal carbon_dioxide={carbon_dioxide} onClose={this.onModalClose} visible={this.state.showCarbonModal}/>

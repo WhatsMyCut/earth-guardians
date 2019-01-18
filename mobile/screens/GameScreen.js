@@ -91,7 +91,6 @@ class GameScreen extends React.Component {
   render() {
     const games = this.props.navigation.getParam('games', []);
     const game_title = this.props.navigation.getParam('game_title', null);
-    console.log('games', game_title);
     return (
       <View style={styles.container}>
         {game_title && (
@@ -99,14 +98,17 @@ class GameScreen extends React.Component {
             <Text style={styles.header}>{game_title.toUpperCase()}</Text>
           </TouchableOpacity>
         )}
-        <GameCards
-          canDelete={this.props.canDelete || null}
-          items={games}
-          navigateBack={this._navigateBack}
-          swipeRight={this.swipeRight}
-          swipeLeft={this.swipeLeft}
-          ref={ref => (this.cardStack = ref)}
-        />
+        {!this.props.get_user.loading &&
+          <GameCards
+            canDelete={this.props.canDelete || null}
+            items={games}
+            user={this.props.get_user.me}
+            navigateBack={this._navigateBack}
+            swipeRight={this.swipeRight}
+            swipeLeft={this.swipeLeft}
+            ref={ref => (this.cardStack = ref)}
+          />
+        }
 
         {/* <GameControls
                rightPress={this.handleRightPress}

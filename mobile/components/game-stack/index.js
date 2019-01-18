@@ -24,7 +24,6 @@ const SCREEN_WIDTH = Dimensions.get("window").width;
 const CARD_WIDTH = Dimensions.get("window").width * 0.87;
 const CARD_HEIGHT = Dimensions.get("window").height * 0.65;
 
-
 @graphql(TAKE_ACTION, {
    name:"take_action"
 })
@@ -77,7 +76,17 @@ export default class GameCards extends React.Component {
             toValue: { x: SCREEN_WIDTH + 100, y: gestureState.dy }
           }).start()
          this.position.setValue({ x: 0, y: 0 })
-         this.setState({ currentIndex: this.state.currentIndex + 1 })
+         if (this.props.items[this.state.currentIndex]) {
+            let variables = {
+              id: this.props.user.id,
+              action: this.props.items[this.state.currentIndex].id,
+            };
+            console.log('variables', variables);
+            this.props.take_action({ variables }).then(res => {
+              console.log('took action', res);
+               this.props.navigateBack()
+            });
+         }         
         }
         else if (gestureState.dx < -120) {
           Animated.spring(this.position, {
@@ -111,9 +120,11 @@ export default class GameCards extends React.Component {
 
    swipeRight = () => {
       this.setState({loading: true});
+      
+      
       Animated.spring(this.position, {
          toValue: { x: SCREEN_WIDTH + 100, y:0 }
-      }).start(this.moveToNextCard(this.props.swipeRight));
+      }).start(()=>this.props.navigateBack());
    };
 
    swipeLeft = () => {

@@ -71,7 +71,6 @@ class MyActionsStackScreen extends React.Component {
                           numColumns={2}
                           data={actions}
                           renderItem={(prop) => {
-                            console.log('my actions prop',prop);
                           return (
                               <ActionCardSmall item={prop.item} index={prop.index} canDelete={true}/>
                             )} 

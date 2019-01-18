@@ -49,7 +49,7 @@ export default class ActionDetails extends React.Component {
     const color = this.state.in ? 'green' : '#aaa';
 
     let item = data.action ? data.action : data;
-
+    console.log('this.props.visible', this.props.visible)
     return (
       <View style={{ flex: 1, margin: 5 }}>
         <View style={{ flex: 1, marginTop: 10, marginBottom: 3 }}>
@@ -186,7 +186,11 @@ export default class ActionDetails extends React.Component {
           </View>
         )}
         {!this.props.zipcode && (
-        <TouchableOpacity style={{ flex: 1 }} onPress={this.props.openZipCodeModal}>
+        <TouchableOpacity style={{ flex: 1 }} onPress={()=> {
+          if(this.props.visible){
+            this.props.openZipCodeModal()
+          }
+          }}>
 
           <Text
             style={{
@@ -219,8 +223,9 @@ export default class ActionDetails extends React.Component {
         <TouchableOpacity
 
                   onPress={() => {
-                    
+                    if(this.props.visible){
                       this._takeInAction()
+                    }
                   }}
                   disabled={this.props.canDelete ? !this.props.canGoThrough : false}
                   style={{flexDirection:'row', justifyContent:'flex-end', alignContent:"center"}}
