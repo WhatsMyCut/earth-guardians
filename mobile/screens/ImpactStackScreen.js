@@ -6,12 +6,13 @@ import {
   PanResponder,
   TouchableOpacity,
   SafeAreaView,
+  ScrollView,
   View,
   Text,
   KeyboardAvoidingView,
   ActivityIndicator,
 } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { BlurView } from 'expo';
 import { Analytics, PageHit } from 'expo-analytics';
 import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_categories_query';
@@ -25,7 +26,6 @@ import ProfileComponent from '../components/shared/profile/ProfileComponent';
 import CommunityEventModal from '../components/shared/modals/CommunityEventModal';
 import { ALL_MY_METRICS } from '../components/graphql/queries/all_my_metrics_query';
 import UpdateUserModal from '../components/shared/modals/updateUserModal';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 import client from '../Apollo';
 import { StoreData } from '../store/AsyncStore';
 import navigationService from '../navigation/navigationService';
@@ -67,15 +67,14 @@ class ImpactStackScreen extends React.Component {
   };
 
   componentWillMount() {
-    this.viewResponder = PanResponder.create({
-      onStartShouldSetPanResponder: () => true,
-
-      onPanResponderMove: (evt, gs) => {
-        if( 200 < gs.dy){
-          NavigationService.navigate('CommunityStack');
-        }
-      },
-    });
+    // this.viewResponder = PanResponder.create({
+    //   onStartShouldSetPanResponder: () => true,
+    //   onPanResponderMove: (evt, gs) => {
+    //     if (200 < gs.dy) {
+    //       NavigationService.navigate('CommunityStack');
+    //     }
+    //   },
+    // });
   }
 
   componentDidMount() {
@@ -164,111 +163,132 @@ class ImpactStackScreen extends React.Component {
     }
 
     return (
-      <SafeAreaView style={{ flex: 1 }}>
-        <Animated.View
-          {...this.viewResponder.panHandlers}
-          style={{
-            flex: 1,
-            alignItems: 'center',
-            justifyContent: 'center',
-            backgroundColor: '#333',
-          }}
-        >
-          <GraphComponent
-            carbon_dioxide={this.state.carbon_dioxide}
-            water={this.state.water}
-            waste={this.state.waste}
-          />
-          <ImpactComponent
-            carbon_dioxide={this.state.carbon_dioxide}
-            water={this.state.water}
-            waste={this.state.waste}
-          />
-          <ReachComponent
-            toggleModal={this.toggleModal}
-            communityEvents={this.state.communityEvents}
-          />
-          <PointsComponent points={this.state.points} />
-          <ProfileComponent
-            onPress={() => this.setState({ openUserModal: true })}
-          />
-        </Animated.View>
+      <SafeAreaView style={{ flex: 1, backgroundColor: '#333' }}>
+        <ScrollView contentContainerStyle={{}}>
+          <View
+            style={{
+              flex: 1,
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundColor: '#333',
+            }}
+          >
+            <GraphComponent
+              carbon_dioxide={this.state.carbon_dioxide}
+              water={this.state.water}
+              waste={this.state.waste}
+            />
+            <ImpactComponent
+              carbon_dioxide={this.state.carbon_dioxide}
+              water={this.state.water}
+              waste={this.state.waste}
+            />
+            <ReachComponent
+              toggleModal={this.toggleModal}
+              communityEvents={this.state.communityEvents}
+            />
+            <PointsComponent points={this.state.points} />
+            <ProfileComponent
+              onPress={() =>
+                this.setState({
+                  openUserModal: true,
+                })
+              }
+            />
+          </View>
 
-        {this.state.openModal ? (
-          <BlurView
-            tint="dark"
-            intensity={80}
-            style={{
-              justifyContent: 'center',
-              alignItems: 'center',
-              backgroundColor: 'rgba(0,0,0,.1)',
-              position: 'absolute',
-              top: 0,
-              right: 0,
-              left: 0,
-              bottom: 0,
-            }}
-          >
-            <CommunityEventModal
-              onClose={() => {
-                this.setState({ openModal: false, loading: true });
+          {this.state.openModal ? (
+            <BlurView
+              tint="dark"
+              intensity={80}
+              style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+                backgroundColor: 'rgba(0,0,0,.1)',
+                position: 'absolute',
+                top: 0,
+                right: 0,
+                left: 0,
+                bottom: 0,
               }}
-            />
-          </BlurView>
-        ) : null}
-        {this.state.openUserModal ? (
-          <BlurView
-            tint="dark"
-            intensity={80}
-            style={{
-              justifyContent: 'center',
-              alignItems: 'center',
-              backgroundColor: 'rgba(0,0,0,.1)',
-              position: 'absolute',
-              top: 0,
-              right: 0,
-              left: 0,
-              bottom: 0,
-            }}
-          >
-            <UpdateUserModal
-              onClose={() => this.setState({ openUserModal: false })}
-            />
-          </BlurView>
-        ) : null}
+            >
+              <CommunityEventModal
+                onClose={() => {
+                  this.setState({ openModal: false, loading: true });
+                }}
+              />
+            </BlurView>
+          ) : null}
+          {this.state.openUserModal ? (
+            <BlurView
+              tint="dark"
+              intensity={80}
+              style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+                backgroundColor: 'rgba(0,0,0,.1)',
+                position: 'absolute',
+                top: 0,
+                right: 0,
+                left: 0,
+                bottom: 0,
+              }}
+            >
+              <UpdateUserModal
+                onClose={() =>
+                  this.setState({
+                    openUserModal: false,
+                  })
+                }
+              />
+            </BlurView>
+          ) : null}
+        </ScrollView>
       </SafeAreaView>
     );
   }
 }
 ImpactStackScreen.navigationOptions = {
+  headerLeft: (
+    <TouchableOpacity onPress={() => navigationService.navigate('MyActions')}>
+      <Ionicons
+        name="ios-arrow-round-back"
+        size={42}
+        color="white"
+        style={{ paddingLeft: 15, opacity: 0.7 }}
+      />
+    </TouchableOpacity>
+  ),
   headerTitle: (
-    <View style={{flex:1, justifyContent:"center"}}>
-    <Text
-      style={{
-        color: '#ffffff',
-        fontSize: 24,
-        fontFamily: 'Proxima Nova Bold',
-        textAlign:"center"
-      }}
-    >
-      MY IMPACT
-    </Text>
+    <View style={{ flex: 1, justifyContent: 'center' }}>
+      <Text
+        style={{
+          color: '#ffffff',
+          fontSize: 24,
+          fontFamily: 'Proxima Nova Bold',
+          textAlign: 'center',
+        }}
+      >
+        MY IMPACT
+      </Text>
     </View>
   ),
-  headerRight:(
-    <TouchableOpacity onPress={async()=>{
-      await StoreData('phone', null);
-      await StoreData('country_dial_code', null);
-      await StoreData('EARTH_GUARDIANS_TOKEN', null);
-      client.resetStore();
-      navigationService.navigate('AuthLoading')
-    }}>
-        <MaterialCommunityIcons
-              name="logout"
-              size={22}
-              color="white"
-              style={{ paddingRight: 10, opacity:0.7 }}
-            />
+  headerRight: (
+    <TouchableOpacity
+      onPress={async () => {
+        await StoreData('phone', null);
+        await StoreData('country_dial_code', null);
+        await StoreData('EARTH_GUARDIANS_TOKEN', null);
+        client.resetStore();
+        navigationService.navigate('AuthLoading');
+      }}
+    >
+      <MaterialCommunityIcons
+        name="logout"
+        size={22}
+        color="white"
+        style={{ paddingRight: 10, opacity: 0.7 }}
+      />
     </TouchableOpacity>
   ),
   headerStyle: {

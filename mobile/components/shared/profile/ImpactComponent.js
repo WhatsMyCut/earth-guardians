@@ -1,23 +1,30 @@
 import React from 'react';
-import { View, Text, Image, Dimensions } from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  Dimensions,
+  TouchableOpacity,
+  StyleSheet,
+} from 'react-native';
+import { LinearGradient } from 'expo';
+import LinearGradientProps from '../../../constants/LinearGradientProps';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
 export default class ImpactComponent extends React.Component {
-
-  render() {
-
+  state = {
+    front: true,
+  };
+  _viewA = () => {
     return (
       <View
         style={{
-          backgroundColor: '#666',
+          //backgroundColor: '#666',
           justifyContent: 'space-around',
           alignItems: 'center',
           width: SCREEN_WIDTH * 0.9,
-          borderRadius: 5,
-          elevation:1,
           height: 120,
-          marginVertical: 5,
           flexDirection: 'row',
         }}
       >
@@ -66,42 +73,66 @@ export default class ImpactComponent extends React.Component {
             {this.props.waste}
           </Text>
         </View>
-        {/* <View>
-          <Text style={{ color: '#fff', marginBottom: 10, fontSize: 10 }}>
-            Community
-          </Text>
-          <Text
-            style={{
-              color: '#fff',
-              marginBottom: 5,
-              fontSize: 18,
-              fontWeight: 'bold',
-            }}
-          >
-            27,894
-          </Text>
-          <Text
-            style={{
-              color: '#fff',
-              marginBottom: 5,
-              fontSize: 18,
-              fontWeight: 'bold',
-            }}
-          >
-            {this.state.points}
-          </Text>
-          <Text
-            style={{
-              color: '#fff',
-              marginBottom: 5,
-              fontSize: 18,
-              fontWeight: 'bold',
-            }}
-          >
-            27,940
-          </Text>
-        </View> */}
       </View>
+    );
+  };
+  _viewB = () => {
+    return (
+      <View
+        style={{
+          justifyContent: 'space-around',
+          alignItems: 'flex-start',
+          width: SCREEN_WIDTH * 0.9,
+          height: 120,
+          paddingHorizontal: 10,
+          marginVertical: 10,
+        }}
+      >
+        <View style={styles.itemView}>
+          <Text style={styles.itemName}>CO2 (lbs): </Text>
+          <Text style={styles.itemDescription}>
+            You’ve offset the equivalent of driving a car for 20 miles.
+          </Text>
+        </View>
+
+        <View style={{ flexDirection: 'row', marginBottom: 10 }}>
+          <Text style={styles.itemName}>H2O (gal): </Text>
+          <Text style={styles.itemDescription}>
+            You’ve offset the equivalent of taking 100 showers.
+          </Text>
+        </View>
+
+        <View style={{ flexDirection: 'row', marginBottom: 10 }}>
+          <Text style={styles.itemName}>Waste (lbs): </Text>
+          <Text style={styles.itemDescription}>
+            You’ve offset the equivalent of 2 months of trash.
+          </Text>
+        </View>
+      </View>
+    );
+  };
+  render() {
+    return (
+      <LinearGradient
+        {...LinearGradientProps.profileItem}
+        style={{ flex: 1, borderRadius: 5, elevation: 1, marginVertical: 5 }}
+      >
+        <TouchableOpacity
+          onPress={() =>
+            this.setState({
+              front: !this.state.front,
+            })
+          }
+        >
+          {this.state.front ? this._viewA() : this._viewB()}
+        </TouchableOpacity>
+      </LinearGradient>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  itemView: { flexDirection: 'row', marginBottom: 10 },
+  itemName: { color: '#fff', fontSize: 12, marginRight: 5 },
+  itemDescription: { color: '#fff', fontSize: 10, paddingRight: 5 },
+});

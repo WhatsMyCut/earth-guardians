@@ -23,6 +23,10 @@ export default {
     colors: ['#556642', '#344029'],
     locations: [0, 1],
   },
+  profileItem: {
+    colors: ['rgba(100,100,100,0.6)', 'rgba(71,71,71,1)'],
+    locations: [0.3, 1],
+  },
   water: {
     colors: ['#426661', '#29403D'],
     locations: [0, 1],
