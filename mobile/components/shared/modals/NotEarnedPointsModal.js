@@ -15,10 +15,6 @@ export default class PointsModal extends React.Component {
         animationType="slide"
         transparent={true}
         visible={this.props.visible}
-        onDismiss={this.props.onClose}
-        onRequestClose={() => {
-          this.props.onClose()
-        }}
         style={{
           backgroundColor: '#333',
           justifyContent: 'center',

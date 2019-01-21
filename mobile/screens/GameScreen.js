@@ -47,8 +47,9 @@ class GameScreen extends React.Component {
   swipeRight = index => {
     const { take_action, get_user } = this.props;
     const games = this.props.navigation.getParam('games', []);
-
+    console.log('swiped right', index);
     if (games[index]) {
+      console.log('game did exist');
       let variables = {
         id: get_user.me.id,
         action: games[index].id,
@@ -56,6 +57,7 @@ class GameScreen extends React.Component {
 
       take_action({ variables }).then(res => {
         console.log('took action', res);
+        this._navigateBack();
       });
     }
   };

@@ -20,6 +20,9 @@ export const ALL_MY_METRICS = gql`
     recent_actions{
         id
         action{
+            category{
+                name
+            }
             id
             points
             carbon_dioxide

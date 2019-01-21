@@ -56,15 +56,15 @@ class PetitionTextScreen extends React.Component {
 
   render() {
     const body = this.props.navigation.getParam('body');
-
     let styles = `
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Proxima+Nova" />
       <style>
         h1,h2,h3,h4,h5,h6{
-          font-family: Roboto;
+          font-family: sans-serif, Roboto;
         }
 
         p {
-          font-family: Roboto;
+          font-family: sans-serif, Roboto;
           font-size:14px;
         }
 
@@ -73,20 +73,6 @@ class PetitionTextScreen extends React.Component {
     let renderBody = styles + body;
 
     return <SafeAreaView style={{flex:1, justifyContent:"center"}}>
-          <View style={{flex:0.1, height:30, paddingHorizontal:15, paddingTop:50}}>
-            <Text
-              style={{
-              fontSize: 30,
-                fontWeight: 'bold',
-                paddingBottom: 10,
-                paddingLeft:5,
-                color: 'blue',
-                textAlign:'left'
-               }}
-             >
-               {this.title}
-            </Text>
-          </View>
           <View style={{flex:1, paddingHorizontal:15}}>
             <WebView 
               // style={{height:600, width:480}}

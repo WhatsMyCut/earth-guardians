@@ -112,6 +112,7 @@ class DefaultScreen extends BaseScreen {
                   uri: videoUrl,
                 },
                 isMuted: false,
+                
                 ref: component => {
                   this._playbackInstance = component;
                 },

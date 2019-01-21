@@ -15,10 +15,6 @@ export default class CarbonModal extends React.Component {
         animationType="slide"
         transparent={true}
         visible={this.props.visible}
-        onDismiss={this.props.onClose}
-        onRequestClose={() => {
-          this.props.onClose();
-        }}
         style={{
           backgroundColor: '#333',
           justifyContent: 'center',

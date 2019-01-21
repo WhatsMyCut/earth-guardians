@@ -23,7 +23,6 @@ export default class Profileomponent extends React.Component {
       
     }
 
-
     return (
       <TouchableHighlight onPress={this.props.onPress}>
       <View style={styles.container}>
@@ -31,10 +30,10 @@ export default class Profileomponent extends React.Component {
         <View style={{ width: SCREEN_WIDTH * 0.9 }}>
           <View style={styles.info}>
             <View style={styles.labelWrapper}>
-            <Text style={styles.label}>{my_user.me.name}</Text>
+            <Text style={styles.label}>{my_user.me.name || 'Name'}</Text>
             </View>
             <View style={styles.labelWrapper}>
-              <Text style={styles.label}>{my_user.me.zipcode}</Text>
+              <Text style={styles.label}>{my_user.me.zipcode || 'Zipcode'}</Text>
             </View>
             {/* <View style={styles.labelWrapper}>
               <Text style={styles.label}>Last Name</Text>
@@ -42,10 +41,10 @@ export default class Profileomponent extends React.Component {
           </View>
           <View style={styles.info}>
             <View style={styles.labelWrapper}>
-              <Text style={styles.label}>{my_user.me.phone}</Text>
+              <Text style={styles.label}>{my_user.me.phone || 'phone'}</Text>
             </View>
             <View style={styles.labelWrapper}>
-              <Text style={styles.label}>{my_user.me.email ? my_user.me.email.length > 15 ? `${my_user.me.email.substring(0, 15)}...` :my_user.me.email : 'None' }</Text>
+              <Text style={styles.label}>{my_user.me.email ? my_user.me.email.length > 15 ? `${my_user.me.email.substring(0, 15)}...` :my_user.me.email : 'Email' }</Text>
             </View>
             
           </View>
@@ -53,10 +52,10 @@ export default class Profileomponent extends React.Component {
             
 
             <View style={styles.labelWrapper}>
-              <Text style={styles.label}>{my_user.me.crew}</Text>
+              <Text style={styles.label}>{my_user.me.crew || 'Affiliation'}</Text>
             </View>
             <View style={styles.labelWrapper}>
-              <Text style={styles.label}>{my_user.me.crew_type}</Text>
+              <Text style={styles.label}>{my_user.me.crew_type || 'Affiliation Type'}</Text>
             </View>
             
           </View>

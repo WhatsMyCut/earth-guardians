@@ -16,6 +16,7 @@ export default class BaseScreen extends React.Component {
   };
 
   componentDidMount() {
+    console.log('base screen did mount');
     ScreenOrientation.allowAsync(ScreenOrientation.Orientation.ALL);
     Dimensions.addEventListener('change', this.orientationChangeHandler);
 
@@ -40,6 +41,7 @@ export default class BaseScreen extends React.Component {
 
   orientationChangeHandler = dims => {
     const { width, height } = dims.window;
+    console.log('orientation change handler', height, width);
     const isLandscape = width > height;
     this.setState({ isPortrait: !isLandscape });
     this.props.navigation.setParams({ tabBarHidden: isLandscape });

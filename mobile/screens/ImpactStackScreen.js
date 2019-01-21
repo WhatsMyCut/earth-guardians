@@ -32,18 +32,6 @@ import navigationService from '../navigation/navigationService';
 
 @graphql(ALL_MY_METRICS, {
   name: 'all_metrics',
-  options: {
-    pollInterval: 500,
-  },
-})
-@graphql(ALL_ACTION_CATEGORIES, {
-  name: 'all_categories',
-  options: {
-    fetchPolicy: 'network-only',
-    variables: {
-      name: 'Impact',
-    },
-  },
 })
 class ImpactStackScreen extends React.Component {
   state = {
@@ -56,6 +44,8 @@ class ImpactStackScreen extends React.Component {
     openUserModal: false,
     communityEvents: 0,
   };
+
+  interval;
   static navigationOptions = {
     header: null,
   };
@@ -89,6 +79,26 @@ class ImpactStackScreen extends React.Component {
         console.log(e);
       }
     };
+
+    this.interval = setInterval(()=>{
+      console.log('refetch is being called');
+      this.props.all_metrics.refetch();
+    }, 2000)
+
+  }
+
+  componentWillUnmount = ()=>{
+    clearInterval(this.interval);
+  }
+
+  componentWillReceiveProps= () => {
+    console.log('component will receive new props');
+    if(!this.props.all_metrics.loading){
+      this._aggregateImpact(
+        this.props.all_metrics.me.recent_actions,
+        this.props.all_metrics.me.community_events
+      );
+    }
   }
 
   async _aggregateImpact(recent_actions, community_events) {
@@ -96,10 +106,12 @@ class ImpactStackScreen extends React.Component {
     if (!loading) {
       return;
     }
+    console.log('aggregate is being called again');
     let newPoints = 0;
     let newWater = 0;
     let newWaste = 0;
     let newCarbonDioxide = 0;
+    let aggregateObj = {};
 
     await Promise.all([
       recent_actions.map(item => {
@@ -107,11 +119,19 @@ class ImpactStackScreen extends React.Component {
         newWater += item.action.water;
         newWaste += item.action.waste;
         newCarbonDioxide += item.action.carbon_dioxide;
+          if(aggregateObj.hasOwnProperty(`${item.action.category.name}`)){
+            aggregateObj[`${item.action.category.name}`] += item.action.points;
+          } else{
+            aggregateObj[`${item.action.category.name}`] = item.action.points;
+          }
       }),
+      
     ]);
 
-    let additionalPoints = community_events.length * 100;
+    
 
+
+    let additionalPoints = community_events.length * 100;
     this.setState({
       points: points != newPoints ? newPoints + additionalPoints : points,
       water: water != newWater ? newWater : water,
@@ -120,6 +140,7 @@ class ImpactStackScreen extends React.Component {
         carbon_dioxide != newCarbonDioxide ? newCarbonDioxide : carbon_dioxide,
       communityEvents: community_events,
       loading: false,
+      aggregateObj: aggregateObj
     });
   }
 
@@ -137,7 +158,6 @@ class ImpactStackScreen extends React.Component {
     // if (!this.state.primary_video && !this.state.primary_image) {
     //   return null;
     // }
-
     if (this.props.all_metrics.loading) {
       return (
         <SafeAreaView style={{ flex: 1 }}>
@@ -187,7 +207,7 @@ class ImpactStackScreen extends React.Component {
               toggleModal={this.toggleModal}
               communityEvents={this.state.communityEvents}
             />
-            <PointsComponent points={this.state.points} />
+            <PointsComponent points={this.state.points} aggregate={this.state.aggregateObj}/>
             <ProfileComponent
               onPress={() =>
                 this.setState({

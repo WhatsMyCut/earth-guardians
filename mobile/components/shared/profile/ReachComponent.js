@@ -11,8 +11,8 @@ export default class ReachComponent extends React.Component {
         reach += parseInt(event.number_of_people);
       });
     }
-
-    return `${reach} PEOPLE REACHED`;
+    
+    return  reach > 0 ?  <Text style={{ color: '#fff', fontSize: 18, fontWeight: 'bold' }}>{reach} PEOPLE REACHED</Text> :<Text style={{ color: 'rgba(255,255,255,0.3)', fontSize: 18, fontWeight: 'bold' }}>{reach} PEOPLE REACHED</Text> ;
   }
 
   render() {
@@ -25,6 +25,13 @@ export default class ReachComponent extends React.Component {
           elevation: 1,
 
           marginVertical: 5,
+          shadowColor: "#000",
+          shadowRadius: 2,
+          shadowOpacity: 0.35,
+          shadowOffset: {
+            width: 0,
+            height: 2
+          }, 
         }}
       >
         <TouchableOpacity onPress={() => this.props.toggleModal()}>
@@ -38,9 +45,7 @@ export default class ReachComponent extends React.Component {
               padding: 10,
             }}
           >
-            <Text style={{ color: '#fff', fontSize: 18, fontWeight: 'bold' }}>
               {this._returnPeopleReached()}
-            </Text>
           </View>
         </TouchableOpacity>
       </LinearGradient>

@@ -23,8 +23,9 @@ export default class PointsComponent extends React.Component {
           justifyContent: 'center',
           alignItems: 'center',
           width: SCREEN_WIDTH * 0.9,
-
+          height:125,
           padding: 20,
+          
         }}
       >
         <Text style={{ color: '#fff', fontSize: 30, fontWeight: 'bold' }}>
@@ -43,34 +44,35 @@ export default class PointsComponent extends React.Component {
           alignItems: 'center',
           width: SCREEN_WIDTH * 0.9,
           padding: 20,
+          
         }}
       >
         <View style={[styles.detailedPoints, { marginBottom: 10 }]}>
           <View style={styles.itemView}>
             <Text style={styles.itemName}>Energy</Text>
-            <Text style={styles.itemPoint}>127</Text>
+            <Text style={styles.itemPoint}>{this.props.aggregate['Energy'] || 0}</Text>
           </View>
           <View style={styles.itemView}>
             <Text style={styles.itemName}>Travel</Text>
-            <Text style={styles.itemPoint}>480</Text>
+            <Text style={styles.itemPoint}>{this.props.aggregate['Travel'] || 0}</Text>
           </View>
           <View style={styles.itemView}>
             <Text style={styles.itemName}>Waste</Text>
-            <Text style={styles.itemPoint}>983</Text>
+            <Text style={styles.itemPoint}>{this.props.aggregate['Waste'] || 0}</Text>
           </View>
         </View>
         <View style={styles.detailedPoints}>
           <View style={styles.itemView}>
             <Text style={styles.itemName}>Water</Text>
-            <Text style={styles.itemPoint}>35</Text>
+            <Text style={styles.itemPoint}>{this.props.aggregate['Water'] || 0}</Text>
           </View>
           <View style={styles.itemView}>
             <Text style={styles.itemName}>Food</Text>
-            <Text style={styles.itemPoint}>731</Text>
+            <Text style={styles.itemPoint}>{this.props.aggregate['Food'] || 0}</Text>
           </View>
           <View style={styles.itemView}>
             <Text style={styles.itemName}>Shopping</Text>
-            <Text style={styles.itemPoint}>92</Text>
+            <Text style={styles.itemPoint}>{this.props.aggregate['Shopping'] || 0}</Text>
           </View>
         </View>
       </View>
@@ -81,7 +83,19 @@ export default class PointsComponent extends React.Component {
     return (
       <LinearGradient
         {...LinearGradientProps.profileItem}
-        style={{ flex: 1, borderRadius: 5, elevation: 1, marginVertical: 5 }}
+        style={{ 
+          flex: 1, 
+          borderRadius: 5, 
+          elevation: 1, 
+          marginVertical: 5,
+          shadowColor: "#000",
+          shadowRadius: 2,
+          shadowOpacity: 0.35,
+          shadowOffset: {
+            width: 0,
+            height: 2
+          }, 
+        }}
       >
         <TouchableOpacity
           onPress={() =>

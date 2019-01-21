@@ -16,8 +16,14 @@ export default class GraphComponent extends React.Component {
           flex: 1,
           borderRadius: 5,
           elevation: 1,
-
           marginVertical: 5,
+          shadowColor: "#000",
+          shadowRadius: 2,
+          shadowOpacity: 0.35,
+          shadowOffset: {
+            width: 0,
+            height: 2
+          }, 
         }}
       >
         <View

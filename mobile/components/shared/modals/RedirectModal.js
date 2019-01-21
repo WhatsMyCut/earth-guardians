@@ -72,7 +72,7 @@ export default class RedirectModal extends React.Component {
                 marginTop: 40,
               }}
               onPress={() => {
-                WebBrowser.openBrowserAsync(this.props.external_url);
+                WebBrowser.openBrowserAsync(this.props.external_url.trim());
                 this.props.onClose();
               }}
             >

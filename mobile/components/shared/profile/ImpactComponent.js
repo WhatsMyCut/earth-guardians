@@ -25,18 +25,19 @@ export default class ImpactComponent extends React.Component {
           alignItems: 'center',
           width: SCREEN_WIDTH * 0.9,
           height: 120,
+          marginVertical:5,
           flexDirection: 'row',
         }}
       >
         <View>
           <Text>{null}</Text>
-          <Text style={{ color: '#fff', marginBottom: 10, fontSize: 11 }}>
+          <Text style={{ color: '#fff', marginBottom: 10, fontSize: 14 }}>
             CO2 (lbs)
           </Text>
-          <Text style={{ color: '#fff', marginBottom: 10, fontSize: 11 }}>
+          <Text style={{ color: '#fff', marginBottom: 10, fontSize: 14 }}>
             H2O (gal)
           </Text>
-          <Text style={{ color: '#fff', fontSize: 11 }}>Waste (lbs)</Text>
+          <Text style={{ color: '#fff', fontSize: 14 }}>Waste (lbs)</Text>
         </View>
         <View>
           <Text style={{ color: '#fff', marginBottom: 10, fontSize: 10 }}>
@@ -48,6 +49,7 @@ export default class ImpactComponent extends React.Component {
               marginBottom: 5,
               fontSize: 18,
               fontWeight: '900',
+              paddingRight:10
             }}
           >
             {this.props.carbon_dioxide}
@@ -58,6 +60,7 @@ export default class ImpactComponent extends React.Component {
               marginBottom: 5,
               fontSize: 18,
               fontWeight: '900',
+              paddingRight:10
             }}
           >
             {this.props.water}
@@ -68,6 +71,7 @@ export default class ImpactComponent extends React.Component {
               marginBottom: 5,
               fontSize: 18,
               fontWeight: '900',
+              paddingRight:10
             }}
           >
             {this.props.waste}
@@ -83,9 +87,10 @@ export default class ImpactComponent extends React.Component {
           justifyContent: 'space-around',
           alignItems: 'flex-start',
           width: SCREEN_WIDTH * 0.9,
-          height: 120,
+          height: 150,
           paddingHorizontal: 10,
-          marginVertical: 10,
+          paddingRight:20,
+          marginVertical: 15,
         }}
       >
         <View style={styles.itemView}>
@@ -115,7 +120,19 @@ export default class ImpactComponent extends React.Component {
     return (
       <LinearGradient
         {...LinearGradientProps.profileItem}
-        style={{ flex: 1, borderRadius: 5, elevation: 1, marginVertical: 5 }}
+        style={{ 
+          flex: 1, 
+          borderRadius: 5, 
+          elevation: 1, 
+          marginVertical: 5, 
+          shadowColor: "#000",
+          shadowRadius: 2,
+          shadowOpacity: 0.35,
+          shadowOffset: {
+            width: 0,
+            height: 2
+          },  
+        }}
       >
         <TouchableOpacity
           onPress={() =>
@@ -134,5 +151,5 @@ export default class ImpactComponent extends React.Component {
 const styles = StyleSheet.create({
   itemView: { flexDirection: 'row', marginBottom: 10 },
   itemName: { color: '#fff', fontSize: 12, marginRight: 5 },
-  itemDescription: { color: '#fff', fontSize: 10, paddingRight: 5 },
+  itemDescription: { color: '#fff', fontSize: 10, paddingRight: 50 },
 });

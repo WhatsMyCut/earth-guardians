@@ -141,7 +141,7 @@ class PetitionScreen extends React.Component {
               const phone = await RetrieveData('phone');
               const analytics = new Analytics('UA-131896215-1');
               analytics
-                .event(new Event('UnSignPetition', 'Press', phone, petition_id))
+                .event(new Event('UnSignPetition', 'Press', phone, this.image.id))
                 .then(() => console.log('success '))
                 .catch(e => console.log(e.message));
             } catch (e) {
@@ -168,7 +168,7 @@ class PetitionScreen extends React.Component {
               const phone = await RetrieveData('phone');
               const analytics = new Analytics('UA-131896215-1');
               analytics
-                .event(new Event('SignPetition', 'Press', phone, petition_id))
+                .event(new Event('SignPetition', 'Press', phone, this.image.id))
                 .then(() => console.log('success '))
                 .catch(e => console.log(e.message));
             } catch (e) {
@@ -270,6 +270,7 @@ class PetitionScreen extends React.Component {
                 style={{
                   opacity: 0.9,
                   position: 'absolute',
+                  width:100,
                   top: 0,
                   left: SCREEN_WIDTH / 2.2,
                 }}
@@ -280,6 +281,7 @@ class PetitionScreen extends React.Component {
                     petition: this.image,
                   });
                 }}
+                hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}
               >
                 <FontAwesome name="play" size={52} color="white" />
               </TouchableOpacity>
