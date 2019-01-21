@@ -235,7 +235,7 @@ class CommunityStackScreen extends React.Component {
           {...{ preview, uri: petition.primary_image }}
         />
         <LinearGradient
-          colors={['rgba(255,255,255,0)', 'rgba(0,0,0,0.7)']}
+          colors={['rgba(255,255,255,0)', 'rgba(0,0,0,0.85)']}
           locations={[0.1, 1]}
           style={{
             height: SCREEN_HEIGHT - 180,
@@ -337,7 +337,7 @@ class CommunityStackScreen extends React.Component {
           {...{ preview, uri: petition.primary_image }}
         />
         <LinearGradient
-          colors={['rgba(255,255,255,0)', 'rgba(0,0,0,0.7)']}
+          colors={['rgba(255,255,255,0)', 'rgba(0,0,0,0.85)']}
           locations={[0.3, 1]}
           style={{
             height: SCREEN_HEIGHT - 180,

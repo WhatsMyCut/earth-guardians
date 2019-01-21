@@ -168,7 +168,7 @@ export default class GameCards extends React.Component {
                         {...{preview, uri: item.primary_image}}
                      />
                      <LinearGradient
-                        colors={['rgba(255,255,255,0)', 'rgba(0,0,0,0.5)']}
+                        colors={['rgba(255,255,255,0)', 'rgba(0,0,0,0.7)']}
                         locations={[0, 1]}
                         style={[styles.gradient, { height: CARD_HEIGHT}]}
                      />

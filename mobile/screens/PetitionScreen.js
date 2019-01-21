@@ -248,7 +248,7 @@ class PetitionScreen extends React.Component {
           />
 
           <LinearGradient
-            colors={['rgba(255,255,255,0)', 'rgba(0,0,0,0.7)']}
+            colors={['rgba(255,255,255,0)', 'rgba(0,0,0,0.85)']}
             locations={[0, 1]}
             style={{
               position: 'absolute',

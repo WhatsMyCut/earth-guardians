@@ -111,7 +111,7 @@ export default class PhoneSignup extends React.Component {
     return (
         <SafeAreaView style={{ flex: 1 }}>
         <LinearGradient
-            colors={['rgba(255,255,255,0)', 'rgba(0,0,0,0.7)']}
+            colors={['rgba(255,255,255,0)', 'rgba(0,0,0,0.9)']}
             locations={[0, 1]}
             style={{
               position: 'absolute',
