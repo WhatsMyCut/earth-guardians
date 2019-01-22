@@ -27,7 +27,7 @@ export class StoreProvider extends React.Component {
       // await StoreData('country_dial_code', null);
       // await StoreData('EARTH_GUARDIANS_TOKEN', null);
       if (phone && country_dial_code && store_data) {
-        console.log('user exists');
+   
         const user = { phone, country_dial_code };
         this.setState({ authenticated: true, user });
         navigationService.navigate('CommunityStack', {});
@@ -50,7 +50,6 @@ export class StoreProvider extends React.Component {
       Permissions.NOTIFICATIONS
     );
     let finalStatus = existingStatus;
-    console.log('final status stuff', finalStatus);
     const new_user = {
       phone: details.phone,
       country_dial_code: details.dialCode,

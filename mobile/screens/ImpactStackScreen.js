@@ -81,7 +81,6 @@ class ImpactStackScreen extends React.Component {
     };
 
     this.interval = setInterval(()=>{
-      console.log('refetch is being called');
       this.props.all_metrics.refetch();
     }, 2000)
 
@@ -92,7 +91,6 @@ class ImpactStackScreen extends React.Component {
   }
 
   componentWillReceiveProps= () => {
-    console.log('component will receive new props');
     if(!this.props.all_metrics.loading){
       this._aggregateImpact(
         this.props.all_metrics.me.recent_actions,
@@ -106,7 +104,6 @@ class ImpactStackScreen extends React.Component {
     if (!loading) {
       return;
     }
-    console.log('aggregate is being called again');
     let newPoints = 0;
     let newWater = 0;
     let newWaste = 0;

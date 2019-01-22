@@ -7,7 +7,7 @@ import {
   StyleSheet,
   Dimensions,
 } from 'react-native';
-
+import PubSub from 'pubsub-js'
 import { Analytics, PageHit } from 'expo-analytics';
 
 import GameControls from '../components/game-stack/GameControls';
@@ -87,7 +87,8 @@ class GameScreen extends React.Component {
       'MyActions'
     );
     console.log('navigating back');
-    NavigationService.navigate(screen);
+    PubSub.publish('GameComplete');
+    NavigationService.navigate(screen,{previousScreen:screen});
   };
 
   render() {

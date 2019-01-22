@@ -248,8 +248,8 @@ class PetitionScreen extends React.Component {
           />
 
           <LinearGradient
-            colors={['rgba(255,255,255,0)', 'rgba(0,0,0,0.85)']}
-            locations={[0, 1]}
+            colors={['rgba(0,0,0,0.08)', 'rgba(0,0,0,0.85)']}
+            locations={[0.4, 1]}
             style={{
               position: 'absolute',
               width: SCREEN_WIDTH,
@@ -287,7 +287,7 @@ class PetitionScreen extends React.Component {
               </TouchableOpacity>
             )}
 
-            <Text style={{ color: 'white', fontSize: 30, paddingBottom:15 }}>
+            <Text style={{ color: 'white', fontSize: 30, paddingBottom:15, fontWeight:"600" }}>
               {this.image.title}
             </Text>
             <Text style={{ color: 'white', fontSize: 16, paddingBottom:20 }}>

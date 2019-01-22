@@ -32,7 +32,6 @@ class MyActionsStackScreen extends React.Component {
   }
 
   _loading =() =>{
-    console.log('loading is firing');
     return <View style={{ flex: 1, backgroundColor:'#333' }}>
             <AppLoading
         />
@@ -45,13 +44,12 @@ class MyActionsStackScreen extends React.Component {
                 {({ loading,error, data }) => {
                 if (loading) return this._loading();
                 if (error) {
-                  console.log('error', error);
                   return this._loading();
                 }
                 if(data.myAvailableActions.length == 0){
                   return <SafeAreaView style={{ flex: 1 }}>
                   <View style={{...styles.container, justifyContent:'center', alignContent:'center'}}>
-                    <Text style={{color:"white", textAlign:"center"}}>You should start taking action!</Text>
+                    <Text style={{color:"white", textAlign:"center"}}>We Got This! Start Taking Action Now!</Text>
                   </View>
                 </SafeAreaView>
                 }

@@ -129,7 +129,7 @@ class ActionCardSmall extends React.Component {
             }
             break;
         case 'QUARTERLY' :
-            nextDate = originalDate.add(4, 'months').fromNow();
+            nextDate = originalDate.add(3, 'months').fromNow();
             if(nextDate.indexOf('ago') !== -1){
               canGoThrough = true;
             }
@@ -196,14 +196,12 @@ class ActionCardSmall extends React.Component {
         zipcode:zipcode
       }
       update_zipcode({variables}).then(()=>{
-          console.log('updated zipcode');
           this.onModalClose();
       })
     }
   }
 
   openZipCodeModal = () =>{
-    console.log('openzipcodemodal is being called ')
     this.setState({showZipcodeModal: true});
   }
 
@@ -212,7 +210,6 @@ class ActionCardSmall extends React.Component {
       return (
         <TouchableOpacity
           onPress={() =>{
-            console.log('red icon was pressed');
             this.delete()
           }}
           hitSlop={{top: 15, left: 15, right:15, bottom:15}}
@@ -224,7 +221,7 @@ class ActionCardSmall extends React.Component {
     }
   };
 
-  _showTheModal =() =>{
+  _showTheModal =() => {
     const { item } = this.props;
    
       let waste = item.action ? item.action.waste : item.waste;
@@ -244,7 +241,6 @@ class ActionCardSmall extends React.Component {
   _takeAction = () => {
     const { take_action, item, get_user, canDelete } = this.props;
     const { currScreen } = this.state;
-      console.log('take this action', item.id || item.action.id);
       let variables = {
         id: get_user.me.id,
         action : item.action ? item.action.id : item.id
@@ -320,7 +316,7 @@ class ActionCardSmall extends React.Component {
         {...{preview, uri: item.action.primary_image}}
       />
       <LinearGradient
-        colors={['rgba(255,255,255,0)', 'rgba(0,0,0,0.85)']}
+        colors={['rgba(0,0,0,0.1)', 'rgba(0,0,0,0.85)']}
         locations={[0.0, 1]}
         style={[styles.gradient, { height: 250}]}
       />
@@ -444,7 +440,7 @@ class ActionCardSmall extends React.Component {
         {...{preview, uri: canDelete ? item.action.primary_image : item.primary_image}}
       />
       <LinearGradient
-        colors={['rgba(255,255,255,0)', 'rgba(0,0,0,0.8)']}
+        colors={['rgba(0,0,0,0.1)', 'rgba(0,0,0,0.8)']}
         locations={[0, 1]}
         style={[styles.gradient, { height: 250}]}
       />

@@ -8,13 +8,14 @@ export default class GraphComponent extends React.Component {
     super(props);
   }
   render() {
-    console.log('props in graph component', this.props);
     return (
       <LinearGradient
         {...LinearGradientProps.profileItem}
         style={{
           flex: 1,
           borderRadius: 5,
+          paddingTop:20,
+          paddingBottom:20,
           elevation: 1,
           marginVertical: 5,
           shadowColor: "#000",

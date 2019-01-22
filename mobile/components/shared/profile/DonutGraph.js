@@ -86,9 +86,9 @@ export class DonutGraph extends React.Component {
                 key={section.index}
                 d={path(section)}
                 stroke="#000"
-                fill={`rgba(${10},${colors(section.index) * 1},${colors(
-                  section.index
-                )}, 0.7)`}
+                fill={`rgba(${0},${colors(section.index)},${colors(
+                  section.index+1
+                )*2}, 0.7)`}
                 strokeWidth={1}
               />
             ))}

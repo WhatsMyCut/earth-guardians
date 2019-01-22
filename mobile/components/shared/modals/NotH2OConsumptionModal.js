@@ -45,7 +45,7 @@ export default class WaterModal extends React.Component {
                 textAlign: 'center',
               }}
             >
-              YOU'VE REDUCED YOUR H2O COSUMPTION BY {this.props.water} GALLONS!
+              YOU'VE REDUCED YOUR H2O COSUMPTION BY {parseFloat(this.props.water).toFixed(2)} GALLONS!
             </Text>
             {/* 
             <Text

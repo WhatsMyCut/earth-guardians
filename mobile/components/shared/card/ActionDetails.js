@@ -18,10 +18,7 @@ export default class ActionDetails extends React.Component {
       this.setState(
         prevState => ({
           in: !prevState.in,
-        }),
-        () => {
-          console.log(`The state is ${this.state.in}`);
-        }
+        })
       );
 
       this.props.takeTheAction();

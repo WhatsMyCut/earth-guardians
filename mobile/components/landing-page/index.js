@@ -11,7 +11,6 @@ export default class LandingPage extends React.Component {
       const country_dial_code = await RetrieveData('country_dial_code');
       const store_data = await RetrieveData('EARTH_GUARDIANS_TOKEN');
       if (phone && country_dial_code && store_data) {
-        console.log('user exists');
         this.props.navigation.navigate('CommunityStack');
       } else {
         await StoreData('phone', null);

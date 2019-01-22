@@ -5,6 +5,7 @@ import {
   TextInput,
   TouchableOpacity,
   Modal,
+  Linking,
   Alert,
   TouchableHighlight,
   KeyboardAvoidingView,
@@ -15,7 +16,6 @@ import { SIGNUP } from '../../graphql/mutations/signup_mutation';
 import { LOGIN } from '../../graphql/mutations/login_mutation';
 import { USER_EXISTS_QUERY } from '../../graphql/queries/UserExistsQuery';
 import { StoreData } from '../../../store/AsyncStore';
-
 
 @graphql(SIGNUP, {
   name: 'signup_mutation',
@@ -51,7 +51,6 @@ export default class PasswordModal extends React.Component {
     if (password === confirmPassword) {
 
       signup_mutation({variables:{username:username, password: password}}).then(res =>{
-        console.log('response stuffs', res.data);
         this.props.setToken(res.data.signup.token);
         this.props.phone_signup();
       })
@@ -222,6 +221,11 @@ export default class PasswordModal extends React.Component {
     <TouchableHighlight
           onPress={this.props.togglePasswordModal}>
           <Text style={{color:"white"}}>Go Back</Text>
+     </TouchableHighlight>
+     <TouchableHighlight
+          style={{paddingTop:10, paddingBottom:10}}
+          onPress={()=> Linking.openURL('mailto:daniel.ashcraft@ofashandfire.com')}>
+          <Text style={{color:"white"}}>Reset Password</Text>
      </TouchableHighlight>
      
     

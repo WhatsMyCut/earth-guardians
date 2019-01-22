@@ -36,7 +36,6 @@ class DefaultScreen extends BaseScreen {
 
       onPanResponderMove: (evt, gs) => {
         if( 200 < gs.dy){
-          console.log('navigate back')
           if(petition){
             this.props.navigation.navigate(screen, {screen:"CommunityStack", image:petition, petitionTitle:petition.title});
           } else{
@@ -44,7 +43,6 @@ class DefaultScreen extends BaseScreen {
           }
         }
         if( -100 > gs.dy){
-          console.log('navigate back')
           if(petition){
             this.props.navigation.navigate(screen, {screen:"CommunityStack", image:petition, petitionTitle:petition.title});
           } else{
@@ -81,7 +79,7 @@ class DefaultScreen extends BaseScreen {
       </TouchableHighlight>
     );
 
-    const screen = this.props.navigation.getParam('screen', 'MyActions');
+    const screen = this.props.navigation.getParam('screen', 'Community');
     const petition = this.props.navigation.getParam('petition');
 
     const videoUrl = this.props.navigation.getParam(
@@ -92,12 +90,23 @@ class DefaultScreen extends BaseScreen {
     console.ignoredYellowBox = ['Warning:'];
     return (
       <Animated.View {...this.viewResponder.panHandlers} style={{ flex: 1 }}>
+        
         <View style={styles.container}>
-         
+        <View style={styles.topBackNav}>
+              <TouchableOpacity
+                onPress={() => this.props.navigation.navigate('Petition', {
+                  screen: 'Community',
+                  image: petition,s
+                })
+              }
+              >
+                <Ionicons name="ios-arrow-round-back" size={42} color="#ccc" />
+              </TouchableOpacity>
+        </View>
           <View
             style={[
               styles.container,
-              { justifyContent: 'center', alignItems: 'center' },
+              { justifyContent: 'center', alignItems: 'center', zIndex:999 },
             ]}
           >
             <VideoPlayer
@@ -153,6 +162,7 @@ const styles = {
     justifyContent: 'flex-start',
     maxHeight: 30,
     paddingHorizontal: 5,
+    zindex:1
   },
 };
 

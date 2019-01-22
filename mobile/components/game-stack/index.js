@@ -81,11 +81,9 @@ export default class GameCards extends React.Component {
               id: this.props.user.id,
               action: this.props.items[this.state.currentIndex].id,
             };
-            console.log('variables', variables);
-            console.log('swiped right')
+
             this.props.take_action({ variables }).then(res => {
-              console.log('took action', res);
-              console.log('action was taken');
+
                this.props.navigateBack()
             });
          }         
@@ -111,7 +109,6 @@ export default class GameCards extends React.Component {
    moveToNextCard = callback => {
       return () => {
          if(this.state.currentIndex >= this.props.items.length-1){
-            console.log('move to next card is firing');
             this.props.navigateBack();
          }
          this.position.setValue({ x: 0, y: 0 });
@@ -121,10 +118,15 @@ export default class GameCards extends React.Component {
       };
    };
 
+   goBack = () =>{
+      if(this.state.currentIndex!=0){
+         this.setState({currentIndex: this.state.currentIndex-1})
+      }
+   }
+
    swipeRight = () => {
       this.setState({loading: true});
-      console.log('swipe right inside game stack is being called');
-      
+
       Animated.spring(this.position, {
          toValue: { x: SCREEN_WIDTH + 100, y:0 }
       }).start(this.props.swipeRight(this.state.currentIndex));
@@ -218,6 +220,7 @@ export default class GameCards extends React.Component {
             rightPress={this.swipeRight}
             leftPress={this.swipeLeft}
             loading={this.state.loading}
+            goBack={this.goBack}
          />
       </View>
       );

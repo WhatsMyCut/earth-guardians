@@ -4,6 +4,7 @@ import {
   View,
   TouchableOpacity,
   Text,
+  Image,
   StyleSheet,
   Dimensions,
   ScrollView,
@@ -20,7 +21,7 @@ import { Analytics, PageHit } from 'expo-analytics';
 // import navigationService from '../navigation/navigationService';
 // import LinearGradientProps from '../constants/LinearGradientProps';
 // import GeneralScreen from './GeneralScreen';
-// const SCREEN_HEIGHT = Dimensions.get('window').height;
+const SCREEN_WIDTH = Dimensions.get('window').width;
 // @graphql(ALL_ACTION_CATEGORIES, {
 //   name: 'all_categories',
 //   fetchPolicy: 'network-only',
@@ -54,14 +55,18 @@ class EarthGuardiansInfoScreen extends React.Component {
                 <Ionicons name="ios-arrow-round-back" size={42} color="#ccc" />
               </TouchableOpacity>
             </View>
-            <ScrollView style={{ flex: 1, paddingRight: 10, paddingLeft: 20 }}>
+            <ScrollView style={{ flex: 1, paddingRight: 20, paddingLeft: 20, paddingTop:15 }}>
               <View style={{ marginBottom: 10 }}>
+                <Image style={{ width: SCREEN_WIDTH, height: 200, marginLeft:-20 }} source={{uri:"https://farm8.staticflickr.com/7887/46833317801_75cbc31625_b.jpg"}} />
+                <View style={{flex:1, justifyContent:'center', flexDirection:'row', alignContent:'center'}}>
+                  <Image style={{width: 120, height: 120}} resizeMode="contain" source={require('../assets/eye_w.png')} />
+                </View>
                 <Text
                   style={{
                     fontSize: 30,
                     fontWeight: 'bold',
                     paddingBottom: 10,
-                    paddingTop: 30,
+                    paddingTop: 20,
                     color: '#ffffff',
                     textAlign: 'center',
                   }}

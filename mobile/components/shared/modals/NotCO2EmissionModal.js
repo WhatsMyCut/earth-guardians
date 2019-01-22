@@ -49,7 +49,7 @@ export default class CarbonModal extends React.Component {
                 textAlign: 'center',
               }}
             >
-              YOU'VE REDUCED YOUR CO2 EMMISION BY {this.props.carbon_dioxide}{' '}
+              YOU'VE REDUCED YOUR CO2 EMMISION BY {parseFloat(this.props.carbon_dioxide).toFixed(2)}{' '}
               POUNDS!
             </Text>
 

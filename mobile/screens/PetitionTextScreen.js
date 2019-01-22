@@ -13,20 +13,7 @@ import {
 import { Button, Searchbar } from 'react-native-paper';
 import { all } from 'rsvp';
 import { LinearGradient, Icon, WebBrowser } from 'expo';
-import { Ionicons } from '@expo/vector-icons';
-
-import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_categories_query';
-import graphql from '../components/hoc/graphql';
-import HeaderNavBar from '../components/shared/navBar/HeaderNavBar';
-import TabBarIcon from '../components/shared/icons/TabBarIcon';
-import navigationService from '../navigation/navigationService';
-import LinearGradientProps from '../constants/LinearGradientProps';
-import GeneralScreen from './GeneralScreen';
-import { valueToObjectRepresentation } from 'apollo-utilities';
-import { SIGN_PETITION } from '../components/graphql/mutations/sign_petition';
-import { GET_USER } from '../components/graphql/queries/get_user';
-const SCREEN_HEIGHT = Dimensions.get('window').height;
-
+import { AntDesign } from '@expo/vector-icons';
 
 class PetitionTextScreen extends React.Component {
   state = { in: false }; //TODO, when Database is established, do a componentDidMount to load status
@@ -46,10 +33,7 @@ class PetitionTextScreen extends React.Component {
     this.setState(
       prevState => ({
         in: !prevState.in,
-      }),
-      () => {
-        console.log(`The state is ${this.state.in}`);
-      }
+      })
     );
   };
 
@@ -57,23 +41,26 @@ class PetitionTextScreen extends React.Component {
   render() {
     const body = this.props.navigation.getParam('body');
     let styles = `
-    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Proxima+Nova" />
       <style>
         h1,h2,h3,h4,h5,h6{
           font-family: sans-serif, Roboto;
+          color:#ffffff;
         }
 
         p {
           font-family: sans-serif, Roboto;
           font-size:14px;
+          color:#ffffff !important;
+        }
+        span{
+          color:#ffffff !important;
         }
 
       </style>
     `
     let renderBody = styles + body;
-
-    return <SafeAreaView style={{flex:1, justifyContent:"center"}}>
-          <View style={{flex:1, paddingHorizontal:15}}>
+    return <SafeAreaView style={{flex:1, justifyContent:"center", backgroundColor:"#1a1a1a"}}>
+          <View style={{flex:1, paddingHorizontal:20, paddingTop:40}}>
             <WebView 
               // style={{height:600, width:480}}
               style={{backgroundColor: 'transparent'}}
@@ -81,8 +68,6 @@ class PetitionTextScreen extends React.Component {
               source={{ html: renderBody}} 
               scalesPageToFit={false}
               onNavigationStateChange={(event) => {
-                console.log('url stuff',event);
-                
                 if(event.url !== 'about:blank'){
                   let url = event.url.indexOf('https://') !== -1 ? event.url : `https://${event.url}`
                   WebBrowser.openBrowserAsync(url);
@@ -98,12 +83,17 @@ class PetitionTextScreen extends React.Component {
                   title: this.title,
                 })
               }
-               style={{ color: '#fff', alignSelf: 'center', paddingBottom: 10 }}
+               style={{ color: '#fff', alignSelf: 'center', paddingBottom: 0 }}
              >
-               <TabBarIcon
-                 name={
-                   Platform.OS === 'ios' ? `ios-arrow-down` : 'md-arrow-down'
-                 }
+               <AntDesign
+                  name="down"
+                  style={{
+                  color: '#fff',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    fontSize: 20,
+                    // marginHorizontal: 10,
+                 }}
                />
              </TouchableOpacity>
         </SafeAreaView>

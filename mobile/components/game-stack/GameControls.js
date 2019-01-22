@@ -14,7 +14,7 @@ class GameControls extends React.Component {
                <Icon name="close" size={56} color="#824A4A" />
             </TouchableOpacity>
             <TouchableOpacity
-               onPress={this.props.centerPress}
+               onPress={this.props.goBack}
                style={[styles.swipeButton, { padding: 10 }]}
                disable={this.props.loading}
             >

@@ -195,11 +195,11 @@ class CommunityStackScreen extends React.Component {
         style={[
           {
             height: SCREEN_HEIGHT - 180,
-            width: SCREEN_WIDTH - 60,
+            width: SCREEN_WIDTH - 30,
+            left: SCREEN_WIDTH / 21,
             paddingHorizontal: 20,
             position: 'absolute',
             top: 20 + 20 / index,
-            left: SCREEN_WIDTH / 12,
             zIndex: index * 10,
           },
         ]}
@@ -208,18 +208,18 @@ class CommunityStackScreen extends React.Component {
           style={[
             {
               position: 'absolute',
-              bottom: 50,
+              bottom: 10,
               left: 10,
               zIndex: 1000,
               paddingHorizontal: 20,
             },
           ]}
         >
-          <Text style={{ color: 'white', fontSize: 18, paddingBottom: 10 }}>
+          <Text style={{ color: 'white', fontSize: 18, paddingBottom: 10, fontWeight:"600" }}>
             {petition.title}
           </Text>
 
-          <Text style={{ color: 'white', paddingBottom: 10 }}>
+          <Text style={{ color: 'white', paddingBottom: 5 }}>
             {petition.short_description}
           </Text>
         </View>
@@ -235,11 +235,11 @@ class CommunityStackScreen extends React.Component {
           {...{ preview, uri: petition.primary_image }}
         />
         <LinearGradient
-          colors={['rgba(255,255,255,0)', 'rgba(0,0,0,0.85)']}
-          locations={[0.1, 1]}
+          colors={['rgba(0,0,0,0.2)', 'rgba(0,0,0,0.85)']}
+          locations={[0.5, 1]}
           style={{
             height: SCREEN_HEIGHT - 180,
-            width: SCREEN_WIDTH - 100,
+            width: SCREEN_WIDTH - 70,
             ...styles.gradient,
           }}
         />
@@ -296,8 +296,8 @@ class CommunityStackScreen extends React.Component {
           this.rotateAndTranslate,
           {
             height: SCREEN_HEIGHT - 180,
-            width: SCREEN_WIDTH - 60,
-            left: SCREEN_WIDTH / 12,
+            width: SCREEN_WIDTH - 30,
+            left: SCREEN_WIDTH / 21,
             paddingHorizontal: 20,
             zIndex: 999,
             top: 20,
@@ -305,26 +305,7 @@ class CommunityStackScreen extends React.Component {
           },
         ]}
       >
-        <Animated.View
-          style={[
-            { opacity: this.nextCardOpacity / 1 },
-            {
-              position: 'absolute',
-              bottom: 50,
-              left: 10,
-              zIndex: 1000,
-              paddingHorizontal: 20,
-            },
-          ]}
-        >
-          <Text style={{ color: 'white', fontSize: 18, paddingBottom: 10 }}>
-            {petition.title}
-          </Text>
-
-          <Text style={{ color: 'white', paddingBottom: 10 }}>
-            {petition.short_description}
-          </Text>
-        </Animated.View>
+        
 
         <Image
           style={{
@@ -337,14 +318,36 @@ class CommunityStackScreen extends React.Component {
           {...{ preview, uri: petition.primary_image }}
         />
         <LinearGradient
-          colors={['rgba(255,255,255,0)', 'rgba(0,0,0,0.85)']}
-          locations={[0.3, 1]}
+          colors={['rgba(0,0,0,0.2)', 'rgba(0,0,0,0.85)']}
+          locations={[0.5, 1]}
           style={{
             height: SCREEN_HEIGHT - 180,
-            width: SCREEN_WIDTH - 100,
+            width: SCREEN_WIDTH - 70,
             ...styles.gradient,
           }}
         />
+
+        <Animated.View
+          style={[
+            { opacity: this.nextCardOpacity / 1 },
+            {
+              position: 'absolute',
+              bottom: 10,
+              left: 10,
+              zIndex: 1000,
+              paddingHorizontal: 20,
+            },
+          ]}
+        >
+          <Text style={{ color: 'white', fontSize: 18, paddingBottom: 10, fontWeight:"600" }}>
+            {petition.title}
+          </Text>
+
+          <Text style={{ color: 'white', paddingBottom: 5 }}>
+            {petition.short_description}
+          </Text>
+        </Animated.View>
+        
 
         <View style={styles.headlineViewPlayIcon}>
           <TouchableOpacity

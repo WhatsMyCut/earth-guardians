@@ -3,9 +3,12 @@ import {
   StyleSheet,
   SafeAreaView,
   View,
+  Animated,
   Text,
+  Linking,
   ImageBackground,
   TouchableOpacity,
+  PanResponder,
   Platform,
   Dimensions,
   KeyboardAvoidingView
@@ -76,6 +79,20 @@ export default class PhoneSignup extends React.Component {
     }
   };
 
+  componentWillMount() {
+    this.viewResponder = PanResponder.create({
+      onStartShouldSetPanResponder: () => true,
+
+      onPanResponderMove: (evt, gs) => {
+        if (-200 > gs.dy) {
+          if(this.state.valid_phone){
+            this.setState({ showPasswordModal: true });
+          }
+        }
+      },
+    });
+  }
+
 
   componentDidMount(){
     fetch(`https://api.vimeo.com/videos/309965359`, {
@@ -109,16 +126,9 @@ export default class PhoneSignup extends React.Component {
 
 
     return (
+        <Animated.View style={{flex:1}} {...this.viewResponder.panHandlers}>
         <SafeAreaView style={{ flex: 1 }}>
-        <LinearGradient
-            colors={['rgba(255,255,255,0)', 'rgba(0,0,0,0.9)']}
-            locations={[0, 1]}
-            style={{
-              position: 'absolute',
-              width: WIDTH,
-              height: HEIGHT,
-            }}
-          />
+        
          <Video 
           source={{uri: video_url}}
           rate={1.0}
@@ -132,6 +142,15 @@ export default class PhoneSignup extends React.Component {
             height: HEIGHT,
             position: 'absolute', }} 
         />
+        <LinearGradient
+            colors={['rgba(0,0,0,0.2)', 'rgba(0,0,0,0.9)']}
+            locations={[0.4, 1]}
+            style={{
+              position: 'absolute',
+              width: WIDTH,
+              height: HEIGHT,
+            }}
+          />
 
           {/* <ImageBackground
             source={require('../../assets/earth_guardians_main.gif')}
@@ -151,14 +170,14 @@ export default class PhoneSignup extends React.Component {
                 paddingBottom: 60,
 
                 paddingLeft: 30,
-                paddingRight: 90,
+                paddingRight: 70,
               }}
             >
               <Text style={styles.title}>Welcome to EarthTracks!</Text>
               <Text style={{...styles.promo, fontWeight:'bold',paddingBottom:5}}>Fitness Tracker for the Planet</Text>
               <Text style={styles.promo}>The change we need for a</Text>
               <Text style={{...styles.promo,paddingBottom:5}}>regenerative shift starts with you.</Text>
-              <Text style={{...styles.promo,paddingBottom:5}}>ARE YOU IN?</Text>
+              <Text style={{...styles.promo,paddingBottom:8}}>ARE YOU IN?</Text>
               
               
               
@@ -168,6 +187,10 @@ export default class PhoneSignup extends React.Component {
                 validate_phone={this.is_phone_valid}
                 onChangeUpdatePhone = {this._setPhone}
               />
+              {this.state.valid_phone && (
+                <Text style={{fontSize:10, color:'#ffffff', paddingTop:3}}>By signing up, you confirm that you agree to our Terms of Use and have read and understood our <Text onPress={()=> Linking.openURL('https://app.termly.io/document/privacy-policy-for-website/ad2b059a-ddec-4f69-97a5-4dc346948ac7')}>Privacy Policy</Text>.</Text>
+              )}
+
             </View>
             {this.state.showPasswordModal && (
               <BlurView
@@ -199,6 +222,7 @@ export default class PhoneSignup extends React.Component {
             ) : null}
           {/* </ImageBackground> */}
         </SafeAreaView>
+        </Animated.View>
     );
   }
 }
@@ -213,7 +237,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   title: {
-    fontSize: 30,
+    fontSize: 22,
     color: '#ffffff',
     fontWeight: 'bold',
     paddingBottom: 10,

@@ -54,7 +54,6 @@ export default class UpdateUserModal extends React.Component {
         : my_user.me.crew_type,
     };
     update_user_mutation({ variables }).then(res => {
-      console.log('response stuffs', res.data);
       this.props.onClose();
     });
   };

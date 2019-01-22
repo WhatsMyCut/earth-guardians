@@ -1,74 +1,66 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, Modal, Image } from 'react-native';
-import { AntDesign, Entypo } from '@expo/vector-icons';
-
-export default class WasteModal extends React.Component {
+import { View, Text, TouchableOpacity, Modal } from 'react-native';
+import { AntDesign } from '@expo/vector-icons';
+import { WebBrowser } from 'expo';
+import NavigationService from '../../../navigation/navigationService';
+export default class GameCompleteModal extends React.Component {
   state = { modalVisible: true };
   toggleModalVisible = () => {
-    this.setState({
-      modalVisible: !this.state.modalVisible,
-    });
+    this.setState({ modalVisible: !this.state.modalVisible });
   };
-
   render() {
     return (
       <Modal
         animationType="slide"
         transparent={true}
-        visible={this.props.visible}
+        visible={this.state.modalVisible}
+        onRequestClose={() => {
+
+        }}
         style={{
           backgroundColor: '#333',
           justifyContent: 'center',
           alignItems: 'center',
         }}
       >
-        <View style={{ marginTop: 200, marginHorizontal: 20 }}>
+        <View
+          style={{
+            paddingTop: 200,
+            paddingHorizontal: 20
+          }}
+        >
           <View
             style={{
               backgroundColor: '#333',
               justifyContent: 'center',
               alignItems: 'center',
               borderRadius: 20,
-              padding: 30,
+              padding: 60,
             }}
           >
-            {/* <Entypo name="trash" color="white" size={50} /> */}
-            <Image
-              source={require('../../../assets/waste.png')}
-              style={{ width: 138, height: 100, margin: 20 }}
-            />
             <Text
               style={{
                 color: '#fff',
-                marginHorizontal: 5,
+                marginHorizontal: 20,
                 fontSize: 18,
                 fontWeight: 'bold',
                 textAlign: 'center',
               }}
             >
-              YOU'VE REDUCED YOUR WASTE BY {parseFloat(this.props.waste).toFixed(2)} POUNDS!
-            </Text>
-
-            {/* <Text
-              style={{
-                color: '#fff',
-                fontSize: 12,
-                paddingTop: 10,
-                textAlign: 'center',
-              }}
-            >
-              You've offset the equivalent of
+              Thank You!
             </Text>
             <Text
-              style={{
-                color: '#fff',
-                fontSize: 12,
-                paddingBottom: 10,
-                textAlign: 'center',
-              }}
+            style={{
+              color: '#fff',
+              marginHorizontal: 20,
+              fontSize: 14,
+              textAlign: 'center',
+              marginTop:10
+            }}
             >
-              buying 3000 water bottles
-            </Text> */}
+               Check 'My Actions' to keep track of the action you committed to.
+            </Text>
+           
             <TouchableOpacity
               onPress={() => {
                 this.props.onClose();
