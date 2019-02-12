@@ -16,6 +16,7 @@ import { SIGNUP } from '../../graphql/mutations/signup_mutation';
 import { LOGIN } from '../../graphql/mutations/login_mutation';
 import { USER_EXISTS_QUERY } from '../../graphql/queries/UserExistsQuery';
 import { StoreData } from '../../../store/AsyncStore';
+import { Constants} from 'expo'
 
 @graphql(SIGNUP, {
   name: 'signup_mutation',
@@ -49,8 +50,9 @@ export default class PasswordModal extends React.Component {
     const { password, confirmPassword } = this.state;
     const { signup_mutation, username } = this.props;
     if (password === confirmPassword) {
+      const device_id = Constants.deviceId;
 
-      signup_mutation({variables:{username:username, password: password}}).then(res =>{
+      signup_mutation({ variables: { username: username, password: password, device_id: device_id}}).then(res =>{
         this.props.setToken(res.data.signup.token);
         this.props.phone_signup();
       })
