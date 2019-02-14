@@ -3,7 +3,6 @@ import navigationService from '../navigation/navigationService';
 import { StoreData, RetrieveData } from './AsyncStore';
 import { Permissions, Notifications } from 'expo';
 import { Analytics, Event } from 'expo-analytics';
-
 // a store to hold the react context api
 const Store = React.createContext();
 
@@ -22,6 +21,7 @@ export class StoreProvider extends React.Component {
 			const phone = await RetrieveData('phone');
 			const country_dial_code = await RetrieveData('country_dial_code');
 			const store_data = await RetrieveData('EARTH_GUARDIANS_TOKEN');
+
 			// await StoreData('phone', null);
 			// await StoreData('country_dial_code', null);
 			// await StoreData('EARTH_GUARDIANS_TOKEN', null);
@@ -39,6 +39,7 @@ export class StoreProvider extends React.Component {
 			console.log(e);
 		}
 	}
+
 	appReady = () => {
 		this.setState({ isLoading: false });
 	};

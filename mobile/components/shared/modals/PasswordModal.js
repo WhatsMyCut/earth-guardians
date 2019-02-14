@@ -1,378 +1,424 @@
 import React from 'react';
 import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  Modal,
-  Linking,
-  Alert,
-  TouchableHighlight,
-  KeyboardAvoidingView,
+	View,
+	Text,
+	TextInput,
+	TouchableOpacity,
+	Modal,
+	Linking,
+	Alert,
+	TouchableHighlight,
+	KeyboardAvoidingView,
 } from 'react-native';
 import NavigationService from '../../../navigation/navigationService';
 import graphql from '../../hoc/graphql';
 import { SIGNUP } from '../../graphql/mutations/signup_mutation';
 import { LOGIN } from '../../graphql/mutations/login_mutation';
+import { TOKEN } from '../../graphql/mutations/token_mutation';
 import { USER_EXISTS_QUERY } from '../../graphql/queries/UserExistsQuery';
 import { StoreData } from '../../../store/AsyncStore';
-import { Constants} from 'expo'
+import { Notifications } from 'expo';
 
 @graphql(SIGNUP, {
-  name: 'signup_mutation',
+	name: 'signup_mutation',
 })
 @graphql(LOGIN, {
-  name:"login_mutation"
+	name: 'login_mutation',
 })
 @graphql(USER_EXISTS_QUERY, {
-  name:"user_exists_query",
-  options: (props) => {
-      const username = props.username ? props.username : null;
-      return {
-        variables: {
-          username
-        }
-      }
-  }
+	name: 'user_exists_query',
+	options: (props) => {
+		const username = props.username ? props.username : null;
+		return {
+			variables: {
+				username,
+			},
+		};
+	},
+})
+@graphql(TOKEN, {
+	name: 'token_mutation',
 })
 export default class PasswordModal extends React.Component {
-  state = { password:'', confirmPassword:'', passwordError: null, existsPassword:null, standardError:null };
-  
-  constructor(props){
-      super(props);
+	state = { password: '', confirmPassword: '', passwordError: null, existsPassword: null, standardError: null };
 
-  }
-  setModalVisible(visible) {
-    this.setState({ modalVisible: visible });
-  }
+	constructor(props) {
+		super(props);
+	}
 
-  signup = () => {
-    const { password, confirmPassword } = this.state;
-    const { signup_mutation, username } = this.props;
-    if (password === confirmPassword) {
-      const device_id = Constants.deviceId;
+	registerForPushNotificationsAsync = async () => {
+		const { status: existingStatus } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
+		let finalStatus = existingStatus;
 
-      signup_mutation({ variables: { username: username, password: password, device_id: device_id}}).then(res =>{
-        this.props.setToken(res.data.signup.token);
-        this.props.phone_signup();
-      })
-      //NavigationService.navigate('Main');
-    } else {
-      this.setState({ passwordError: 'Passwords do not Match' });
-    }
-  };
+		// only ask if permissions have not already been determined, because
+		// iOS won't necessarily prompt the user a second time.
+		if (existingStatus !== 'granted') {
+			// Android remote notification permissions are granted during the app
+			// install, so this will only ask on iOS
+			const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+			finalStatus = status;
+		}
 
-  signIn = () => {
-    const { login_mutation, username } = this.props;
-    const { existsPassword } = this.state;
-    if(existsPassword && username){
-      login_mutation({variables:{username:username, password:existsPassword}}).then(res =>{
-        this.props.setToken(res.data.login.token);
-        this.props.phone_signup();
-      })
-    } else{
-      this.setState({standardError: "You must enter your username and password..."})
-    }
-  }
+		// Stop here if the user did not grant permissions
+		if (finalStatus !== 'granted') {
+			return;
+		}
 
-  loadingModalContent(){
-    return <Modal
-    animationType="slide"
-    transparent={true}
-    visible={this.props.isVisible}
-    onRequestClose={() => {
-      Alert.alert('Modal has been closed.');
-    }}
-    
-    >
-    <View 
-          style={{
-              flex:1,
-              justifyContent: 'center',
-              flexDirection:'column',
-              alignItems: 'center',
-              paddingHorizontal: 5,
-          }}
-      >
-     <View
-    style={{
-      backgroundColor: '#333',
-      alignItems: 'center',
-      height:'50%',
-      width:'75%',
-      borderRadius: 15,
-      paddingTop:20,
-    }}
-  > 
-  
-   
-    <Text
-      style={{
-        color: '#fff',
-        marginHorizontal: 20,
-        fontSize: 18,
-        fontWeight: 'bold',
-        textAlign: 'center',
-      }}
-    >
-      Loading ... 
-    </Text>
-    
-    
-  </View>
-  </View>
-  </Modal>
-  }
+		// Get the token that uniquely identifies this device
+		let token = await Notifications.getExpoPushTokenAsync();
+		console.log(token, 'HEHEHEHEHE');
 
-  _userExistsContent(){
-    return <Modal
-    animationType="slide"
-    transparent={true}
-    visible={this.props.isVisible}
-    onRequestClose={() => {
-      Alert.alert('Modal has been closed.');
-    }}
-    
-    >
-    <View 
-          style={{
-              flex:1,
-              justifyContent: 'center',
-              flexDirection:'column',
-              alignItems: 'center',
-              paddingHorizontal: 5,
-          }}
-      >
-     <View
-    style={{
-      backgroundColor: '#333',
-      alignItems: 'center',
-      borderRadius: 15,
-      paddingTop:20,
-      paddingHorizontal:15,
-      paddingBottom:10
-    }}
-  > 
-  
-   
-    <Text
-      style={{
-        color: '#fff',
-        marginHorizontal: 20,
-        fontSize: 18,
-        fontWeight: 'bold',
-        textAlign: 'center',
-      }}
-    >
-      Welcome Back!
-    </Text>
-    {this.state.passwordError && (
-          <Text style={{
-              color: 'red',
-              marginHorizontal: 20,
-              fontSize: 18,
-              fontWeight: 'bold',
-              textAlign: 'center',
-            }}>{this.state.passwordError}</Text>
-      )}
-       {this.state.standardError && (
-              <Text style={{
-                color: 'red',
-                marginHorizontal: 20,
-                fontSize: 18,
-                fontWeight: 'bold',
-                textAlign: 'center',
-              }}>{this.state.standardError}</Text>
-            )}
-    <TextInput
-      style={{
-        color: '#fff',
-        height: 30,
-        width: 200,
-        textAlign: 'left',
-        marginVertical: 20,
-        borderColor: 'gray',
-        borderBottomWidth: 1,
-      }}
-      onChangeText={password => this.setState({ existsPassword:password, passwordError:null, standardError:null })}
-      placeholder="Password"
-      placeholderTextColor="#fff"
-      keyboardType="default"
-      secureTextEntry={true}
-      returnKeyType="done"
-      // value={this.state.zipCode}
-    />
-    <TouchableOpacity
-      style={{
-        backgroundColor: '#fff',
-        width: 130,
-        height: 50,
-        borderRadius: 5,
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginTop: 20,
-        marginBottom:20
-      }}
-      onPress={this.signIn}
-    >
-      <Text style={{ color: '#333', fontSize: 18, fontWeight: 'bold' }}>
-        Sign In
-      </Text>
-    </TouchableOpacity>
+		// POST the token to your backend server from where you can retrieve it to send push notifications.
+		/*return fetch(PUSH_ENDPOINT, {
+		method: 'POST',
+		headers: {
+			Accept: 'application/json',
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify({
+			token: {
+				value: token,
+			},
+			user: {
+				username: username,
+			},
+		}),
+  });
+  */
+		token_mutation({ variables: { token: token } }).then((res) => {
+			//TBD
+		});
+	};
 
-    <TouchableHighlight
-          onPress={this.props.togglePasswordModal}>
-          <Text style={{color:"white"}}>Go Back</Text>
-     </TouchableHighlight>
-     <TouchableHighlight
-          style={{paddingTop:10, paddingBottom:10}}
-          onPress={()=> Linking.openURL('mailto:daniel.ashcraft@ofashandfire.com')}>
-          <Text style={{color:"white"}}>Reset Password</Text>
-     </TouchableHighlight>
-     
-    
-  </View>
-  </View>
-  </Modal>
-  }
+	setModalVisible(visible) {
+		this.setState({ modalVisible: visible });
+	}
 
-  render() {
+	signup = async () => {
+		const { password, confirmPassword } = this.state;
+		const { signup_mutation, username } = this.props;
+		if (password === confirmPassword) {
+			signup_mutation({ variables: { username: username, password: password } }).then((res) => {
+				this.props.setToken(res.data.signup.token);
+				this.props.phone_signup();
+			});
+			//NavigationService.navigate('Main');
+		} else {
+			this.setState({ passwordError: 'Passwords do not Match' });
+		}
+	};
 
-    const { goBack, user_exists_query } = this.props;
-    if(user_exists_query.loading) {
-      return this.loadingModalContent()
-    } 
+	signIn = () => {
+		const { login_mutation, username } = this.props;
+		const { existsPassword } = this.state;
+		if (existsPassword && username) {
+			login_mutation({ variables: { username: username, password: existsPassword } }).then((res) => {
+				this.props.setToken(res.data.login.token);
+				this.props.phone_signup();
+			});
+		} else {
+			this.setState({ standardError: 'You must enter your username and password...' });
+		}
+	};
 
-    if(user_exists_query.user){
-      if(user_exists_query.user.id){
-        return this._userExistsContent();
-      }
-    }
-   
-    return (
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={this.props.isVisible}
-        onRequestClose={() => {
-          Alert.alert('Modal has been closed.');
-        }}
-      >
-       
-       <View 
-          style={{
-              flex:1,
-              justifyContent: 'center',
-              flexDirection:'column',
-              alignItems: 'center',
-              paddingHorizontal: 5,
-          }}
-      >
-     <View
-    style={{
-      backgroundColor: '#333',
-      alignItems: 'center',
-      borderRadius: 15,
-      paddingTop:20,
-      paddingHorizontal:15,
-      paddingBottom:10
-    }}
-  > 
-  
-         
-          <Text
-            style={{
-              color: '#fff',
-              marginHorizontal: 20,
-              fontSize: 18,
-              fontWeight: 'bold',
-              textAlign: 'center',
-            }}
-          >
-            Create a Password
-          </Text>
-          {this.state.passwordError && (
-                <Text style={{
-                    color: 'red',
-                    marginHorizontal: 20,
-                    fontSize: 18,
-                    fontWeight: 'bold',
-                    textAlign: 'center',
-                  }}>{this.state.passwordError}</Text>
-            )}
-            {this.state.standardError && (
-              <Text style={{
-                color: 'red',
-                marginHorizontal: 20,
-                fontSize: 18,
-                fontWeight: 'bold',
-                textAlign: 'center',
-              }}>{this.state.standardError}</Text>
-            )}
-          <TextInput
-            style={{
-              color: '#fff',
-              height: 30,
-              width: 200,
-              textAlign: 'left',
-              marginVertical: 20,
-              borderColor: 'gray',
-              borderBottomWidth: 1,
-            }}
-            onChangeText={password => this.setState({ password, passwordError:null })}
-            placeholder="Password"
-            placeholderTextColor="#fff"
-            keyboardType="default"
-            secureTextEntry={true}
-            returnKeyType="done"
-            // value={this.state.zipCode}
-          />
-          <TextInput
-            style={{
-              color: '#fff',
-              height: 30,
-              width: 200,
-              textAlign: 'left',
-              marginTop:20,
-              marginBottom:10,
-              borderColor: 'gray',
-              borderBottomWidth: 1,
-            }}
-            onChangeText={confirmPassword => this.setState({ confirmPassword, passwordError:null })}
-            placeholder="Confirm Password"
-            placeholderTextColor="#fff"
-            keyboardType="default"
-            secureTextEntry={true}
-            returnKeyType="done"
-            // value={this.state.zipCode}
-          />
-         
-          
-            <TouchableOpacity
-              style={{
-                backgroundColor: '#fff',
-                width: 130,
-                borderRadius: 5,
-                justifyContent: 'center',
-                alignItems: 'center',
-                paddingTop: 20,
-                paddingBottom: 20,
-              }}
-              onPress={this.signup}
-            >
-              <Text style={{ color: '#333', fontSize: 18, fontWeight: 'bold' }}>
-                SUBMIT
-              </Text>
-            </TouchableOpacity>
+	loadingModalContent() {
+		return (
+			<Modal
+				animationType="slide"
+				transparent={true}
+				visible={this.props.isVisible}
+				onRequestClose={() => {
+					Alert.alert('Modal has been closed.');
+				}}
+			>
+				<View
+					style={{
+						flex: 1,
+						justifyContent: 'center',
+						flexDirection: 'column',
+						alignItems: 'center',
+						paddingHorizontal: 5,
+					}}
+				>
+					<View
+						style={{
+							backgroundColor: '#333',
+							alignItems: 'center',
+							height: '50%',
+							width: '75%',
+							borderRadius: 15,
+							paddingTop: 20,
+						}}
+					>
+						<Text
+							style={{
+								color: '#fff',
+								marginHorizontal: 20,
+								fontSize: 18,
+								fontWeight: 'bold',
+								textAlign: 'center',
+							}}
+						>
+							Loading ...
+						</Text>
+					</View>
+				</View>
+			</Modal>
+		);
+	}
 
-          <TouchableHighlight
-                onPress={this.props.togglePasswordModal}>
-                <Text style={{color:"white"}}>Go Back</Text>
-           </TouchableHighlight>
-           
-            </View>
-            </View>
-      </Modal>
-    );
-  }
+	_userExistsContent() {
+		return (
+			<Modal
+				animationType="slide"
+				transparent={true}
+				visible={this.props.isVisible}
+				onRequestClose={() => {
+					Alert.alert('Modal has been closed.');
+				}}
+			>
+				<View
+					style={{
+						flex: 1,
+						justifyContent: 'center',
+						flexDirection: 'column',
+						alignItems: 'center',
+						paddingHorizontal: 5,
+					}}
+				>
+					<View
+						style={{
+							backgroundColor: '#333',
+							alignItems: 'center',
+							borderRadius: 15,
+							paddingTop: 20,
+							paddingHorizontal: 15,
+							paddingBottom: 10,
+						}}
+					>
+						<Text
+							style={{
+								color: '#fff',
+								marginHorizontal: 20,
+								fontSize: 18,
+								fontWeight: 'bold',
+								textAlign: 'center',
+							}}
+						>
+							Welcome Back!
+						</Text>
+						{this.state.passwordError && (
+							<Text
+								style={{
+									color: 'red',
+									marginHorizontal: 20,
+									fontSize: 18,
+									fontWeight: 'bold',
+									textAlign: 'center',
+								}}
+							>
+								{this.state.passwordError}
+							</Text>
+						)}
+						{this.state.standardError && (
+							<Text
+								style={{
+									color: 'red',
+									marginHorizontal: 20,
+									fontSize: 18,
+									fontWeight: 'bold',
+									textAlign: 'center',
+								}}
+							>
+								{this.state.standardError}
+							</Text>
+						)}
+						<TextInput
+							style={{
+								color: '#fff',
+								height: 30,
+								width: 200,
+								textAlign: 'left',
+								marginVertical: 20,
+								borderColor: 'gray',
+								borderBottomWidth: 1,
+							}}
+							onChangeText={(password) =>
+								this.setState({ existsPassword: password, passwordError: null, standardError: null })}
+							placeholder="Password"
+							placeholderTextColor="#fff"
+							keyboardType="default"
+							secureTextEntry={true}
+							returnKeyType="done"
+							// value={this.state.zipCode}
+						/>
+						<TouchableOpacity
+							style={{
+								backgroundColor: '#fff',
+								width: 130,
+								height: 50,
+								borderRadius: 5,
+								justifyContent: 'center',
+								alignItems: 'center',
+								marginTop: 20,
+								marginBottom: 20,
+							}}
+							onPress={this.signIn}
+						>
+							<Text style={{ color: '#333', fontSize: 18, fontWeight: 'bold' }}>Sign In</Text>
+						</TouchableOpacity>
+
+						<TouchableHighlight onPress={this.props.togglePasswordModal}>
+							<Text style={{ color: 'white' }}>Go Back</Text>
+						</TouchableHighlight>
+						<TouchableHighlight
+							style={{ paddingTop: 10, paddingBottom: 10 }}
+							onPress={() => Linking.openURL('mailto:daniel.ashcraft@ofashandfire.com')}
+						>
+							<Text style={{ color: 'white' }}>Reset Password</Text>
+						</TouchableHighlight>
+					</View>
+				</View>
+			</Modal>
+		);
+	}
+
+	render() {
+		const { goBack, user_exists_query } = this.props;
+		if (user_exists_query.loading) {
+			return this.loadingModalContent();
+		}
+
+		if (user_exists_query.user) {
+			if (user_exists_query.user.id) {
+				return this._userExistsContent();
+			}
+		}
+
+		return (
+			<Modal
+				animationType="slide"
+				transparent={true}
+				visible={this.props.isVisible}
+				onRequestClose={() => {
+					Alert.alert('Modal has been closed.');
+				}}
+			>
+				<View
+					style={{
+						flex: 1,
+						justifyContent: 'center',
+						flexDirection: 'column',
+						alignItems: 'center',
+						paddingHorizontal: 5,
+					}}
+				>
+					<View
+						style={{
+							backgroundColor: '#333',
+							alignItems: 'center',
+							borderRadius: 15,
+							paddingTop: 20,
+							paddingHorizontal: 15,
+							paddingBottom: 10,
+						}}
+					>
+						<Text
+							style={{
+								color: '#fff',
+								marginHorizontal: 20,
+								fontSize: 18,
+								fontWeight: 'bold',
+								textAlign: 'center',
+							}}
+						>
+							Create a Password
+						</Text>
+						{this.state.passwordError && (
+							<Text
+								style={{
+									color: 'red',
+									marginHorizontal: 20,
+									fontSize: 18,
+									fontWeight: 'bold',
+									textAlign: 'center',
+								}}
+							>
+								{this.state.passwordError}
+							</Text>
+						)}
+						{this.state.standardError && (
+							<Text
+								style={{
+									color: 'red',
+									marginHorizontal: 20,
+									fontSize: 18,
+									fontWeight: 'bold',
+									textAlign: 'center',
+								}}
+							>
+								{this.state.standardError}
+							</Text>
+						)}
+						<TextInput
+							style={{
+								color: '#fff',
+								height: 30,
+								width: 200,
+								textAlign: 'left',
+								marginVertical: 20,
+								borderColor: 'gray',
+								borderBottomWidth: 1,
+							}}
+							onChangeText={(password) => this.setState({ password, passwordError: null })}
+							placeholder="Password"
+							placeholderTextColor="#fff"
+							keyboardType="default"
+							secureTextEntry={true}
+							returnKeyType="done"
+							// value={this.state.zipCode}
+						/>
+						<TextInput
+							style={{
+								color: '#fff',
+								height: 30,
+								width: 200,
+								textAlign: 'left',
+								marginTop: 20,
+								marginBottom: 10,
+								borderColor: 'gray',
+								borderBottomWidth: 1,
+							}}
+							onChangeText={(confirmPassword) => this.setState({ confirmPassword, passwordError: null })}
+							placeholder="Confirm Password"
+							placeholderTextColor="#fff"
+							keyboardType="default"
+							secureTextEntry={true}
+							returnKeyType="done"
+							// value={this.state.zipCode}
+						/>
+
+						<TouchableOpacity
+							style={{
+								backgroundColor: '#fff',
+								width: 130,
+								borderRadius: 5,
+								justifyContent: 'center',
+								alignItems: 'center',
+								paddingTop: 20,
+								paddingBottom: 20,
+							}}
+							onPress={this.signup}
+						>
+							<Text style={{ color: '#333', fontSize: 18, fontWeight: 'bold' }}>SUBMIT</Text>
+						</TouchableOpacity>
+
+						<TouchableHighlight onPress={this.props.togglePasswordModal}>
+							<Text style={{ color: 'white' }}>Go Back</Text>
+						</TouchableHighlight>
+					</View>
+				</View>
+			</Modal>
+		);
+	}
 }
