@@ -1,7 +1,7 @@
 import React from 'react';
 import navigationService from '../navigation/navigationService';
 import { StoreData, RetrieveData } from './AsyncStore';
-import { Permissions, Notifications } from 'expo';
+import { Permissions } from 'expo';
 import { Analytics, Event } from 'expo-analytics';
 // a store to hold the react context api
 const Store = React.createContext();

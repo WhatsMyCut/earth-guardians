@@ -14,11 +14,16 @@ import NavigationService from '../../../navigation/navigationService';
 import graphql from '../../hoc/graphql';
 import { SIGNUP } from '../../graphql/mutations/signup_mutation';
 import { LOGIN } from '../../graphql/mutations/login_mutation';
-import { TOKEN } from '../../graphql/mutations/token_mutation';
+//import { TOKEN } from '../../graphql/mutations/token_mutation';
 import { USER_EXISTS_QUERY } from '../../graphql/queries/UserExistsQuery';
 import { StoreData } from '../../../store/AsyncStore';
-import { Notifications } from 'expo';
+import { Permissions, Notifications } from 'expo';
 
+/*
+@graphql(TOKEN, {
+ 	name: 'token_mutation', 
+})
+*/
 @graphql(SIGNUP, {
 	name: 'signup_mutation',
 })
@@ -36,14 +41,22 @@ import { Notifications } from 'expo';
 		};
 	},
 })
-@graphql(TOKEN, {
-	name: 'token_mutation',
-})
 export default class PasswordModal extends React.Component {
-	state = { password: '', confirmPassword: '', passwordError: null, existsPassword: null, standardError: null };
+	state = {
+		password: '',
+		confirmPassword: '',
+		passwordError: null,
+		existsPassword: null,
+		standardError: null,
+		token: null,
+	};
 
 	constructor(props) {
 		super(props);
+	}
+
+	componentDidMount() {
+		this.registerForPushNotificationsAsync();
 	}
 
 	registerForPushNotificationsAsync = async () => {
@@ -66,7 +79,7 @@ export default class PasswordModal extends React.Component {
 
 		// Get the token that uniquely identifies this device
 		let token = await Notifications.getExpoPushTokenAsync();
-		console.log(token, 'HEHEHEHEHE');
+		console.log('Token is ', token);
 
 		// POST the token to your backend server from where you can retrieve it to send push notifications.
 		/*return fetch(PUSH_ENDPOINT, {
@@ -85,9 +98,13 @@ export default class PasswordModal extends React.Component {
 		}),
   });
   */
+		//update the graphql
+		/*
 		token_mutation({ variables: { token: token } }).then((res) => {
 			//TBD
-		});
+    });
+    */
+		this.setState({ token: token });
 	};
 
 	setModalVisible(visible) {
@@ -95,10 +112,10 @@ export default class PasswordModal extends React.Component {
 	}
 
 	signup = async () => {
-		const { password, confirmPassword } = this.state;
+		const { password, confirmPassword, token } = this.state;
 		const { signup_mutation, username } = this.props;
 		if (password === confirmPassword) {
-			signup_mutation({ variables: { username: username, password: password } }).then((res) => {
+			signup_mutation({ variables: { username: username, password: password, token: token } }).then((res) => {
 				this.props.setToken(res.data.signup.token);
 				this.props.phone_signup();
 			});
