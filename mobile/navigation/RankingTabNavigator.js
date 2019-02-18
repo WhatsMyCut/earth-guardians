@@ -6,28 +6,19 @@ import {
 import Ionicons from '@expo/vector-icons/Ionicons';
 import Entypo from '@expo/vector-icons/Entypo';
 import RankingStackScreen from '../screens/RankingStackScreen';
-
-import NotificationStackScreen from '../screens/NotificationStackScreen';
+import WorldRankStackScreen from '../screens/WorldRankStackScreen';
 
 import SocialStackScreen from '../screens/SocialStackScreen';
 
-const Stats = ({ focused }) => {
-  return (
-    <Ionicons name="ios-stats" size={25} color={focused ? '#fff' : '#3C3B3D'} />
-  );
-};
 const Ranking = ({ focused }) => {
   return (
     <Ionicons name="ios-ribbon" size={25} color={focused ? '#fff' : '#3C3B3D'} />
   );
 };
-const Notification = ({ focused }) => {
+
+const WorldRank = ({ focused }) => {
   return (
-    <Ionicons
-      name="ios-notifications"
-      size={25}
-      color={focused ? '#fff' : '#3C3B3D'}
-    />
+    <Ionicons name="ios-globe" size={25} color={focused ? '#fff' : '#3C3B3D'} />
   );
 };
 
@@ -49,6 +40,14 @@ RankingStack.navigationOptions = {
   tabBarIcon: Ranking,
 };
 
+const WorldRankStack = createStackNavigator({
+  WorldRank: WorldRankStackScreen,
+});
+
+WorldRankStack.navigationOptions = {
+  tabBarIcon: WorldRank,
+};
+
 const SocialStack = createStackNavigator({
   Social: SocialStackScreen,
 });
@@ -59,6 +58,7 @@ SocialStack.navigationOptions = {
 
 const routeConfig = {
   RankingStack,
+  WorldRankStack,
   SocialStack
 };
 
