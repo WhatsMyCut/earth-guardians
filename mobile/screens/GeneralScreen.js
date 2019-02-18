@@ -12,14 +12,14 @@ import { LinearGradient } from 'expo';
 import { Image } from 'react-native-expo-image-cache';
 import navigationService from '../navigation/navigationService';
 import Layout from '../constants/Layout';
-import Styles from '../constants/Styles';
+import { defaults } from '../constants/Styles';
 import LinearGradientProps from '../constants/LinearGradientProps';
 import ActionCardSmall from '../components/shared/card';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-const width = Layout.window.width - 2 * Styles.marginHorizontal;
-const primaryHeight = Styles.primaryHeight;
+const width = Layout.window.width - 2 * defaults.marginHorizontal;
+const primaryHeight = defaults.primaryHeight;
 
 export default class GeneralScreen extends React.Component {
   constructor(props) {
@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     elevation: 1,
     borderColor: 'transparent',
-    borderRadius: Styles.borderRadius,
+    borderRadius: defaults.borderRadius,
   },
   headlineViewPlayIcon: {
     position: 'absolute',
@@ -189,11 +189,11 @@ const styles = StyleSheet.create({
     height: primaryHeight,
     borderColor: 'transparent',
     borderWidth: 0,
-    borderRadius: Styles.borderRadius,
+    borderRadius: defaults.borderRadius,
   },
   primaryMedia: {
     width: width,
     height: primaryHeight,
-    borderRadius: Styles.borderRadius,
+    borderRadius: defaults.borderRadius,
   },
 });
