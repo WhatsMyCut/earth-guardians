@@ -79,5 +79,71 @@ export const styles = StyleSheet.create({
     height: 120,
     marginVertical:5,
     flexDirection: 'row',
-  }
+  },
+  viewB_container: {
+    justifyContent: 'space-around',
+    alignItems: 'flex-start',
+    width: SCREEN_WIDTH * 0.9,
+    height: 150,
+    paddingHorizontal: 10,
+    paddingRight:20,
+    marginVertical: 15,
+  },
+  reachComponent: {
+    //backgroundColor: '#666',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: SCREEN_WIDTH * 0.9,
+
+    padding: 10,
+  },
+
+  linearGradientBox: {
+    flex: 1,
+    borderRadius: 5,
+    elevation: 1,
+
+    marginVertical: 5,
+    shadowColor: "#000",
+    shadowRadius: 2,
+    shadowOpacity: 0.35,
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+  },
+  linearGradientBoxPadded: {
+    flex: 1,
+    borderRadius: 5,
+    paddingTop:20,
+    paddingBottom:20,
+    elevation: 1,
+    marginVertical: 5,
+    shadowColor: "#000",
+    shadowRadius: 2,
+    shadowOpacity: 0.35,
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+  },
+  donutGraphContainer: {
+    //backgroundColor: '#666',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: SCREEN_WIDTH * 0.9,
+
+    height: 150,
+  },
+
+  detailedPoints: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginLeft: 20,
+  },
+
+  itemPoint: { color: '#fff', fontWeight: '900', fontSize: 20 },
+
 });

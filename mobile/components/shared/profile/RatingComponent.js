@@ -5,9 +5,9 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
-import { styles } from '../../../constants/Styles'
 import { LinearGradient } from 'expo';
 import LinearGradientProps from '../../../constants/LinearGradientProps';
+import { styles } from '../../../constants/Styles'
 
 
 export default class RatingComponent extends React.Component {
@@ -71,15 +71,7 @@ export default class RatingComponent extends React.Component {
   _viewB = () => {
     return (
       <View
-        style={{
-          justifyContent: 'space-around',
-          alignItems: 'flex-start',
-          width: SCREEN_WIDTH * 0.9,
-          height: 150,
-          paddingHorizontal: 10,
-          paddingRight:20,
-          marginVertical: 15,
-        }}
+        style={ styles.viewB_container }
       >
         <View style={styles.itemView}>
           <Text style={styles.itemName}>CO2 (lbs): </Text>
@@ -108,20 +100,7 @@ export default class RatingComponent extends React.Component {
     return (
       <LinearGradient
         {...LinearGradientProps.profileItem}
-        style={{
-          flex: 1,
-          borderRadius: 5,
-          elevation: 1,
-          marginVertical: 5,
-          shadowColor: "#000",
-          shadowRadius: 2,
-          shadowOpacity: 0.35,
-          shadowOffset: {
-            width: 0,
-            height: 2
-          },
-        }}
-      >
+        style={ styles.linearGradientBox} >
         <TouchableOpacity
           onPress={() =>
             this.setState({

@@ -23,8 +23,8 @@ import BaseScreen from './BaseScreen';
 // import navigationService from '../navigation/navigationService';
 
 class DefaultScreen extends BaseScreen {
-  
-  
+
+
   async componentWillMount(){
 
     const screen = this.props.navigation.getParam('screen', 'MyActions');
@@ -90,7 +90,7 @@ class DefaultScreen extends BaseScreen {
     console.ignoredYellowBox = ['Warning:'];
     return (
       <Animated.View {...this.viewResponder.panHandlers} style={{ flex: 1 }}>
-        
+
         <View style={styles.container}>
         <View style={styles.topBackNav}>
               <TouchableOpacity
@@ -103,7 +103,7 @@ class DefaultScreen extends BaseScreen {
                 <Ionicons name="ios-arrow-round-back" size={42} color="#ccc" />
               </TouchableOpacity>
         </View>
-          <View
+        <View
             style={[
               styles.container,
               { justifyContent: 'center', alignItems: 'center', zIndex:999 },
@@ -121,7 +121,7 @@ class DefaultScreen extends BaseScreen {
                   uri: videoUrl,
                 },
                 isMuted: false,
-                
+
                 ref: component => {
                   this._playbackInstance = component;
                 },

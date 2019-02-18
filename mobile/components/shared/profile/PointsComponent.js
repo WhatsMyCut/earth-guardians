@@ -9,8 +9,7 @@ import {
 } from 'react-native';
 import { LinearGradient } from 'expo';
 import LinearGradientProps from '../../../constants/LinearGradientProps';
-
-const SCREEN_WIDTH = Dimensions.get('window').width;
+import { styles } from '../../../constants/Styles';
 export default class PointsComponent extends React.Component {
   state = {
     front: true,
@@ -25,7 +24,7 @@ export default class PointsComponent extends React.Component {
           width: SCREEN_WIDTH * 0.9,
           height:125,
           padding: 20,
-          
+
         }}
       >
         <Text style={{ color: '#fff', fontSize: 30, fontWeight: 'bold' }}>
@@ -44,7 +43,7 @@ export default class PointsComponent extends React.Component {
           alignItems: 'center',
           width: SCREEN_WIDTH * 0.9,
           padding: 20,
-          
+
         }}
       >
         <View style={[styles.detailedPoints, { marginBottom: 10 }]}>
@@ -83,10 +82,10 @@ export default class PointsComponent extends React.Component {
     return (
       <LinearGradient
         {...LinearGradientProps.profileItem}
-        style={{ 
-          flex: 1, 
-          borderRadius: 5, 
-          elevation: 1, 
+        style={{
+          flex: 1,
+          borderRadius: 5,
+          elevation: 1,
           marginVertical: 5,
           shadowColor: "#000",
           shadowRadius: 2,
@@ -94,7 +93,7 @@ export default class PointsComponent extends React.Component {
           shadowOffset: {
             width: 0,
             height: 2
-          }, 
+          },
         }}
       >
         <TouchableOpacity
@@ -111,15 +110,3 @@ export default class PointsComponent extends React.Component {
   }
 }
 
-const styles = StyleSheet.create({
-  detailedPoints: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginLeft: 20,
-  },
-  itemView: { flex: 1 },
-  itemName: { color: '#fff', fontSize: 11 },
-  itemPoint: { color: '#fff', fontWeight: '900', fontSize: 20 },
-});
