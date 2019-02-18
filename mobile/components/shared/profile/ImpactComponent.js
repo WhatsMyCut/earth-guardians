@@ -9,8 +9,7 @@ import {
 } from 'react-native';
 import { LinearGradient } from 'expo';
 import LinearGradientProps from '../../../constants/LinearGradientProps';
-
-const SCREEN_WIDTH = Dimensions.get('window').width;
+import { styles } from '../../../constants/Styles'
 
 export default class ImpactComponent extends React.Component {
   state = {
@@ -18,17 +17,7 @@ export default class ImpactComponent extends React.Component {
   };
   _viewA = () => {
     return (
-      <View
-        style={{
-          //backgroundColor: '#666',
-          justifyContent: 'space-around',
-          alignItems: 'center',
-          width: SCREEN_WIDTH * 0.9,
-          height: 120,
-          marginVertical:5,
-          flexDirection: 'row',
-        }}
-      >
+      <View style={ styles.viewA_container }>
         <View>
           <Text>{null}</Text>
           <Text style={{ color: '#fff', marginBottom: 10, fontSize: 14 }}>
@@ -74,7 +63,7 @@ export default class ImpactComponent extends React.Component {
               paddingRight:10
             }}
           >
-            {this.props.waste}
+            {this.props.waste -= this.props.waste%.01}
           </Text>
         </View>
       </View>
@@ -82,17 +71,7 @@ export default class ImpactComponent extends React.Component {
   };
   _viewB = () => {
     return (
-      <View
-        style={{
-          justifyContent: 'space-around',
-          alignItems: 'flex-start',
-          width: SCREEN_WIDTH * 0.9,
-          height: 150,
-          paddingHorizontal: 10,
-          paddingRight:20,
-          marginVertical: 15,
-        }}
-      >
+      <View style={ styles.viewB_container }>
         <View style={styles.itemView}>
           <Text style={styles.itemName}>CO2 (lbs): </Text>
           <Text style={styles.itemDescription}>
@@ -120,18 +99,18 @@ export default class ImpactComponent extends React.Component {
     return (
       <LinearGradient
         {...LinearGradientProps.profileItem}
-        style={{ 
-          flex: 1, 
-          borderRadius: 5, 
-          elevation: 1, 
-          marginVertical: 5, 
+        style={{
+          flex: 1,
+          borderRadius: 5,
+          elevation: 1,
+          marginVertical: 5,
           shadowColor: "#000",
           shadowRadius: 2,
           shadowOpacity: 0.35,
           shadowOffset: {
             width: 0,
             height: 2
-          },  
+          },
         }}
       >
         <TouchableOpacity
@@ -148,8 +127,3 @@ export default class ImpactComponent extends React.Component {
   }
 }
 
-const styles = StyleSheet.create({
-  itemView: { flexDirection: 'row', marginBottom: 10 },
-  itemName: { color: '#fff', fontSize: 12, marginRight: 5 },
-  itemDescription: { color: '#fff', fontSize: 10, paddingRight: 50 },
-});
