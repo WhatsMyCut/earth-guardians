@@ -19,7 +19,7 @@ import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_
 import graphql from '../components/hoc/graphql';
 import NavigationService from '../navigation/navigationService';
 import GraphComponent from '../components/shared/profile/GraphComponent';
-import RatingComponent from '../components/shared/profile/RatingComponent';
+import RankingComponent from '../components/shared/profile/RankingComponent';
 import ReachComponent from '../components/shared/profile/ReachComponent';
 import PointsComponent from '../components/shared/profile/PointsComponent';
 import ProfileComponent from '../components/shared/profile/ProfileComponent';
@@ -34,7 +34,7 @@ import { styles } from '../constants/Styles'
 @graphql(ALL_MY_METRICS, {
   name: 'all_metrics',
 })
-class RatingStackScreen extends React.Component {
+class RankingStackScreen extends React.Component {
   state = {
     openModal: false,
     points: 0,
@@ -73,7 +73,7 @@ class RatingStackScreen extends React.Component {
       try {
         const analytics = new Analytics('UA-131896215-1');
         analytics
-          .hit(new PageHit('RatingScreen'))
+          .hit(new PageHit('RankingScreen'))
           .then(() => console.log('success '))
           .catch(e => console.log(e.message));
       } catch (e) {
@@ -93,14 +93,14 @@ class RatingStackScreen extends React.Component {
 
   componentWillReceiveProps= () => {
     if(!this.props.all_metrics.loading){
-      this._aggregateRating(
+      this._aggregateRanking(
         this.props.all_metrics.me.recent_actions,
         this.props.all_metrics.me.community_events
       );
     }
   }
 
-  async _aggregateRating(recent_actions, community_events) {
+  async _aggregateRanking(recent_actions, community_events) {
     const { points, water, waste, carbon_dioxide, loading } = this.state;
     if (!loading) {
       return;
@@ -173,7 +173,7 @@ class RatingStackScreen extends React.Component {
       );
     } else {
       if (this.props.all_metrics.me.recent_actions.length !== 0) {
-        this._aggregateRating(
+        this._aggregateRanking(
           this.props.all_metrics.me.recent_actions,
           this.props.all_metrics.me.community_events
         );
@@ -191,9 +191,9 @@ class RatingStackScreen extends React.Component {
               backgroundColor: '#333',
             }}
           >
-            <Text style={ styles.containerTitle }>National Rating</Text>
+            <Text style={ styles.containerTitle }>National Ranking</Text>
 
-            <RatingComponent
+            <RankingComponent
               carbon_dioxide={this.state.carbon_dioxide}
               water={this.state.water}
               waste={this.state.waste}
@@ -252,7 +252,7 @@ class RatingStackScreen extends React.Component {
     );
   }
 }
-RatingStackScreen.navigationOptions = {
+RankingStackScreen.navigationOptions = {
   headerLeft: (
     <TouchableOpacity onPress={() => navigationService.navigate('MyActions')}>
       <Ionicons
@@ -273,7 +273,7 @@ RatingStackScreen.navigationOptions = {
           textAlign: 'center',
         }}
       >
-        MY RATING
+        MY Ranking
       </Text>
     </View>
   ),
@@ -306,4 +306,4 @@ RatingStackScreen.navigationOptions = {
   },
 };
 
-export default RatingStackScreen;
+export default RankingStackScreen;

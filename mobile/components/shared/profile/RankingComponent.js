@@ -10,7 +10,7 @@ import LinearGradientProps from '../../../constants/LinearGradientProps';
 import { styles } from '../../../constants/Styles'
 
 
-export default class RatingComponent extends React.Component {
+export default class RankingComponent extends React.Component {
   state = {
     front: true,
   };
@@ -19,17 +19,17 @@ export default class RatingComponent extends React.Component {
       <View style={ styles.viewA_container }>
         <View>
           <Text>User</Text>
-          <Text style={{ color: '#fff', marginBottom: 10, fontSize: 14 }}>
+          <Text style={styles.itemName}>
             CO2 (lbs)
           </Text>
-          <Text style={{ color: '#fff', marginBottom: 10, fontSize: 14 }}>
+          <Text style={styles.itemName}>
             H2O (gal)
           </Text>
-          <Text style={{ color: '#fff', fontSize: 14 }}>Waste (lbs)</Text>
+          <Text style={styles.itemName}>Waste (lbs)</Text>
         </View>
         <View>
           <Text style={{ color: '#fff', marginBottom: 10, fontSize: 10 }}>
-            Your Rating
+            Your Ranking
           </Text>
           <Text style={ styles.itemPoint}>
             {this.props.carbon_dioxide}

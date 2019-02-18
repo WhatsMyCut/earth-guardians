@@ -20,49 +20,25 @@ export default class ImpactComponent extends React.Component {
       <View style={ styles.viewA_container }>
         <View>
           <Text>{null}</Text>
-          <Text style={{ color: '#fff', marginBottom: 10, fontSize: 14 }}>
+          <Text style={styles.itemName}>
             CO2 (lbs)
           </Text>
-          <Text style={{ color: '#fff', marginBottom: 10, fontSize: 14 }}>
+          <Text style={styles.itemName}>
             H2O (gal)
           </Text>
-          <Text style={{ color: '#fff', fontSize: 14 }}>Waste (lbs)</Text>
+          <Text style={styles.itemName}>Waste (lbs)</Text>
         </View>
         <View>
           <Text style={{ color: '#fff', marginBottom: 10, fontSize: 10 }}>
             Your Impact
           </Text>
-          <Text
-            style={{
-              color: '#fff',
-              marginBottom: 5,
-              fontSize: 18,
-              fontWeight: '900',
-              paddingRight:10
-            }}
-          >
+          <Text style={styles.itemPoint}>
             {this.props.carbon_dioxide}
           </Text>
-          <Text
-            style={{
-              color: '#fff',
-              marginBottom: 5,
-              fontSize: 18,
-              fontWeight: '900',
-              paddingRight:10
-            }}
-          >
+          <Text style={styles.itemPoint}>
             {this.props.water}
           </Text>
-          <Text
-            style={{
-              color: '#fff',
-              marginBottom: 5,
-              fontSize: 18,
-              fontWeight: '900',
-              paddingRight:10
-            }}
-          >
+          <Text style={styles.itemPoint}>
             {this.props.waste -= this.props.waste%.01}
           </Text>
         </View>
@@ -73,7 +49,7 @@ export default class ImpactComponent extends React.Component {
     return (
       <View style={ styles.viewB_container }>
         <View style={styles.itemView}>
-          <Text style={styles.itemName}>CO2 (lbs): </Text>
+          <Text style={styles.itemName}>CO2 (lbs):</Text>
           <Text style={styles.itemDescription}>
             You’ve offset the equivalent of driving a car for 20 miles.
           </Text>

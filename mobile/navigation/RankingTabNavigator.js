@@ -5,7 +5,7 @@ import {
 } from 'react-navigation';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import Entypo from '@expo/vector-icons/Entypo';
-import RatingStackScreen from '../screens/RatingStackScreen';
+import RankingStackScreen from '../screens/RankingStackScreen';
 
 import NotificationStackScreen from '../screens/NotificationStackScreen';
 
@@ -16,7 +16,7 @@ const Stats = ({ focused }) => {
     <Ionicons name="ios-stats" size={25} color={focused ? '#fff' : '#3C3B3D'} />
   );
 };
-const Rating = ({ focused }) => {
+const Ranking = ({ focused }) => {
   return (
     <Ionicons name="ios-ribbon" size={25} color={focused ? '#fff' : '#3C3B3D'} />
   );
@@ -41,12 +41,12 @@ const Share = ({ focused }) => {
   );
 };
 
-const RatingStack = createStackNavigator({
-  Rating: RatingStackScreen,
+const RankingStack = createStackNavigator({
+  Ranking: RankingStackScreen,
 });
 
-RatingStack.navigationOptions = {
-  tabBarIcon: Rating,
+RankingStack.navigationOptions = {
+  tabBarIcon: Ranking,
 };
 
 const SocialStack = createStackNavigator({
@@ -58,7 +58,7 @@ SocialStack.navigationOptions = {
 };
 
 const routeConfig = {
-  RatingStack,
+  RankingStack,
   SocialStack
 };
 
@@ -74,5 +74,5 @@ export default createBottomTabNavigator(routeConfig, {
     },
   },
   lazy: true,
-  initialRouteName: 'RatingStack',
+  initialRouteName: 'RankingStack',
 });

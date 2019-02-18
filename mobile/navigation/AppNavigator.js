@@ -6,7 +6,7 @@ import DefaultScreen from '../screens/DefaultScreen';
 import PetitionScreen from '../screens/PetitionScreen';
 import PetitionTextScreen from '../screens/PetitionTextScreen';
 import ProfileStack from './ProfileTabNavigator';
-import RatingStack from './RatingTabNavigator';
+import RankingStack from './RankingTabNavigator';
 import MainTabNavigator from './MainTabNavigator';
 import EarthGuardiansInfoScreen from '../screens/EarthGuardiansInfoScreen';
 import GameScreen from '../screens/GameScreen';
@@ -20,7 +20,7 @@ export default createAppContainer(
       AuthLoading: AuthLoadingScreen,
       Main: MainTabNavigator,
       Profile: ProfileStack,
-      Rating: RatingStack,
+      Ranking: RankingStack,
       Video: DefaultScreen,
       Petition: PetitionScreen,
       PetitionText: PetitionTextScreen,

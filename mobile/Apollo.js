@@ -2,7 +2,6 @@ import React from 'react';
 import { AsyncStorage } from 'react-native'
 import { StoreProvider } from './store/Store';
 
-import AppNavigator from './navigation/AppNavigator';
 import NavigationService from './navigation/navigationService';
 import { graphql, ApolloProvider } from 'react-apollo';
 import { ApolloClient } from 'apollo-client';
@@ -16,7 +15,8 @@ import { onError } from 'apollo-link-error';
 import { RetrieveData } from './store/AsyncStore';
 
 const httpLink = new HttpLink({
-  uri: `https://eg-production.herokuapp.com/`
+  // uri: `https://eg-production.herokuapp.com/`
+  uri: `http://localhost:4000`
 });
 
 const errorLink = onError(({ graphQLErrors, networkError, operation }) => {
