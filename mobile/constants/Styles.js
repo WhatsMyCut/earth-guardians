@@ -20,6 +20,7 @@ export const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#000000',
   },
+  containerTitle: { color: '#fff', fontWeight: '900', fontSize: 24 },
   videoContainer: {
     flex: 1,
     backgroundColor: '#000000',

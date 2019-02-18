@@ -29,6 +29,7 @@ import UpdateUserModal from '../components/shared/modals/updateUserModal';
 import client from '../Apollo';
 import { StoreData } from '../store/AsyncStore';
 import navigationService from '../navigation/navigationService';
+import { styles } from '../constants/Styles'
 
 @graphql(ALL_MY_METRICS, {
   name: 'all_metrics',
@@ -190,25 +191,14 @@ class RatingStackScreen extends React.Component {
               backgroundColor: '#333',
             }}
           >
-            <Text>National Rating</Text>
+            <Text style={ styles.containerTitle }>National Rating</Text>
 
             <RatingComponent
               carbon_dioxide={this.state.carbon_dioxide}
               water={this.state.water}
               waste={this.state.waste}
             />
-            <ReachComponent
-              toggleModal={this.toggleModal}
-              communityEvents={this.state.communityEvents}
-            />
             <PointsComponent points={this.state.points} aggregate={this.state.aggregateObj}/>
-            <ProfileComponent
-              onPress={() =>
-                this.setState({
-                  openUserModal: true,
-                })
-              }
-            />
           </View>
 
           {this.state.openModal ? (
