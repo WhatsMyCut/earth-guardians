@@ -6,6 +6,7 @@ import {
 import Ionicons from '@expo/vector-icons/Ionicons';
 import Entypo from '@expo/vector-icons/Entypo';
 import ImpactStackScreen from '../screens/ImpactStackScreen';
+import RatingStackScreen from '../screens/RatingStackScreen';
 
 import NotificationStackScreen from '../screens/NotificationStackScreen';
 
@@ -14,6 +15,11 @@ import SocialStackScreen from '../screens/SocialStackScreen';
 const Stats = ({ focused }) => {
   return (
     <Ionicons name="ios-stats" size={25} color={focused ? '#fff' : '#3C3B3D'} />
+  );
+};
+const Rating = ({ focused }) => {
+  return (
+    <Ionicons name="ios-ribbon" size={25} color={focused ? '#fff' : '#3C3B3D'} />
   );
 };
 const Notification = ({ focused }) => {
@@ -44,6 +50,14 @@ ImpactStack.navigationOptions = {
   tabBarIcon: Stats,
 };
 
+const RatingStack = createStackNavigator({
+  Rating: RatingStackScreen,
+});
+
+RatingStack.navigationOptions = {
+  tabBarIcon: Rating,
+};
+
 const NotificationStack = createStackNavigator({
   Notification: NotificationStackScreen,
 });
@@ -63,7 +77,8 @@ SocialStack.navigationOptions = {
 const routeConfig = {
   ImpactStack,
   //NotificationStack,
-  SocialStack,
+  RatingStack,
+  SocialStack
 };
 
 export default createBottomTabNavigator(routeConfig, {
