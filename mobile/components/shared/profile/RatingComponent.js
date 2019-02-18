@@ -31,37 +31,13 @@ export default class RatingComponent extends React.Component {
           <Text style={{ color: '#fff', marginBottom: 10, fontSize: 10 }}>
             Your Rating
           </Text>
-          <Text
-            style={{
-              color: '#fff',
-              marginBottom: 5,
-              fontSize: 18,
-              fontWeight: '900',
-              paddingRight:10
-            }}
-          >
+          <Text style={ styles.itemPoint}>
             {this.props.carbon_dioxide}
           </Text>
-          <Text
-            style={{
-              color: '#fff',
-              marginBottom: 5,
-              fontSize: 18,
-              fontWeight: '900',
-              paddingRight:10
-            }}
-          >
+          <Text style={ styles.itemPoint}>
             {this.props.water}
           </Text>
-          <Text
-            style={{
-              color: '#fff',
-              marginBottom: 5,
-              fontSize: 18,
-              fontWeight: '900',
-              paddingRight:10
-            }}
-          >
+          <Text style={ styles.itemPoint}>
             {this.props.waste}
           </Text>
         </View>
@@ -70,9 +46,7 @@ export default class RatingComponent extends React.Component {
   };
   _viewB = () => {
     return (
-      <View
-        style={ styles.viewB_container }
-      >
+      <View style={ styles.viewB_container }>
         <View style={styles.itemView}>
           <Text style={styles.itemName}>CO2 (lbs): </Text>
           <Text style={styles.itemDescription}>
