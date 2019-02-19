@@ -16,56 +16,83 @@ export default class RankingComponent extends React.Component {
   };
   _viewA = () => {
     return (
-      <View style={ styles.viewA_container }>
-        <View>
-          <Text>User</Text>
-          <Text style={styles.itemName}>
-            CO2 (lbs)
-          </Text>
-          <Text style={styles.itemName}>
-            H2O (gal)
-          </Text>
-          <Text style={styles.itemName}>Waste (lbs)</Text>
+      <View style={styles.rankContainer}>
+        <Text style={styles.headerText}>User</Text>
+        <View style={styles.rankRow}>
+          <Text style={[styles.rankNumber, {color: 'gold'}]}>1</Text>
+          <View style={styles.rankDetail}>
+            <Text style={styles.rankName}>
+              Dawn Smith
+            </Text>
+            <Text style={styles.smallWhiteText}>
+              7,406
+            </Text>
+          </View>
+          <Text style={styles.rankState}>WA</Text>
         </View>
-        <View>
-          <Text style={{ color: '#fff', marginBottom: 10, fontSize: 10 }}>
-            Your Ranking
-          </Text>
-          <Text style={ styles.itemPoint}>
-            {this.props.carbon_dioxide}
-          </Text>
-          <Text style={ styles.itemPoint}>
-            {this.props.water}
-          </Text>
-          <Text style={ styles.itemPoint}>
-            {this.props.waste}
-          </Text>
+        <View style={styles.rankRow}>
+          <Text style={[styles.rankNumber, {color: 'silver'}]}>2</Text>
+          <View style={styles.rankDetail}>
+            <Text style={styles.rankName}>
+              Andrew Hunt
+            </Text>
+            <Text style={styles.smallWhiteText}>
+              2,492
+            </Text>
+          </View>
+          <Text style={styles.rankState}>CO</Text>
+        </View>
+        <View style={[styles.rankRow, styles.noDivider]}>
+          <Text style={[styles.rankNumber, {color: '#7c600b'}]}>3</Text>
+          <View style={styles.rankDetail}>
+            <Text style={styles.rankName}>
+              Jeffrey Tso
+            </Text>
+            <Text style={styles.smallWhiteText}>
+              901
+            </Text>
+          </View>
+          <Text style={styles.rankState}>AL</Text>
         </View>
       </View>
     );
   };
   _viewB = () => {
     return (
-      <View style={ styles.viewB_container }>
-        <View style={styles.itemView}>
-          <Text style={styles.itemName}>CO2 (lbs): </Text>
-          <Text style={styles.itemDescription}>
-            You’ve offset the equivalent of driving a car for 20 miles.
-          </Text>
+      <View style={styles.rankContainer}>
+        <Text style={styles.headerText}>State</Text>
+        <View style={styles.rankRow}>
+          <Text style={styles.rankNumber}>1</Text>
+          <View style={styles.rankDetail}>
+            <Text style={styles.rankName}>
+              Vermont
+            </Text>
+            <Text style={styles.smallWhiteText}>
+              920,647
+            </Text>
+          </View>
         </View>
-
-        <View style={{ flexDirection: 'row', marginBottom: 10 }}>
-          <Text style={styles.itemName}>H2O (gal): </Text>
-          <Text style={styles.itemDescription}>
-            You’ve offset the equivalent of taking 100 showers.
-          </Text>
+        <View style={styles.rankRow}>
+          <Text style={styles.rankNumber}>2</Text>
+          <View style={styles.rankDetail}>
+            <Text style={styles.rankName}>
+              Oregon
+            </Text>
+            <Text style={styles.smallWhiteText}>
+              204,719
+            </Text>
+          </View>
         </View>
-
-        <View style={{ flexDirection: 'row', marginBottom: 10 }}>
-          <Text style={styles.itemName}>Waste (lbs): </Text>
-          <Text style={styles.itemDescription}>
-            You’ve offset the equivalent of 2 months of trash.
-          </Text>
+        <View style={[styles.rankRow, styles.noDivider]}>
+          <Text style={styles.rankNumber}>3</Text>
+          <View style={styles.rankDetail}>
+            <Text style={styles.rankName}>
+              Massachusetts
+            </Text>
+            <Text style={styles.smallWhiteText}>
+              95,730
+            </Text>
+          </View>
         </View>
       </View>
     );

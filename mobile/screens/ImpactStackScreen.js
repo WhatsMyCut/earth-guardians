@@ -29,6 +29,7 @@ import UpdateUserModal from '../components/shared/modals/updateUserModal';
 import client from '../Apollo';
 import { StoreData } from '../store/AsyncStore';
 import navigationService from '../navigation/navigationService';
+import { styles } from '../constants/Styles'
 
 @graphql(ALL_MY_METRICS, {
   name: 'all_metrics',
@@ -122,11 +123,7 @@ class ImpactStackScreen extends React.Component {
             aggregateObj[`${item.action.category.name}`] = item.action.points;
           }
       }),
-      
     ]);
-
-    
-
 
     let additionalPoints = community_events.length * 100;
     this.setState({
@@ -142,30 +139,10 @@ class ImpactStackScreen extends React.Component {
   }
 
   render() {
-    // const { all_categories } = this.props;
-    // if (all_categories.loading) {
-    //   return (
-    //     <LinearGradient {...LinearGradientProps.food} style={{ flex: 1 }}>
-    //       <AppLoading />
-    //     </LinearGradient>
-    //   );
-    // }
-
-    // const actions = all_categories.actionCategories;
-    // if (!this.state.primary_video && !this.state.primary_image) {
-    //   return null;
-    // }
     if (this.props.all_metrics.loading) {
       return (
         <SafeAreaView style={{ flex: 1 }}>
-          <View
-            style={{
-              flex: 1,
-              alignItems: 'center',
-              justifyContent: 'center',
-              backgroundColor: '#333',
-            }}
-          >
+          <View style={ styles.containerGrey }>
             <ActivityIndicator size={'large'} />
           </View>
         </SafeAreaView>
@@ -180,16 +157,9 @@ class ImpactStackScreen extends React.Component {
     }
 
     return (
-      <SafeAreaView style={{ flex: 1, backgroundColor: '#333' }}>
+      <SafeAreaView style={ styles.greyCard }>
         <ScrollView contentContainerStyle={{}}>
-          <View
-            style={{
-              flex: 1,
-              alignItems: 'center',
-              justifyContent: 'center',
-              backgroundColor: '#333',
-            }}
-          >
+          <View style={ styles.containerGrey }>
             <GraphComponent
               carbon_dioxide={this.state.carbon_dioxide}
               water={this.state.water}
@@ -277,15 +247,8 @@ ImpactStackScreen.navigationOptions = {
     </TouchableOpacity>
   ),
   headerTitle: (
-    <View style={{ flex: 1, justifyContent: 'center' }}>
-      <Text
-        style={{
-          color: '#ffffff',
-          fontSize: 24,
-          fontFamily: 'Proxima Nova Bold',
-          textAlign: 'center',
-        }}
-      >
+    <View style={ styles.headerContainer }>
+      <Text style={ styles.headerText }>
         MY IMPACT
       </Text>
     </View>
@@ -308,15 +271,7 @@ ImpactStackScreen.navigationOptions = {
       />
     </TouchableOpacity>
   ),
-  headerStyle: {
-    backgroundColor: '#333',
-    borderBottomWidth: 0,
-    shadowColor: 'transparent',
-    shadowRadius: 0,
-    shadowOffset: {
-      height: 0,
-    },
-  },
+  headerStyle: styles.greyCardHeader,
 };
 
 export default ImpactStackScreen;

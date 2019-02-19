@@ -11,64 +11,59 @@ import { styles, defaults } from '../../../constants/Styles'
 import ViewShot from 'react-native-view-shot';
 
 
-export default class WorldRankComponent extends React.Component {
+export default class SocialRankComponent extends React.Component {
   render() {
     return (
-      <View style={styles.rankContainer}>
-        <View style={styles.rankRow}>
-          <Text style={styles.rankNumber}>1</Text>
+      <View style={[styles.greyCard, { margin: 15 }]}>
+        <Text style={styles.socialRankHeader}>My Rank</Text>
+        <View style={[styles.rankRow, styles.noDivider]}>
+          <Text style={[styles.socialRankNumber, styles.myRankNumber]}>538</Text>
           <View style={styles.rankDetail}>
             <Text style={styles.rankName}>
-              Iceland
+              John Mattia
             </Text>
             <Text style={styles.smallWhiteText}>
-              9,876,653
+              502
             </Text>
           </View>
+          <Text style={styles.rankState}>CO</Text>
         </View>
+        <Text style={styles.socialRankHeader}>My Friends Rank</Text>
         <View style={styles.rankRow}>
-          <Text style={styles.rankNumber}>2</Text>
+          <Text style={styles.socialRankNumber}>397</Text>
           <View style={styles.rankDetail}>
             <Text style={styles.rankName}>
-              Switzerland
+              Jane Carroll
             </Text>
             <Text style={styles.smallWhiteText}>
-              9,876,653
+              383
             </Text>
           </View>
+          <Text style={styles.rankState}>NY</Text>
         </View>
         <View style={styles.rankRow}>
-          <Text style={styles.rankNumber}>3</Text>
-          <View style={styles.rankDetail}>
-            <Text style={ styles.rankName}>
-              Costa Rica
-            </Text>
-            <Text style={styles.smallWhiteText}>
-              9,876,653
-            </Text>
-          </View>
-        </View>
-        <View style={styles.rankRow}>
-          <Text style={styles.rankNumber}>4</Text>
+          <Text style={styles.socialRankNumber}>835</Text>
           <View style={styles.rankDetail}>
             <Text style={styles.rankName}>
-              Sweden
+              Rita Olsen
             </Text>
             <Text style={styles.smallWhiteText}>
-              9,876,653
+              196
             </Text>
           </View>
+          <Text style={styles.rankState}>CO</Text>
         </View>
-        <View style={styles.rankRow}>
-          <Text style={styles.rankNumber}>5</Text>
-          <View style={styles.rankDetail }>
+        <View style={[styles.rankRow, styles.noDivider]}>
+          <Text style={styles.socialRankNumber}>1074</Text>
+          <View style={styles.rankDetail}>
             <Text style={styles.rankName}>
-              Norway
+              Ben Hewitt
             </Text>
             <Text style={styles.smallWhiteText}>
-              9,876,653
+              75
             </Text>
           </View>
+          <Text style={styles.rankState}>CO</Text>
         </View>
       </View>
     );
