@@ -273,7 +273,7 @@ class ActionCardSmall extends React.Component {
     const backAnimatedStyle = {
       transform: [{ rotateY: this.backInterpolate }],
     };
-    if(!item.action){
+    if(!item.action || !get_user.me){
       return <View></View>
     }
     let waste = item.action ? item.action.waste : item.waste;
@@ -397,7 +397,7 @@ class ActionCardSmall extends React.Component {
     };
 
     const preview = { uri: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==" };
-    if(!item){
+    if(!item || !get_user.me){
       return <View></View>
     }
 

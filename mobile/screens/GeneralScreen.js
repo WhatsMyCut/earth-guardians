@@ -119,6 +119,7 @@ export default class GeneralScreen extends React.Component {
         </SafeAreaView>
       );
     }
+
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.container}>
