@@ -224,7 +224,7 @@ export default class PasswordModal extends React.Component {
      </TouchableHighlight>
      <TouchableHighlight
           style={{paddingTop:10, paddingBottom:10}}
-          onPress={()=> Linking.openURL('mailto:daniel.ashcraft@ofashandfire.com')}>
+          onPress={()=> Linking.openURL('mailto:reachout@earthguardians.com')}>
           <Text style={{color:"white"}}>Reset Password</Text>
      </TouchableHighlight>
      

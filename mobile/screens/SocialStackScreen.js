@@ -33,7 +33,7 @@ class SocialStackScreen extends React.Component {
     const result = await Share.share(
       {
         message:
-          'I love #EarthTracks by #EarthGuardians. It shows me the actions I take make a difference. Check it out in the App Store. Are you in?',
+          'I love #EarthTracks by #EarthGuardians. It shows me the actions that I take make a difference. Check it out in the App Store. Are you in?',
         url: 'https://www.earthguardians.org/',
         title: 'Share EarthTracks App!',
       },
