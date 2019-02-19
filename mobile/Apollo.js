@@ -15,8 +15,8 @@ import { onError } from 'apollo-link-error';
 import { RetrieveData } from './store/AsyncStore';
 
 const httpLink = new HttpLink({
-  // uri: `https://eg-production.herokuapp.com/`
-  uri: `http://localhost:4000`
+  uri: `https://eg-production.herokuapp.com/`
+  // uri: `http://localhost:4000`
 });
 
 const errorLink = onError(({ graphQLErrors, networkError, operation }) => {

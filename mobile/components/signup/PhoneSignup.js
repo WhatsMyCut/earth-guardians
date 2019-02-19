@@ -102,10 +102,10 @@ export default class PhoneSignup extends React.Component {
     })
       .then(response => response.json())
       .then(data => {
-        // this.setState({
-        //   picture_url: data.pictures.sizes[4].link,
-        //   video_url: data.download[data.download.length - 2].link,
-        // });
+        this.setState({
+          picture_url: data.pictures.sizes[4].link,
+          video_url: data.download[data.download.length - 2].link,
+        });
       });
   }
 
@@ -115,12 +115,14 @@ export default class PhoneSignup extends React.Component {
 
   render() {
     const { video_url } = this.state;
+
     if (!video_url) {
       return (
         <AppLoading
         />
       );
     }
+
 
 
 
