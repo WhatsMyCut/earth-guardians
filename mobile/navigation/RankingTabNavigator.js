@@ -5,24 +5,20 @@ import {
 } from 'react-navigation';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import Entypo from '@expo/vector-icons/Entypo';
-import ImpactStackScreen from '../screens/ImpactStackScreen';
-
-import NotificationStackScreen from '../screens/NotificationStackScreen';
+import RankingStackScreen from '../screens/RankingStackScreen';
+import WorldRankStackScreen from '../screens/WorldRankStackScreen';
 
 import SocialStackScreen from '../screens/SocialStackScreen';
 
-const Stats = ({ focused }) => {
+const Ranking = ({ focused }) => {
   return (
-    <Ionicons name="ios-stats" size={25} color={focused ? '#fff' : '#3C3B3D'} />
+    <Ionicons name="ios-ribbon" size={25} color={focused ? '#fff' : '#3C3B3D'} />
   );
 };
-const Notification = ({ focused }) => {
+
+const WorldRank = ({ focused }) => {
   return (
-    <Ionicons
-      name="ios-notifications"
-      size={25}
-      color={focused ? '#fff' : '#3C3B3D'}
-    />
+    <Ionicons name="ios-globe" size={25} color={focused ? '#fff' : '#3C3B3D'} />
   );
 };
 
@@ -36,20 +32,20 @@ const Share = ({ focused }) => {
   );
 };
 
-const ImpactStack = createStackNavigator({
-  Impact: ImpactStackScreen,
+const RankingStack = createStackNavigator({
+  Ranking: RankingStackScreen,
 });
 
-ImpactStack.navigationOptions = {
-  tabBarIcon: Stats,
+RankingStack.navigationOptions = {
+  tabBarIcon: Ranking,
 };
 
-const NotificationStack = createStackNavigator({
-  Notification: NotificationStackScreen,
+const WorldRankStack = createStackNavigator({
+  WorldRank: WorldRankStackScreen,
 });
 
-NotificationStack.navigationOptions = {
-  tabBarIcon: Notification,
+WorldRankStack.navigationOptions = {
+  tabBarIcon: WorldRank,
 };
 
 const SocialStack = createStackNavigator({
@@ -61,8 +57,8 @@ SocialStack.navigationOptions = {
 };
 
 const routeConfig = {
-  ImpactStack,
-  //NotificationStack,
+  RankingStack,
+  WorldRankStack,
   SocialStack
 };
 
@@ -78,5 +74,5 @@ export default createBottomTabNavigator(routeConfig, {
     },
   },
   lazy: true,
-  initialRouteName: 'ImpactStack',
+  initialRouteName: 'RankingStack',
 });

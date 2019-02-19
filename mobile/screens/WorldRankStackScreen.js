@@ -18,11 +18,8 @@ import { Analytics, PageHit } from 'expo-analytics';
 import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_categories_query';
 import graphql from '../components/hoc/graphql';
 import NavigationService from '../navigation/navigationService';
-import GraphComponent from '../components/shared/profile/GraphComponent';
-import ImpactComponent from '../components/shared/profile/ImpactComponent';
-import ReachComponent from '../components/shared/profile/ReachComponent';
+import WorldRankComponent from '../components/shared/profile/WorldRankComponent';
 import PointsComponent from '../components/shared/profile/PointsComponent';
-import ProfileComponent from '../components/shared/profile/ProfileComponent';
 import CommunityEventModal from '../components/shared/modals/CommunityEventModal';
 import { ALL_MY_METRICS } from '../components/graphql/queries/all_my_metrics_query';
 import UpdateUserModal from '../components/shared/modals/updateUserModal';
@@ -34,7 +31,7 @@ import { styles } from '../constants/Styles'
 @graphql(ALL_MY_METRICS, {
   name: 'all_metrics',
 })
-class ImpactStackScreen extends React.Component {
+class WorldRankStackScreen extends React.Component {
   state = {
     openModal: false,
     points: 0,
@@ -46,7 +43,7 @@ class ImpactStackScreen extends React.Component {
     communityEvents: 0,
   };
 
-  interval;
+  //interval;
   static navigationOptions = {
     header: null,
   };
@@ -73,7 +70,7 @@ class ImpactStackScreen extends React.Component {
       try {
         const analytics = new Analytics('UA-131896215-1');
         analytics
-          .hit(new PageHit('ImpactScreen'))
+          .hit(new PageHit('WorldRankScreen'))
           .then(() => console.log('success '))
           .catch(e => console.log(e.message));
       } catch (e) {
@@ -81,26 +78,26 @@ class ImpactStackScreen extends React.Component {
       }
     };
 
-    this.interval = setInterval(()=>{
-      this.props.all_metrics.refetch();
-    }, 2000)
+    // this.interval = setInterval(()=>{
+    //   this.props.all_metrics.refetch();
+    // }, 2000)
 
   }
 
   componentWillUnmount = ()=>{
-    clearInterval(this.interval);
+    // clearInterval(this.interval);
   }
 
   componentWillReceiveProps= () => {
     if(!this.props.all_metrics.loading){
-      this._aggregateImpact(
+      this._aggregateWorldRank(
         this.props.all_metrics.me.recent_actions,
         this.props.all_metrics.me.community_events
       );
     }
   }
 
-  async _aggregateImpact(recent_actions, community_events) {
+  async _aggregateWorldRank(recent_actions, community_events) {
     const { points, water, waste, carbon_dioxide, loading } = this.state;
     if (!loading) {
       return;
@@ -149,7 +146,7 @@ class ImpactStackScreen extends React.Component {
       );
     } else {
       if (this.props.all_metrics.me.recent_actions.length !== 0) {
-        this._aggregateImpact(
+        this._aggregateWorldRank(
           this.props.all_metrics.me.recent_actions,
           this.props.all_metrics.me.community_events
         );
@@ -160,27 +157,11 @@ class ImpactStackScreen extends React.Component {
       <SafeAreaView style={ styles.greyCard }>
         <ScrollView contentContainerStyle={{}}>
           <View style={ styles.containerGrey }>
-            <GraphComponent
+            <Text style={ styles.containerTitle }>Worldwide Rank</Text>
+            <WorldRankComponent
               carbon_dioxide={this.state.carbon_dioxide}
               water={this.state.water}
               waste={this.state.waste}
-            />
-            <ImpactComponent
-              carbon_dioxide={this.state.carbon_dioxide}
-              water={this.state.water}
-              waste={this.state.waste}
-            />
-            <ReachComponent
-              toggleModal={this.toggleModal}
-              communityEvents={this.state.communityEvents}
-            />
-            <PointsComponent points={this.state.points} aggregate={this.state.aggregateObj}/>
-            <ProfileComponent
-              onPress={() =>
-                this.setState({
-                  openUserModal: true,
-                })
-              }
             />
           </View>
 
@@ -235,7 +216,7 @@ class ImpactStackScreen extends React.Component {
     );
   }
 }
-ImpactStackScreen.navigationOptions = {
+WorldRankStackScreen.navigationOptions = {
   headerLeft: (
     <TouchableOpacity onPress={() => navigationService.navigate('MyActions')}>
       <Ionicons
@@ -247,31 +228,14 @@ ImpactStackScreen.navigationOptions = {
     </TouchableOpacity>
   ),
   headerTitle: (
-    <View style={ styles.headerContainer }>
+    <View style={ styles.headerContainer}>
       <Text style={ styles.headerText }>
-        MY IMPACT
+        MY RANK
       </Text>
     </View>
   ),
-  headerRight: (
-    <TouchableOpacity
-      onPress={async () => {
-        await StoreData('phone', null);
-        await StoreData('country_dial_code', null);
-        await StoreData('EARTH_GUARDIANS_TOKEN', null);
-        client.resetStore();
-        navigationService.navigate('AuthLoading');
-      }}
-    >
-      <MaterialCommunityIcons
-        name="logout"
-        size={22}
-        color="white"
-        style={{ paddingRight: 10, opacity: 0.7 }}
-      />
-    </TouchableOpacity>
-  ),
+  headerRight: (''),
   headerStyle: styles.greyCardHeader,
 };
 
-export default ImpactStackScreen;
+export default WorldRankStackScreen;

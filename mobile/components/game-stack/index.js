@@ -12,7 +12,7 @@ import {
 import { LinearGradient } from 'expo';
 
 import { Image } from 'react-native-expo-image-cache'
-import Styles from "../../constants/Styles";
+import { defaults } from "../../constants/Styles";
 import NavigationService from '../../navigation/navigationService';
 import graphql from '../hoc/graphql';
 import { TAKE_ACTION } from '../graphql/mutations/take_action_mutation';
@@ -58,7 +58,7 @@ export default class GameCards extends React.Component {
          ]
       };
 
-     
+
    }
 
    componentWillMount() {
@@ -86,7 +86,7 @@ export default class GameCards extends React.Component {
 
                this.props.navigateBack()
             });
-         }         
+         }
         }
         else if (gestureState.dx < -120) {
           Animated.spring(this.position, {
@@ -94,7 +94,7 @@ export default class GameCards extends React.Component {
           }).start();
           this.position.setValue({ x: 0, y: 0 })
          this.setState({ currentIndex: this.state.currentIndex + 1 })
-            
+
         }
         else {
           Animated.spring(this.position, {
@@ -112,7 +112,7 @@ export default class GameCards extends React.Component {
             this.props.navigateBack();
          }
          this.position.setValue({ x: 0, y: 0 });
-         
+
          callback(this.state.currentIndex);
          this.setState({ currentIndex: this.state.currentIndex + 1, loading:false }, callback);
       };
@@ -131,7 +131,7 @@ export default class GameCards extends React.Component {
          toValue: { x: SCREEN_WIDTH + 100, y:0 }
       }).start(this.props.swipeRight(this.state.currentIndex));
 
-      
+
    };
 
    swipeLeft = () => {
@@ -198,7 +198,7 @@ export default class GameCards extends React.Component {
 
    render() {
       const { position} = this.state;
-      
+
       return (
          <View style={{
             flex: 1,
@@ -214,7 +214,7 @@ export default class GameCards extends React.Component {
             }}
          >
             {this.renderCards(this.props.items)}
-            
+
          </View>
          <GameControls
             rightPress={this.swipeRight}
@@ -234,7 +234,7 @@ const styles = StyleSheet.create({
       position: "absolute",
       padding: 0,
       top: 0,
-      borderRadius: Styles.borderRadius,
+      borderRadius: defaults.borderRadius,
       shadowColor: "#000",
       shadowRadius: 2,
       shadowOpacity: 0.75,
@@ -246,8 +246,8 @@ const styles = StyleSheet.create({
    },
    gradient: {
       position: 'absolute',
-      borderRadius: Styles.borderRadius,
-      
+      borderRadius: defaults.borderRadius,
+
       width: CARD_WIDTH,
     },
    cardImage: {
@@ -255,7 +255,7 @@ const styles = StyleSheet.create({
       height: null,
       width: null,
       resizeMode: "cover",
-      borderRadius: Styles.borderRadius
+      borderRadius: defaults.borderRadius
    }
    // overlay: {
    //    flexGrow: 1,

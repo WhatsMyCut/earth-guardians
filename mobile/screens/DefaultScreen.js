@@ -13,7 +13,7 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import VideoPlayer from '@expo/videoplayer';
 import BaseScreen from './BaseScreen';
-
+import { styles } from '../constants/Styles'
 
 // import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_categories_query';
 
@@ -23,8 +23,8 @@ import BaseScreen from './BaseScreen';
 // import navigationService from '../navigation/navigationService';
 
 class DefaultScreen extends BaseScreen {
-  
-  
+
+
   async componentWillMount(){
 
     const screen = this.props.navigation.getParam('screen', 'MyActions');
@@ -90,25 +90,18 @@ class DefaultScreen extends BaseScreen {
     console.ignoredYellowBox = ['Warning:'];
     return (
       <Animated.View {...this.viewResponder.panHandlers} style={{ flex: 1 }}>
-        
+
         <View style={styles.container}>
-        <View style={styles.topBackNav}>
+          <View style={styles.topBackNav}>
               <TouchableOpacity
                 onPress={() => this.props.navigation.navigate('Petition', {
                   screen: 'Community',
                   image: petition,s
-                })
-              }
-              >
+                })}>
                 <Ionicons name="ios-arrow-round-back" size={42} color="#ccc" />
               </TouchableOpacity>
-        </View>
-          <View
-            style={[
-              styles.container,
-              { justifyContent: 'center', alignItems: 'center', zIndex:999 },
-            ]}
-          >
+          </View>
+        <View style={ styles.videoContainer }>
             <VideoPlayer
               ref={this._mountVideo}
               style={{
@@ -121,7 +114,7 @@ class DefaultScreen extends BaseScreen {
                   uri: videoUrl,
                 },
                 isMuted: false,
-                
+
                 ref: component => {
                   this._playbackInstance = component;
                 },
@@ -151,20 +144,6 @@ class DefaultScreen extends BaseScreen {
     );
   }
 }
-
-const styles = {
-  container: {
-    flex: 1,
-    backgroundColor: '#000000',
-  },
-  topBackNav: {
-    flex: 1,
-    justifyContent: 'flex-start',
-    maxHeight: 30,
-    paddingHorizontal: 5,
-    zindex:1
-  },
-};
 
 DefaultScreen.navigationOptions = {
   headerStyle: {
