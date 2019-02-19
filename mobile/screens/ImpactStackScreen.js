@@ -93,9 +93,10 @@ class ImpactStackScreen extends React.Component {
 
   componentWillReceiveProps= () => {
     if(!this.props.all_metrics.loading){
+      console.log('this.props.all_metrics.loading', this.props.all_metrics.me)
       this._aggregateImpact(
-        this.props.all_metrics.me.recent_actions,
-        this.props.all_metrics.me.community_events
+        this.props.all_metrics.me ? this.props.all_metrics.me.recent_actions : 0,
+        this.props.all_metrics.me? this.props.all_metrics.me.community_events : 0
       );
     }
   }
@@ -139,6 +140,7 @@ class ImpactStackScreen extends React.Component {
   }
 
   render() {
+    console.log('this.props', this.props);
     if (this.props.all_metrics.loading) {
       return (
         <SafeAreaView style={{ flex: 1 }}>
@@ -147,7 +149,9 @@ class ImpactStackScreen extends React.Component {
           </View>
         </SafeAreaView>
       );
-    } else {
+    } else if(this.props.all_metrics.me.recent_actions){
+      console.log('this.props.all_metrics.loading', this.props.all_metrics.me)
+
       if (this.props.all_metrics.me.recent_actions.length !== 0) {
         this._aggregateImpact(
           this.props.all_metrics.me.recent_actions,

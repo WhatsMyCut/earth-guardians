@@ -486,7 +486,7 @@ class ActionCardSmall extends React.Component {
   }
 
   render() {
-    const { canDelete, get_user } = this.props;
+    const { canDelete, get_user, item } = this.props;
     if(get_user.loading){
       return <View></View>
     }
