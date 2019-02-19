@@ -9,8 +9,7 @@ import {
 } from 'react-native';
 import { LinearGradient } from 'expo';
 import LinearGradientProps from '../../../constants/LinearGradientProps';
-
-const SCREEN_WIDTH = Dimensions.get('window').width;
+import { styles } from '../../../constants/Styles'
 
 export default class ImpactComponent extends React.Component {
   state = {
@@ -18,63 +17,31 @@ export default class ImpactComponent extends React.Component {
   };
   _viewA = () => {
     return (
-      <View
-        style={{
-          //backgroundColor: '#666',
-          justifyContent: 'space-around',
-          alignItems: 'center',
-          width: SCREEN_WIDTH * 0.9,
-          height: 120,
-          marginVertical:5,
-          flexDirection: 'row',
-        }}
-      >
+      <View style={ styles.viewA_container }>
         <View>
           <Text>{null}</Text>
-          <Text style={{ color: '#fff', marginBottom: 10, fontSize: 14 }}>
+          <Text style={styles.itemName}>
             CO2 (lbs)
           </Text>
-          <Text style={{ color: '#fff', marginBottom: 10, fontSize: 14 }}>
-            Water (gal)
+          <Text style={styles.itemName}>
+            H2O (gal)
           </Text>
-          <Text style={{ color: '#fff', fontSize: 14 }}>Waste (lbs)</Text>
+          <Text style={styles.itemName}>
+            Waste (lbs)
+          </Text>
         </View>
         <View>
           <Text style={{ color: '#fff', marginBottom: 10, fontSize: 10 }}>
             Your Impact
           </Text>
-          <Text
-            style={{
-              color: '#fff',
-              marginBottom: 5,
-              fontSize: 18,
-              fontWeight: '900',
-              paddingRight:10
-            }}
-          >
+          <Text style={styles.itemPoint}>
             {this.props.carbon_dioxide}
           </Text>
-          <Text
-            style={{
-              color: '#fff',
-              marginBottom: 5,
-              fontSize: 18,
-              fontWeight: '900',
-              paddingRight:10
-            }}
-          >
+          <Text style={styles.itemPoint}>
             {this.props.water}
           </Text>
-          <Text
-            style={{
-              color: '#fff',
-              marginBottom: 5,
-              fontSize: 18,
-              fontWeight: '900',
-              paddingRight:10
-            }}
-          >
-            {this.props.waste}
+          <Text style={styles.itemPoint}>
+            {this.props.waste -= this.props.waste%.01}
           </Text>
         </View>
       </View>
@@ -82,34 +49,24 @@ export default class ImpactComponent extends React.Component {
   };
   _viewB = () => {
     return (
-      <View
-        style={{
-          justifyContent: 'space-around',
-          alignItems: 'flex-start',
-          width: SCREEN_WIDTH * 0.9,
-          height: 150,
-          paddingHorizontal: 10,
-          paddingRight:20,
-          marginVertical: 15,
-        }}
-      >
+      <View style={ styles.viewB_container }>
         <View style={styles.itemView}>
-          <Text style={styles.itemName}>CO2 (lbs): </Text>
-          <Text style={styles.itemDescription}>
+          <Text style={styles.itemName}>CO2 (lbs):</Text>
+          <Text style={[styles.smallWhiteText, styles.padRight50]}>
             You’ve offset the equivalent of driving a car for 20 miles.
           </Text>
         </View>
 
         <View style={{ flexDirection: 'row', marginBottom: 10 }}>
           <Text style={styles.itemName}>H2O (gal): </Text>
-          <Text style={styles.itemDescription}>
+          <Text style={[styles.smallWhiteText, styles.padRight50]}>
             You’ve offset the equivalent of taking 100 showers.
           </Text>
         </View>
 
         <View style={{ flexDirection: 'row', marginBottom: 10 }}>
           <Text style={styles.itemName}>Waste (lbs): </Text>
-          <Text style={styles.itemDescription}>
+          <Text style={[styles.smallWhiteText, styles.padRight50]}>
             You’ve offset the equivalent of 2 months of trash.
           </Text>
         </View>
@@ -120,18 +77,18 @@ export default class ImpactComponent extends React.Component {
     return (
       <LinearGradient
         {...LinearGradientProps.profileItem}
-        style={{ 
-          flex: 1, 
-          borderRadius: 5, 
-          elevation: 1, 
-          marginVertical: 5, 
+        style={{
+          flex: 1,
+          borderRadius: 5,
+          elevation: 1,
+          marginVertical: 5,
           shadowColor: "#000",
           shadowRadius: 2,
           shadowOpacity: 0.35,
           shadowOffset: {
             width: 0,
             height: 2
-          },  
+          },
         }}
       >
         <TouchableOpacity
@@ -148,8 +105,3 @@ export default class ImpactComponent extends React.Component {
   }
 }
 
-const styles = StyleSheet.create({
-  itemView: { flexDirection: 'row', marginBottom: 10 },
-  itemName: { color: '#fff', fontSize: 12, marginRight: 5 },
-  itemDescription: { color: '#fff', fontSize: 10, paddingRight: 50 },
-});

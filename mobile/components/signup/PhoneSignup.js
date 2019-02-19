@@ -15,6 +15,7 @@ import {
 } from 'react-native';
 import { LinearGradient, Asset, AppLoading, BlurView, Video } from 'expo';
 
+import Logo from '../../constants/Logo'
 import PhoneInputComp from '../shared/phone/PhoneInputComp';
 import TabBarIcon from '../shared/icons/TabBarIcon';
 import PasswordModal from '../shared/modals/PasswordModal';
@@ -74,7 +75,7 @@ export default class PhoneSignup extends React.Component {
         phone: numberAndCode.number,
         username: numberAndCode.number,
         dialCode: numberAndCode.country_dial_code
-       
+
       });
     }
   };
@@ -115,6 +116,7 @@ export default class PhoneSignup extends React.Component {
 
   render() {
     const { video_url } = this.state;
+
     if (!video_url) {
       return (
         <AppLoading
@@ -125,11 +127,12 @@ export default class PhoneSignup extends React.Component {
 
 
 
+
     return (
         <Animated.View style={{flex:1}} {...this.viewResponder.panHandlers}>
         <SafeAreaView style={{ flex: 1 }}>
-        
-         <Video 
+
+         <Video
           source={{uri: video_url}}
           rate={1.0}
           volume={1.0}
@@ -140,7 +143,7 @@ export default class PhoneSignup extends React.Component {
           style={{ flex: 1,
             width: WIDTH,
             height: HEIGHT,
-            position: 'absolute', }} 
+            position: 'absolute', }}
         />
         <LinearGradient
             colors={['rgba(0,0,0,0.2)', 'rgba(0,0,0,0.9)']}
@@ -151,6 +154,7 @@ export default class PhoneSignup extends React.Component {
               height: HEIGHT,
             }}
           />
+          <Logo beta={ 'true' } />
 
           {/* <ImageBackground
             source={require('../../assets/earth_guardians_main.gif')}
@@ -178,9 +182,9 @@ export default class PhoneSignup extends React.Component {
               <Text style={styles.promo}>The change we need for a</Text>
               <Text style={{...styles.promo,paddingBottom:5}}>regenerative shift starts with you.</Text>
               <Text style={{...styles.promo,paddingBottom:8}}>ARE YOU IN?</Text>
-              
-              
-              
+
+
+
 
               <PhoneInputComp
                 updatePhone={this._setPhone}
@@ -194,7 +198,7 @@ export default class PhoneSignup extends React.Component {
             </View>
             {this.state.showPasswordModal && (
               <BlurView
-              tint="dark" 
+              tint="dark"
               intensity={80}
               style={{height:HEIGHT, width:WIDTH, position:"absolute"}}
               >

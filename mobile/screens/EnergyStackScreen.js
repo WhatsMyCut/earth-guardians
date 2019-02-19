@@ -54,7 +54,7 @@ class EnergyStackScreen extends React.Component {
         <LinearGradient {...LinearGradientProps.energy} style={{ flex: 1 }} />
       );
     }
-
+    
     return (
       <LinearGradient {...LinearGradientProps.energy} style={{ flex: 1 }}>
         <GeneralScreen

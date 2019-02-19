@@ -5,7 +5,7 @@ import navigationService from '../../../navigation/navigationService';
 
 const CommunityIcon = () => {
   return (
-    <TouchableOpacity onPress={() => navigationService.navigate('Community')}>
+    <TouchableOpacity onPress={() => navigationService.navigate('Ranking')}>
       <Image
         source={require('../../../assets/community_w.png')}
         style={{ width: 35, height: 20 }}
