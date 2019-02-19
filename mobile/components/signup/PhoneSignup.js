@@ -15,6 +15,7 @@ import {
 } from 'react-native';
 import { LinearGradient, Asset, AppLoading, BlurView, Video } from 'expo';
 
+import Logo from '../../constants/Logo'
 import PhoneInputComp from '../shared/phone/PhoneInputComp';
 import TabBarIcon from '../shared/icons/TabBarIcon';
 import PasswordModal from '../shared/modals/PasswordModal';
@@ -153,6 +154,7 @@ export default class PhoneSignup extends React.Component {
               height: HEIGHT,
             }}
           />
+          <Logo beta={ 'true' } />
 
           {/* <ImageBackground
             source={require('../../assets/earth_guardians_main.gif')}

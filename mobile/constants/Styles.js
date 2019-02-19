@@ -76,6 +76,11 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     zIndex: 999,
   },
+  splashLogoContainer: {
+    flex: 1,
+    alignSelf: 'center',
+    marginTop: 35
+  },
   itemView: {
     flexDirection: 'row',
     marginBottom: 10
