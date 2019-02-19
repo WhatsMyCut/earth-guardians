@@ -14,6 +14,11 @@
     "splash": {
       "backgroundColor": "#ffffff"
     },
+    "notification": {
+      "icon": "https://s3.amazonaws.com/exp-us-standard/placeholder-push-icon-blue-circle.png",
+      "color": "#FE4040",
+      "androidMode": "default"
+    },
     "updates": {
       "fallbackToCacheTimeout": 0
     },
@@ -23,6 +28,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.ofashandfire.earthguardians",
+      "icon":"./assets/eg_app_icon_ios_120_120.png",
       "buildNumber":"24"
     },
     "android": {

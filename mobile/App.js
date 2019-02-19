@@ -1,6 +1,6 @@
 import React from 'react';
 import { AsyncStorage, Dimensions } from 'react-native';
-import { BlurView } from 'expo';
+import { BlurView, Notifications } from 'expo';
 import { StoreProvider } from './store/Store';
 import { Font } from 'expo';
 import AppNavigator from './navigation/AppNavigator';
@@ -9,7 +9,7 @@ import { graphql, ApolloProvider } from 'react-apollo';
 import client from './Apollo';
 import PubSub from 'pubsub-js'
 import GameCompleteModal from './components/shared/modals/GameCompleteModal';
-
+import NotificationModal from './components/shared/modals/NotificationModal';
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
@@ -27,9 +27,16 @@ export default class App extends React.Component {
     });
 
     var token = PubSub.subscribe('GameComplete', this.modalHandler);
-
+    this._notificationSubscription = Notifications.addListener(this._handleNotification);
+    
     this.setState({ fontLoaded: true });
   }
+
+  _handleNotification = (notification) => {
+    console.log('incoming notification', notification)
+    // this.setState({notification: notification});
+    this.setState({showNotificationModal: true, notification: notification});
+  };
 
   modalHandler = (msg, data) => {
     this.setState({showGameComplete:true})
@@ -37,6 +44,10 @@ export default class App extends React.Component {
 
   closeGameCompleteModal = () =>{
     this.setState({showGameComplete:false});
+  }
+
+  closeNotificationModal = () => {
+    this.setState({ showNotificationModal : false, notification: null})
   }
 
   render() {
@@ -60,6 +71,15 @@ export default class App extends React.Component {
              style={{height:SCREEN_HEIGHT, width:SCREEN_WIDTH, position:"absolute"}}
              >
             <GameCompleteModal onClose={this.closeGameCompleteModal}/>
+            </BlurView>
+          )}
+          {this.state.showNotificationModal && (
+             <BlurView
+             tint="dark" 
+             intensity={80}
+             style={{height:SCREEN_HEIGHT, width:SCREEN_WIDTH, position:"absolute"}}
+             >
+              <NotificationModal onClose={this.closeNotificationModal} notification={this.state.notification}/>
             </BlurView>
           )}
         </ApolloProvider>
