@@ -26,7 +26,9 @@ export default class ImpactComponent extends React.Component {
           <Text style={styles.itemName}>
             H2O (gal)
           </Text>
-          <Text style={styles.itemName}>Waste (lbs)</Text>
+          <Text style={styles.itemName}>
+            Waste (lbs)
+          </Text>
         </View>
         <View>
           <Text style={{ color: '#fff', marginBottom: 10, fontSize: 10 }}>
@@ -50,21 +52,21 @@ export default class ImpactComponent extends React.Component {
       <View style={ styles.viewB_container }>
         <View style={styles.itemView}>
           <Text style={styles.itemName}>CO2 (lbs):</Text>
-          <Text style={styles.itemDescription}>
+          <Text style={[styles.smallWhiteText, styles.padRight50]}>
             You’ve offset the equivalent of driving a car for 20 miles.
           </Text>
         </View>
 
         <View style={{ flexDirection: 'row', marginBottom: 10 }}>
           <Text style={styles.itemName}>H2O (gal): </Text>
-          <Text style={styles.itemDescription}>
+          <Text style={[styles.smallWhiteText, styles.padRight50]}>
             You’ve offset the equivalent of taking 100 showers.
           </Text>
         </View>
 
         <View style={{ flexDirection: 'row', marginBottom: 10 }}>
           <Text style={styles.itemName}>Waste (lbs): </Text>
-          <Text style={styles.itemDescription}>
+          <Text style={[styles.smallWhiteText, styles.padRight50]}>
             You’ve offset the equivalent of 2 months of trash.
           </Text>
         </View>

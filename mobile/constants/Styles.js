@@ -49,7 +49,8 @@ export const styles = StyleSheet.create({
     color: '#fff',
     fontWeight: '700',
     fontSize: 24,
-    fontVariant: [ 'small-caps' ]
+    fontVariant: [ 'small-caps' ],
+    marginBottom: 15,
   },
   headerContainer: {
     flex: 1,
@@ -60,6 +61,8 @@ export const styles = StyleSheet.create({
     fontSize: 24,
     fontFamily: 'Proxima Nova Bold',
     textAlign: 'center',
+    marginBottom: 10,
+    marginTop: 15,
   },
   smallWhiteText: {
     color: '#fff',
@@ -217,6 +220,9 @@ export const styles = StyleSheet.create({
     padding: 10,
     paddingBottom: 5,
   },
+  noDivider: {
+    borderBottomColor: 'transparent',
+  },
   rankNumber: {
     flexBasis: '15%',
     color: '#fff',
@@ -226,8 +232,18 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     paddingTop: 5,
   },
+  rankState: {
+    flexBasis: '15%',
+    color: '#fff',
+    fontSize: 22,
+    fontWeight: '500',
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+  },
   rankDetail: {
-    flexBasis: '85%',
+    flexGrow: 1,
+    flexShrink: 0,
+    flexBasis: 0,
     fontWeight: '500',
   },
   rankName: {
@@ -235,6 +251,26 @@ export const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: '500',
     paddingBottom: 10
+  },
+  socialRankHeader: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '500',
+    paddingBottom: 10
+  },
+  socialRankNumber: {
+    flexBasis: '25%',
+    color: '#fff',
+    fontSize: 22,
+    fontWeight: '500',
+    paddingRight: 15,
+    paddingTop: 5,
+    fontVariant: ['tabular-nums'],
+    textAlign: 'right'
+  },
+  myRankNumber: {
+    fontSize: 24,
+    color: 'lightgreen',
   },
   topBackNav: {
     flex: 1,

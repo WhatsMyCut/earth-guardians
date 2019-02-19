@@ -18,11 +18,8 @@ import { Analytics, PageHit } from 'expo-analytics';
 import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_categories_query';
 import graphql from '../components/hoc/graphql';
 import NavigationService from '../navigation/navigationService';
-import GraphComponent from '../components/shared/profile/GraphComponent';
 import RankingComponent from '../components/shared/profile/RankingComponent';
-import ReachComponent from '../components/shared/profile/ReachComponent';
-import PointsComponent from '../components/shared/profile/PointsComponent';
-import ProfileComponent from '../components/shared/profile/ProfileComponent';
+import SocialRankComponent from '../components/shared/profile/SocialRankComponent';
 import CommunityEventModal from '../components/shared/modals/CommunityEventModal';
 import { ALL_MY_METRICS } from '../components/graphql/queries/all_my_metrics_query';
 import UpdateUserModal from '../components/shared/modals/updateUserModal';
@@ -123,11 +120,7 @@ class RankingStackScreen extends React.Component {
             aggregateObj[`${item.action.category.name}`] = item.action.points;
           }
       }),
-
     ]);
-
-
-
 
     let additionalPoints = community_events.length * 100;
     this.setState({
@@ -143,30 +136,10 @@ class RankingStackScreen extends React.Component {
   }
 
   render() {
-    // const { all_categories } = this.props;
-    // if (all_categories.loading) {
-    //   return (
-    //     <LinearGradient {...LinearGradientProps.food} style={{ flex: 1 }}>
-    //       <AppLoading />
-    //     </LinearGradient>
-    //   );
-    // }
-
-    // const actions = all_categories.actionCategories;
-    // if (!this.state.primary_video && !this.state.primary_image) {
-    //   return null;
-    // }
     if (this.props.all_metrics.loading) {
       return (
         <SafeAreaView style={{ flex: 1 }}>
-          <View
-            style={{
-              flex: 1,
-              alignItems: 'center',
-              justifyContent: 'center',
-              backgroundColor: '#333',
-            }}
-          >
+          <View style={ styles.containerGrey }>
             <ActivityIndicator size={'large'} />
           </View>
         </SafeAreaView>
@@ -181,24 +154,19 @@ class RankingStackScreen extends React.Component {
     }
 
     return (
-      <SafeAreaView style={{ flex: 1, backgroundColor: '#333' }}>
+      <SafeAreaView style={ styles.greyCard }>
         <ScrollView contentContainerStyle={{}}>
-          <View
-            style={{
-              flex: 1,
-              alignItems: 'center',
-              justifyContent: 'center',
-              backgroundColor: '#333',
-            }}
-          >
-            <Text style={ styles.containerTitle }>National Ranking</Text>
-
+          <View style={ styles.containerGrey }>
+            <Text style={ styles.containerTitle }>National Rank</Text>
             <RankingComponent
               carbon_dioxide={this.state.carbon_dioxide}
               water={this.state.water}
               waste={this.state.waste}
             />
-            <PointsComponent points={this.state.points} aggregate={this.state.aggregateObj}/>
+            <SocialRankComponent
+              mystats={this.state.points}
+              friendstats={this.state.aggregateObj}
+            />
           </View>
 
           {this.state.openModal ? (
@@ -264,46 +232,14 @@ RankingStackScreen.navigationOptions = {
     </TouchableOpacity>
   ),
   headerTitle: (
-    <View style={{ flex: 1, justifyContent: 'center' }}>
-      <Text
-        style={{
-          color: '#ffffff',
-          fontSize: 24,
-          fontFamily: 'Proxima Nova Bold',
-          textAlign: 'center',
-        }}
-      >
-        MY Ranking
+    <View style={ styles.headerContainer}>
+      <Text style={ styles.headerText }>
+        MY RANK
       </Text>
     </View>
   ),
-  headerRight: (
-    <TouchableOpacity
-      onPress={async () => {
-        await StoreData('phone', null);
-        await StoreData('country_dial_code', null);
-        await StoreData('EARTH_GUARDIANS_TOKEN', null);
-        client.resetStore();
-        navigationService.navigate('AuthLoading');
-      }}
-    >
-      <MaterialCommunityIcons
-        name="logout"
-        size={22}
-        color="white"
-        style={{ paddingRight: 10, opacity: 0.7 }}
-      />
-    </TouchableOpacity>
-  ),
-  headerStyle: {
-    backgroundColor: '#333',
-    borderBottomWidth: 0,
-    shadowColor: 'transparent',
-    shadowRadius: 0,
-    shadowOffset: {
-      height: 0,
-    },
-  },
+  headerRight: (''),
+  headerStyle: styles.greyCardHeader,
 };
 
 export default RankingStackScreen;
