@@ -179,15 +179,6 @@ export const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: defaults.borderRadius,
   },
-  impactContainer: {
-    //backgroundColor: '#666',
-    flex: 1,
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    width: SCREEN_WIDTH * 0.9,
-    marginVertical:5,
-    flexDirection: 'column',
-  },
   reachComponent: {
     //backgroundColor: '#666',
     justifyContent: 'center',
@@ -200,19 +191,64 @@ export const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 18,
     fontWeight: 'bold',
-    marginBottom: 10
+    marginVertical: 10,
   },
   reachGrey: {
     color: 'rgba(255,255,255,0.3)',
     fontSize: 18,
     fontWeight: 'bold'
   },
-  communityGradientBox: {
+  gradientContainer: {
     position: 'absolute',
-    paddingHorizontal: 10,
-    borderRadius: defaults.borderRadius,
-    left: 20,
+    borderRadius: 20,
+    left: 0,
+    top: 0,
+  },
+  petitionCard: {
+    height: SCREEN_HEIGHT - 180,
+    width: SCREEN_WIDTH - 40,
+    position: 'absolute',
+    marginHorizontal: 20,
+  },
+  petitionDimensions: {
+    height: SCREEN_HEIGHT - 180,
+    width: SCREEN_WIDTH - 40,
+  },
+  petitionCardTop: {
+    position: 'absolute',
+    bottom: 10,
+    left: 10,
+    zIndex: 1000,
+  },
+  petitionCardUnder: {
+    zIndex: 999,
+    top: 20,
+  },
+  petitionCardImage: {
+    flex: 1,
+    position: 'relative',
+    height: null,
+    width: '100%',
+    resizeMode: 'contain',
+    borderRadius: 20,
+  },
+  petitionDetails: {
+    position: 'absolute',
+    bottom: 10,
     paddingHorizontal: 20,
+    zIndex: 1000,
+    width: SAFE_WIDTH,
+  },
+  petitionTitle: {
+    fontSize: 18,
+    color: '#fff',
+    fontWeight: 'bold',
+    paddingBottom: 10,
+  },
+  petitionText: {
+    fontSize: 16,
+    color: '#fff',
+    paddingBottom: 10,
   },
   linearGradientBox: {
     flex: 1,
@@ -264,7 +300,7 @@ export const styles = StyleSheet.create({
     fontWeight: '900',
     fontSize: 20
   },
-  rankContainer: {
+  componentContainer: {
     flexDirection: 'column',
     width: SCREEN_WIDTH * 0.9,
     justifyContent: 'center'
@@ -367,16 +403,6 @@ export const styles = StyleSheet.create({
     borderColor: 'transparent',
     borderRadius: defaults.borderRadius,
   },
-  headlineViewPlayIcon: {
-    position: 'absolute',
-    opacity: 0.8,
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   imageLinearGradient: {
     position: 'absolute',
     width: defaults.width,
@@ -434,7 +460,12 @@ export const styles = StyleSheet.create({
     paddingBottom: 15,
     color: '#fff',
   },
-  social: {
+  profileImage: {
+    width: 50,
+    height: 50,
+    marginVertical: 10,
+  },
+social: {
     borderRadius: 10,
     borderWidth: 1,
     backgroundColor: '#666',
@@ -450,10 +481,9 @@ export const styles = StyleSheet.create({
   centerAll: {
     justifyContent: 'center',
     alignItems: 'center',
-    textAlign: 'center',
     alignContent: 'center',
   },
-  headlineViewPlayIcon: {
+  videoPlayIcon: {
     position: 'absolute',
     opacity: 0.8,
     top: 0,
@@ -462,13 +492,6 @@ export const styles = StyleSheet.create({
     bottom: 0,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  communityGradient: {
-    position: 'absolute',
-    paddingHorizontal: 10,
-    borderRadius: 20,
-    left: 20,
-    paddingHorizontal: 20,
   },
   notificationWraper: {
     flexDirection: 'row',

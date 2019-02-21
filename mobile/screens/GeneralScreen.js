@@ -93,7 +93,7 @@ export default class GeneralScreen extends React.Component {
             style={styles.imageLinearGradient}
           />
         </View>
-        <View style={styles.headlineViewPlayIcon}>
+        <View style={styles.videoPlayContainer}>
           <FontAwesome name="play" size={52} color="white" />
         </View>
       </TouchableOpacity>

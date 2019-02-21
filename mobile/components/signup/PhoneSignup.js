@@ -19,12 +19,9 @@ import Logo from '../../constants/Logo'
 import PhoneInputComp from '../shared/phone/PhoneInputComp';
 import TabBarIcon from '../shared/icons/TabBarIcon';
 import PasswordModal from '../shared/modals/PasswordModal';
-import { styles } from '../../constants/Styles'
+import { styles, SCREEN_HEIGHT, SCREEN_WIDTH } from '../../constants/Styles'
 import graphql from '../hoc/graphql';
 // import registerForPushNotificationsAsync from '../../services/registerForPushNotifications';
-const HEIGHT = Dimensions.get('window').height;
-const WIDTH = Dimensions.get('window').width;
-
 export default class PhoneSignup extends React.Component {
   constructor(props) {
     super(props);
@@ -95,6 +92,10 @@ export default class PhoneSignup extends React.Component {
     });
   }
 
+  componentWillUnmount() {
+    this.viewResponder = null;
+  }
+
 
   componentDidMount(){
     fetch(`https://api.vimeo.com/videos/309965359`, {
@@ -142,8 +143,8 @@ export default class PhoneSignup extends React.Component {
           shouldPlay
           isLooping
           style={{ flex: 1,
-            width: WIDTH,
-            height: HEIGHT,
+            width: SCREEN_WIDTH,
+            height: SCREEN_HEIGHT,
             position: 'absolute', }}
         />
         <LinearGradient
@@ -151,8 +152,8 @@ export default class PhoneSignup extends React.Component {
             locations={[0.4, 1]}
             style={{
               position: 'absolute',
-              width: WIDTH,
-              height: HEIGHT,
+              width: SCREEN_WIDTH,
+              height: SCREEN_HEIGHT,
             }}
           />
           <Logo beta={ 'true' } />
@@ -161,8 +162,8 @@ export default class PhoneSignup extends React.Component {
             source={require('../../assets/earth_guardians_main.gif')}
             style={{
               flex: 1,
-              width: WIDTH,
-              height: HEIGHT,
+              width: SCREEN_WIDTH,
+              height: SCREEN_HEIGHT,
               position: 'absolute',
             }}
             resizeMode="cover"
@@ -201,7 +202,7 @@ export default class PhoneSignup extends React.Component {
               <BlurView
               tint="dark"
               intensity={80}
-              style={{height:HEIGHT, width:WIDTH, position:"absolute"}}
+              style={{height:SCREEN_HEIGHT, width:SCREEN_WIDTH, position:"absolute"}}
               >
               <KeyboardAvoidingView behavior="padding" >
                 <PasswordModal phone_signup={this.phone_signup} setToken={this.setToken} isVisible={this.state.showPasswordModal} username={this.state.phone} togglePasswordModal={this.togglePasswordModal}/>

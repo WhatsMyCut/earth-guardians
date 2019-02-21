@@ -16,7 +16,7 @@ export default class RankingComponent extends React.Component {
   };
   _viewA = () => {
     return (
-      <View style={styles.rankContainer}>
+      <View style={styles.componentContainer}>
         <Text style={styles.headerText}>User</Text>
         <View style={styles.rankRow}>
           <Text style={[styles.rankNumber, {color: 'gold'}]}>1</Text>

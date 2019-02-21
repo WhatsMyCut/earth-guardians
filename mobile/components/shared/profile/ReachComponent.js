@@ -28,8 +28,8 @@ export default class ReachComponent extends React.Component {
       <LinearGradient
         {...LinearGradientProps.profileItem}
         style={styles.linearGradientBox }>
-        <TouchableOpacity onPress={() => this.props.toggleModal()}>
-          <View style={ styles.reachComponent }>
+        <TouchableOpacity style={ styles.componentContainer } onPress={() => this.props.toggleModal()}>
+          <View style={ styles.componentHeader }>
             {this._returnPeopleReached()}
           </View>
         </TouchableOpacity>
