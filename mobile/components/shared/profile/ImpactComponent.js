@@ -17,30 +17,33 @@ export default class ImpactComponent extends React.Component {
   };
   _viewA = () => {
     return (
-      <View style={ styles.viewA_container }>
-        <View>
-          <Text>{null}</Text>
-          <Text style={styles.itemName}>
-            CO2 (lbs)
-          </Text>
-          <Text style={styles.itemName}>
-            H2O (gal)
-          </Text>
-          <Text style={styles.itemName}>
-            Waste (lbs)
+      <View style={[styles.impactContainer] }>
+        <View style={styles.headerContainer}>
+          <Text style={[styles.componentHeader]}>
+            YOUR IMPACT
           </Text>
         </View>
-        <View>
-          <Text style={{ color: '#fff', marginBottom: 10, fontSize: 10 }}>
-            Your Impact
+        <View style={ styles.detailRow }>
+          <Text style={styles.detailCell}>
+            CO2 (lbs)
           </Text>
-          <Text style={styles.itemPoint}>
+          <Text style={[styles.detailCell, styles.itemPoint, styles.centerAll]}>
             {this.props.carbon_dioxide}
           </Text>
-          <Text style={styles.itemPoint}>
+        </View>
+        <View style={ styles.detailRow }>
+          <Text style={styles.detailCell}>
+            H2O (gal)
+          </Text>
+          <Text style={[styles.detailCell, styles.itemPoint, styles.centerAll]}>
             {this.props.water}
           </Text>
-          <Text style={styles.itemPoint}>
+        </View>
+        <View style={ styles.detailRow }>
+          <Text style={styles.detailCell}>
+            Waste (lbs)
+          </Text>
+          <Text style={[styles.detailCell, styles.itemPoint, styles.centerAll]}>
             {this.props.waste -= this.props.waste%.01}
           </Text>
         </View>
@@ -49,24 +52,35 @@ export default class ImpactComponent extends React.Component {
   };
   _viewB = () => {
     return (
-      <View style={ styles.viewB_container }>
-        <View style={styles.itemView}>
-          <Text style={styles.itemName}>CO2 (lbs):</Text>
-          <Text style={[styles.smallWhiteText, styles.padRight50]}>
+      <View style={ styles.impactContainer }>
+        <View style={styles.headerContainer}>
+          <Text style={[styles.componentHeader]}>
+            YOUR IMPACT
+          </Text>
+        </View>
+        <View style={[ styles.detailRow] }>
+          <Text style={[styles.detailCell, { flexBasis: '25%'}]}>
+            CO2 (lbs)
+          </Text>
+          <Text style={[styles.detailCell, { flexBasis: '75%'}]}>
             You’ve offset the equivalent of driving a car for 20 miles.
           </Text>
         </View>
 
-        <View style={{ flexDirection: 'row', marginBottom: 10 }}>
-          <Text style={styles.itemName}>H2O (gal): </Text>
-          <Text style={[styles.smallWhiteText, styles.padRight50]}>
+        <View style={[ styles.detailRow] }>
+          <Text style={[styles.detailCell, { flexBasis: '25%'}]}>
+            H2O (gal):
+          </Text>
+          <Text style={[styles.detailCell, { flexBasis: '75%'}]}>
             You’ve offset the equivalent of taking 100 showers.
           </Text>
         </View>
 
-        <View style={{ flexDirection: 'row', marginBottom: 10 }}>
-          <Text style={styles.itemName}>Waste (lbs): </Text>
-          <Text style={[styles.smallWhiteText, styles.padRight50]}>
+        <View style={[ styles.detailRow] }>
+          <Text style={[styles.detailCell, { flexBasis: '25%'}]}>
+            Waste (lbs):
+          </Text>
+          <Text style={[styles.detailCell, { flexBasis: '75%'}]}>
             You’ve offset the equivalent of 2 months of trash.
           </Text>
         </View>

@@ -13,6 +13,7 @@ import { Query } from 'react-apollo';
 //import { data } from './dummy/actions.json';
 import { actions_data } from './dummy/data';
 import NavigationService from '../navigation/navigationService';
+import { styles } from '../constants/Styles';
 
 
 
@@ -48,10 +49,10 @@ class MyActionsStackScreen extends React.Component {
                 }
                 if(data.myAvailableActions.length == 0){
                   return <SafeAreaView style={{ flex: 1 }}>
-                  <View style={{...styles.container, justifyContent:'center', alignContent:'center'}}>
-                    <Text style={{color:"white", textAlign:"center"}}>We Got This! Start Taking Action Now!</Text>
-                  </View>
-                </SafeAreaView>
+                    <View style={[styles.container, styles.centerAll]}>
+                      <Text style={{color:"white", textAlign:"center"}}>We Got This! Start Taking Action Now!</Text>
+                    </View>
+                  </SafeAreaView>
                 }
 
 
@@ -60,26 +61,26 @@ class MyActionsStackScreen extends React.Component {
                   return { id: event.id, action:event.action, createdAt:event.createdAt}
                 });
 
+                return (
+                  <View style={styles.container}>
+                    <FlatList
+                      style={{ backgroundColor: '#333', paddingRight:10 }}
+                      numColumns={2}
+                      data={actions}
+                      renderItem={(prop) => {
                       return (
-                        <View style={styles.container}>
-                        <FlatList
-                          style={{ backgroundColor: '#333', paddingRight:10 }}
-                          numColumns={2}
-                          data={actions}
-                          renderItem={(prop) => {
-                          return (
-                              <ActionCardSmall item={prop.item} index={prop.index} canDelete={true}/>
-                            )} 
-                          }
-                        />
-                      </View>
-                      );
+                          <ActionCardSmall item={prop.item} index={prop.index} canDelete={true}/>
+                        )}
+                      }
+                    />
+                  </View>
+                );
             }}
           </Query>
   }
 
   render() {
-   
+
     // if(my_actions.me.recent_actions.length == 0){
     //   console.log('my actions finished loading', my_actions.me);
     //   return <SafeAreaView style={{ flex: 1 }}>
@@ -97,13 +98,6 @@ class MyActionsStackScreen extends React.Component {
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#333',
-    paddingTop: 15,
-  },
-});
 
 MyActionsStackScreen.navigationOptions = {
   headerTitle: HeaderNavBar,

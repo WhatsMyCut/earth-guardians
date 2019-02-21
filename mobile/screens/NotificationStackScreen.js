@@ -3,6 +3,7 @@ import React from 'react';
 import { SafeAreaView, View, Text, Switch, StyleSheet } from 'react-native';
 import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_categories_query';
 import graphql from '../components/hoc/graphql';
+import { styles } from '../constants/Styles';
 
 //import { data } from './dummy/actions.json';
 @graphql(ALL_ACTION_CATEGORIES, {
@@ -43,7 +44,7 @@ class NotificationStackScreen extends React.Component {
     // }
     return (
       <SafeAreaView style={{ flex: 1 }}>
-        <View style={styles.container}>
+        <View style={[styles.greyCard]}>
           <View style={styles.notificationWraper}>
             <Text style={styles.notification}>Push Notification</Text>
             <Switch
@@ -78,32 +79,9 @@ class NotificationStackScreen extends React.Component {
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    backgroundColor: '#333',
-    paddingTop: 20,
-  },
-  notificationWraper: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: 300,
-    alignItems: 'center',
-  },
-  notification: { color: '#fff', marginVertical: 20 },
-});
-
 NotificationStackScreen.navigationOptions = {
   headerTitle: (
-    <Text
-      style={{
-        color: '#ffffff',
-        fontSize: 28,
-        fontFamily: 'Proxima Nova Bold',
-      }}
-    >
+    <Text style={[styles.headerText]}>
       NOTIFICATIONS
     </Text>
   ),

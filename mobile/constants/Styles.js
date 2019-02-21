@@ -16,16 +16,59 @@ export const defaults = {
 export const SCREEN_WIDTH = Dimensions.get('window').width
 export const SCREEN_HEIGHT = Dimensions.get('window').height;
 export const SAFE_WIDTH = Layout.window.width - 2 * defaults.marginHorizontal;
+export const CARD_WIDTH = Dimensions.get("window").width * 0.87;
+export const CARD_HEIGHT = Dimensions.get("window").height * 0.65;
 defaults.primaryHeight = SCREEN_HEIGHT
 defaults.width = SAFE_WIDTH
 
 export const styles = StyleSheet.create({
+  // Main shared styles
   container: {
     flex: 1,
   },
   blackBG: {
     backgroundColor: '#000000',
   },
+  title: {
+    fontSize: 22,
+    color: '#fff',
+    fontWeight: 'bold',
+    paddingBottom: 10,
+  },
+  promo: {
+    fontSize: 16,
+    color: '#fff'
+  },
+  // Game Cards
+  card: {
+    height: CARD_HEIGHT,
+    width: CARD_WIDTH,
+    position: "absolute",
+    padding: 0,
+    top: 0,
+    borderRadius: defaults.borderRadius,
+    shadowColor: "#000",
+    shadowRadius: 2,
+    shadowOpacity: 0.75,
+    shadowOffset: {
+        width: 0,
+        height: 0
+    },
+    backgroundColor: "white"
+  },
+  indexGradient: {
+    position: 'absolute',
+    borderRadius: defaults.borderRadius,
+    width: CARD_WIDTH,
+  },
+  cardImage: {
+    flex: 1,
+    height: null,
+    width: null,
+    resizeMode: "cover",
+    borderRadius: defaults.borderRadius
+  },
+  // Info Views
   greyCard: {
     flex: 1,
     backgroundColor: '#333'
@@ -69,6 +112,8 @@ export const styles = StyleSheet.create({
     marginBottom: 10,
     fontSize: 12,
   },
+
+  // Video
   videoContainer: {
     flex: 1,
     backgroundColor: '#000000',
@@ -134,23 +179,14 @@ export const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: defaults.borderRadius,
   },
-  viewA_container: {
+  impactContainer: {
     //backgroundColor: '#666',
+    flex: 1,
     justifyContent: 'space-around',
     alignItems: 'center',
     width: SCREEN_WIDTH * 0.9,
-    height: 120,
     marginVertical:5,
-    flexDirection: 'row',
-  },
-  viewB_container: {
-    justifyContent: 'space-around',
-    alignItems: 'flex-start',
-    width: SCREEN_WIDTH * 0.9,
-    height: 150,
-    paddingHorizontal: 10,
-    paddingRight:20,
-    marginVertical: 15,
+    flexDirection: 'column',
   },
   reachComponent: {
     //backgroundColor: '#666',
@@ -160,7 +196,24 @@ export const styles = StyleSheet.create({
 
     padding: 10,
   },
-
+  componentHeader: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 10
+  },
+  reachGrey: {
+    color: 'rgba(255,255,255,0.3)',
+    fontSize: 18,
+    fontWeight: 'bold'
+  },
+  communityGradientBox: {
+    position: 'absolute',
+    paddingHorizontal: 10,
+    borderRadius: defaults.borderRadius,
+    left: 20,
+    paddingHorizontal: 20,
+  },
   linearGradientBox: {
     flex: 1,
     borderRadius: 5,
@@ -224,6 +277,21 @@ export const styles = StyleSheet.create({
     alignSelf: 'center',
     padding: 10,
     paddingBottom: 5,
+  },
+  detailRow: {
+    flexDirection: 'row',
+    width: '90%',
+    alignSelf: 'center',
+    paddingBottom: 5,
+  },
+  detailCell: {
+    flexDirection: 'column',
+    color: '#fff',
+    justifyContent: 'center',
+    flexBasis: '50%'
+  },
+  halfCell: {
+    flexBasis: '50%'
   },
   noDivider: {
     borderBottomColor: 'transparent',
@@ -322,5 +390,94 @@ export const styles = StyleSheet.create({
     height: defaults.primaryHeight,
     borderRadius: defaults.borderRadius,
   },
+  gameRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%'
+  },
+  swipeButton: {
+    padding: 20,
+    marginHorizontal: 14,
+    borderRadius: 50,
+    shadowColor: "#000",
+    shadowRadius: 2,
+    shadowOpacity: 0.32,
+    shadowOffset: {
+       width: 0,
+       height: 0
+    },
+    backgroundColor: "white"
+   },
+   phoneInputContainer: {
+    flexDirection: 'row',
+    borderColor: 'gray',
+    borderWidth: 0,
 
+    borderBottomWidth: 1,
+    alignItems: 'flex-end',
+    width: '100%',
+  },
+  countryCode: {
+    width: 80,
+    borderWidth: 0,
+  },
+  countryCodeInput: {
+    borderBottomWidth: 0,
+    borderBottomColor: 'transparent',
+    marginBottom: 0,
+    paddingBottom: 0,
+  },
+  phoneInputNumber: {
+    borderWidth: 0,
+    width: '100%',
+    paddingBottom: 15,
+    color: '#fff',
+  },
+  social: {
+    borderRadius: 10,
+    borderWidth: 1,
+    backgroundColor: '#666',
+    width: 350,
+    paddingVertical: 20,
+    marginVertical: 10,
+    alignItems: 'center',
+  },
+  socialItem: {
+    color: '#fff',
+    fontSize: 18
+  },
+  centerAll: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    textAlign: 'center',
+    alignContent: 'center',
+  },
+  headlineViewPlayIcon: {
+    position: 'absolute',
+    opacity: 0.8,
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  communityGradient: {
+    position: 'absolute',
+    paddingHorizontal: 10,
+    borderRadius: 20,
+    left: 20,
+    paddingHorizontal: 20,
+  },
+  notificationWraper: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: 300,
+    alignItems: 'center',
+  },
+  notification: {
+    color: '#fff',
+    marginVertical: 20
+  },
 });

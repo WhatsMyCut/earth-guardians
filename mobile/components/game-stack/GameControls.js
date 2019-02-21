@@ -1,11 +1,12 @@
 import React from "react";
 import { View, TouchableOpacity, StyleSheet } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
+import { styles } from '../../constants/Styles'
 
 class GameControls extends React.Component {
    render() {
       return (
-         <View style={styles.row}>
+         <View style={styles.gameRow}>
             <TouchableOpacity
                onPress={this.props.leftPress}
                style={styles.swipeButton}
@@ -33,25 +34,3 @@ class GameControls extends React.Component {
 }
 
 export default GameControls;
-
-const styles = StyleSheet.create({
-   row: {
-      flexDirection: "row",
-      alignItems: "center",
-      justifyContent: "center",
-      width: "100%"
-   },
-   swipeButton: {
-      padding: 20,
-      marginHorizontal: 14,
-      borderRadius: 50,
-      shadowColor: "#000",
-      shadowRadius: 2,
-      shadowOpacity: 0.32,
-      shadowOffset: {
-         width: 0,
-         height: 0
-      },
-      backgroundColor: "white"
-   }
-});

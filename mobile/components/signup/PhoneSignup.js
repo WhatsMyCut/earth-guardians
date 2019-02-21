@@ -19,6 +19,7 @@ import Logo from '../../constants/Logo'
 import PhoneInputComp from '../shared/phone/PhoneInputComp';
 import TabBarIcon from '../shared/icons/TabBarIcon';
 import PasswordModal from '../shared/modals/PasswordModal';
+import { styles } from '../../constants/Styles'
 import graphql from '../hoc/graphql';
 // import registerForPushNotificationsAsync from '../../services/registerForPushNotifications';
 const HEIGHT = Dimensions.get('window').height;
@@ -230,21 +231,3 @@ export default class PhoneSignup extends React.Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingLeft: 30,
-    paddingRight: 130,
-  },
-  linearGradient: {
-    flex: 1,
-  },
-  title: {
-    fontSize: 22,
-    color: '#ffffff',
-    fontWeight: 'bold',
-    paddingBottom: 10,
-  },
-  promo: { fontSize: 16, color: '#ffffff' },
-});

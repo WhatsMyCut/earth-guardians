@@ -6,7 +6,8 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 import { Dropdown } from 'react-native-material-dropdown';
-import { countries } from './country_codes.json'; // data from local file
+import { countries } from './country_codes.json';
+import { styles } from '../../../constants/Styles';
 
 export default class PhoneInputComp extends React.Component {
   state = {
@@ -61,10 +62,10 @@ export default class PhoneInputComp extends React.Component {
     return (
       <KeyboardAvoidingView
         behavior="padding"
-        style={[styles.container, { paddingBottom: 30 }]}
+        style={[styles.phoneInputContainer, { paddingBottom: 30 }]}
         enabled
       >
-        <View style={styles.container}>
+        <View style={styles.phoneInputContainer}>
           <Dropdown
             dropdownOffset={{ top: 0, bottom: 0, left: 1 }}
             data={this.state.countries}
@@ -87,7 +88,7 @@ export default class PhoneInputComp extends React.Component {
           />
           <TextInput
             placeholder="(999) 999-9999"
-            style={styles.number}
+            style={styles.phoneInputNumber}
             keyboardType="number-pad"
             name="phone_number"
             type="number"
@@ -104,30 +105,3 @@ export default class PhoneInputComp extends React.Component {
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    borderColor: 'gray',
-    borderWidth: 0,
-
-    borderBottomWidth: 1,
-    alignItems: 'flex-end',
-    width: '100%',
-  },
-  countryCode: {
-    width: 80,
-    borderWidth: 0,
-  },
-  countryCodeInput: {
-    borderBottomWidth: 0,
-    borderBottomColor: 'transparent',
-    marginBottom: 0,
-    paddingBottom: 0,
-  },
-  number: {
-    borderWidth: 0,
-    width: '100%',
-    paddingBottom: 15,
-    color: '#fff',
-  },
-});

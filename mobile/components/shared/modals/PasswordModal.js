@@ -21,7 +21,7 @@ import { Permissions, Notifications } from 'expo';
 
 /*
 @graphql(TOKEN, {
- 	name: 'token_mutation', 
+ 	name: 'token_mutation',
 })
 */
 @graphql(SIGNUP, {
@@ -285,9 +285,6 @@ export default class PasswordModal extends React.Component {
 							<Text style={{ color: '#333', fontSize: 18, fontWeight: 'bold' }}>Sign In</Text>
 						</TouchableOpacity>
 
-						<TouchableHighlight onPress={this.props.togglePasswordModal}>
-							<Text style={{ color: 'white' }}>Go Back</Text>
-						</TouchableHighlight>
 						<TouchableHighlight
 							style={{ paddingTop: 10, paddingBottom: 10 }}
 							onPress={() => Linking.openURL('mailto:reachout@earthguardians.com')}

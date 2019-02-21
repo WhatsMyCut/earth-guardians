@@ -13,7 +13,14 @@ export default class ReachComponent extends React.Component {
       });
     }
 
-    return  reach > 0 ?  <Text style={{ color: '#fff', fontSize: 18, fontWeight: 'bold' }}>{reach} PEOPLE REACHED</Text> :<Text style={{ color: 'rgba(255,255,255,0.3)', fontSize: 18, fontWeight: 'bold' }}>{reach} PEOPLE REACHED</Text> ;
+    const style = reach > 0 ? styles.componentHeader : styles.reachGrey;
+
+    return (
+      <View style={[styles.centerAll, style]}>
+        <Text style={style}>PEOPLE REACHED</Text>
+        <Text style={[style, { fontSize: 22 }]}>{reach}</Text>
+      </View>
+    );
   }
 
   render() {
@@ -23,7 +30,7 @@ export default class ReachComponent extends React.Component {
         style={styles.linearGradientBox }>
         <TouchableOpacity onPress={() => this.props.toggleModal()}>
           <View style={ styles.reachComponent }>
-              {this._returnPeopleReached()}
+            {this._returnPeopleReached()}
           </View>
         </TouchableOpacity>
       </LinearGradient>

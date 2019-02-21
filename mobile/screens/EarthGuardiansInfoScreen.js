@@ -13,6 +13,7 @@ import {
 import { LinearGradient, Icon } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
 import { Analytics, PageHit } from 'expo-analytics';
+import { styles, SCREEN_WIDTH } from '../constants/Styles'
 
 // import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_categories_query';
 // import graphql from '../components/hoc/graphql';
@@ -21,7 +22,6 @@ import { Analytics, PageHit } from 'expo-analytics';
 // import navigationService from '../navigation/navigationService';
 // import LinearGradientProps from '../constants/LinearGradientProps';
 // import GeneralScreen from './GeneralScreen';
-const SCREEN_WIDTH = Dimensions.get('window').width;
 // @graphql(ALL_ACTION_CATEGORIES, {
 //   name: 'all_categories',
 //   fetchPolicy: 'network-only',
@@ -152,17 +152,5 @@ class EarthGuardiansInfoScreen extends React.Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  topBackNav: {
-    flex: 1,
-    justifyContent: 'flex-start',
-    maxHeight: 30,
-    paddingHorizontal: 5,
-  },
-});
 
 export default EarthGuardiansInfoScreen;

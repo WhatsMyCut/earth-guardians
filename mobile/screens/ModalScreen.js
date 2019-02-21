@@ -14,6 +14,7 @@ import CommunityEventModal from '../components/shared/modals/CommunityEventModal
 import SignPetitionModal from '../components/shared/modals/SignPetitionModal';
 import LinearGradientProps from '../constants/LinearGradientProps';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
+import { styles } from '../constants/Styles'
 
 export default class ModalScreen extends React.Component {
   render() {
@@ -40,9 +41,3 @@ export default class ModalScreen extends React.Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
