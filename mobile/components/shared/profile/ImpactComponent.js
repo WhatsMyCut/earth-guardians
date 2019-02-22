@@ -19,7 +19,7 @@ export default class ImpactComponent extends React.Component {
     return (
       <View style={[styles.componentContainer] }>
         <View style={styles.headerContainer}>
-          <Text style={[styles.componentHeader, styles.centerAll]}>
+          <Text style={[styles.componentHeader]}>
             YOUR IMPACT
           </Text>
         </View>
@@ -27,7 +27,7 @@ export default class ImpactComponent extends React.Component {
           <Text style={styles.detailCell}>
             CO2 (lbs)
           </Text>
-          <Text style={[styles.detailCell, styles.itemPoint, styles.centerAll]}>
+          <Text style={[styles.detailCell, styles.itemPoint, styles.centerText]}>
             {this.props.carbon_dioxide}
           </Text>
         </View>
@@ -35,7 +35,7 @@ export default class ImpactComponent extends React.Component {
           <Text style={styles.detailCell}>
             H2O (gal)
           </Text>
-          <Text style={[styles.detailCell, styles.itemPoint, styles.centerAll]}>
+          <Text style={[styles.detailCell, styles.itemPoint, styles.centerText]}>
             {this.props.water}
           </Text>
         </View>
@@ -43,7 +43,7 @@ export default class ImpactComponent extends React.Component {
           <Text style={styles.detailCell}>
             Waste (lbs)
           </Text>
-          <Text style={[styles.detailCell, styles.itemPoint, styles.centerAll]}>
+          <Text style={[styles.detailCell, styles.itemPoint, styles.centerText]}>
             {this.props.waste -= this.props.waste%.01}
           </Text>
         </View>

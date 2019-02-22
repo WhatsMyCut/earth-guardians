@@ -29,16 +29,16 @@ export default class Profileomponent extends React.Component {
           <Image source={require('../../../assets/Group_427.png')} style={styles.profileImage} />
           <View style={styles.container}>
             <View style={styles.detailRow}>
-              <Text style={styles.detailCell}>{my_user.me.name || 'Name'}</Text>
-              <Text style={styles.detailCell}>{my_user.me.zipcode || 'Zipcode'}</Text>
+              <Text style={[styles.detailCell, styles.underline]}>{my_user.me.name || 'Name'}</Text>
+              <Text style={[styles.detailCell, styles.underline]}>{my_user.me.zipcode || 'Zipcode'}</Text>
             </View>
             <View style={styles.detailRow}>
-              <Text style={styles.detailCell}>{my_user.me.phone || 'Phone'}</Text>
-              <Text style={styles.detailCell}>{my_user.me.email ? my_user.me.email.length > 15 ? `${my_user.me.email.substring(0, 15)}...` :my_user.me.email : 'Email' }</Text>
+              <Text style={[styles.detailCell, styles.underline]}>{my_user.me.phone || 'Phone'}</Text>
+              <Text style={[styles.detailCell, styles.underline]}>{my_user.me.email ? my_user.me.email.length > 15 ? `${my_user.me.email.substring(0, 15)}...` :my_user.me.email : 'Email' }</Text>
             </View>
             <View style={styles.detailRow}>
-              <Text style={styles.detailCell}>{my_user.me.crew || 'Affiliation'}</Text>
-              <Text style={styles.detailCell}>{my_user.me.crew_type || 'Affiliation Type'}</Text>
+              <Text style={[styles.detailCell, styles.underline]}>{my_user.me.crew || 'Affiliation'}</Text>
+              <Text style={[styles.detailCell, styles.underline]}>{my_user.me.crew_type || 'Affiliation Type'}</Text>
             </View>
           </View>
         </View>

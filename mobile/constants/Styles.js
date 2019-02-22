@@ -112,7 +112,18 @@ export const styles = StyleSheet.create({
     marginBottom: 10,
     fontSize: 12,
   },
-
+  centerAll: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignContent: 'center',
+  },
+  centerText: {
+    textAlign: 'center',
+  },
+  underline: {
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: '#fff',
+  },
   // Video
   videoContainer: {
     flex: 1,
@@ -192,6 +203,7 @@ export const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     marginVertical: 10,
+    textAlign: 'center',
   },
   reachGrey: {
     color: 'rgba(255,255,255,0.3)',
@@ -477,11 +489,6 @@ social: {
   socialItem: {
     color: '#fff',
     fontSize: 18
-  },
-  centerAll: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    alignContent: 'center',
   },
   videoPlayIcon: {
     position: 'absolute',

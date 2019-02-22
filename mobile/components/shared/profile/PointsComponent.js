@@ -21,7 +21,7 @@ export default class PointsComponent extends React.Component {
           //backgroundColor: '#666',
           justifyContent: 'center',
           alignItems: 'center',
-          width: SCREEN_WIDTH * 0.9,
+          width: defaults.width,
           height:125,
           padding: 20,
 
@@ -40,32 +40,32 @@ export default class PointsComponent extends React.Component {
         <View style={[styles.reachComponent]}>
           <View style={styles.detailRow}>
             <View style={ { flexBasis: '33%' } }>
-              <Text style={[styles.detailCell, styles.halfCell, styles.centerAll]}>Energy</Text>
-              <Text style={[styles.itemPoint, styles.detailCell, styles.halfCell, styles.centerAll]}>{this.props.aggregate['Energy'] || 0}</Text>
+              <Text style={[styles.detailCell, styles.halfCell, styles.centerText]}>Energy</Text>
+              <Text style={[styles.itemPoint, styles.detailCell, styles.halfCell, styles.centerText]}>{this.props.aggregate['Energy'] || 0}</Text>
             </View>
             <View style={ {flexBasis: '33%'} }>
-              <Text style={[styles.detailCell, styles.halfCell, styles.centerAll]}>Travel</Text>
-              <Text style={[styles.itemPoint, styles.detailCell, styles.halfCell, styles.centerAll]}>{this.props.aggregate['Travel'] || 0}</Text>
+              <Text style={[styles.detailCell, styles.halfCell, styles.centerText]}>Travel</Text>
+              <Text style={[styles.itemPoint, styles.detailCell, styles.halfCell, styles.centerText]}>{this.props.aggregate['Travel'] || 0}</Text>
             </View>
             <View style={ {flexBasis: '33%'} }>
-              <Text style={[styles.detailCell, styles.halfCell, styles.centerAll]}>Waste</Text>
-              <Text style={[styles.itemPoint, styles.detailCell, styles.halfCell, styles.centerAll]}>{this.props.aggregate['Waste'] || 0}</Text>
+              <Text style={[styles.detailCell, styles.halfCell, styles.centerText]}>Waste</Text>
+              <Text style={[styles.itemPoint, styles.detailCell, styles.halfCell, styles.centerText]}>{this.props.aggregate['Waste'] || 0}</Text>
             </View>
           </View>
         </View>
         <View style={styles.reachComponent}>
           <View style={styles.detailRow}>
             <View style={ {flexBasis: '33%'} }>
-              <Text style={[styles.detailCell, styles.halfCell, styles.centerAll]}>Water</Text>
-              <Text style={[styles.itemPoint, styles.detailCell, styles.halfCell, styles.centerAll]}>{this.props.aggregate['Water'] || 0}</Text>
+              <Text style={[styles.detailCell, styles.halfCell, styles.centerText]}>Water</Text>
+              <Text style={[styles.itemPoint, styles.detailCell, styles.halfCell, styles.centerText]}>{this.props.aggregate['Water'] || 0}</Text>
             </View>
             <View style={ {flexBasis: '33%'} }>
-              <Text style={[styles.detailCell, styles.halfCell, styles.centerAll]}>Food</Text>
-              <Text style={[styles.itemPoint, styles.detailCell, styles.halfCell, styles.centerAll]}>{this.props.aggregate['Food'] || 0}</Text>
+              <Text style={[styles.detailCell, styles.halfCell, styles.centerText]}>Food</Text>
+              <Text style={[styles.itemPoint, styles.detailCell, styles.halfCell, styles.centerText]}>{this.props.aggregate['Food'] || 0}</Text>
             </View>
             <View style={ {flexBasis: '33%'} }>
-              <Text style={[styles.detailCell, styles.halfCell, styles.centerAll]}>Shopping</Text>
-              <Text style={[styles.itemPoint, styles.detailCell, styles.halfCell, styles.centerAll]}>{this.props.aggregate['Shopping'] || 0}</Text>
+              <Text style={[styles.detailCell, styles.halfCell, styles.centerText]}>Shopping</Text>
+              <Text style={[styles.itemPoint, styles.detailCell, styles.halfCell, styles.centerText]}>{this.props.aggregate['Shopping'] || 0}</Text>
             </View>
           </View>
         </View>
@@ -73,7 +73,6 @@ export default class PointsComponent extends React.Component {
     );
   };
   render() {
-    console.log(this.props, 'HEHEHEHEHE');
     return (
       <LinearGradient
         {...LinearGradientProps.profileItem}
