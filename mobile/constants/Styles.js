@@ -20,6 +20,7 @@ export const CARD_WIDTH = Dimensions.get("window").width * 0.87;
 export const CARD_HEIGHT = Dimensions.get("window").height * 0.65;
 defaults.primaryHeight = SCREEN_HEIGHT
 defaults.width = SAFE_WIDTH
+defaults.hairline = StyleSheet.hairlineWidth
 
 export const styles = StyleSheet.create({
   // Main shared styles
@@ -38,6 +39,22 @@ export const styles = StyleSheet.create({
   promo: {
     fontSize: 16,
     color: '#fff'
+  },
+  buttonContainer: {
+    backgroundColor: '#fff',
+    width: 130,
+    height: 50,
+    borderRadius: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 20,
+  },
+  coverScreen: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    left: 0,
+    bottom: 0,
   },
   // Game Cards
   card: {
@@ -71,7 +88,7 @@ export const styles = StyleSheet.create({
   // Info Views
   greyCard: {
     flex: 1,
-    backgroundColor: '#333'
+    backgroundColor: '#333',
   },
   greyCardHeader: {
     backgroundColor: '#333',
@@ -80,6 +97,23 @@ export const styles = StyleSheet.create({
     shadowRadius: 0,
     shadowOffset: {
       height: 0,
+    },
+  },
+  modalView: {
+    backgroundColor: '#333',
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignContent: 'center',
+    borderRadius: 20,
+    paddingVertical: 30,
+    paddingHorizontal: 60,
+    marginHorizontal: 20,
+    shadowColor: "#000",
+    shadowRadius: 3,
+    shadowOpacity: 0.35,
+    shadowOffset: {
+      width: 0,
+      height: 2
     },
   },
   containerGrey: {
@@ -97,15 +131,15 @@ export const styles = StyleSheet.create({
   },
   headerContainer: {
     flex: 1,
-    justifyContent: 'center'
+    justifyContent: 'center',
+    alignContent: 'center',
+    paddingVertical: 10
   },
   headerText: {
     color: '#ffffff',
     fontSize: 24,
     fontFamily: 'Proxima Nova Bold',
     textAlign: 'center',
-    marginBottom: 10,
-    marginTop: 15,
   },
   smallWhiteText: {
     color: '#fff',
@@ -205,7 +239,17 @@ export const styles = StyleSheet.create({
     marginVertical: 10,
     textAlign: 'center',
   },
-  reachGrey: {
+  textWhite18B: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: 'bold'
+  },
+  textGrey18B: {
+    color: '#333',
+    fontSize: 18,
+    fontWeight: 'bold'
+  },
+  fadeText18B: {
     color: 'rgba(255,255,255,0.3)',
     fontSize: 18,
     fontWeight: 'bold'
@@ -266,7 +310,6 @@ export const styles = StyleSheet.create({
     flex: 1,
     borderRadius: 5,
     elevation: 1,
-
     marginVertical: 5,
     shadowColor: "#000",
     shadowRadius: 2,
@@ -280,7 +323,7 @@ export const styles = StyleSheet.create({
     flex: 1,
     borderRadius: 5,
     paddingTop:20,
-    paddingBottom:20,
+    paddingBottom:10,
     elevation: 1,
     marginVertical: 5,
     shadowColor: "#000",
@@ -291,14 +334,19 @@ export const styles = StyleSheet.create({
       height: 2
     },
   },
-  donutGraphContainer: {
+  graphContainer: {
     //backgroundColor: '#666',
     justifyContent: 'center',
     alignItems: 'center',
     width: SCREEN_WIDTH * 0.9,
     height: 150,
   },
-
+  graphLabel: {
+    color:"white",
+    fontFamily:"Proxima Nova Bold",
+    fontSize:14,
+    paddingRight:10
+  },
   detailedPoints: {
     flex: 1,
     flexDirection: 'row',
