@@ -5,6 +5,7 @@ import {
   Animated,
   PanResponder,
   TouchableOpacity,
+  TouchableWithoutFeedback,
   SafeAreaView,
   ScrollView,
   View,
@@ -28,8 +29,7 @@ import { ALL_MY_METRICS } from '../components/graphql/queries/all_my_metrics_que
 import UpdateUserModal from '../components/shared/modals/updateUserModal';
 import client from '../Apollo';
 import { StoreData } from '../store/AsyncStore';
-import navigationService from '../navigation/navigationService';
-import { styles } from '../constants/Styles'
+import { styles, defaults } from '../constants/Styles'
 
 @graphql(ALL_MY_METRICS, {
   name: 'all_metrics',
@@ -140,7 +140,7 @@ class ImpactStackScreen extends React.Component {
   }
 
   render() {
-    console.log('this.props', this.props);
+    //console.log('this.props', this.props);
     if (this.props.all_metrics.loading) {
       return (
         <SafeAreaView style={{ flex: 1 }}>
@@ -150,7 +150,7 @@ class ImpactStackScreen extends React.Component {
         </SafeAreaView>
       );
     } else if(this.props.all_metrics.me.recent_actions){
-      console.log('this.props.all_metrics.loading', this.props.all_metrics.me)
+      //console.log('this.props.all_metrics.loading', this.props.all_metrics.me)
 
       if (this.props.all_metrics.me.recent_actions.length !== 0) {
         this._aggregateImpact(
@@ -161,9 +161,9 @@ class ImpactStackScreen extends React.Component {
     }
 
     return (
-      <SafeAreaView style={ styles.greyCard }>
-        <ScrollView contentContainerStyle={{}}>
-          <View style={ styles.containerGrey }>
+      <SafeAreaView style={[styles.greyCard]}>
+        <ScrollView contentContainerStyle={[{}]}>
+          <View style={[styles.containerGrey, defaults.SCREEN_HEIGHT]}>
             <GraphComponent
               carbon_dioxide={this.state.carbon_dioxide}
               water={this.state.water}
@@ -189,19 +189,17 @@ class ImpactStackScreen extends React.Component {
           </View>
 
           {this.state.openModal ? (
+            <TouchableWithoutFeedback onPress={() => {
+              console.log('outside')
+              this.setState({openModal: !this.state.openModal})
+            }}>
             <BlurView
               tint="dark"
               intensity={80}
-              style={{
-                justifyContent: 'center',
-                alignItems: 'center',
-                backgroundColor: 'rgba(0,0,0,.1)',
-                position: 'absolute',
-                top: 0,
-                right: 0,
-                left: 0,
-                bottom: 0,
-              }}
+              style={[styles.container, styles.centerAll, styles.coverScreen, {
+                height: defaults.primaryHeight - 150,
+                zIndex: 999,
+              }]}
             >
               <CommunityEventModal
                 onClose={() => {
@@ -209,6 +207,7 @@ class ImpactStackScreen extends React.Component {
                 }}
               />
             </BlurView>
+            </TouchableWithoutFeedback>
           ) : null}
           {this.state.openUserModal ? (
             <BlurView
@@ -241,7 +240,7 @@ class ImpactStackScreen extends React.Component {
 }
 ImpactStackScreen.navigationOptions = {
   headerLeft: (
-    <TouchableOpacity onPress={() => navigationService.navigate('MyActions')}>
+    <TouchableOpacity onPress={() => NavigationService.navigate('MyActions')}>
       <Ionicons
         name="ios-arrow-round-back"
         size={42}
@@ -264,7 +263,7 @@ ImpactStackScreen.navigationOptions = {
         await StoreData('country_dial_code', null);
         await StoreData('EARTH_GUARDIANS_TOKEN', null);
         client.resetStore();
-        navigationService.navigate('AuthLoading');
+        NavigationService.navigate('AuthLoading');
       }}
     >
       <MaterialCommunityIcons

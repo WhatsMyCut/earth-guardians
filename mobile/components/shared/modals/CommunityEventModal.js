@@ -4,16 +4,16 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
+  TouchableWithoutFeedback,
   KeyboardAvoidingView,
   PickerIOS,
+  Modal,
 } from 'react-native';
 import { Dropdown } from 'react-native-material-dropdown';
 import graphql from '../../hoc/graphql';
 import { CREATE_COMMUNITY_EVENT } from '../../graphql/mutations/create_community_mutation';
 import { GET_USER } from '../../graphql/queries/get_user';
-import { AntDesign } from '@expo/vector-icons';
-
-import NavigationService from '../../../navigation/navigationService';
+import { styles } from '../../../constants/Styles';
 
 @graphql(GET_USER, {
   name: 'my_user',
@@ -55,29 +55,11 @@ export default class CommunityEventModal extends React.Component {
     ];
 
     return (
-      <KeyboardAvoidingView
-        // style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
-        behavior="padding"
-        enabled
-      >
-        <View
-          style={{
-            backgroundColor: '#333',
-            justifyContent: 'center',
-            alignItems: 'center',
-            borderRadius: 20,
-            padding: 30,
-            paddingHorizontal: 60,
-          }}
-        >
-          <Text
-            style={{
-              color: '#fff',
-              marginHorizontal: 20,
-              fontSize: 18,
-              fontWeight: 'bold',
-            }}
-          >
+      <TouchableWithoutFeedback onPress={() => {
+        console.log('inside')
+      }}>
+        <View style={[styles.modalView]}>
+          <Text style={[styles.componentHeader]}>
             HAVE YOU HOSTED A COMMUNITY EVENT?
           </Text>
 
@@ -117,38 +99,18 @@ export default class CommunityEventModal extends React.Component {
             returnKeyType="done"
           />
           <TouchableOpacity
-            style={{
-              backgroundColor: '#fff',
-              width: 130,
-              height: 50,
-              borderRadius: 5,
-              justifyContent: 'center',
-              alignItems: 'center',
-              marginTop: 20,
-            }}
+            style={[styles.buttonContainer]}
             disabled={!this.state.numberOfPeople || !this.state.typeOfEvent}
             onPress={() => {
               this._submitCommunityEvent();
             }}
           >
-            <Text style={{ color: '#333', fontSize: 18, fontWeight: 'bold' }}>
+            <Text style={[styles.textGrey18B]}>
               SUBMIT
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => this.props.onClose()}
-            hitSlop={{ top: 15, left: 15, right: 15, bottom: 15 }}
-            style={{ position: 'absolute', right: -2, top: -5 }}
-          >
-            <AntDesign
-              name="close"
-              size={32}
-              color="white"
-              style={{ padding: 5 }}
-            />
-          </TouchableOpacity>
         </View>
-      </KeyboardAvoidingView>
+      </TouchableWithoutFeedback>
     );
   }
 }
