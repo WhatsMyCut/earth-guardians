@@ -5,7 +5,6 @@ import {
   Animated,
   PanResponder,
   TouchableOpacity,
-  TouchableWithoutFeedback,
   SafeAreaView,
   ScrollView,
   View,
@@ -189,16 +188,12 @@ class ImpactStackScreen extends React.Component {
           </View>
 
           {this.state.openModal ? (
-            <TouchableWithoutFeedback onPress={() => {
-              console.log('outside')
-              this.setState({openModal: !this.state.openModal})
-            }}>
             <BlurView
               tint="dark"
               intensity={80}
-              style={[styles.container, styles.centerAll, styles.coverScreen, {
+              style={[styles.container, styles.coverScreen, {
                 height: defaults.primaryHeight - 150,
-                zIndex: 999,
+
               }]}
             >
               <CommunityEventModal
@@ -207,7 +202,6 @@ class ImpactStackScreen extends React.Component {
                 }}
               />
             </BlurView>
-            </TouchableWithoutFeedback>
           ) : null}
           {this.state.openUserModal ? (
             <BlurView
