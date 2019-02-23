@@ -43,6 +43,11 @@ export default class GeneralScreen extends React.Component {
         });
     }
   }
+
+  componentWillUnmount() {
+    this.props.primary_video = null
+  }
+
   renderPrimaryImage = () => {
     const preview = {
       uri: PrimaryImage,

@@ -67,9 +67,10 @@ class MyActionsStackScreen extends React.Component {
                       style={{ backgroundColor: '#333', paddingRight:10 }}
                       numColumns={2}
                       data={actions}
-                      renderItem={(prop) => {
+                      keyExtractor={(item, index) => item.id}
+                      renderItem={({ item, index }) => {
                       return (
-                          <ActionCardSmall item={prop.item} index={prop.index} canDelete={true}/>
+                          <ActionCardSmall item={item} index={index} canDelete={true}/>
                         )}
                       }
                     />
