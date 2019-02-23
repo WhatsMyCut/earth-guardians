@@ -121,8 +121,7 @@ export default class PhoneSignup extends React.Component {
 
     if (!video_url) {
       return (
-        <AppLoading
-        />
+        <AppLoading />
       );
     }
 
