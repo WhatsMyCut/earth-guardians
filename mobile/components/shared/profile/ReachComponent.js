@@ -13,12 +13,12 @@ export default class ReachComponent extends React.Component {
       });
     }
 
-    const style = reach > 0 ? styles.componentHeader : styles.reachGrey;
+    const style = reach > 0 ? styles.textWhite18B : styles.textGrey18B;
 
     return (
       <View style={[styles.centerAll, style]}>
-        <Text style={style}>PEOPLE REACHED</Text>
-        <Text style={[style, { fontSize: 22 }]}>{reach}</Text>
+        <Text style={[styles.componentHeader, style]}>PEOPLE I'VE REACHED</Text>
+        <Text style={[styles.componentHeader, style, { fontSize: 24 }]}>{reach}</Text>
       </View>
     );
   }

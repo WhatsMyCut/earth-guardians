@@ -16,17 +16,7 @@ export default class PointsComponent extends React.Component {
   };
   _viewA = () => {
     return (
-      <View
-        style={{
-          //backgroundColor: '#666',
-          justifyContent: 'center',
-          alignItems: 'center',
-          width: defaults.width,
-          height:125,
-          padding: 20,
-
-        }}
-      >
+      <View style={[styles.componentContainer, styles.centerAll, { height:132, }]}>
         <Text style={{ color: '#fff', fontSize: 30, fontWeight: 'bold' }}>
           {this.props.points} Points
         </Text>
@@ -36,8 +26,8 @@ export default class PointsComponent extends React.Component {
 
   _viewB = () => {
     return (
-      <View style={[defaults.width, styles.centerAll]} >
-        <View style={[styles.reachComponent]}>
+      <View style={[styles.container, styles.centerAll]} >
+        <View style={[styles.componentContainer, { marginTop: 20 }]}>
           <View style={styles.detailRow}>
             <View style={ { flexBasis: '33%' } }>
               <Text style={[styles.detailCell, styles.halfCell, styles.centerText]}>Energy</Text>
@@ -76,20 +66,7 @@ export default class PointsComponent extends React.Component {
     return (
       <LinearGradient
         {...LinearGradientProps.profileItem}
-        style={{
-          flex: 1,
-          borderRadius: 5,
-          elevation: 1,
-          marginVertical: 5,
-          shadowColor: "#000",
-          shadowRadius: 2,
-          shadowOpacity: 0.35,
-          shadowOffset: {
-            width: 0,
-            height: 2
-          },
-        }}
-      >
+        style={[styles.linearGradientBox]}>
         <TouchableOpacity
           onPress={() =>
             this.setState({
