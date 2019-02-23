@@ -4,13 +4,13 @@ import { ART } from 'react-native';
 const { Surface, Group, Shape } = ART;
 import * as d3 from 'd3';
 import WaterModal from '../modals/NotH2OConsumptionModal';
-
+import { styles, defaults } from '../../../constants/Styles';
 
 
 
 
 export class DonutGraph extends React.Component {
- 
+
 
   state={
     loading:true,
@@ -20,11 +20,11 @@ export class DonutGraph extends React.Component {
   }
   constructor(props){
     super(props);
-    
+
   }
 
   // componentDidMount(){
-    
+
 
   //     this.setState({
   //       userPurchases,
@@ -45,17 +45,16 @@ export class DonutGraph extends React.Component {
     const total = userPurchases.reduce((sum, item) =>{
         return sum+=item.value
     }, 0)
-    const sectionAngles = d3.pie().value(d => d.value)(userPurchases);
-    
+
     const colors = d3
       .scaleLinear()
-      .domain([0, userPurchases.length])
-      .range([0, 150]);
+      .domain([0, parseInt(userPurchases.length/2), userPurchases.length])
+      .range(["grey", "lightGrey", "darkGrey"]);
     const path = d3
       .arc()
       .outerRadius(smallerLength / 2 - 10)
-      .padAngle(0.05)
-      .innerRadius(smallerLength / 5);
+      .padAngle(0)
+      .innerRadius(smallerLength / 4);
 
     let waterPercent = Math.floor((parseFloat(this.props.water, 2) / total)*100);
     let wastePercent =Math.floor((parseFloat(this.props.waste, 2) / total)*100);
@@ -72,12 +71,13 @@ export class DonutGraph extends React.Component {
 
     let showGraph = false;
 
+    const sectionAngles = d3.pie().value(d => d.value)(userPurchases);
+
     if(waterPercent != 0 || carbonDioxidePercent != 0 || wastePercent != 0){
       showGraph = true
     }
-  
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <View style={[styles.container, styles.centerAll]}>
       {showGraph && (
         <Surface width={width} height={height}>
           <Group x={width / 2} y={height / 2}>
@@ -85,11 +85,11 @@ export class DonutGraph extends React.Component {
               <Shape
                 key={section.index}
                 d={path(section)}
-                stroke="#000"
+                stroke="#999"
                 fill={`rgba(${0},${colors(section.index)},${colors(
                   section.index+1
-                )*2}, 0.7)`}
-                strokeWidth={1}
+                )*2}, 0.9)`}
+                strokeWidth={[defaults.hairline]}
               />
             ))}
           </Group>
@@ -103,10 +103,9 @@ export class DonutGraph extends React.Component {
 
         )}
         <View style={{flex:1, flexDirection:'row', alignContent:"space-between", justifyContent:"flex-end", paddingTop: showGraph ? 0 : 20}}>
-            <Text style={{color:"white", fontFamily:"Proxima Nova", fontSize:14, paddingRight:10}}>CO2 {typeof carbonDioxidePercent !== 'NaN' ? carbonDioxidePercent : 0} %</Text>
-            <Text style={{color:"white", fontFamily:"Proxima Nova", fontSize:14, paddingRight:10}}>Water {typeof waterPercent !== 'NaN' ? waterPercent : 0} %</Text>
-            <Text style={{color:"white", fontFamily:"Proxima Nova", fontSize:14, paddingRight:10}}>Waste {typeof wastePercent !== 'NaN' ? wastePercent : 0} %</Text>
-
+            <Text style={[styles.graphLabel]}>CO2 {typeof carbonDioxidePercent !== 'NaN' ? carbonDioxidePercent : 0} %</Text>
+            <Text style={[styles.graphLabel]}>Water {typeof waterPercent !== 'NaN' ? waterPercent : 0} %</Text>
+            <Text style={[styles.graphLabel]}>Waste {typeof wastePercent !== 'NaN' ? wastePercent : 0} %</Text>
         </View>
       </View>
     );
