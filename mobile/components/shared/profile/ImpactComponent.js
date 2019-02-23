@@ -18,7 +18,7 @@ export default class ImpactComponent extends React.Component {
   _viewA = () => {
     return (
       <View style={[styles.componentContainer, {marginBottom: 15}] }>
-        <View style={styles.headerContainer}>
+        <View style={styles.container}>
           <Text style={[styles.componentHeader]}>
             YOUR IMPACT
           </Text>
@@ -53,7 +53,7 @@ export default class ImpactComponent extends React.Component {
   _viewB = () => {
     return (
       <View style={[styles.componentContainer, {marginBottom: 15}]}>
-        <View style={styles.headerContainer}>
+        <View style={styles.container}>
           <Text style={[styles.componentHeader, styles.centerAll]}>
             YOUR IMPACT
           </Text>

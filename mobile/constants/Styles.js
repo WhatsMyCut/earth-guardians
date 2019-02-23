@@ -133,7 +133,8 @@ export const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignContent: 'center',
-    paddingVertical: 10
+    paddingVertical: 10,
+    height: 80,
   },
   headerText: {
     color: '#ffffff',
