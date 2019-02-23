@@ -20,12 +20,9 @@ import graphql from '../components/hoc/graphql';
 import NavigationService from '../navigation/navigationService';
 import RankingComponent from '../components/shared/profile/RankingComponent';
 import SocialRankComponent from '../components/shared/profile/SocialRankComponent';
-import CommunityEventModal from '../components/shared/modals/CommunityEventModal';
 import { ALL_MY_METRICS } from '../components/graphql/queries/all_my_metrics_query';
-import UpdateUserModal from '../components/shared/modals/updateUserModal';
 import client from '../Apollo';
 import { StoreData } from '../store/AsyncStore';
-import navigationService from '../navigation/navigationService';
 import { styles } from '../constants/Styles'
 
 @graphql(ALL_MY_METRICS, {
@@ -55,14 +52,6 @@ class RankingStackScreen extends React.Component {
   };
 
   componentWillMount() {
-    // this.viewResponder = PanResponder.create({
-    //   onStartShouldSetPanResponder: () => true,
-    //   onPanResponderMove: (evt, gs) => {
-    //     if (200 < gs.dy) {
-    //       NavigationService.navigate('CommunityStack');
-    //     }
-    //   },
-    // });
   }
 
   componentDidMount() {
@@ -169,52 +158,6 @@ class RankingStackScreen extends React.Component {
             />
           </View>
 
-          {this.state.openModal ? (
-            <BlurView
-              tint="dark"
-              intensity={80}
-              style={{
-                justifyContent: 'center',
-                alignItems: 'center',
-                backgroundColor: 'rgba(0,0,0,.1)',
-                position: 'absolute',
-                top: 0,
-                right: 0,
-                left: 0,
-                bottom: 0,
-              }}
-            >
-              <CommunityEventModal
-                onClose={() => {
-                  this.setState({ openModal: false, loading: true });
-                }}
-              />
-            </BlurView>
-          ) : null}
-          {this.state.openUserModal ? (
-            <BlurView
-              tint="dark"
-              intensity={80}
-              style={{
-                justifyContent: 'center',
-                alignItems: 'center',
-                backgroundColor: 'rgba(0,0,0,.1)',
-                position: 'absolute',
-                top: 0,
-                right: 0,
-                left: 0,
-                bottom: 0,
-              }}
-            >
-              <UpdateUserModal
-                onClose={() =>
-                  this.setState({
-                    openUserModal: false,
-                  })
-                }
-              />
-            </BlurView>
-          ) : null}
         </ScrollView>
       </SafeAreaView>
     );
@@ -222,7 +165,7 @@ class RankingStackScreen extends React.Component {
 }
 RankingStackScreen.navigationOptions = {
   headerLeft: (
-    <TouchableOpacity onPress={() => navigationService.navigate('MyActions')}>
+    <TouchableOpacity onPress={() => NavigationService.navigate('MyActions')}>
       <Ionicons
         name="ios-arrow-round-back"
         size={42}
