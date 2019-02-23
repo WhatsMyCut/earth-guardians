@@ -14,7 +14,7 @@ import NavigationService from '../../../navigation/navigationService';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
-export default class CommunityEventModal extends React.Component {
+export default class SignPetitionModal extends React.Component {
   state = { firstName: '', lastName: '', email: '', modalVisible: true };
   toggleModalVisible = () => {
     this.setState({ modalVisible: !this.state.modalVisible });
