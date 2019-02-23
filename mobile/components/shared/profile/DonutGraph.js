@@ -49,7 +49,7 @@ export class DonutGraph extends React.Component {
     const colors = d3
       .scaleLinear()
       .domain([0, parseInt(userPurchases.length/2), userPurchases.length])
-      .range(["grey", "lightGrey", "darkGrey"]);
+      .range(["#e9e9e9", "#e3e3e3", "#9c9c9c"]);
     const path = d3
       .arc()
       .outerRadius(smallerLength / 2 - 10)
