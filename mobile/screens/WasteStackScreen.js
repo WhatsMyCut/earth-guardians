@@ -37,6 +37,10 @@ class WasteStackScreen extends React.Component {
   //     console.log(e);
   //   }
   // }
+  componentWillUnmount() {
+    this.pollInterval = null
+  }
+
   componentDidMount() {
     // Analytics
     () => {
