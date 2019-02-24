@@ -5,7 +5,10 @@ import navigationService from '../../../navigation/navigationService';
 
 const CommunityIcon = () => {
   return (
-    <TouchableOpacity onPress={() => navigationService.navigate('Ranking')}>
+    <TouchableOpacity
+      onPress={() => navigationService.navigate('Ranking')}
+      hitSlop={{top: 15, left: 15, right:15, bottom:15}}
+    >
       <Image
         source={require('../../../assets/community_w.png')}
         style={{ width: 35, height: 20 }}
@@ -16,7 +19,10 @@ const CommunityIcon = () => {
 
 const EyeIcon = () => {
   return (
-    <TouchableOpacity onPress={() => navigationService.navigate('EGInfo')}>
+    <TouchableOpacity
+      onPress={() => navigationService.navigate('EGInfo')}
+      hitSlop={{top: 15, left: 15, right:15, bottom:15}}
+    >
       <Image
         source={require('../../../assets/eye_w.png')}
         style={{ width: 40, height: 27 }}
@@ -27,7 +33,10 @@ const EyeIcon = () => {
 
 const UserIcon = () => {
   return (
-    <TouchableOpacity onPress={() => navigationService.navigate('Profile')}>
+    <TouchableOpacity
+      onPress={() => navigationService.navigate('Profile')}
+      hitSlop={{top: 15, left: 15, right:15, bottom:15}}
+    >
       <Image
         style={{ width: 20, height: 20 }}
         source={require('../../../assets/user_w.png')}
