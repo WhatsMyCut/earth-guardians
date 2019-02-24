@@ -6,7 +6,7 @@ import { styles } from '../../constants/Styles'
 class GameControls extends React.Component {
    render() {
       return (
-         <View style={styles.gameRow}>
+         <View style={styles.centeredRow}>
             <TouchableOpacity
                onPress={this.props.leftPress}
                style={styles.swipeButton}
