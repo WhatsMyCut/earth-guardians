@@ -104,7 +104,7 @@ class PetitionScreen extends React.Component {
       onStartShouldSetPanResponder: () => true,
 
       onPanResponderMove: (evt, gs) => {
-        if (200 < gs.dy) {
+        if (150 < gs.dy) {
           console.log('navigate back');
           NavigationService.navigate(this.screen, {
             position: this.image.Dimensions,
@@ -235,7 +235,11 @@ class PetitionScreen extends React.Component {
             source={{ uri: this.image.primary_image }}
             style={[styles.container, styles.coverScreen]}
           />
-          <View style={[styles.container, styles.centeredRow, { position: 'absolute', top: 50 }]}>
+          <View style={[styles.container, styles.centeredRow, { position: 'absolute', top: 50, flexDirection: 'column' }]}>
+            <Icon.MaterialCommunityIcons
+              name={'gesture-swipe-down'}
+              style={[styles.centerText, styles.textWhite, { fontSize: 30 }]}
+            />
             <Text style={[styles.textWhite]}>(Swipe down to dismiss)</Text>
           </View>
 
