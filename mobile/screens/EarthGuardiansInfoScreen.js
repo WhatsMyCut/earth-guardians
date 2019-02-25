@@ -48,7 +48,7 @@ class EarthGuardiansInfoScreen extends React.Component {
       <LinearGradient colors={['#333333', '#1a1a1a']} style={{ flex: 1 }}>
         <SafeAreaView style={{ flex: 1 }}>
           <View style={styles.container}>
-            <View style={styles.topBackNav}>
+            <View style={styles.topNav}>
               <TouchableOpacity
                 onPress={() => this.props.navigation.navigate('MyActions')}
               >

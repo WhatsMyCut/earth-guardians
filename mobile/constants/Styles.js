@@ -175,10 +175,9 @@ export const styles = StyleSheet.create({
   // Video
   videoContainer: {
     flex: 1,
-    backgroundColor: '#000000',
+    backgroundColor: '#333',
     justifyContent: 'center',
     alignItems: 'center',
-    zIndex: 999,
   },
   splashLogoContainer: {
     flex: 1,
@@ -461,11 +460,12 @@ export const styles = StyleSheet.create({
     fontSize: 24,
     color: 'lightgreen',
   },
-  topBackNav: {
+  topNav: {
     flex: 1,
     justifyContent: 'flex-start',
-    maxHeight: 30,
-    paddingHorizontal: 5,
+    maxHeight: 50,
+    marginTop: 50,
+    paddingHorizontal: defaults.paddingHorizontal,
     zIndex:1
   },
   headlineView: {
