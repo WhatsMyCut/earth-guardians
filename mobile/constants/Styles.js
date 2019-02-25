@@ -284,6 +284,7 @@ export const styles = StyleSheet.create({
     width: SCREEN_WIDTH - 40,
     position: 'absolute',
     marginHorizontal: 20,
+    borderRadius: defaults.borderRadius
   },
   petitionDimensions: {
     height: SCREEN_HEIGHT - 180,

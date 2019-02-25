@@ -287,11 +287,13 @@ class PetitionScreen extends React.Component {
                     onPress={() => this.togglePetition()}
                     style={[styles.buttonContainer]}
                   >
-                    <Text>{youinverbiage} </Text>
-                    <Icon.MaterialCommunityIcons
-                      name={status_icon_name}
-                      style={{ color: color, fontSize: 20 }}
-                    />
+                    <View style={[styles.centeredRow]}>
+                      <Text styles={[styles.detailCell, styles.centerText, { paddingHorizontal: defaults.paddingHorizontal}]}>{youinverbiage}</Text>
+                      <Icon.MaterialCommunityIcons
+                        name={status_icon_name}
+                        style={[{ textAlign: 'right', color: color, fontSize: 22 }]}
+                      />
+                    </View>
                   </TouchableOpacity>
                 </View>
               </View>
