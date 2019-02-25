@@ -7,14 +7,9 @@ import {
   TouchableOpacity,
   Text,
   ImageBackground,
-  StyleSheet,
-  WebView,
   Platform,
   Dimensions,
-  StatusBar
 } from 'react-native';
-import { Button } from 'react-native-paper';
-import { all } from 'rsvp';
 import { LinearGradient, Icon, BlurView } from 'expo';
 import { AntDesign } from '@expo/vector-icons';
 import { Analytics, Event, PageHit } from 'expo-analytics';
@@ -25,13 +20,12 @@ import {
   UNSIGN_PETITION,
 } from '../components/graphql/mutations/sign_petition';
 import graphql from '../components/hoc/graphql';
-import TabBarIcon from '../components/shared/icons/TabBarIcon';
 import NavigationService from '../navigation/navigationService';
 import CommunitySignedModal from '../components/shared/modals/communitySignedModal';
 import RedirectModal from '../components/shared/modals/RedirectModal';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { RetrieveData } from '../store/AsyncStore';
-import PetitionTextScreen from './PetitionTextScreen';
+import { styles, defaults } from '../constants/Styles'
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
@@ -212,7 +206,7 @@ class PetitionScreen extends React.Component {
 
   render() {
     const { my_user } = this.props;
-  
+
     const { showRedirectModal,youinverbiage, redirectModalPetition, showCommunitySignedModal } = this.state;
     let status_icon_name;
     if (my_user.loading) {
@@ -225,45 +219,38 @@ class PetitionScreen extends React.Component {
     let color = '#aaa';
     const petitionids = my_user.me.petitions_signed ? my_user.me.petitions_signed.map(x => x.id) : null;
     if (petitionids) {
-      color = petitionids.indexOf(this.image.id) > -1 ? 'green' : '#aaa';
-      status_icon_name =
-        petitionids.indexOf(this.image.id) > -1
-          ? 'circle-slice-8'
-          : 'circle-outline';
+      color = petitionids.indexOf(this.image.id) > -1 ? 'green' : color;
+      status_icon_name = petitionids.indexOf(this.image.id) > -1
+        ? 'circle-slice-8'
+        : 'circle-outline';
     }
 
     console.log('got this far', this.image);
 
     return (
-      <Animated.View style={{ flex: 1 }} {...this.viewResponder.panHandlers}>
-        {/* <StatusBar
-            hidden={true}
-            barStyle="dark-content"
-          /> */}
+      <Animated.View style={[styles.container]} {...this.viewResponder.panHandlers}>
 
-        <View style={styles.container}>
+        <View style={[styles.container]}>
           <ImageBackground
             source={{ uri: this.image.primary_image }}
-            style={{ flex: 1, width: SCREEN_WIDTH, height: SCREEN_HEIGHT }}
+            style={[styles.container, styles.coverScreen]}
           />
+          <View style={[styles.container, styles.centeredRow, { position: 'absolute', top: 50 }]}>
+            <Text style={[styles.textWhite]}>(Swipe down to dismiss)</Text>
+          </View>
 
           <LinearGradient
             colors={['rgba(0,0,0,0.08)', 'rgba(0,0,0,0.85)']}
             locations={[0.4, 1]}
-            style={{
-              position: 'absolute',
-              width: SCREEN_WIDTH,
-              height: SCREEN_HEIGHT,
-            }}
+            style={[styles.container, styles.coverAll]}
           />
-
           <View
-            style={{
-              flex: 1,
+            style={[styles.container, styles.coverScreen, {
               justifyContent: 'flex-end',
               alignItems: 'flex-start',
               padding: 20,
-            }}
+              paddingBottom: 60,
+            }]}
           >
             {this.image.video_url && (
               <TouchableOpacity
@@ -271,7 +258,7 @@ class PetitionScreen extends React.Component {
                   opacity: 0.9,
                   position: 'absolute',
                   width:100,
-                  top: 0,
+                  top: SCREEN_HEIGHT / 2,
                   left: SCREEN_WIDTH / 2.2,
                 }}
                 onPress={() => {
@@ -287,123 +274,89 @@ class PetitionScreen extends React.Component {
               </TouchableOpacity>
             )}
 
-            <Text style={{ color: 'white', fontSize: 30, paddingBottom:15, fontWeight:"600" }}>
-              {this.image.title}
-            </Text>
-            <Text style={{ color: 'white', fontSize: 16, paddingBottom:20 }}>
-              {this.image.short_description}
-            </Text>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}
-            >
-          
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}
-              >
-                <Button
-                  mode="contained"
-                  color="#fff"
-                  onPress={() => this.togglePetition()}
-                >
-                  <Text>{youinverbiage}</Text>
-                  <Icon.MaterialCommunityIcons
-                    name={status_icon_name}
-                    style={{ color: color, fontSize: 20 }}
-                  />
-                </Button>
-
-               
-              {/* <Text style={{ color: '#fff', alignSelf: 'center' }}>
-                  4K took action
-                </Text> */}
+            <View style={[styles.container, styles.petitionDetails, { bottom: 100 } ]}>
+              <Text style={styles.title}>
+                {this.image.title}
+              </Text>
+              <Text style={[styles.petitionText]}>
+                {this.image.short_description}
+              </Text>
+              <View style={[styles.container]}>
+                <View style={[styles.detailRow, { marginLeft: 0 }]}>
+                  <TouchableOpacity
+                    onPress={() => this.togglePetition()}
+                    style={[styles.buttonContainer]}
+                  >
+                    <Text>{youinverbiage} </Text>
+                    <Icon.MaterialCommunityIcons
+                      name={status_icon_name}
+                      style={{ color: color, fontSize: 20 }}
+                    />
+                  </TouchableOpacity>
+                </View>
+              </View>
             </View>
-            
-  </View>
-  {showRedirectModal && (
-              <BlurView
-                tint="dark"
-                intensity={80}
-                style={{
-                  height: SCREEN_HEIGHT,
-                  width: SCREEN_WIDTH,
-                  position: 'absolute',
+          </View>
+          {this.image.body.length>0 &&
+            <View style={[styles.container, styles.centeredRow, {position:'absolute', bottom:0}]}>
+              <TouchableOpacity
+                style={[styles.container, styles.centeredRow, {
+                  paddingBottom: 35,
+                  flexDirection: 'column'
+                }]}
+                onPress={()=>{
+                  console.log('this is working')
+                  NavigationService.navigate('PetitionText', {image:this.image, title:this.image.title, body:this.image.body})
                 }}
               >
-                <RedirectModal
-                  onClose={this._modalOnClose}
-                  external_url={
-                    this.image.external_url ? this.image.external_url : null
-                  }
-                />
-              </BlurView>
-            )}
-            {showCommunitySignedModal && (
-              <BlurView
-                tint="dark"
-                intensity={80}
-                style={{
-                  height: SCREEN_HEIGHT,
-                  width: SCREEN_WIDTH,
-                  position: 'absolute',
-                }}
-              >
-                <CommunitySignedModal onClose={this._modalOnClose} />
-              </BlurView>
-            )}
-            {this.image.body.length>0 &&
-            <View style={{position:"absolute", bottom:0, width:SCREEN_WIDTH}}>
-            <TouchableOpacity 
-              style={{
-                flex:1, flexDirection:"row", justifyContent:"center", alignContent:'center'
-              }}
-            onPress={()=>{
-              console.log('this is working')
-              NavigationService.navigate('PetitionText', {image:this.image, title:this.image.title, body:this.image.body})
-            }}>
+                <Text style={[styles.smallWhiteText, styles.centerText]}>READ MORE</Text>
                 <AntDesign
                   name="down"
                   style={{
-                  color: '#fff',
+                    color: '#fff',
                     justifyContent: 'center',
                     alignItems: 'center',
                     fontSize: 20,
                     marginHorizontal: 10,
-                 }}
-               />
-               </TouchableOpacity>
-               </View>
-            }
-          
+                  }}
+                />
+              </TouchableOpacity>
+            </View>
+          }
           </View>
-        </View>
+          {showCommunitySignedModal && (
+            <BlurView
+            tint="dark"
+            intensity={80}
+            style={[styles.container, styles.coverScreen,
+              {
+                height: defaults.primaryHeight,
+              }]}
+            >
+              <CommunitySignedModal onClose={this._modalOnClose} />
+            </BlurView>
+          )}
+          {showRedirectModal && (
+            <BlurView
+              tint="dark"
+              intensity={80}
+              style={{
+                height: SCREEN_HEIGHT,
+                width: SCREEN_WIDTH,
+                position: 'absolute',
+              }}
+            >
+              <RedirectModal
+                onClose={this._modalOnClose}
+                external_url={
+                  this.image.external_url ? this.image.external_url : null
+                }
+              />
+            </BlurView>
+          )}
       </Animated.View>
     );
   }
 }
-
-const styles = {
-  topBar: {
-    position: 'absolute',
-    top: 8,
-    left: 15,
-  },
-  container: {
-    flex: 1,
-  },
-  topBackNav: {
-    flex: 1,
-    justifyContent: 'flex-start',
-    maxHeight: 30,
-    paddingHorizontal: 5,
-  },
-};
 
 export default PetitionScreen;
