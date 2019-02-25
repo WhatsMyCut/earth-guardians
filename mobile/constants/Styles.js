@@ -29,7 +29,7 @@ export const styles = StyleSheet.create({
     flex: 1,
   },
   blackBG: {
-    backgroundColor: '#000000',
+    backgroundColor: '#000',
   },
   title: {
     fontSize: 22,
@@ -171,13 +171,6 @@ export const styles = StyleSheet.create({
   },
   padded: {
     padding: defaults.padding
-  },
-  // Video
-  videoContainer: {
-    flex: 1,
-    backgroundColor: '#333',
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   splashLogoContainer: {
     flex: 1,
@@ -466,8 +459,6 @@ export const styles = StyleSheet.create({
     position: 'absolute',
     width: defaults.width,
     height: defaults.primaryHeight,
-    borderColor: 'transparent',
-    borderWidth: 0,
     borderRadius: defaults.borderRadius,
   },
   primaryMedia: {

@@ -105,7 +105,7 @@ class DefaultScreen extends BaseScreen {
                   <Text style={[styles.headerText]}>VIDEO</Text>
                 </View>
             </View>
-            <View style={[styles.videoContainer]}>
+            <View style={[styles.containerGrey]}>
               <VideoPlayer
                 ref={this._mountVideo}
                 style={{
