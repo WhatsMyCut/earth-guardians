@@ -60,10 +60,11 @@ export default class CommunityEventModal extends React.Component {
         transparent={true}
         visible={this.state.openModal}
         onRequestClose={() => {
-          console.log('Modal has been closed.');
+          this.props.onClose()
         }}
         onBackDropPress={() => {
           console.log('backdroppress')
+          this.props.onClose()
         }}
       >
         <TouchableWithoutFeedback style={[styles.container, styles.coverScreen]} onPress={() => {

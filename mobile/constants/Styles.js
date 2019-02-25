@@ -10,8 +10,9 @@ export const defaults = {
     marginLeft: 10,
     marginRight: 10,
     margin: 20,
-    marginHorizontal: 10,
-    paddingHorizontal: 10,
+    padding: 20,
+    marginHorizontal: 20,
+    paddingHorizontal: 20,
 }
 export const SCREEN_WIDTH = Dimensions.get('window').width
 export const SCREEN_HEIGHT = Dimensions.get('window').height;
@@ -55,6 +56,10 @@ export const styles = StyleSheet.create({
     right: 0,
     left: 0,
     bottom: 0,
+  },
+  coverAll: {
+    width: SCREEN_WIDTH,
+    height: SCREEN_HEIGHT
   },
   // Game Cards
   card: {
@@ -147,6 +152,11 @@ export const styles = StyleSheet.create({
     marginBottom: 10,
     fontSize: 12,
   },
+  smallGreyText: {
+    color: '#ccc',
+    marginBottom: 10,
+    fontSize: 12,
+  },
   centerAll: {
     justifyContent: 'center',
     alignItems: 'center',
@@ -159,13 +169,15 @@ export const styles = StyleSheet.create({
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: '#fff',
   },
+  padded: {
+    padding: defaults.padding
+  },
   // Video
   videoContainer: {
     flex: 1,
-    backgroundColor: '#000000',
+    backgroundColor: '#333',
     justifyContent: 'center',
     alignItems: 'center',
-    zIndex: 999,
   },
   splashLogoContainer: {
     flex: 1,
@@ -240,6 +252,11 @@ export const styles = StyleSheet.create({
     marginVertical: 10,
     textAlign: 'center',
   },
+  textWhite: {
+    color: "#fff",
+    fontSize: defaults.fontSize,
+    fontWeight: 'normal'
+  },
   textWhite18B: {
     color: '#fff',
     fontSize: 18,
@@ -266,6 +283,7 @@ export const styles = StyleSheet.create({
     width: SCREEN_WIDTH - 40,
     position: 'absolute',
     marginHorizontal: 20,
+    borderRadius: defaults.borderRadius
   },
   petitionDimensions: {
     height: SCREEN_HEIGHT - 180,
@@ -442,11 +460,12 @@ export const styles = StyleSheet.create({
     fontSize: 24,
     color: 'lightgreen',
   },
-  topBackNav: {
+  topNav: {
     flex: 1,
     justifyContent: 'flex-start',
-    maxHeight: 30,
-    paddingHorizontal: 5,
+    maxHeight: 50,
+    marginTop: 50,
+    paddingHorizontal: defaults.paddingHorizontal,
     zIndex:1
   },
   headlineView: {
@@ -477,7 +496,7 @@ export const styles = StyleSheet.create({
     height: defaults.primaryHeight,
     borderRadius: defaults.borderRadius,
   },
-  gameRow: {
+  centeredRow: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',

@@ -89,19 +89,22 @@ class DefaultScreen extends BaseScreen {
 
     console.ignoredYellowBox = ['Warning:'];
     return (
-      <Animated.View {...this.viewResponder.panHandlers} style={{ flex: 1 }}>
+      <Animated.View {...this.viewResponder.panHandlers} style={[styles.container, styles.greyCard]}>
 
-        <View style={styles.container}>
-          <View style={styles.topBackNav}>
+        <View style={[styles.container, styles.greyCardHeader]}>
+          <View style={[styles.container, styles.topNav]}>
               <TouchableOpacity
                 onPress={() => this.props.navigation.navigate('Petition', {
                   screen: 'Community',
-                  image: petition,s
+                  image: petition,
                 })}>
                 <Ionicons name="ios-arrow-round-back" size={42} color="#ccc" />
               </TouchableOpacity>
+              <View style={[styles.headerContainer]}>
+                <Text style={[styles.headerText]}>VIDEO</Text>
+              </View>
           </View>
-        <View style={ styles.videoContainer }>
+          <View style={[styles.videoContainer]}>
             <VideoPlayer
               ref={this._mountVideo}
               style={{
@@ -114,7 +117,6 @@ class DefaultScreen extends BaseScreen {
                   uri: videoUrl,
                 },
                 isMuted: false,
-
                 ref: component => {
                   this._playbackInstance = component;
                 },
@@ -125,19 +127,6 @@ class DefaultScreen extends BaseScreen {
               switchToPortrait={this.switchToPortrait.bind(this)}
               playFromPositionMillis={0}
             />
-            {/* <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                alignContent: 'center',
-              }}
-            >
-              <Text style={{ color: '#ffffff' }}> Change Default Rate </Text>
-              <RateButton rate={1} style={{ color: '#ffffff' }} />
-              <RateButton rate={2} style={{ color: '#ffffff' }} />
-              <RateButton rate={4} style={{ color: '#ffffff' }} />
-            </View> */}
           </View>
         </View>
       </Animated.View>
@@ -146,15 +135,7 @@ class DefaultScreen extends BaseScreen {
 }
 
 DefaultScreen.navigationOptions = {
-  headerStyle: {
-    backgroundColor: '#000000',
-    borderBottomWidth: 0,
-    shadowColor: 'transparent',
-    shadowRadius: 0,
-    shadowOffset: {
-      height: 0,
-    },
-  },
+  headerStyle: styles.greyCardHeader
 };
 
 export default DefaultScreen;
