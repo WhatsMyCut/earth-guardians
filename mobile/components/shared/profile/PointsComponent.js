@@ -43,7 +43,7 @@ export default class PointsComponent extends React.Component {
             </View>
           </View>
         </View>
-        <View style={styles.reachComponent}>
+        <View style={[styles.componentContainer, {marginBottom: 20}]}>
           <View style={styles.detailRow}>
             <View style={ {flexBasis: '33%'} }>
               <Text style={[styles.detailCell, styles.halfCell, styles.centerText]}>Water</Text>
