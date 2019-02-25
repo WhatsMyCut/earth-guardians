@@ -258,13 +258,13 @@ class PetitionScreen extends React.Component {
           >
             {this.image.video_url && (
               <TouchableOpacity
-                style={{
+                style={[styles.centerAll, {
                   opacity: 0.9,
                   position: 'absolute',
                   width:100,
                   top: SCREEN_HEIGHT / 2,
                   left: SCREEN_WIDTH / 2.2,
-                }}
+                }]}
                 onPress={() => {
                   NavigationService.navigate('Video', {
                     screen: 'Petition',
@@ -275,6 +275,7 @@ class PetitionScreen extends React.Component {
                 hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}
               >
                 <FontAwesome name="play" size={52} color="white" />
+                <Text style={[styles.smallWhiteText, {marginTop: 10}]}>Play Video</Text>
               </TouchableOpacity>
             )}
 

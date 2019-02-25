@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import { Image } from 'react-native-expo-image-cache';
 import { all } from 'rsvp';
-import { LinearGradient, BlurView } from 'expo';
+import { LinearGradient, BlurView, Icon } from 'expo';
 import { Analytics, PageHit } from 'expo-analytics';
 
 import { ALL_PETITIONS } from '../components/graphql/queries/all_petitions';
@@ -193,7 +193,8 @@ class CommunityStackScreen extends React.Component {
         style={[styles.petitionCard, {
           top: 20 + 20 / index,
           zIndex: index * 10,
-        }]}>
+        }]}
+      >
         <View style={[styles.petitionDetails ]}>
           <Text style={styles.title}>
             {petition.title}
@@ -287,14 +288,24 @@ class CommunityStackScreen extends React.Component {
         </Animated.View>
 
         <View style={styles.videoPlayIcon}>
+        <View style={[styles.container, styles.centeredRow, { position: 'absolute', top: 20, flexDirection: 'column' }]}>
+          <Icon.MaterialCommunityIcons
+            name={'gesture-swipe-vertical'}
+            style={[styles.centerText, styles.textWhite, { fontSize: 30 }]}
+          />
+          <Text style={[styles.textWhite]}>(Swipe up or down for more)</Text>
+        </View>
           <TouchableOpacity
             onPress={() => {
               navigationService.navigate('Petition', {
                 screen: 'Community',
                 image: petition,
               });
-          }}>
+            }}
+            style={[styles.centerAll]}
+          >
             <FontAwesome name="play" size={52} color="white" />
+            <Text style={[styles.smallWhiteText, {marginTop: 10}]}>Learn More</Text>
           </TouchableOpacity>
         </View>
       </Animated.View>
