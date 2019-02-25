@@ -11,12 +11,12 @@ import {
 import { LinearGradient } from 'expo';
 import { Image } from 'react-native-expo-image-cache';
 import navigationService from '../navigation/navigationService';
-import { styles } from '../constants/Styles';
 import LinearGradientProps from '../constants/LinearGradientProps';
 import ActionCardSmall from '../components/shared/card';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import PrimaryImage from '../constants/PrimaryImage'
 import FontAwesome from '@expo/vector-icons/FontAwesome';
+import { styles, defaults } from '../constants/Styles';
 
 export default class GeneralScreen extends React.Component {
   constructor(props) {
@@ -63,7 +63,7 @@ export default class GeneralScreen extends React.Component {
       >
         <Image
           style={styles.primaryMedia}
-          {...{ preview, uri: this.props.primary_image }}
+          source={{preview, uri: this.props.primary_image }}
         />
       </TouchableOpacity>
     );
@@ -74,8 +74,7 @@ export default class GeneralScreen extends React.Component {
       return null;
     }
     const preview = {
-      uri:
-        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==',
+      uri: PrimaryImage,
     };
 
     return (
@@ -86,20 +85,22 @@ export default class GeneralScreen extends React.Component {
             video: this.state.video_url,
           })
         }
+        style={[styles.container, { marginLeft: 20}]}
       >
-        <Image
-          style={styles.primaryMedia}
-          {...{ preview, uri: this.state.picture_url }}
-        />
-        <View style={styles.imageLinearGradient}>
+        <View style={styles.container}>
+          <Image
+            style={styles.primaryMedia}
+            {...{ preview, uri: this.state.picture_url }}
+          />
           <LinearGradient
             locations={[0, 1.0]}
-            colors={['rgba(0,0,0,0.00)', 'rgba(0,0,0,0.70)']}
-            style={styles.imageLinearGradient}
+            colors={['rgba(0,0,0,0.08)', 'rgba(0,0,0,0.85)']}
+            style={styles.container}
           />
         </View>
-        <View style={styles.videoPlayContainer}>
+        <View style={[styles.videoPlayIcon, { position: 'absolute', top: 50 }]}>
           <FontAwesome name="play" size={52} color="white" />
+          <Text style={[styles.smallWhiteText]}>Click to Play</Text>
         </View>
       </TouchableOpacity>
     );
@@ -117,8 +118,8 @@ export default class GeneralScreen extends React.Component {
   render() {
     if (!this.props.data) {
       return (
-        <SafeAreaView style={styles.container}>
-          <View style={styles.container}>
+        <SafeAreaView style={[styles.container]}>
+          <View style={[styles.container]}>
             <Text>Nothing available!</Text>
           </View>
         </SafeAreaView>
@@ -126,15 +127,21 @@ export default class GeneralScreen extends React.Component {
     }
 
     return (
-      <SafeAreaView style={styles.container}>
-        <View style={styles.container}>
-          <ScrollView style={{ flex: 1 }}>
-            <View style={styles.headlineView}>{this.primaryView()}</View>
+      <SafeAreaView style={[styles.container]}>
+        <ScrollView style={[styles.container, {flexDirection: 'column'}]}>
+          <View style={[styles.container]}>{this.primaryView()}</View>
+          <View style={[styles.container, {
+              marginLeft: 10,
+              marginRight: defaults.marginHorizontal,
+              marginTop: 20,
+            }]}
+          >
             <FlatList
-              style={styles.container}
+              style={[styles.container]}
               numColumns={2}
               style={{
-                paddingRight:10
+                paddingRight: defaults.paddingRight,
+                paddingBottom: 20
               }}
               data={this.props.data[0].actions}
               keyExtractor={(item, index) => item.id}
@@ -146,8 +153,8 @@ export default class GeneralScreen extends React.Component {
                 />
               )}
             />
-          </ScrollView>
-        </View>
+          </View>
+        </ScrollView>
       </SafeAreaView>
     );
   }

@@ -229,22 +229,6 @@ export const styles = StyleSheet.create({
     right:-5,
     height:250
   },
-  imageLinearGradient: {
-    position: 'absolute',
-    height: '100%',
-    width: '100%',
-    borderColor: 'transparent',
-    borderWidth: 1,
-    borderRadius: defaults.borderRadius,
-  },
-  reachComponent: {
-    //backgroundColor: '#666',
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: SCREEN_WIDTH * 0.9,
-
-    padding: 10,
-  },
   componentHeader: {
     color: '#fff',
     fontSize: 18,
@@ -267,14 +251,9 @@ export const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold'
   },
-  fadeText18B: {
-    color: 'rgba(255,255,255,0.3)',
-    fontSize: 18,
-    fontWeight: 'bold'
-  },
   gradientContainer: {
     position: 'absolute',
-    borderRadius: 20,
+    borderRadius: defaults.borderRadius,
     left: 0,
     top: 0,
   },
@@ -464,15 +443,15 @@ export const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-start',
     maxHeight: 50,
-    marginTop: 50,
     paddingHorizontal: defaults.paddingHorizontal,
     zIndex:1
   },
   headlineView: {
-    height: defaults.primaryHeight,
+    flex: 1,
+    height: defaults.primaryHeight / 4,
     borderWidth: 1,
     paddingHorizontal: 10,
-    marginTop: 35,
+    marginVertical: 35,
     justifyContent: 'center',
     alignItems: 'center',
     shadowColor: '#000',
@@ -493,7 +472,8 @@ export const styles = StyleSheet.create({
   },
   primaryMedia: {
     width: defaults.width,
-    height: defaults.primaryHeight,
+    height: 250,
+    top: 20,
     borderRadius: defaults.borderRadius,
   },
   centeredRow: {
@@ -519,7 +499,6 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     borderColor: 'gray',
     borderWidth: 0,
-
     borderBottomWidth: 1,
     alignItems: 'flex-end',
     width: '100%',
@@ -545,7 +524,7 @@ export const styles = StyleSheet.create({
     height: 50,
     marginVertical: 10,
   },
-social: {
+  social: {
     borderRadius: 10,
     borderWidth: 1,
     backgroundColor: '#666',

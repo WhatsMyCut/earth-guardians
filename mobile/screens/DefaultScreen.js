@@ -89,47 +89,49 @@ class DefaultScreen extends BaseScreen {
 
     console.ignoredYellowBox = ['Warning:'];
     return (
-      <Animated.View {...this.viewResponder.panHandlers} style={[styles.container, styles.greyCard]}>
+      <SafeAreaView style={[styles.greyCard]}>
+        <Animated.View {...this.viewResponder.panHandlers} style={[styles.container]}>
 
-        <View style={[styles.container, styles.greyCardHeader]}>
-          <View style={[styles.container, styles.topNav]}>
-              <TouchableOpacity
-                onPress={() => this.props.navigation.navigate('Petition', {
-                  screen: 'Community',
-                  image: petition,
-                })}>
-                <Ionicons name="ios-arrow-round-back" size={42} color="#ccc" />
-              </TouchableOpacity>
-              <View style={[styles.headerContainer]}>
-                <Text style={[styles.headerText]}>VIDEO</Text>
-              </View>
+          <View style={[styles.container, styles.greyCardHeader]}>
+            <View style={[styles.container, styles.topNav]}>
+                <TouchableOpacity
+                  onPress={() => this.props.navigation.navigate('Petition', {
+                    screen: 'Community',
+                    image: petition,
+                  })}>
+                  <Ionicons name="ios-arrow-round-back" size={42} color="#ccc" />
+                </TouchableOpacity>
+                <View style={[styles.headerContainer]}>
+                  <Text style={[styles.headerText]}>VIDEO</Text>
+                </View>
+            </View>
+            <View style={[styles.videoContainer]}>
+              <VideoPlayer
+                ref={this._mountVideo}
+                style={{
+                  justifyContent: 'flex-start',
+                }}
+                videoProps={{
+                  shouldPlay: true,
+                  resizeMode: 'cover',
+                  source: {
+                    uri: videoUrl,
+                  },
+                  isMuted: false,
+                  ref: component => {
+                    this._playbackInstance = component;
+                  },
+                }}
+                showControlsOnLoad={true}
+                isPortrait={this.state.isPortrait}
+                switchToLandscape={this.switchToLandscape.bind(this)}
+                switchToPortrait={this.switchToPortrait.bind(this)}
+                playFromPositionMillis={0}
+              />
+            </View>
           </View>
-          <View style={[styles.videoContainer]}>
-            <VideoPlayer
-              ref={this._mountVideo}
-              style={{
-                justifyContent: 'flex-start',
-              }}
-              videoProps={{
-                shouldPlay: true,
-                resizeMode: 'cover',
-                source: {
-                  uri: videoUrl,
-                },
-                isMuted: false,
-                ref: component => {
-                  this._playbackInstance = component;
-                },
-              }}
-              showControlsOnLoad={true}
-              isPortrait={this.state.isPortrait}
-              switchToLandscape={this.switchToLandscape.bind(this)}
-              switchToPortrait={this.switchToPortrait.bind(this)}
-              playFromPositionMillis={0}
-            />
-          </View>
-        </View>
-      </Animated.View>
+        </Animated.View>
+      </SafeAreaView>
     );
   }
 }
