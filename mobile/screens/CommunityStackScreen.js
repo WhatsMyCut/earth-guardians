@@ -61,17 +61,7 @@ class CommunityStackScreen extends React.Component {
         showRedirectModal: false,
         redirectModalPetition: null,
       }, // Analytics
-      () => {
-        try {
-          const analytics = new Analytics('UA-131896215-1');
-          analytics
-            .hit(new PageHit('CommunityScreen'))
-            .then(() => console.log('success '))
-            .catch(e => console.log(e.message));
-        } catch (e) {
-          console.log(e);
-        }
-      }
+      () => _sendAnalytics
     );
   }
 
@@ -160,6 +150,18 @@ class CommunityStackScreen extends React.Component {
       },
     });
   }
+
+  _sendAnalytics = () => {
+    try {
+      const analytics = new Analytics('UA-131896215-1');
+      analytics
+        .hit(new PageHit('CommunityScreen'))
+        .then(() => console.log('success '))
+        .catch(e => console.log(e.message));
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   _handleLoading = () => {
     this.setState({ loading: false });

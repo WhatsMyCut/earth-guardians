@@ -71,17 +71,7 @@ class PetitionScreen extends React.Component {
             {
               video_url: data.download[data.download.length - 2].link,
             },
-            () => {
-              try {
-                const analytics = new Analytics('UA-131896215-1');
-                analytics
-                  .hit(new PageHit('Petition'))
-                  .then(() => console.log('success '))
-                  .catch(e => console.log(e.message));
-              } catch (e) {
-                console.log(e);
-              }
-            }
+            () => _sendAnalytics
           );
         });
     }
@@ -112,6 +102,18 @@ class PetitionScreen extends React.Component {
         }
       },
     });
+  }
+
+  _sendAnalytics = () =>{
+    try {
+      const analytics = new Analytics('UA-131896215-1');
+      analytics
+        .hit(new PageHit('Petition'))
+        .then(() => console.log('success '))
+        .catch(e => console.log(e.message));
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   togglePetition = () => {
