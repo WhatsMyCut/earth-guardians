@@ -13,11 +13,11 @@ import { styles } from '../../../constants/Styles'
 
 @graphql(GET_USER,{
   name:"my_user",
-  options:{
-    pollInterval:500
-  }
 })
-export default class Profileomponent extends React.Component {
+export default class ProfileComponent extends React.Component {
+  componentWillUnmount() {
+    this.props.my_user = null
+  }
   render() {
     const { my_user } = this.props;
 

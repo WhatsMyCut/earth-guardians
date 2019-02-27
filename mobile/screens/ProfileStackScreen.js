@@ -20,23 +20,17 @@ import graphql from '../components/hoc/graphql';
 import NavigationService from '../navigation/navigationService';
 import ProfileComponent from '../components/shared/profile/ProfileComponent';
 import CommunityEventModal from '../components/shared/modals/CommunityEventModal';
-import { ALL_MY_METRICS } from '../components/graphql/queries/all_my_metrics_query';
+import { GET_USER } from '../components/graphql/queries/get_user';
 import client from '../Apollo';
 import { StoreData } from '../store/AsyncStore';
 import { styles, defaults } from '../constants/Styles'
 
-@graphql(ALL_MY_METRICS, {
-  name: 'all_metrics',
+@graphql(GET_USER, {
+  name: 'user',
 })
 class ProfileStackScreen extends React.Component {
   state = {
     openModal: false,
-    points: 0,
-    waste: 0,
-    water: 0,
-    carbon_dioxide: 0,
-    loading: true,
-    communityEvents: 0,
   };
 
   interval;
@@ -65,68 +59,30 @@ class ProfileStackScreen extends React.Component {
         console.log(e);
       }
     };
-
-    this.interval = setInterval(()=>{
-      this.props.all_metrics.refetch();
+    this.interval = setInterval(() => {
+      this.props.user.refetch();
     }, 2000)
-
   }
 
   componentWillUnmount = ()=>{
     clearInterval(this.interval);
   }
 
-  componentWillReceiveProps= () => {
-    if(!this.props.all_metrics.loading){
-      console.log('this.props.all_metrics.loading', this.props.all_metrics.me)
-      this._aggregateProfile(
-        this.props.all_metrics.me ? this.props.all_metrics.me.recent_actions : 0,
-        this.props.all_metrics.me? this.props.all_metrics.me.community_events : 0
-      );
-    }
-  }
-
-  async _aggregateProfile(recent_actions, community_events) {
-    const { points, water, waste, carbon_dioxide, loading } = this.state;
+  async _aggregateProfile() {
+    const { loading } = this.state;
     if (!loading) {
       return;
     }
-    let newPoints = 0;
-    let newWater = 0;
-    let newWaste = 0;
-    let newCarbonDioxide = 0;
-    let aggregateObj = {};
 
-    await Promise.all([
-      recent_actions.map(item => {
-        newPoints += item.action.points;
-        newWater += item.action.water;
-        newWaste += item.action.waste;
-        newCarbonDioxide += item.action.carbon_dioxide;
-          if(aggregateObj.hasOwnProperty(`${item.action.category.name}`)){
-            aggregateObj[`${item.action.category.name}`] += item.action.points;
-          } else{
-            aggregateObj[`${item.action.category.name}`] = item.action.points;
-          }
-      }),
-    ]);
-
-    let additionalPoints = community_events.length * 100;
     this.setState({
-      points: points != newPoints ? newPoints + additionalPoints : points,
-      water: water != newWater ? newWater : water,
-      waste: waste != newWaste ? newWaste : waste,
-      carbon_dioxide:
-        carbon_dioxide != newCarbonDioxide ? newCarbonDioxide : carbon_dioxide,
-      communityEvents: community_events,
       loading: false,
-      aggregateObj: aggregateObj
+      user: this.props.user
     });
   }
 
   render() {
     //console.log('this.props', this.props);
-    if (this.props.all_metrics.loading) {
+    if (this.props.user.loading) {
       return (
         <SafeAreaView style={{ flex: 1 }}>
           <View style={ styles.containerGrey }>
@@ -134,22 +90,16 @@ class ProfileStackScreen extends React.Component {
           </View>
         </SafeAreaView>
       );
-    } else if(this.props.all_metrics.me.recent_actions){
-      //console.log('this.props.all_metrics.loading', this.props.all_metrics.me)
-
-      if (this.props.all_metrics.me.recent_actions.length !== 0) {
-        this._aggregateProfile(
-          this.props.all_metrics.me.recent_actions,
-          this.props.all_metrics.me.community_events
-        );
-      }
+    } else {
+      this._aggregateProfile()
+      console.log('this.props.user', this.props.user)
     }
 
     return (
       <SafeAreaView style={[styles.greyCard]}>
         <ScrollView contentContainerStyle={[{}]}>
           <View style={[styles.containerGrey, defaults.SCREEN_HEIGHT]}>
-            <ProfileComponent points={this.state.points} aggregate={this.state.aggregateObj}/>
+            <ProfileComponent user={this.state.user}/>
           </View>
 
           {this.state.openModal ? (

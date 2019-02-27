@@ -5,18 +5,29 @@ import {
   createBottomTabNavigator,
 } from 'react-navigation';
 import { Ionicons, MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons';
-import Entypo from '@expo/vector-icons/Entypo';
 import ProfileStackScreen from '../screens/ProfileStackScreen';
 import NotificationStackScreen from '../screens/NotificationStackScreen';
-import AuthLoading from '../screens/AuthLoadingScreen';
+import PhoneSignup from '../components/signup/PhoneSignup';
+import client from '../Apollo';
+import { StoreData } from '../store/AsyncStore';
 
 const Logout = ({ focused }) => {
   return (
-    <MaterialCommunityIcons
+    <TouchableOpacity
+      onPress={async () => {
+        await StoreData('phone', null);
+        await StoreData('country_dial_code', null);
+        await StoreData('EARTH_GUARDIANS_TOKEN', null);
+        client.resetStore();
+        NavigationService.navigate('Community');
+      }}
+    >
+      <MaterialCommunityIcons
         name="logout"
         size={22}
         color={focused ? '#fff' : '#3C3B3D'}
-    />
+      />
+    </TouchableOpacity>
   );
 };
 const Notification = ({ focused }) => {
@@ -56,7 +67,7 @@ NotificationStack.navigationOptions = {
 };
 
 const LogoutButton = createStackNavigator({
-  Logout: AuthLoading,
+  Logout: PhoneSignup,
 });
 
 LogoutButton.navigationOptions = {
