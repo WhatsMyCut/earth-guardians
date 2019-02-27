@@ -44,7 +44,7 @@ export default class ImpactComponent extends React.Component {
             Waste (lbs)
           </Text>
           <Text style={[styles.detailCell, styles.itemPoint, styles.centerText]}>
-            {this.props.waste -= this.props.waste%.01}
+            {this.props.waste}
           </Text>
         </View>
       </View>
