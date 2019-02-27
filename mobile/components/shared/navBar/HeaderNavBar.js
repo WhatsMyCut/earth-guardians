@@ -34,7 +34,7 @@ const EyeIcon = () => {
 const UserIcon = () => {
   return (
     <TouchableOpacity
-      onPress={() => navigationService.navigate('Profile')}
+      onPress={() => navigationService.navigate('Impact')}
       hitSlop={{top: 15, left: 15, right:15, bottom:15}}
     >
       <Image

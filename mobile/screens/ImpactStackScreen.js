@@ -2,17 +2,14 @@ import React from 'react';
 //import { LinearGradient, AppLoading } from 'expo';
 
 import {
-  Animated,
-  PanResponder,
   TouchableOpacity,
   SafeAreaView,
   ScrollView,
   View,
   Text,
-  KeyboardAvoidingView,
   ActivityIndicator,
 } from 'react-native';
-import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { Ionicons, FontAwesome } from '@expo/vector-icons';
 import { BlurView } from 'expo';
 import { Analytics, PageHit } from 'expo-analytics';
 import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_categories_query';
@@ -22,12 +19,8 @@ import GraphComponent from '../components/shared/profile/GraphComponent';
 import ImpactComponent from '../components/shared/profile/ImpactComponent';
 import ReachComponent from '../components/shared/profile/ReachComponent';
 import PointsComponent from '../components/shared/profile/PointsComponent';
-import ProfileComponent from '../components/shared/profile/ProfileComponent';
 import CommunityEventModal from '../components/shared/modals/CommunityEventModal';
 import { ALL_MY_METRICS } from '../components/graphql/queries/all_my_metrics_query';
-import UpdateUserModal from '../components/shared/modals/updateUserModal';
-import client from '../Apollo';
-import { StoreData } from '../store/AsyncStore';
 import { styles, defaults } from '../constants/Styles'
 
 @graphql(ALL_MY_METRICS, {
@@ -41,7 +34,6 @@ class ImpactStackScreen extends React.Component {
     water: 0,
     carbon_dioxide: 0,
     loading: true,
-    openUserModal: false,
     communityEvents: 0,
   };
 
@@ -57,14 +49,6 @@ class ImpactStackScreen extends React.Component {
   };
 
   componentWillMount() {
-    // this.viewResponder = PanResponder.create({
-    //   onStartShouldSetPanResponder: () => true,
-    //   onPanResponderMove: (evt, gs) => {
-    //     if (200 < gs.dy) {
-    //       NavigationService.navigate('CommunityStack');
-    //     }
-    //   },
-    // });
   }
 
   componentDidMount() {
@@ -178,13 +162,6 @@ class ImpactStackScreen extends React.Component {
               communityEvents={this.state.communityEvents}
             />
             <PointsComponent points={this.state.points} aggregate={this.state.aggregateObj}/>
-            <ProfileComponent
-              onPress={() =>
-                this.setState({
-                  openUserModal: true,
-                })
-              }
-            />
           </View>
 
           {this.state.openModal ? (
@@ -200,30 +177,6 @@ class ImpactStackScreen extends React.Component {
                 onClose={() => {
                   this.setState({ openModal: false, loading: true });
                 }}
-              />
-            </BlurView>
-          ) : null}
-          {this.state.openUserModal ? (
-            <BlurView
-              tint="dark"
-              intensity={80}
-              style={{
-                justifyContent: 'center',
-                alignItems: 'center',
-                backgroundColor: 'rgba(0,0,0,.1)',
-                position: 'absolute',
-                top: 0,
-                right: 0,
-                left: 0,
-                bottom: 0,
-              }}
-            >
-              <UpdateUserModal
-                onClose={() =>
-                  this.setState({
-                    openUserModal: false,
-                  })
-                }
               />
             </BlurView>
           ) : null}
@@ -252,21 +205,17 @@ ImpactStackScreen.navigationOptions = {
   ),
   headerRight: (
     <TouchableOpacity
-      onPress={async () => {
-        await StoreData('phone', null);
-        await StoreData('country_dial_code', null);
-        await StoreData('EARTH_GUARDIANS_TOKEN', null);
-        client.resetStore();
-        NavigationService.navigate('AuthLoading');
-      }}
+      onPress={() => NavigationService.navigate('Profile')}
+      hitSlop={{top: 15, left: 15, right:15, bottom:15}}
+      style={[styles.container, {paddingRight: defaults.padding}]}
     >
-      <MaterialCommunityIcons
-        name="logout"
-        size={22}
-        color="white"
-        style={{ paddingRight: 10, opacity: 0.7 }}
+      <FontAwesome
+        name="gear"
+        size={25}
+        color={'white'}
       />
     </TouchableOpacity>
+
   ),
   headerStyle: styles.greyCardHeader,
 };

@@ -2,10 +2,7 @@ import React from 'react';
 import {
   View,
   Text,
-  Image,
-  Dimensions,
   TouchableOpacity,
-  StyleSheet,
 } from 'react-native';
 import { LinearGradient } from 'expo';
 import LinearGradientProps from '../../../constants/LinearGradientProps';

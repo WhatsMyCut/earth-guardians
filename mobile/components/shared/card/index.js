@@ -6,14 +6,13 @@ import {
   FlatList,
   Text,
   TouchableOpacity,
-  Image as NativeImage,
+  Image,
   Animated,
   View,
 } from 'react-native';
 import { LinearGradient } from 'expo';
 import ActionDetails from './ActionDetails';
 import { defaults, styles } from '../../../constants/Styles';
-import { Image } from 'react-native-expo-image-cache';
 import NavigationService from '../../../navigation/navigationService';
 // import graphql from '../components/hoc/graphql';
 import DoubleClick from 'react-native-double-tap';
@@ -215,7 +214,7 @@ class ActionCardSmall extends React.Component {
           hitSlop={{top: 15, left: 15, right:15, bottom:15}}
           style={{ position: 'absolute', right: -2, top: -5 }}
         >
-          <NativeImage source={require('../../../assets/delete_icon.png')} style={{height:40, width:40}}/>
+          <Image source={require('../../../assets/delete_icon.png')} style={{height:40, width:40}}/>
         </TouchableOpacity>
       );
     }

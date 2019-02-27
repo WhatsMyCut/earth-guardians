@@ -1,18 +1,23 @@
 import React from 'react';
-import { View, Text, TextInput,ActivityIndicator, Image, StyleSheet, Dimensions, TouchableHighlight } from 'react-native';
+import {
+  View,
+  Text,
+  ActivityIndicator,
+  TouchableHighlight,
+  Image
+} from 'react-native';
 import graphql from '../../hoc/graphql';
-const SCREEN_WIDTH = Dimensions.get('window').width;
 import { GET_USER } from '../../graphql/queries/get_user';
 import { styles } from '../../../constants/Styles'
 
 
 @graphql(GET_USER,{
   name:"my_user",
-  options:{
-    pollInterval:500
-  }
 })
-export default class Profileomponent extends React.Component {
+export default class ProfileComponent extends React.Component {
+  componentWillUnmount() {
+    this.props.my_user = null
+  }
   render() {
     const { my_user } = this.props;
 

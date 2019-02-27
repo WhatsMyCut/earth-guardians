@@ -5,6 +5,7 @@ import AuthLoadingScreen from '../screens/AuthLoadingScreen';
 import VideoScreen from '../screens/VideoScreen';
 import PetitionScreen from '../screens/PetitionScreen';
 import PetitionTextScreen from '../screens/PetitionTextScreen';
+import ImpactStack from './ImpactTabNavigator';
 import ProfileStack from './ProfileTabNavigator';
 import RankingStack from './RankingTabNavigator';
 import MainTabNavigator from './MainTabNavigator';
@@ -20,6 +21,7 @@ export default createAppContainer(
       AuthLoading: AuthLoadingScreen,
       Main: MainTabNavigator,
       Profile: ProfileStack,
+      Impact: ImpactStack,
       Ranking: RankingStack,
       Video: VideoScreen,
       Petition: PetitionScreen,
