@@ -87,8 +87,6 @@ class VideoScreen extends BaseScreen {
       'https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8'
     );
 
-    console.log('hre', videoUrl)
-
     console.ignoredYellowBox = ['Warning:'];
     return (
       <SafeAreaView style={[styles.greyCard]}>

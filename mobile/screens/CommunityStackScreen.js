@@ -25,6 +25,7 @@ import client from '../Apollo';
 import RedirectModal from '../components/shared/modals/RedirectModal';
 import { PrimaryImage } from '../constants/PrimaryImage';
 import { styles, SCREEN_HEIGHT, SCREEN_WIDTH, SAFE_WIDTH } from '../constants/Styles';
+import _fetchVideoUrl from '../services/fetchVideoUrl';
 
 //import { petitions } from './dummy/community_data.json';
 import { community_data } from './dummy/data';
@@ -56,22 +57,12 @@ class CommunityStackScreen extends React.Component {
       }
     }
     if (all_available_petitions[0] !== null && all_available_petitions[0].video_url) {
-      this._fetchVideoURL(all_available_petitions[0].video_url)
-      .then(video_url => this._setInitialState(all_available_petitions, video_url))
+      _fetchVideoUrl(all_available_petitions[0].video_url)
+      .then(data => this._setInitialState(all_available_petitions, data.video_url))
       .catch(e => console.error(e))
     } else {
       this._setInitialState(all_available_petitions, '')
     }
-  }
-
-  _fetchVideoURL = (video_id) => {
-    return fetch(`https://api.vimeo.com/videos/${video_id}`, {
-      headers: {
-        authorization: 'Bearer 5af014003bea7ca29ec721cc5a7bd34d',
-      },
-    })
-    .then(response => response.json())
-    .then(data => data.download[data.download.length - 2].link);
   }
 
   constructor(props) {
@@ -136,8 +127,8 @@ class CommunityStackScreen extends React.Component {
 
           this.position.setValue({ x: 0, y: 0 });
           this.setState({ petitions: petitions });
-          this._fetchVideoURL(petitions[0].video_url)
-          .then(video_url => this.setState({ video_url: video_url }));
+          _fetchVideoUrl(petitions[0].video_url)
+          .then(data => this.setState({ video_url: data.video_url }));
         } else if (200 < gs.dy) {
           let { petitions } = this.state;
 
@@ -151,8 +142,8 @@ class CommunityStackScreen extends React.Component {
 
           this.position.setValue({ x: 0, y: 0 });
           this.setState({ petitions: petitions });
-          this._fetchVideoURL(petitions[0].video_url)
-          .then(video_url => this.setState({ video_url: video_url }));
+          _fetchVideoUrl(petitions[0].video_url)
+          .then(data => this.setState({ video_url: data.video_url }));
         } else {
           Animated.spring(this.position, {
             toValue: { x: 0, y: 0 },
@@ -326,7 +317,7 @@ class CommunityStackScreen extends React.Component {
           <TouchableOpacity
             onPress={() => {
               NavigationService.navigate('Video', {
-                screen: 'Community',
+                screen: 'Petition',
                 video: this.state.video_url,
                 petition: petition,
               });

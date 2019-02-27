@@ -25,6 +25,7 @@ import CommunitySignedModal from '../components/shared/modals/communitySignedMod
 import RedirectModal from '../components/shared/modals/RedirectModal';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { RetrieveData } from '../store/AsyncStore';
+import _fetchVideoUrl from '../services/fetchVideoUrl'
 import { styles, defaults } from '../constants/Styles'
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
@@ -60,20 +61,13 @@ class PetitionScreen extends React.Component {
   componentDidMount() {
     const { my_user } = this.props;
     if (this.image.video_url) {
-      fetch(`https://api.vimeo.com/videos/${this.image.video_url}`, {
-        headers: {
-          authorization: 'Bearer 5af014003bea7ca29ec721cc5a7bd34d',
+      _fetchVideoUrl(this.image.video_url)
+      .then(data => {
+        this.setState({
+          video_url: data.video_url,
         },
-      })
-        .then(response => response.json())
-        .then(data => {
-          this.setState(
-            {
-              video_url: data.download[data.download.length - 2].link,
-            },
-            () => this._sendAnalytics
-          );
-        });
+        () => this._sendAnalytics);
+      });
     }
 
     const petitionids = my_user.me.petitions_signed.map(x => x.id);
