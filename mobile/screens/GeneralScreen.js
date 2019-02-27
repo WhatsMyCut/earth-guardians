@@ -14,9 +14,8 @@ import navigationService from '../navigation/navigationService';
 import _fetchVideoUrl from '../services/fetchVideoUrl';
 import LinearGradientProps from '../constants/LinearGradientProps';
 import ActionCardSmall from '../components/shared/card';
-import Ionicons from '@expo/vector-icons/Ionicons';
 import PrimaryImage from '../constants/PrimaryImage'
-import FontAwesome from '@expo/vector-icons/FontAwesome';
+import { FontAwesome } from '@expo/vector-icons';
 import { styles, defaults } from '../constants/Styles';
 
 export default class GeneralScreen extends React.Component {

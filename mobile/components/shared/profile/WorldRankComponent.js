@@ -2,13 +2,8 @@ import React from 'react';
 import {
   View,
   Text,
-  Image,
-  TouchableOpacity,
 } from 'react-native';
-import { LinearGradient } from 'expo';
-import LinearGradientProps from '../../../constants/LinearGradientProps';
-import { styles, defaults } from '../../../constants/Styles'
-import ViewShot from 'react-native-view-shot';
+import { styles } from '../../../constants/Styles'
 
 
 export default class WorldRankComponent extends React.Component {

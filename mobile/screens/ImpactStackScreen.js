@@ -21,8 +21,6 @@ import ReachComponent from '../components/shared/profile/ReachComponent';
 import PointsComponent from '../components/shared/profile/PointsComponent';
 import CommunityEventModal from '../components/shared/modals/CommunityEventModal';
 import { ALL_MY_METRICS } from '../components/graphql/queries/all_my_metrics_query';
-import client from '../Apollo';
-import { StoreData } from '../store/AsyncStore';
 import { styles, defaults } from '../constants/Styles'
 
 @graphql(ALL_MY_METRICS, {

@@ -5,27 +5,13 @@ import {
   TouchableOpacity,
   Text,
   Image,
-  StyleSheet,
-  Dimensions,
   ScrollView,
 } from 'react-native';
-//import { all } from 'rsvp';
-import { LinearGradient, Icon } from 'expo';
+import { LinearGradient } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
 import { Analytics, PageHit } from 'expo-analytics';
-import { styles, SCREEN_WIDTH } from '../constants/Styles'
+import { styles, defaults } from '../constants/Styles'
 
-// import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_categories_query';
-// import graphql from '../components/hoc/graphql';
-// import HeaderNavBar from '../components/shared/navBar/HeaderNavBar';
-// import TabBarIcon from '../components/shared/icons/TabBarIcon';
-// import navigationService from '../navigation/navigationService';
-// import LinearGradientProps from '../constants/LinearGradientProps';
-// import GeneralScreen from './GeneralScreen';
-// @graphql(ALL_ACTION_CATEGORIES, {
-//   name: 'all_categories',
-//   fetchPolicy: 'network-only',
-// })
 class EarthGuardiansInfoScreen extends React.Component {
   //TODO, navigate back to the previos screen
   componentDidMount() {
@@ -57,7 +43,7 @@ class EarthGuardiansInfoScreen extends React.Component {
             </View>
             <ScrollView style={{ flex: 1, paddingRight: 20, paddingLeft: 20, paddingTop:15 }}>
               <View style={{ marginBottom: 10 }}>
-                <Image style={{ width: SCREEN_WIDTH, height: 200, marginLeft:-20 }} source={{uri:"https://farm8.staticflickr.com/7887/46833317801_75cbc31625_b.jpg"}} />
+                <Image style={{ width: defaults.SCREEN_WIDTH, height: 200, marginLeft:-20 }} source={{uri:"https://farm8.staticflickr.com/7887/46833317801_75cbc31625_b.jpg"}} />
                 <View style={{flex:1, justifyContent:'center', flexDirection:'row', alignContent:'center'}}>
                   <Image style={{width: 120, height: 120}} resizeMode="contain" source={require('../assets/eye_w.png')} />
                 </View>
