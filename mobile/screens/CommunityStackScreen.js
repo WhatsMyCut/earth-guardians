@@ -19,7 +19,7 @@ import { ALL_PETITIONS } from '../components/graphql/queries/all_petitions';
 import graphql from '../components/hoc/graphql';
 import HeaderNavBar from '../components/shared/navBar/HeaderNavBar';
 import LinearGradientProps from '../constants/LinearGradientProps';
-import navigationService from '../navigation/navigationService';
+import NavigationService from '../navigation/navigationService';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import client from '../Apollo';
 import RedirectModal from '../components/shared/modals/RedirectModal';
@@ -37,7 +37,9 @@ class CommunityStackScreen extends React.Component {
   state = {
     currentIndex: 0,
     petitions: [],
+    currentPetition: null,
     loading: true,
+    video_url: null,
   };
 
   async componentDidMount() {
@@ -53,16 +55,23 @@ class CommunityStackScreen extends React.Component {
         }
       }
     }
+    if (all_available_petitions[0] !== null && all_available_petitions[0].video_url) {
+      this._fetchVideoURL(all_available_petitions[0].video_url)
+      .then(video_url => this._setInitialState(all_available_petitions, video_url))
+      .catch(e => console.error(e))
+    } else {
+      this._setInitialState(all_available_petitions, '')
+    }
+  }
 
-    this.setState(
-      {
-        petitions: all_available_petitions,
-        loading: false,
-        showRedirectModal: false,
-        redirectModalPetition: null,
-      }, // Analytics
-      () => _sendAnalytics
-    );
+  _fetchVideoURL = (video_id) => {
+    return fetch(`https://api.vimeo.com/videos/${video_id}`, {
+      headers: {
+        authorization: 'Bearer 5af014003bea7ca29ec721cc5a7bd34d',
+      },
+    })
+    .then(response => response.json())
+    .then(data => data.download[data.download.length - 2].link);
   }
 
   constructor(props) {
@@ -114,7 +123,7 @@ class CommunityStackScreen extends React.Component {
       },
 
       onPanResponderRelease: (evt, gs) => {
-        if (-100 > gs.dy) {
+        if (-200 > gs.dy) {
           let { petitions } = this.state;
 
           Animated.spring(this.position, {
@@ -127,6 +136,8 @@ class CommunityStackScreen extends React.Component {
 
           this.position.setValue({ x: 0, y: 0 });
           this.setState({ petitions: petitions });
+          this._fetchVideoURL(petitions[0].video_url)
+          .then(video_url => this.setState({ video_url: video_url }));
         } else if (200 < gs.dy) {
           let { petitions } = this.state;
 
@@ -140,6 +151,8 @@ class CommunityStackScreen extends React.Component {
 
           this.position.setValue({ x: 0, y: 0 });
           this.setState({ petitions: petitions });
+          this._fetchVideoURL(petitions[0].video_url)
+          .then(video_url => this.setState({ video_url: video_url }));
         } else {
           Animated.spring(this.position, {
             toValue: { x: 0, y: 0 },
@@ -162,6 +175,20 @@ class CommunityStackScreen extends React.Component {
       console.log(e);
     }
   };
+
+  _setInitialState = (petitions, video_url) => {
+    this.setState(
+      {
+        video_url: video_url,
+        petitions: petitions,
+        currentPetition: petitions[0],
+        loading: false,
+        showRedirectModal: false,
+        redirectModalPetition: null,
+      },
+      () => this._sendAnalytics
+    );
+  }
 
   _handleLoading = () => {
     this.setState({ loading: false });
@@ -221,12 +248,11 @@ class CommunityStackScreen extends React.Component {
         <View style={styles.videoPlayIcon}>
           <TouchableOpacity
             onPress={() => {
-              navigationService.navigate('Petition', {
+              NavigationService.navigate('Petition', {
                 screen: 'Community',
                 image: petition,
               });
             }}
-            hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}
           >
             <FontAwesome name="play" size={52} color="white" />
           </TouchableOpacity>
@@ -299,15 +325,17 @@ class CommunityStackScreen extends React.Component {
         </View>
           <TouchableOpacity
             onPress={() => {
-              navigationService.navigate('Petition', {
+              NavigationService.navigate('Video', {
                 screen: 'Community',
-                image: petition,
+                video: this.state.video_url,
+                petition: petition,
               });
             }}
+            hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}
             style={[styles.centerAll]}
           >
             <FontAwesome name="play" size={52} color="white" />
-            <Text style={[styles.smallWhiteText, {marginTop: 10}]}>Learn More</Text>
+            <Text style={[styles.smallWhiteText, {paddingTop: 10}]}>Learn More</Text>
           </TouchableOpacity>
         </View>
       </Animated.View>
@@ -349,7 +377,7 @@ class CommunityStackScreen extends React.Component {
       );
     }
     return (
-      <LinearGradient {...LinearGradientProps.community} style={{ flex: 1 }}>
+      <LinearGradient {...LinearGradientProps.community} style={[styles.container]}>
         <View style={[styles.container]}>
           <View styles={[styles.container, styles.centerAll]}>
             {this._renderCard(petitions[0])}
