@@ -541,8 +541,8 @@ export const styles = StyleSheet.create({
   notificationWraper: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    width: 300,
     alignItems: 'center',
+    marginHorizontal: defaults.margin
   },
   notification: {
     color: '#fff',
