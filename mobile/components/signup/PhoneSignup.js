@@ -20,12 +20,14 @@ import PhoneInputComp from '../shared/phone/PhoneInputComp';
 import TabBarIcon from '../shared/icons/TabBarIcon';
 import PasswordModal from '../shared/modals/PasswordModal';
 import { styles, SCREEN_HEIGHT, SCREEN_WIDTH } from '../../constants/Styles'
+import _fetchVideoUrl from '../../services/fetchVideoUrl';
 import graphql from '../hoc/graphql';
 // import registerForPushNotificationsAsync from '../../services/registerForPushNotifications';
 export default class PhoneSignup extends React.Component {
   constructor(props) {
     super(props);
   }
+  video_id = '309965359'
   state = {
     valid_phone: false,
     username: null,
@@ -34,7 +36,8 @@ export default class PhoneSignup extends React.Component {
     showPasswordModal: false,
     dialCode: null,
     token: null,
-    video_url: null
+    video_url: null,
+    picture_url: null,
   };
 
   is_phone_valid = valid => {
@@ -94,22 +97,14 @@ export default class PhoneSignup extends React.Component {
 
   componentWillUnmount() {
     this.viewResponder = null;
+    this.state.video_url = null;
+    this.state.picture_url = null;
   }
 
 
   componentDidMount(){
-    fetch(`https://api.vimeo.com/videos/309965359`, {
-      headers: {
-        authorization: 'Bearer 5af014003bea7ca29ec721cc5a7bd34d',
-      },
-    })
-      .then(response => response.json())
-      .then(data => {
-        this.setState({
-          picture_url: data.pictures.sizes[4].link,
-          video_url: data.download[data.download.length - 2].link,
-        });
-      });
+    _fetchVideoUrl(this.video_id)
+    .then(data => this.setState({ video_url: data.video_url, picture_url: data.picture_url }))
   }
 
   checkIfUserExists = () => {
@@ -134,7 +129,7 @@ export default class PhoneSignup extends React.Component {
         <SafeAreaView style={{ flex: 1 }}>
 
          <Video
-          source={{uri: video_url}}
+          source={{uri: this.state.video_url}}
           rate={1.0}
           volume={1.0}
           isMuted={true}

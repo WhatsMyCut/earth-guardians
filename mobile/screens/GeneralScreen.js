@@ -11,6 +11,7 @@ import {
 import { LinearGradient } from 'expo';
 import { Image } from 'react-native-expo-image-cache';
 import navigationService from '../navigation/navigationService';
+import _fetchVideoUrl from '../services/fetchVideoUrl';
 import LinearGradientProps from '../constants/LinearGradientProps';
 import ActionCardSmall from '../components/shared/card';
 import Ionicons from '@expo/vector-icons/Ionicons';
@@ -29,18 +30,13 @@ export default class GeneralScreen extends React.Component {
 
   componentDidMount() {
     if (this.props.primary_video) {
-      fetch(`https://api.vimeo.com/videos/${this.props.primary_video}`, {
-        headers: {
-          authorization: 'Bearer 5af014003bea7ca29ec721cc5a7bd34d',
-        },
-      })
-        .then(response => response.json())
-        .then(data => {
-          this.setState({
-            picture_url: data.pictures.sizes[4].link,
-            video_url: data.download[data.download.length - 2].link,
-          });
-        });
+      _fetchVideoUrl(this.props.primary_video)
+      .then(data => {
+        this.setState({
+          picture_url: data.picture_url,
+          video_url: data.video_url,
+        })
+      });
     }
   }
 
