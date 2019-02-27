@@ -25,7 +25,7 @@ import { fromPromise } from 'apollo-link';
   name: 'my_user',
   fetchPolicy: 'network-only',
 })
-export default class UpdateUserModal extends React.Component {
+export default class UpdateUserComponent extends React.Component {
   state = {
     phone: null,
     zipcode: null,

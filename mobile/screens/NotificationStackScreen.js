@@ -43,7 +43,7 @@ class NotificationStackScreen extends React.Component {
     //   return null;
     // }
     return (
-      <SafeAreaView style={{ flex: 1 }}>
+      <SafeAreaView style={[styles.container]}>
         <View style={[styles.greyCard]}>
           <View style={styles.notificationWraper}>
             <Text style={styles.notification}>Push Notification</Text>

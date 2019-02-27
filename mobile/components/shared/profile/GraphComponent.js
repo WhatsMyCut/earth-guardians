@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Image } from 'react-native';
+import { View } from 'react-native';
 import { LinearGradient } from 'expo';
 import { DonutGraph } from './DonutGraph';
 import LinearGradientProps from '../../../constants/LinearGradientProps';

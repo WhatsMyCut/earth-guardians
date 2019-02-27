@@ -2,9 +2,7 @@ import React from 'react';
 import {
   Text,
   View,
-  StyleSheet,
   SafeAreaView,
-  Dimensions,
   Animated,
   ActivityIndicator,
   PanResponder,

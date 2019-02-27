@@ -1,19 +1,33 @@
 import React from 'react';
+import { TouchableOpacity } from 'react-native';
 import {
   createStackNavigator,
   createBottomTabNavigator,
 } from 'react-navigation';
-import Ionicons from '@expo/vector-icons/Ionicons';
-import Entypo from '@expo/vector-icons/Entypo';
-import ImpactStackScreen from '../screens/ImpactStackScreen';
-
+import { Ionicons, MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons';
+import ProfileStackScreen from '../screens/ProfileStackScreen';
 import NotificationStackScreen from '../screens/NotificationStackScreen';
+import PhoneSignup from '../components/signup/PhoneSignup';
+import client from '../Apollo';
+import { StoreData } from '../store/AsyncStore';
 
-import SocialStackScreen from '../screens/SocialStackScreen';
-
-const Stats = ({ focused }) => {
+const Logout = ({ focused }) => {
   return (
-    <Ionicons name="ios-stats" size={25} color={focused ? '#fff' : '#3C3B3D'} />
+    <TouchableOpacity
+      onPress={async () => {
+        await StoreData('phone', null);
+        await StoreData('country_dial_code', null);
+        await StoreData('EARTH_GUARDIANS_TOKEN', null);
+        client.resetStore();
+        NavigationService.navigate('Community');
+      }}
+    >
+      <MaterialCommunityIcons
+        name="logout"
+        size={22}
+        color={focused ? '#fff' : '#3C3B3D'}
+      />
+    </TouchableOpacity>
   );
 };
 const Notification = ({ focused }) => {
@@ -26,22 +40,22 @@ const Notification = ({ focused }) => {
   );
 };
 
-const Share = ({ focused }) => {
+const Profile = ({ focused }) => {
   return (
-    <Entypo
-      name="share-alternative"
-      size={25}
-      color={focused ? '#fff' : '#3C3B3D'}
+    <FontAwesome
+        name="user"
+        size={25}
+        color={focused ? '#fff' : '#3C3B3D'}
     />
   );
 };
 
-const ImpactStack = createStackNavigator({
-  Impact: ImpactStackScreen,
+const ProfileStack = createStackNavigator({
+  Profile: ProfileStackScreen,
 });
 
-ImpactStack.navigationOptions = {
-  tabBarIcon: Stats,
+ProfileStack.navigationOptions = {
+  tabBarIcon: Profile,
 };
 
 const NotificationStack = createStackNavigator({
@@ -52,18 +66,19 @@ NotificationStack.navigationOptions = {
   tabBarIcon: Notification,
 };
 
-const SocialStack = createStackNavigator({
-  Social: SocialStackScreen,
+const LogoutButton = createStackNavigator({
+  Logout: PhoneSignup,
 });
 
-SocialStack.navigationOptions = {
-  tabBarIcon: Share,
+LogoutButton.navigationOptions = {
+  tabBarIcon: Logout,
 };
 
+
 const routeConfig = {
-  ImpactStack,
-  //NotificationStack,
-  SocialStack
+  ProfileStack,
+  NotificationStack,
+  LogoutButton,
 };
 
 export default createBottomTabNavigator(routeConfig, {
@@ -78,5 +93,5 @@ export default createBottomTabNavigator(routeConfig, {
     },
   },
   lazy: true,
-  initialRouteName: 'ImpactStack',
+  initialRouteName: 'ProfileStack',
 });

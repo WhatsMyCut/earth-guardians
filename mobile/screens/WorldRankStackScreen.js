@@ -13,19 +13,14 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
-import { BlurView } from 'expo';
 import { Analytics, PageHit } from 'expo-analytics';
 import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_categories_query';
 import graphql from '../components/hoc/graphql';
 import NavigationService from '../navigation/navigationService';
 import WorldRankComponent from '../components/shared/profile/WorldRankComponent';
-import PointsComponent from '../components/shared/profile/PointsComponent';
-import CommunityEventModal from '../components/shared/modals/CommunityEventModal';
 import { ALL_MY_METRICS } from '../components/graphql/queries/all_my_metrics_query';
-import UpdateUserModal from '../components/shared/modals/updateUserModal';
 import client from '../Apollo';
 import { StoreData } from '../store/AsyncStore';
-import navigationService from '../navigation/navigationService';
 import { styles } from '../constants/Styles'
 
 @graphql(ALL_MY_METRICS, {
@@ -55,14 +50,6 @@ class WorldRankStackScreen extends React.Component {
   };
 
   componentWillMount() {
-    // this.viewResponder = PanResponder.create({
-    //   onStartShouldSetPanResponder: () => true,
-    //   onPanResponderMove: (evt, gs) => {
-    //     if (200 < gs.dy) {
-    //       NavigationService.navigate('CommunityStack');
-    //     }
-    //   },
-    // });
   }
 
   componentDidMount() {
@@ -164,53 +151,6 @@ class WorldRankStackScreen extends React.Component {
               waste={this.state.waste}
             />
           </View>
-
-          {this.state.openModal ? (
-            <BlurView
-              tint="dark"
-              intensity={80}
-              style={{
-                justifyContent: 'center',
-                alignItems: 'center',
-                backgroundColor: 'rgba(0,0,0,.1)',
-                position: 'absolute',
-                top: 0,
-                right: 0,
-                left: 0,
-                bottom: 0,
-              }}
-            >
-              <CommunityEventModal
-                onClose={() => {
-                  this.setState({ openModal: false, loading: true });
-                }}
-              />
-            </BlurView>
-          ) : null}
-          {this.state.openUserModal ? (
-            <BlurView
-              tint="dark"
-              intensity={80}
-              style={{
-                justifyContent: 'center',
-                alignItems: 'center',
-                backgroundColor: 'rgba(0,0,0,.1)',
-                position: 'absolute',
-                top: 0,
-                right: 0,
-                left: 0,
-                bottom: 0,
-              }}
-            >
-              <UpdateUserModal
-                onClose={() =>
-                  this.setState({
-                    openUserModal: false,
-                  })
-                }
-              />
-            </BlurView>
-          ) : null}
         </ScrollView>
       </SafeAreaView>
     );
@@ -218,7 +158,7 @@ class WorldRankStackScreen extends React.Component {
 }
 WorldRankStackScreen.navigationOptions = {
   headerLeft: (
-    <TouchableOpacity onPress={() => navigationService.navigate('MyActions')}>
+    <TouchableOpacity onPress={() => NavigationService.navigate('MyActions')}>
       <Ionicons
         name="ios-arrow-round-back"
         size={42}
