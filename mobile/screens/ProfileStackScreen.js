@@ -2,23 +2,23 @@ import React from 'react';
 //import { LinearGradient, AppLoading } from 'expo';
 
 import {
+  Animated,
+  PanResponder,
   TouchableOpacity,
   SafeAreaView,
   ScrollView,
   View,
   Text,
+  KeyboardAvoidingView,
   ActivityIndicator,
 } from 'react-native';
-import { Ionicons, FontAwesome } from '@expo/vector-icons';
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { BlurView } from 'expo';
 import { Analytics, PageHit } from 'expo-analytics';
 import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_categories_query';
 import graphql from '../components/hoc/graphql';
 import NavigationService from '../navigation/navigationService';
-import GraphComponent from '../components/shared/profile/GraphComponent';
-import ImpactComponent from '../components/shared/profile/ImpactComponent';
-import ReachComponent from '../components/shared/profile/ReachComponent';
-import PointsComponent from '../components/shared/profile/PointsComponent';
+import ProfileComponent from '../components/shared/profile/ProfileComponent';
 import CommunityEventModal from '../components/shared/modals/CommunityEventModal';
 import { ALL_MY_METRICS } from '../components/graphql/queries/all_my_metrics_query';
 import client from '../Apollo';
@@ -28,7 +28,7 @@ import { styles, defaults } from '../constants/Styles'
 @graphql(ALL_MY_METRICS, {
   name: 'all_metrics',
 })
-class ImpactStackScreen extends React.Component {
+class ProfileStackScreen extends React.Component {
   state = {
     openModal: false,
     points: 0,
@@ -58,7 +58,7 @@ class ImpactStackScreen extends React.Component {
       try {
         const analytics = new Analytics('UA-131896215-1');
         analytics
-          .hit(new PageHit('ImpactScreen'))
+          .hit(new PageHit('ProfileScreen'))
           .then(() => console.log('success '))
           .catch(e => console.log(e.message));
       } catch (e) {
@@ -79,14 +79,14 @@ class ImpactStackScreen extends React.Component {
   componentWillReceiveProps= () => {
     if(!this.props.all_metrics.loading){
       console.log('this.props.all_metrics.loading', this.props.all_metrics.me)
-      this._aggregateImpact(
+      this._aggregateProfile(
         this.props.all_metrics.me ? this.props.all_metrics.me.recent_actions : 0,
         this.props.all_metrics.me? this.props.all_metrics.me.community_events : 0
       );
     }
   }
 
-  async _aggregateImpact(recent_actions, community_events) {
+  async _aggregateProfile(recent_actions, community_events) {
     const { points, water, waste, carbon_dioxide, loading } = this.state;
     if (!loading) {
       return;
@@ -138,7 +138,7 @@ class ImpactStackScreen extends React.Component {
       //console.log('this.props.all_metrics.loading', this.props.all_metrics.me)
 
       if (this.props.all_metrics.me.recent_actions.length !== 0) {
-        this._aggregateImpact(
+        this._aggregateProfile(
           this.props.all_metrics.me.recent_actions,
           this.props.all_metrics.me.community_events
         );
@@ -149,21 +149,7 @@ class ImpactStackScreen extends React.Component {
       <SafeAreaView style={[styles.greyCard]}>
         <ScrollView contentContainerStyle={[{}]}>
           <View style={[styles.containerGrey, defaults.SCREEN_HEIGHT]}>
-            <GraphComponent
-              carbon_dioxide={this.state.carbon_dioxide}
-              water={this.state.water}
-              waste={this.state.waste}
-            />
-            <ImpactComponent
-              carbon_dioxide={this.state.carbon_dioxide}
-              water={this.state.water}
-              waste={this.state.waste}
-            />
-            <ReachComponent
-              toggleModal={this.toggleModal}
-              communityEvents={this.state.communityEvents}
-            />
-            <PointsComponent points={this.state.points} aggregate={this.state.aggregateObj}/>
+            <ProfileComponent points={this.state.points} aggregate={this.state.aggregateObj}/>
           </View>
 
           {this.state.openModal ? (
@@ -187,9 +173,9 @@ class ImpactStackScreen extends React.Component {
     );
   }
 }
-ImpactStackScreen.navigationOptions = {
+ProfileStackScreen.navigationOptions = {
   headerLeft: (
-    <TouchableOpacity onPress={() => NavigationService.navigate('MyActions')}>
+    <TouchableOpacity onPress={() => NavigationService.navigate('Impact')}>
       <Ionicons
         name="ios-arrow-round-back"
         size={42}
@@ -201,25 +187,11 @@ ImpactStackScreen.navigationOptions = {
   headerTitle: (
     <View style={ styles.headerContainer }>
       <Text style={ styles.headerText }>
-        MY IMPACT
+        MY PROFILE
       </Text>
     </View>
-  ),
-  headerRight: (
-    <TouchableOpacity
-      onPress={() => NavigationService.navigate('Profile')}
-      hitSlop={{top: 15, left: 15, right:15, bottom:15}}
-      style={[styles.container, {paddingRight: defaults.padding}]}
-    >
-      <FontAwesome
-        name="gear"
-        size={25}
-        color={'white'}
-      />
-    </TouchableOpacity>
-
   ),
   headerStyle: styles.greyCardHeader,
 };
 
-export default ImpactStackScreen;
+export default ProfileStackScreen;
