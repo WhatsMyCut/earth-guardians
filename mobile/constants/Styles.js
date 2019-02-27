@@ -109,7 +109,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     alignContent: 'center',
-    borderRadius: 20,
+    borderRadius: defaults.borderRadius,
     paddingVertical: 30,
     paddingHorizontal: 60,
     marginHorizontal: 20,
@@ -277,7 +277,7 @@ export const styles = StyleSheet.create({
     height: null,
     width: '100%',
     resizeMode: 'contain',
-    borderRadius: 20,
+    borderRadius: defaults.borderRadius,
   },
   petitionDetails: {
     position: 'absolute',
@@ -299,7 +299,7 @@ export const styles = StyleSheet.create({
   },
   linearGradientBox: {
     flex: 1,
-    borderRadius: 5,
+    borderRadius: defaults.borderRadius,
     elevation: 1,
     marginVertical: 5,
     shadowColor: "#000",
@@ -312,7 +312,7 @@ export const styles = StyleSheet.create({
   },
   linearGradientBoxPadded: {
     flex: 1,
-    borderRadius: 5,
+    borderRadius: defaults.borderRadius,
     paddingTop:20,
     paddingBottom:10,
     elevation: 1,
@@ -516,7 +516,7 @@ export const styles = StyleSheet.create({
     marginVertical: 10,
   },
   social: {
-    borderRadius: 10,
+    borderRadius: defaults.borderRadius,
     borderWidth: 1,
     backgroundColor: '#666',
     width: 350,

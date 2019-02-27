@@ -22,7 +22,7 @@ import { styles } from '../constants/Styles'
 // import { data } from './dummy/actions.json';
 // import navigationService from '../navigation/navigationService';
 
-class DefaultScreen extends BaseScreen {
+class VideoScreen extends BaseScreen {
 
 
   async componentWillMount(){
@@ -87,6 +87,8 @@ class DefaultScreen extends BaseScreen {
       'https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8'
     );
 
+    console.log('hre', videoUrl)
+
     console.ignoredYellowBox = ['Warning:'];
     return (
       <SafeAreaView style={[styles.greyCard]}>
@@ -95,7 +97,7 @@ class DefaultScreen extends BaseScreen {
           <View style={[styles.container, styles.greyCardHeader]}>
             <View style={[styles.container, styles.topNav]}>
                 <TouchableOpacity
-                  onPress={() => this.props.navigation.navigate('Petition', {
+                  onPress={() => this.props.navigation.navigate(screen, {
                     screen: 'Community',
                     image: petition,
                   })}>
@@ -136,8 +138,8 @@ class DefaultScreen extends BaseScreen {
   }
 }
 
-DefaultScreen.navigationOptions = {
+VideoScreen.navigationOptions = {
   headerStyle: styles.greyCardHeader
 };
 
-export default DefaultScreen;
+export default VideoScreen;

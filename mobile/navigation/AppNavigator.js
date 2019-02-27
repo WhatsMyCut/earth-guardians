@@ -2,7 +2,7 @@ import React from 'react';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 
 import AuthLoadingScreen from '../screens/AuthLoadingScreen';
-import DefaultScreen from '../screens/DefaultScreen';
+import VideoScreen from '../screens/VideoScreen';
 import PetitionScreen from '../screens/PetitionScreen';
 import PetitionTextScreen from '../screens/PetitionTextScreen';
 import ProfileStack from './ProfileTabNavigator';
@@ -21,7 +21,7 @@ export default createAppContainer(
       Main: MainTabNavigator,
       Profile: ProfileStack,
       Ranking: RankingStack,
-      Video: DefaultScreen,
+      Video: VideoScreen,
       Petition: PetitionScreen,
       PetitionText: PetitionTextScreen,
       Modal: ModalScreen,

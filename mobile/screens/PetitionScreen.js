@@ -71,17 +71,7 @@ class PetitionScreen extends React.Component {
             {
               video_url: data.download[data.download.length - 2].link,
             },
-            () => {
-              try {
-                const analytics = new Analytics('UA-131896215-1');
-                analytics
-                  .hit(new PageHit('Petition'))
-                  .then(() => console.log('success '))
-                  .catch(e => console.log(e.message));
-              } catch (e) {
-                console.log(e);
-              }
-            }
+            () => this._sendAnalytics
           );
         });
     }
@@ -112,6 +102,18 @@ class PetitionScreen extends React.Component {
         }
       },
     });
+  }
+
+  _sendAnalytics = () =>{
+    try {
+      const analytics = new Analytics('UA-131896215-1');
+      analytics
+        .hit(new PageHit('Petition'))
+        .then(() => console.log('success '))
+        .catch(e => console.log(e.message));
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   togglePetition = () => {
@@ -262,8 +264,8 @@ class PetitionScreen extends React.Component {
                   opacity: 0.9,
                   position: 'absolute',
                   width:100,
-                  top: SCREEN_HEIGHT / 2,
-                  left: SCREEN_WIDTH / 2.2,
+                  top: (defaults.primaryHeight - 100) / 2,
+                  left: (defaults.width - 60) / 2,
                 }]}
                 onPress={() => {
                   NavigationService.navigate('Video', {
@@ -275,7 +277,7 @@ class PetitionScreen extends React.Component {
                 hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}
               >
                 <FontAwesome name="play" size={52} color="white" />
-                <Text style={[styles.smallWhiteText, {marginTop: 10}]}>Play Video</Text>
+                <Text style={[styles.smallWhiteText, {paddingTop: 10}]}>Play Video</Text>
               </TouchableOpacity>
             )}
 
