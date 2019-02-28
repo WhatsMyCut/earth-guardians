@@ -7,6 +7,7 @@ export const CREW_RANKINGS = gql`
     total_points
     crew
     country
+    state
     rank
       name
   }

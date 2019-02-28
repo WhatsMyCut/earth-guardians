@@ -18,9 +18,9 @@ export default class RankingComponent extends React.Component {
       <View style={styles.componentContainer}>
         <Text style={styles.headerText}>User</Text>
         {this.props.user_rankings &&
-          this.props.user_rankings.map((item, index) => {
-            <View key={index} style={styles.rankRow}>
-              <Text style={[styles.rankNumber]}>{index}</Text>
+          this.props.user_rankings.slice(0,3).map((item, index) =>  {
+            return <View key={index} style={styles.rankRow}>
+              <Text style={[styles.rankNumber]}>{item.rank}</Text>
               <View style={styles.rankDetail}>
                 <Text style={styles.rankName}>
                   {item.name}
@@ -29,7 +29,7 @@ export default class RankingComponent extends React.Component {
                   {item.total_points}
                 </Text>
               </View>
-              <Text style={styles.rankState}>{item.state}</Text>
+              <Text style={styles.rankState}>{item.state.substring(0,2)}</Text>
             </View>
           })
         }
@@ -44,7 +44,7 @@ export default class RankingComponent extends React.Component {
           this.props.state_rankings.map((item, index) => {
             return (
               <View key={index} style={styles.rankRow}>
-                <Text style={styles.rankNumber}>{index+1}</Text>
+                {/* <Text style={styles.rankNumber}>{item}</Text> */}
                 <View style={styles.rankDetail}>
                   <Text style={styles.rankName}>
                     {item.state}
