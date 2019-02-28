@@ -277,15 +277,14 @@ class ActionCardSmall extends React.Component {
       return <View></View>
     }
     let waste = item.action ? item.action.waste : item.waste;
-      let water = item.action ? item.action.water : item.water;
-      let carbon_dioxide = item.action ? item.action.carbon_dioxide : item.carbon_dioxide;
+    let water = item.action ? item.action.water : item.water;
+    let carbon_dioxide = item.action ? item.action.carbon_dioxide : item.carbon_dioxide;
 
-      const preview = {
-        uri: PrimaryImage,
-      };
+    const preview = {
+      uri: PrimaryImage,
+    };
 
-      let timeInfo = this.canTakeAgain(item);
-
+    let timeInfo = this.canTakeAgain(item);
 
     return (
     <View style={{flex:1, height:250, marginVertical:10}}>
@@ -311,7 +310,7 @@ class ActionCardSmall extends React.Component {
           height: null,
           borderRadius: defaults.borderRadius,
         }}
-        {...{preview, uri: item.action.primary_image}}
+        source={[preview, { uri: item.action.primary_image } ]}
       />
       <LinearGradient
         colors={['rgba(0,0,0,0.1)', 'rgba(0,0,0,0.85)']}
@@ -395,7 +394,7 @@ class ActionCardSmall extends React.Component {
       transform: [{ rotateY: this.backInterpolate }],
     };
 
-    const preview = { uri: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==" };
+    const preview = { uri: PrimaryImage };
     if(!item || !get_user.me){
       return <View></View>
     }
@@ -403,7 +402,6 @@ class ActionCardSmall extends React.Component {
     let waste = item.waste;
     let water = item.water;
     let carbon_dioxide = item.carbon_dioxide;
-
     return <View style={{flex:1, height:250, marginVertical:10}}>
 
     <DoubleClick
@@ -428,19 +426,20 @@ class ActionCardSmall extends React.Component {
     {/* <PasswordModal isVisible={this.state.showModal}/> */}
 
     <Animated.View style={[styles.item,frontAnimatedStyle, {height: 250, opacity:takingAction ? 0 : 1}]}>
+    <LinearGradient
+        colors={['rgba(0,0,0,0.1)', 'rgba(0,0,0,0.8)']}
+        locations={[0, 1]}
+        style={[styles.gradient, { height: 250}]}
+      />
       <Image
         style={{
           flex: 1,
           width: null,
           height: null,
           borderRadius: defaults.borderRadius,
+          backgroundColor: 'red'
         }}
-        {...{preview, uri: canDelete ? item.action.primary_image : item.primary_image}}
-      />
-      <LinearGradient
-        colors={['rgba(0,0,0,0.1)', 'rgba(0,0,0,0.8)']}
-        locations={[0, 1]}
-        style={[styles.gradient, { height: 250}]}
+        source={[preview, {uri: canDelete ? item.action.primary_image : item.primary_image}]}
       />
       <Text
         style={{
