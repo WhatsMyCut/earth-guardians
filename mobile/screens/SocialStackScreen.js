@@ -10,20 +10,8 @@ import {
 } from 'react-native';
 
 import { Analytics, PageHit } from 'expo-analytics';
-import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_categories_query';
-import graphql from '../components/hoc/graphql';
 import { styles } from '../constants/Styles';
-//import { data } from './dummy/actions.json';
 
-// @graphql(ALL_ACTION_CATEGORIES, {
-//   name: 'all_categories',
-//   options: {
-//     fetchPolicy: 'network-only',
-//     variables: {
-//       name: 'Social',
-//     },
-//   },
-// })
 class SocialStackScreen extends React.Component {
   static navigationOptions = {
     header: null,

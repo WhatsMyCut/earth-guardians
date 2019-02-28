@@ -8,6 +8,7 @@ import { styles } from '../../../constants/Styles'
 
 export default class SocialRankComponent extends React.Component {
   render() {
+    let len = this.props.user_rankings.length;
     return (
       <View style={[styles.greyCard, { margin: 15 }]}>
         <Text style={styles.socialRankHeader}>My Rank</Text>
@@ -24,20 +25,21 @@ export default class SocialRankComponent extends React.Component {
           <Text style={styles.rankState}>CO</Text>
         </View>
         <Text style={styles.socialRankHeader}>My Friends Rank</Text>
-        {this.props.crew_list &&
-          this.props.crew_list.map((item, index) => {
+        {this.props.user_rankings &&
+          this.props.user_rankings.map((item, index) =>  {
+            let rowStyle = (index == len-1) ? styles.noDivider : ''
             return (
-              <View style={styles.rankRow}>
-                <Text style={styles.socialRankNumber}>{item.rank}</Text>
-                <View style={styles.rankDetail}>
-                  <Text style={styles.rankName}>
+              <View key={index} style={[styles.rankRow, rowStyle]}>
+                <Text style={[styles.socialRankNumber]}>{item.rank}</Text>
+                <View style={[styles.rankDetail]}>
+                  <Text style={[styles.rankName]}>
                     {item.name}
                   </Text>
                   <Text style={styles.smallWhiteText}>
                     {item.total_points}
                   </Text>
                 </View>
-                <Text style={styles.rankState}>{item.country}</Text>
+                <Text style={styles.rankState}>{item.state.substr(0,2).toUpperCase()}</Text>
               </View>
             )
           })

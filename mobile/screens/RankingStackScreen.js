@@ -152,7 +152,6 @@ class RankingStackScreen extends React.Component {
       }
     }
 
-    console.log("HERE", this.props.state_rankings, this.props.crew_rankings)
     return (
       <SafeAreaView style={ styles.greyCard }>
         <ScrollView contentContainerStyle={{}}>
@@ -163,7 +162,7 @@ class RankingStackScreen extends React.Component {
               user_rankings={this.props.crew_rankings.getUserRanks}
             />
             <SocialRankComponent
-              rankings={this.props.crew_rankings.getUserRanks}
+              user_rankings={this.props.crew_rankings.getUserRanks}
             />
           </View>
         </ScrollView>

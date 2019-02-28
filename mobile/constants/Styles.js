@@ -426,7 +426,7 @@ export const styles = StyleSheet.create({
     paddingRight: 15,
     paddingTop: 5,
     fontVariant: ['tabular-nums'],
-    textAlign: 'right'
+    textAlign: 'center'
   },
   myRankNumber: {
     fontSize: 24,
