@@ -17,7 +17,8 @@ import graphql from '../hoc/graphql';
 import { TAKE_ACTION } from '../graphql/mutations/take_action_mutation';
 import GameControls from '../game-stack/GameControls';
 import { PrimaryImage } from '../../constants/PrimaryImage';
-import { styles } from '../../constants/Styles';
+import { styles, CARD_WIDTH, CARD_HEIGHT, SCREEN_HEIGHT, SCREEN_WIDTH } from '../../constants/Styles';
+
 
 @graphql(TAKE_ACTION, {
    name:"take_action"
