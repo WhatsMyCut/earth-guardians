@@ -8,7 +8,6 @@ import { styles } from '../../../constants/Styles'
 
 export default class WorldRankComponent extends React.Component {
   render() {
-    console.log('WorldRankComponent', this.props.rankings)
     return (
       <View style={[styles.rankContainer]}>
         {this.props.rankings &&
