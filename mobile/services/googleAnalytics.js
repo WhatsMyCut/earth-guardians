@@ -1,3 +1,4 @@
+import { Analytics, PageHit } from 'expo-analytics';
 export default googleAnalytics = function(page_name) {
   return () => {
     console.log('googleAnalytics', page_name)
