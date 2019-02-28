@@ -21,12 +21,20 @@ import NavigationService from '../navigation/navigationService';
 import RankingComponent from '../components/shared/profile/RankingComponent';
 import SocialRankComponent from '../components/shared/profile/SocialRankComponent';
 import { ALL_MY_METRICS } from '../components/graphql/queries/all_my_metrics_query';
+import { STATE_RANKINGS } from '../components/graphql/queries/get_state_query';
+import { CREW_RANKINGS } from '../components/graphql/queries/crew_rankings_query';
 import client from '../Apollo';
 import { StoreData } from '../store/AsyncStore';
 import { styles } from '../constants/Styles'
 
 @graphql(ALL_MY_METRICS, {
   name: 'all_metrics',
+})
+@graphql(STATE_RANKINGS, {
+  name: 'state_rankings',
+})
+@graphql(CREW_RANKINGS, {
+  name: 'crew_rankings',
 })
 class RankingStackScreen extends React.Component {
   state = {
@@ -125,7 +133,9 @@ class RankingStackScreen extends React.Component {
   }
 
   render() {
-    if (this.props.all_metrics.loading) {
+    if (this.props.all_metrics.loading ||
+      this.props.state_rankings.loading ||
+      this.props.crew_rankings.loading) {
       return (
         <SafeAreaView style={{ flex: 1 }}>
           <View style={ styles.containerGrey }>
@@ -142,22 +152,20 @@ class RankingStackScreen extends React.Component {
       }
     }
 
+    console.log("HERE", this.props.state_rankings, this.props.crew_rankings)
     return (
       <SafeAreaView style={ styles.greyCard }>
         <ScrollView contentContainerStyle={{}}>
           <View style={ styles.containerGrey }>
             <Text style={ styles.containerTitle }>National Rank</Text>
             <RankingComponent
-              carbon_dioxide={this.state.carbon_dioxide}
-              water={this.state.water}
-              waste={this.state.waste}
+              state_rankings={this.props.state_rankings.getStateStats}
+              user_rankings={this.props.crew_rankings.getUserRanks}
             />
             <SocialRankComponent
-              mystats={this.state.points}
-              friendstats={this.state.aggregateObj}
+              rankings={this.props.crew_rankings.getUserRanks}
             />
           </View>
-
         </ScrollView>
       </SafeAreaView>
     );

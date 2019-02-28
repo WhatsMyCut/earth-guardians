@@ -17,42 +17,22 @@ export default class RankingComponent extends React.Component {
     return (
       <View style={styles.componentContainer}>
         <Text style={styles.headerText}>User</Text>
-        <View style={styles.rankRow}>
-          <Text style={[styles.rankNumber, {color: 'gold'}]}>1</Text>
-          <View style={styles.rankDetail}>
-            <Text style={styles.rankName}>
-              Dawn Smith
-            </Text>
-            <Text style={styles.smallWhiteText}>
-              7,406
-            </Text>
-          </View>
-          <Text style={styles.rankState}>WA</Text>
-        </View>
-        <View style={styles.rankRow}>
-          <Text style={[styles.rankNumber, {color: 'silver'}]}>2</Text>
-          <View style={styles.rankDetail}>
-            <Text style={styles.rankName}>
-              Andrew Hunt
-            </Text>
-            <Text style={styles.smallWhiteText}>
-              2,492
-            </Text>
-          </View>
-          <Text style={styles.rankState}>CO</Text>
-        </View>
-        <View style={[styles.rankRow, styles.noDivider]}>
-          <Text style={[styles.rankNumber, {color: '#7c600b'}]}>3</Text>
-          <View style={styles.rankDetail}>
-            <Text style={styles.rankName}>
-              Jeffrey Tso
-            </Text>
-            <Text style={styles.smallWhiteText}>
-              901
-            </Text>
-          </View>
-          <Text style={styles.rankState}>AL</Text>
-        </View>
+        {this.props.user_rankings &&
+          this.props.user_rankings.map((item, index) => {
+            <View key={index} style={styles.rankRow}>
+              <Text style={[styles.rankNumber]}>{index}</Text>
+              <View style={styles.rankDetail}>
+                <Text style={styles.rankName}>
+                  {item.name}
+                </Text>
+                <Text style={styles.smallWhiteText}>
+                  {item.total_points}
+                </Text>
+              </View>
+              <Text style={styles.rankState}>{item.state}</Text>
+            </View>
+          })
+        }
       </View>
     );
   };
@@ -60,39 +40,23 @@ export default class RankingComponent extends React.Component {
     return (
       <View style={styles.rankContainer}>
         <Text style={styles.headerText}>State</Text>
-        <View style={styles.rankRow}>
-          <Text style={styles.rankNumber}>1</Text>
-          <View style={styles.rankDetail}>
-            <Text style={styles.rankName}>
-              Vermont
-            </Text>
-            <Text style={styles.smallWhiteText}>
-              920,647
-            </Text>
-          </View>
-        </View>
-        <View style={styles.rankRow}>
-          <Text style={styles.rankNumber}>2</Text>
-          <View style={styles.rankDetail}>
-            <Text style={styles.rankName}>
-              Oregon
-            </Text>
-            <Text style={styles.smallWhiteText}>
-              204,719
-            </Text>
-          </View>
-        </View>
-        <View style={[styles.rankRow, styles.noDivider]}>
-          <Text style={styles.rankNumber}>3</Text>
-          <View style={styles.rankDetail}>
-            <Text style={styles.rankName}>
-              Massachusetts
-            </Text>
-            <Text style={styles.smallWhiteText}>
-              95,730
-            </Text>
-          </View>
-        </View>
+        {this.props.state_rankings &&
+          this.props.state_rankings.map((item, index) => {
+            return (
+              <View key={index} style={styles.rankRow}>
+                <Text style={styles.rankNumber}>{index+1}</Text>
+                <View style={styles.rankDetail}>
+                  <Text style={styles.rankName}>
+                    {item.state}
+                  </Text>
+                  <Text style={styles.smallWhiteText}>
+                    {item.points}
+                  </Text>
+                </View>
+              </View>
+            )
+          })
+        }
       </View>
     );
   };

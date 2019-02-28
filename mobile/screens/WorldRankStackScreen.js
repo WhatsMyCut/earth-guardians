@@ -63,6 +63,7 @@ class WorldRankStackScreen extends React.Component {
   }
 
   componentWillUnmount() {
+    this.props.rankings = null;
   }
 
   componentWillReceiveProps() {
