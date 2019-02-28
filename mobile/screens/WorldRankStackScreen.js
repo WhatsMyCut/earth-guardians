@@ -18,24 +18,18 @@ import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_
 import graphql from '../components/hoc/graphql';
 import NavigationService from '../navigation/navigationService';
 import WorldRankComponent from '../components/shared/profile/WorldRankComponent';
-import { ALL_MY_METRICS } from '../components/graphql/queries/all_my_metrics_query';
+import { WW_RANKINGS } from '../components/graphql/queries/ww_rankings_query';
 import client from '../Apollo';
 import { StoreData } from '../store/AsyncStore';
 import { styles } from '../constants/Styles'
+import googleAnalytics from '../services/googleAnalytics'
 
-@graphql(ALL_MY_METRICS, {
-  name: 'all_metrics',
+@graphql(WW_RANKINGS, {
+  name: 'rankings',
 })
 class WorldRankStackScreen extends React.Component {
   state = {
     openModal: false,
-    points: 0,
-    waste: 0,
-    water: 0,
-    carbon_dioxide: 0,
-    loading: true,
-    openUserModal: false,
-    communityEvents: 0,
   };
 
   //interval;
@@ -53,7 +47,9 @@ class WorldRankStackScreen extends React.Component {
   }
 
   componentDidMount() {
+    googleAnalytics('WorldRankScreen');
     () => {
+      console.log('countries', this.props.rankings)
       try {
         const analytics = new Analytics('UA-131896215-1');
         analytics
@@ -64,66 +60,16 @@ class WorldRankStackScreen extends React.Component {
         console.log(e);
       }
     };
-
-    // this.interval = setInterval(()=>{
-    //   this.props.all_metrics.refetch();
-    // }, 2000)
-
   }
 
-  componentWillUnmount = ()=>{
-    // clearInterval(this.interval);
+  componentWillUnmount() {
   }
 
-  componentWillReceiveProps= () => {
-    if(!this.props.all_metrics.loading){
-      this._aggregateWorldRank(
-        this.props.all_metrics.me.recent_actions,
-        this.props.all_metrics.me.community_events
-      );
-    }
-  }
-
-  async _aggregateWorldRank(recent_actions, community_events) {
-    const { points, water, waste, carbon_dioxide, loading } = this.state;
-    if (!loading) {
-      return;
-    }
-    let newPoints = 0;
-    let newWater = 0;
-    let newWaste = 0;
-    let newCarbonDioxide = 0;
-    let aggregateObj = {};
-
-    await Promise.all([
-      recent_actions.map(item => {
-        newPoints += item.action.points;
-        newWater += item.action.water;
-        newWaste += item.action.waste;
-        newCarbonDioxide += item.action.carbon_dioxide;
-          if(aggregateObj.hasOwnProperty(`${item.action.category.name}`)){
-            aggregateObj[`${item.action.category.name}`] += item.action.points;
-          } else{
-            aggregateObj[`${item.action.category.name}`] = item.action.points;
-          }
-      }),
-    ]);
-
-    let additionalPoints = community_events.length * 100;
-    this.setState({
-      points: points != newPoints ? newPoints + additionalPoints : points,
-      water: water != newWater ? newWater : water,
-      waste: waste != newWaste ? newWaste : waste,
-      carbon_dioxide:
-        carbon_dioxide != newCarbonDioxide ? newCarbonDioxide : carbon_dioxide,
-      communityEvents: community_events,
-      loading: false,
-      aggregateObj: aggregateObj
-    });
+  componentWillReceiveProps() {
   }
 
   render() {
-    if (this.props.all_metrics.loading) {
+    if (this.props.rankings.loading) {
       return (
         <SafeAreaView style={{ flex: 1 }}>
           <View style={ styles.containerGrey }>
@@ -131,25 +77,14 @@ class WorldRankStackScreen extends React.Component {
           </View>
         </SafeAreaView>
       );
-    } else {
-      if (this.props.all_metrics.me.recent_actions.length !== 0) {
-        this._aggregateWorldRank(
-          this.props.all_metrics.me.recent_actions,
-          this.props.all_metrics.me.community_events
-        );
-      }
     }
 
     return (
-      <SafeAreaView style={ styles.greyCard }>
+      <SafeAreaView style={[styles.greyCard]}>
         <ScrollView contentContainerStyle={{}}>
-          <View style={ styles.containerGrey }>
+          <View style={[styles.containerGrey]}>
             <Text style={ styles.containerTitle }>Worldwide Rank</Text>
-            <WorldRankComponent
-              carbon_dioxide={this.state.carbon_dioxide}
-              water={this.state.water}
-              waste={this.state.waste}
-            />
+            <WorldRankComponent rankings={this.props.rankings.getCountryStats}/>
           </View>
         </ScrollView>
       </SafeAreaView>

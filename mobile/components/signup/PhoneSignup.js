@@ -103,8 +103,6 @@ export default class PhoneSignup extends React.Component {
 
 
   componentDidMount(){
-    _fetchVideoUrl(this.video_id)
-    .then(data => this.setState({ video_url: data.video_url, picture_url: data.picture_url }))
   }
 
   checkIfUserExists = () => {
@@ -112,7 +110,10 @@ export default class PhoneSignup extends React.Component {
   };
 
   render() {
-    const { video_url } = this.state;
+    let video_url;
+    _fetchVideoUrl(this.video_id)
+    .then(data => video_url = data.video_url)
+    .catch(e => console.error(e))
 
     if (!video_url) {
       return (

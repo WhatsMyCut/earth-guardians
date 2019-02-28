@@ -35,7 +35,8 @@ export default class GeneralScreen extends React.Component {
           picture_url: data.picture_url,
           video_url: data.video_url,
         })
-      });
+      })
+      .catch(e => console.error(e));
     }
   }
 
