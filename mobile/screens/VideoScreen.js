@@ -127,6 +127,7 @@ class VideoScreen extends BaseScreen {
                 switchToLandscape={this.switchToLandscape.bind(this)}
                 switchToPortrait={this.switchToPortrait.bind(this)}
                 playFromPositionMillis={0}
+                playThroughEarpieceAndroid={true}
               />
             </View>
           </View>
