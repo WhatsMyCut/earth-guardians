@@ -43,12 +43,13 @@ export const styles = StyleSheet.create({
   },
   buttonContainer: {
     backgroundColor: '#fff',
-    width: 130,
+    minWidth: 130,
     height: 50,
     borderRadius: 5,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 20,
+    marginVertical: 20,
+    paddingHorizontal: 10
   },
   coverScreen: {
     position: 'absolute',
@@ -78,6 +79,21 @@ export const styles = StyleSheet.create({
     },
     backgroundColor: "white"
   },
+  cardHeaderText: {
+    color: '#fff',
+    height: 30,
+    width: 200,
+    textAlign: 'left',
+    marginVertical: 20,
+    borderColor: 'gray',
+    borderBottomWidth: 1,
+  },
+  cardPlaceholderText: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    fontFamily: 'Proxima Nova Bold',
+    color: '#eee',
+  },
   indexGradient: {
     position: 'absolute',
     borderRadius: defaults.borderRadius,
@@ -89,6 +105,12 @@ export const styles = StyleSheet.create({
     width: null,
     resizeMode: "cover",
     borderRadius: defaults.borderRadius
+  },
+  badgeImage: {
+    flex: 1,
+    height: 100,
+    resizeMode: 'contain',
+    marginHorizontal: 10
   },
   // Info Views
   greyCard: {
@@ -105,13 +127,15 @@ export const styles = StyleSheet.create({
     },
   },
   modalView: {
+    flexShrink: 0,
+    flexGrow: 1,
+    minHeight: 250,
     backgroundColor: '#333',
     justifyContent: 'center',
     alignItems: 'center',
     alignContent: 'center',
     borderRadius: defaults.borderRadius,
-    paddingVertical: 30,
-    paddingHorizontal: 60,
+    padding: 30,
     marginHorizontal: 20,
     shadowColor: "#000",
     shadowRadius: 3,
@@ -120,6 +144,7 @@ export const styles = StyleSheet.create({
       width: 0,
       height: 2
     },
+    zIndex: 999,
   },
   containerGrey: {
     flex: 1,
@@ -427,10 +452,6 @@ export const styles = StyleSheet.create({
     paddingTop: 5,
     fontVariant: ['tabular-nums'],
     textAlign: 'center'
-  },
-  myRankNumber: {
-    fontSize: 24,
-    color: 'lightgreen',
   },
   topNav: {
     flex: 1,

@@ -22,6 +22,7 @@ import PointsComponent from '../components/shared/profile/PointsComponent';
 import CommunityEventModal from '../components/shared/modals/CommunityEventModal';
 import { ALL_MY_METRICS } from '../components/graphql/queries/all_my_metrics_query';
 import { styles, defaults } from '../constants/Styles'
+import BadgeComponent from '../components/shared/profile/BadgeComponent';
 
 @graphql(ALL_MY_METRICS, {
   name: 'all_metrics',
@@ -162,6 +163,7 @@ class ImpactStackScreen extends React.Component {
               communityEvents={this.state.communityEvents}
             />
             <PointsComponent points={this.state.points} aggregate={this.state.aggregateObj}/>
+            <BadgeComponent points={this.state.points}/>
           </View>
 
           {this.state.openModal ? (
