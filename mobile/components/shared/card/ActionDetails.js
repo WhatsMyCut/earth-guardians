@@ -87,7 +87,7 @@ export default class ActionDetails extends React.Component {
                 textAlign: 'center',
               }}
             >
-              {item.carbon_dioxide}
+              {item.carbon_dioxide || 0}
             </Text>
           </View>
           <View style={{ flex: 1 }}>
@@ -200,11 +200,11 @@ export default class ActionDetails extends React.Component {
             Zip Code
           </Text>
 
-          
-        </TouchableOpacity> 
+
+        </TouchableOpacity>
           )}
         </View>
-      
+
 
         {/* <View style={{ flex: 1, marginBottom: 10 }}>
           <Text
