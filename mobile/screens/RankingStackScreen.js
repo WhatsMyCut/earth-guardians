@@ -23,6 +23,7 @@ import SocialRankComponent from '../components/shared/profile/SocialRankComponen
 import { ALL_MY_METRICS } from '../components/graphql/queries/all_my_metrics_query';
 import { STATE_RANKINGS } from '../components/graphql/queries/get_state_query';
 import { CREW_RANKINGS } from '../components/graphql/queries/crew_rankings_query';
+import { GET_USER } from '../components/graphql/queries/get_user';
 import client from '../Apollo';
 import { StoreData } from '../store/AsyncStore';
 import { styles } from '../constants/Styles'
@@ -35,6 +36,9 @@ import { styles } from '../constants/Styles'
 })
 @graphql(CREW_RANKINGS, {
   name: 'crew_rankings',
+})
+@graphql(GET_USER, {
+  name: 'my_user',
 })
 class RankingStackScreen extends React.Component {
   state = {
@@ -135,7 +139,8 @@ class RankingStackScreen extends React.Component {
   render() {
     if (this.props.all_metrics.loading ||
       this.props.state_rankings.loading ||
-      this.props.crew_rankings.loading) {
+      this.props.crew_rankings.loading ||
+      this.props.my_user.loading) {
       return (
         <SafeAreaView style={{ flex: 1 }}>
           <View style={ styles.containerGrey }>
@@ -163,6 +168,7 @@ class RankingStackScreen extends React.Component {
             />
             <SocialRankComponent
               user_rankings={this.props.crew_rankings.getUserRanks}
+              my_user={this.props.my_user.me}
             />
           </View>
         </ScrollView>
