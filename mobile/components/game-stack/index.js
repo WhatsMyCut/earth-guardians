@@ -25,10 +25,10 @@ import { styles, CARD_WIDTH, CARD_HEIGHT, SCREEN_HEIGHT, SCREEN_WIDTH } from '..
 })
 export default class GameCards extends React.Component {
    state = {
-      currentIndex: 0,
-      CARD_COUNT: 3,
-      loading:false,
-      goBack: this.props.goBack
+    currentIndex: 0,
+    CARD_COUNT: 3,
+    loading:false,
+    goBack: this.props.goBack
    };
 
    position;
