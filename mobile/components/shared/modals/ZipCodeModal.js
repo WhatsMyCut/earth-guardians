@@ -1,8 +1,15 @@
 import React from 'react';
-import { View, Text, TouchableOpacity,TextInput, Modal } from 'react-native';
-import { AntDesign } from '@expo/vector-icons';
-import { WebBrowser } from 'expo';
-import NavigationService from '../../../navigation/navigationService';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  TextInput,
+  Modal,
+} from 'react-native';
+import { BlurView } from 'expo';
+import { styles, defaults } from '../../../constants/Styles';
+
 export default class ZipCodeModal extends React.Component {
   state = { zipcode: true };
   toggleModalVisible = () => {
@@ -15,94 +22,48 @@ export default class ZipCodeModal extends React.Component {
         transparent={true}
         visible={this.props.visible}
         onRequestClose={() => {
-          Alert.alert('Modal has been closed.');
-        }}
-        style={{
-          backgroundColor: '#333',
-          justifyContent: 'center',
-          alignItems: 'center',
+          console.log('Modal has been closed.');
         }}
       >
-        <View
-          style={{
-            marginTop: 200,
-            marginHorizontal: 20,
-          }}
-        >
-          <View
-            style={{
-              backgroundColor: '#333',
-              justifyContent: 'center',
-              alignItems: 'center',
+        <TouchableWithoutFeedback style={[styles.container, styles.coverScreen]} onPress={() => {
+          this.props.onClose()
+        }}>
+          <View style={[styles.container]}>
+            <TouchableWithoutFeedback style={[styles.container, styles.coverScreen]} onPress={() => {
+              return false
+            }}>
+              <View style={[styles.modalView, styles.centerAll, {
+                marginVertical: (defaults.primaryHeight / 2) - 80,
+              }]}>
+                <View style={[styles.container, styles.centerAll]}>
+                  <View style={[styles.componentHeader]}>
+                    <Text style={[styles.headerText]}>SET YOUR ZIPCODE TO SEE FUTURE METRICS FROM YOUR COMMUNITY!</Text>
+                  </View>
+                  <TextInput
+                    style={[styles.cardHeaderText]}
+                    onChangeText={password => this.setState({ zipcode:password })}
+                    placeholder="Zipcode"
+                    placeholderTextColor="#fff"
+                    keyboardType="default"
+                    returnKeyType="done"
+                    // value={this.state.zipCode}
+                  />
 
-              borderRadius: 20,
-              padding: 30,
-            }}
-          >
-            <Text
-              style={{
-                color: '#fff',
-                marginHorizontal: 20,
-                fontSize: 18,
-                fontWeight: 'bold',
-                textAlign: 'center',
-              }}
-            >
-              SET YOUR ZIPCODE TO SEE FUTURE METRICS FROM YOUR COMMUNITY!
-            </Text>
-
-            <TextInput
-      style={{
-        color: '#fff',
-        height: 30,
-        width: 200,
-        textAlign: 'left',
-        marginVertical: 20,
-        borderColor: 'gray',
-        borderBottomWidth: 1,
-      }}
-      onChangeText={password => this.setState({ zipcode:password })}
-      placeholder="Zipcode"
-      placeholderTextColor="#fff"
-      keyboardType="default"
-      returnKeyType="done"
-      // value={this.state.zipCode}
-    />
-
-            <TouchableOpacity
-              style={{
-                backgroundColor: '#fff',
-                width: 130,
-                height: 50,
-                borderRadius: 5,
-                justifyContent: 'center',
-                alignItems: 'center',
-                marginTop: 20,
-              }}
-              onPress={() => {
-                this.props.updateZipcode(this.state.zipcode);
-              }}
-            >
-              <Text style={{ color: '#333', fontSize: 18, fontWeight: 'bold' }}>
-                ADD ZIPCODE
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                this.props.onClose();
-              }}
-              hitSlop={{ top: 15, left: 15, right: 15, bottom: 15 }}
-              style={{ position: 'absolute', right: -2, top: -5 }}
-            >
-              <AntDesign
-                name="close"
-                size={32}
-                color="white"
-                style={{ padding: 5 }}
-              />
-            </TouchableOpacity>
+                  <TouchableOpacity
+                    style={[styles.buttonContainer]}
+                    onPress={() => {
+                      this.props.updateZipcode(this.state.zipcode);
+                    }}
+                  >
+                    <Text style={[styles.textGrey18B]}>
+                      ADD ZIPCODE
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </TouchableWithoutFeedback>
           </View>
-        </View>
+        </TouchableWithoutFeedback>
       </Modal>
     );
   }
