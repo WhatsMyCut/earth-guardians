@@ -98,9 +98,9 @@ class ImpactStackScreen extends React.Component {
 
     await Promise.all([
       recent_actions.map(item => {
-        newPoints += parseFloat(item.action.points).toPrecision(2);
-        newWater += parseFloat(item.action.water).toPrecision(2);
-        newWaste += parseFloat(item.action.waste).toPrecision(2);
+        newPoints += parseFloat(item.action.points).toFixed(2);
+        newWater += parseFloat(item.action.water).toFixed(2);
+        newWaste += parseFloat(item.action.waste).toFixed(2);
         newCarbonDioxide += item.action.carbon_dioxide;
           if(aggregateObj.hasOwnProperty(`${item.action.category.name}`)){
             aggregateObj[`${item.action.category.name}`] += item.action.points;
@@ -112,11 +112,11 @@ class ImpactStackScreen extends React.Component {
 
     let additionalPoints = community_events.length * 100;
     this.setState({
-      points: points != newPoints ? parseFloat(newPoints + additionalPoints).toPrecision(2) : parseFloat(points).toPrecision(2),
-      water: water != newWater ? parseFloat(newWater).toPrecision(2) : parseFloat(water).toPrecision(2),
-      waste: waste != newWaste ? parseFloat(newWaste).toPrecision(2) : parseFloat(waste).toPrecision(2),
+      points: points != newPoints ? parseFloat(newPoints + additionalPoints).toFixed(2) : parseFloat(points).toFixed(2),
+      water: water != newWater ? parseFloat(newWater).toFixed(2) : parseFloat(water).toFixed(2),
+      waste: waste != newWaste ? parseFloat(newWaste).toFixed(2) : parseFloat(waste).toFixed(2),
       carbon_dioxide:
-        carbon_dioxide != newCarbonDioxide ? parseFloat(newCarbonDioxide).toPrecision(2) : parseFloat(carbon_dioxide).toPrecision(2),
+        carbon_dioxide != newCarbonDioxide ? parseFloat(newCarbonDioxide).toFixed(2) : parseFloat(carbon_dioxide).toFixed(2),
       communityEvents: community_events,
       loading: false,
       aggregateObj: aggregateObj
