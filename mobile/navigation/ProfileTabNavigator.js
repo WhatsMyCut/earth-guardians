@@ -7,6 +7,7 @@ import {
 import { Ionicons, MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons';
 import ProfileStackScreen from '../screens/ProfileStackScreen';
 import NotificationStackScreen from '../screens/NotificationStackScreen';
+import NavigationService from '../navigation/navigationService';
 import PhoneSignup from '../components/signup/PhoneSignup';
 import client from '../Apollo';
 import { StoreData } from '../store/AsyncStore';
@@ -19,7 +20,7 @@ const Logout = ({ focused }) => {
         await StoreData('country_dial_code', null);
         await StoreData('EARTH_GUARDIANS_TOKEN', null);
         client.resetStore();
-        NavigationService.navigate('Community');
+        NavigationService.navigate('AuthLoading');
       }}
     >
       <MaterialCommunityIcons
