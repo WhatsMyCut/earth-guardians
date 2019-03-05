@@ -14,7 +14,7 @@ import { Button, Searchbar } from 'react-native-paper';
 import { all } from 'rsvp';
 import { LinearGradient, Icon, WebBrowser } from 'expo';
 import { AntDesign } from '@expo/vector-icons';
-import { styles } from '../constants/Styles'
+import { styles, defaults } from '../constants/Styles'
 
 class PetitionTextScreen extends React.Component {
   state = { in: false }; //TODO, when Database is established, do a componentDidMount to load status
@@ -71,7 +71,7 @@ class PetitionTextScreen extends React.Component {
         <View style={[styles.container, styles.padded ]}>
           <WebView
             // style={{height:600, width:480}}
-            style={{backgroundColor: 'transparent'}}
+            style={[styles.coverScreen, styles.coverAll, { maxWidth: defaults.width, backgroundColor: 'transparent' }]}
             originWhitelist={['*']}
             source={{ html: renderBody}}
             scalesPageToFit={false}
