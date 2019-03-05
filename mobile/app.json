@@ -29,11 +29,12 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.ofashandfire.earthguardians",
       "icon":"./assets/eg_app_icon_ios_120_120.png",
-      "buildNumber":"25"
+      "buildNumber":"28"
     },
     "android": {
-      "package": "com.earthguardians.EarthTracks",
-      "versionCode": 6
+      "package": "com.EG.EarthTracks",
+      "versionCode": 1,
+      "permissions":["CAMERA"]
     },
     "description": ""
   }
