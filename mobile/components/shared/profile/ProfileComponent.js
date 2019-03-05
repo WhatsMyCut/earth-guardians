@@ -22,10 +22,11 @@ export default class ProfileComponent extends React.Component {
     const { my_user } = this.props;
 
     if(my_user.loading){
-      return <View style={styles.container}>
-        <ActivityIndicator size="large"/>
-      </View>
-
+      return (
+        <View style={styles.container}>
+          <ActivityIndicator size="large"/>
+        </View>
+      )
     }
 
     return (
