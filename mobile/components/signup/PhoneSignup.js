@@ -27,6 +27,7 @@ export default class PhoneSignup extends React.Component {
   constructor(props) {
     super(props);
   }
+  _isMounted = false
   video_id = '309965359'
   state = {
     valid_phone: false,
@@ -96,15 +97,14 @@ export default class PhoneSignup extends React.Component {
   }
 
   componentWillUnmount() {
-    this.viewResponder = null;
-    this.state.video_url = null;
-    this.state.picture_url = null;
+    this._isMounted = false;
   }
 
 
   componentDidMount(){
+    this._isMounted = true;
     _fetchVideoUrl(this.video_id)
-    .then(data => this.setState({ video_url: data.video_url }))
+    .then(data => (this._isMounted) ? this.setState({ video_url: data.video_url }) : true)
     .catch(e => console.error(e))
   }
 
