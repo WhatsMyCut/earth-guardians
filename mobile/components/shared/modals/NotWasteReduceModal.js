@@ -46,7 +46,7 @@ export default class WasteModal extends React.Component {
                 textAlign: 'center',
               }}
             >
-              YOU'VE REDUCED YOUR WASTE BY {parseFloat(this.props.waste).toFixed(2)} POUNDS!
+              YOU'VE REDUCED YOUR WASTE BY {parseFloat(this.props.waste || 0 ).toFixed(2)} POUNDS!
             </Text>
 
             {/* <Text
