@@ -3,6 +3,7 @@ import {
   Dimensions
 } from 'react-native';
 import Layout from '../constants/Layout';
+import { moderateScale, ScaledSheet } from 'react-native-size-matters';
 
 export const defaults = {
     borderRadius: 10,
@@ -23,7 +24,7 @@ defaults.primaryHeight = SCREEN_HEIGHT
 defaults.width = SAFE_WIDTH
 defaults.hairline = StyleSheet.hairlineWidth
 
-export const styles = StyleSheet.create({
+export const styles = ScaledSheet.create({
   // Main shared styles
   container: {
     flex: 1,
@@ -32,13 +33,13 @@ export const styles = StyleSheet.create({
     backgroundColor: '#000',
   },
   title: {
-    fontSize: 22,
+    fontSize: moderateScale(22),
     color: '#fff',
     fontWeight: 'bold',
     paddingBottom: 10,
   },
   promo: {
-    fontSize: 16,
+    fontSize: moderateScale(16),
     color: '#fff'
   },
   buttonContainer: {
@@ -89,7 +90,7 @@ export const styles = StyleSheet.create({
     borderBottomWidth: 1,
   },
   cardPlaceholderText: {
-    fontSize: 22,
+    fontSize: moderateScale(22),
     fontWeight: 'bold',
     fontFamily: 'Proxima Nova Bold',
     color: '#eee',
@@ -155,7 +156,7 @@ export const styles = StyleSheet.create({
   containerTitle: {
     color: '#fff',
     fontWeight: '700',
-    fontSize: 24,
+    fontSize: moderateScale(24),
     fontVariant: [ 'small-caps' ],
     marginBottom: 15,
   },
@@ -168,19 +169,19 @@ export const styles = StyleSheet.create({
   },
   headerText: {
     color: '#ffffff',
-    fontSize: 24,
+    fontSize: moderateScale(24),
     fontFamily: 'Proxima Nova Bold',
     textAlign: 'center',
   },
   smallWhiteText: {
     color: '#fff',
     marginBottom: 10,
-    fontSize: 12,
+    fontSize: moderateScale(12),
   },
   smallGreyText: {
     color: '#ccc',
     marginBottom: 10,
-    fontSize: 12,
+    fontSize: moderateScale(12),
   },
   centerAll: {
     justifyContent: 'center',
@@ -208,7 +209,7 @@ export const styles = StyleSheet.create({
   },
   itemName: {
     color: '#fff',
-    fontSize: 12,
+    fontSize: moderateScale(12),
     marginRight: 5
   },
   padRight50: {
@@ -249,24 +250,24 @@ export const styles = StyleSheet.create({
   },
   componentHeader: {
     color: '#fff',
-    fontSize: 18,
+    fontSize: moderateScale(18),
     fontWeight: 'bold',
     marginVertical: 10,
     textAlign: 'center',
   },
   textWhite: {
     color: "#fff",
-    fontSize: defaults.fontSize,
+    fontSize: moderateScale(defaults.fontSize),
     fontWeight: 'normal'
   },
   textWhite18B: {
     color: '#fff',
-    fontSize: 18,
+    fontSize: moderateScale(18),
     fontWeight: 'bold'
   },
   textGrey18B: {
     color: '#333',
-    fontSize: 18,
+    fontSize: moderateScale(18),
     fontWeight: 'bold'
   },
   gradientContainer: {
@@ -312,13 +313,13 @@ export const styles = StyleSheet.create({
     width: SAFE_WIDTH,
   },
   petitionTitle: {
-    fontSize: 18,
+    fontSize: moderateScale(18),
     color: '#fff',
     fontWeight: 'bold',
     paddingBottom: 10,
   },
   petitionText: {
-    fontSize: 16,
+    fontSize: moderateScale(16),
     color: '#fff',
     paddingBottom: 10,
   },
@@ -369,7 +370,7 @@ export const styles = StyleSheet.create({
     textAlign: 'center',
   },
   actionCardValue: {
-    fontSize: 18,
+    fontSize: moderateScale(18),
     fontWeight: 'bold',
     fontFamily: 'Proxima Nova Bold',
     color: '#666',
@@ -378,11 +379,11 @@ export const styles = StyleSheet.create({
   actionCardTinyLabel: {
     fontFamily: 'Proxima Nova',
     color: '#666',
-    fontSize: 8,
+    fontSize: moderateScale(8),
     textAlign: 'center',
   },
   actionCardPlaceholderText: {
-    fontSize: 18,
+    fontSize: moderateScale(18),
     fontWeight: 'bold',
     fontFamily: 'Proxima Nova Bold',
     color: '#eee',
@@ -398,7 +399,7 @@ export const styles = StyleSheet.create({
   itemPoint: {
     color: '#fff',
     fontWeight: '900',
-    fontSize: 20
+    fontSize: moderateScale(20)
   },
   componentContainer: {
     flexDirection: 'column',
@@ -436,7 +437,7 @@ export const styles = StyleSheet.create({
     flexBasis: '15%',
     color: '#fff',
     fontWeight: '500',
-    fontSize: 36,
+    fontSize: moderateScale(36),
     justifyContent: 'center',
     alignItems: 'center',
     paddingTop: 5,
@@ -444,7 +445,7 @@ export const styles = StyleSheet.create({
   rankState: {
     flexBasis: '15%',
     color: '#fff',
-    fontSize: 22,
+    fontSize: moderateScale(22),
     fontWeight: '500',
     justifyContent: 'center',
     alignItems: 'flex-start',
@@ -457,20 +458,20 @@ export const styles = StyleSheet.create({
   },
   rankName: {
     color: '#fff',
-    fontSize: 22,
+    fontSize: moderateScale(22),
     fontWeight: '500',
     paddingBottom: 10
   },
   socialRankHeader: {
     color: '#fff',
-    fontSize: 16,
+    fontSize: moderateScale(16),
     fontWeight: '500',
     paddingBottom: 10
   },
   socialRankNumber: {
     flexBasis: '25%',
     color: '#fff',
-    fontSize: 22,
+    fontSize: moderateScale(22),
     fontWeight: '500',
     paddingRight: 15,
     paddingTop: 5,
@@ -571,7 +572,7 @@ export const styles = StyleSheet.create({
   },
   socialItem: {
     color: '#fff',
-    fontSize: 18
+    fontSize: moderateScale(18),
   },
   videoPlayIcon: {
     position: 'absolute',
