@@ -28,8 +28,8 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.ofashandfire.earthguardians",
-      "icon":"./assets/eg_app_icon_ios_120_120.png",
-      "buildNumber":"25"
+      "icon": "./assets/eg_app_icon_ios_120_120.png",
+      "buildNumber": "25"
     },
     "android": {
       "package": "com.earthguardians.EarthTracks",

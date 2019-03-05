@@ -223,9 +223,9 @@ class ActionCardSmall extends React.Component {
   _showTheModal =() => {
     const { item } = this.props;
 
-      let waste = item.action ? item.action.waste : item.waste;
-      let water = item.action ? item.action.water : item.water;
-      let carbon_dioxide = item.action ? item.action.carbon_dioxide : item.carbon_dioxide;
+      let waste = item.action ? parseFloat(item.action.waste).toFixed(2) : parseFloat(item.waste).toPrecision(2);
+      let water = item.action ? parseFloat(item.action.water).toPrecision(2) : parseFloat(item.water).toPrecision(2);
+      let carbon_dioxide = item.action ? parseFloat(item.action.carbon_dioxide).toPrecision(2) : parseFloat(item.carbon_dioxide).toPrecision(2);
       if(this.props.canDelete){
         if(waste > water && waste > carbon_dioxide){
           this.setState({showWasteModal:true})
