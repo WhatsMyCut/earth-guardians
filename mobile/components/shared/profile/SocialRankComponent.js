@@ -9,20 +9,21 @@ import { styles } from '../../../constants/Styles'
 export default class SocialRankComponent extends React.Component {
   render() {
     let len = this.props.user_rankings.length;
+    let my_user_rank = this.props.user_rankings.find(user => user.id == this.props.my_user.id);
     return (
       <View style={[styles.greyCard, { margin: 15 }]}>
         <Text style={styles.socialRankHeader}>My Rank</Text>
         <View style={[styles.rankRow, styles.noDivider]}>
-          <Text style={[styles.socialRankNumber, styles.myRankNumber]}>538</Text>
+          <Text style={[styles.socialRankNumber]}>{"1"}</Text>
           <View style={styles.rankDetail}>
             <Text style={styles.rankName}>
-              ME ME ME
+              {"ME ME ME"}
             </Text>
             <Text style={styles.smallWhiteText}>
-              666
+              {"567"}
             </Text>
           </View>
-          <Text style={styles.rankState}>CO</Text>
+          <Text style={styles.rankState}>{"Colorado".substr(0,2).toUpperCase()}</Text>
         </View>
         <Text style={styles.socialRankHeader}>My Friends Rank</Text>
         {this.props.user_rankings &&
