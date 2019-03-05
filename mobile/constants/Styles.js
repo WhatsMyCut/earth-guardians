@@ -363,6 +363,30 @@ export const styles = StyleSheet.create({
     fontSize:14,
     paddingRight:10
   },
+  actionCardLabel: {
+    fontFamily: 'Proxima Nova',
+    color: '#666',
+    textAlign: 'center',
+  },
+  actionCardValue: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    fontFamily: 'Proxima Nova Bold',
+    color: '#666',
+    textAlign: 'center',
+  },
+  actionCardTinyLabel: {
+    fontFamily: 'Proxima Nova',
+    color: '#666',
+    fontSize: 8,
+    textAlign: 'center',
+  },
+  actionCardPlaceholderText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    fontFamily: 'Proxima Nova Bold',
+    color: '#eee',
+  },
   detailedPoints: {
     flex: 1,
     flexDirection: 'row',

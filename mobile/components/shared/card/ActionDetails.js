@@ -6,6 +6,7 @@ import { LinearGradient, Icon } from 'expo';
 import { TouchableRipple, Button } from 'react-native-paper';
 import { Analytics, Event } from 'expo-analytics';
 import { RetrieveData } from '../../../store/AsyncStore';
+import { styles } from '../../../constants/Styles'
 export default class ActionDetails extends React.Component {
   state = {
     in: false
@@ -62,95 +63,37 @@ export default class ActionDetails extends React.Component {
           </Text>
         </View>
 
-        <View style={{ flex: 1, flexDirection: 'row', marginLeft:-16, alignContent:"flex-start"}}>
-          <View style={{ flex: 1}}>
-            <Text style={{ fontFamily: 'Proxima Nova', color: '#666', textAlign:"center"  }}>
-
+        <View style={[styles.container, { flexDirection: 'row', marginLeft:-16, alignContent:"flex-start"}]}>
+          <View style={[styles.container]}>
+            <Text style={[styles.actionCardLabel]}>
               CO2
             </Text>
-            <Text
-              style={{
-                fontFamily: 'Proxima Nova',
-                color: '#666',
-                fontSize: 8,
-                textAlign: 'center',
-              }}
-            >
+            <Text style={[styles.actionCardTinyLabel]}>
               (lbs)
             </Text>
-            <Text
-              style={{
-                fontSize: 20,
-                fontWeight: 'bold',
-                fontFamily: 'Proxima Nova Bold',
-                color: '#666',
-                textAlign: 'center',
-              }}
-            >
+            <Text style={[styles.actionCardValue]}>
               {item.carbon_dioxide || 0}
             </Text>
           </View>
-          <View style={{ flex: 1 }}>
-            <Text
-              style={{
-                fontFamily: 'Proxima Nova',
-                color: '#666',
-                textAlign: 'center',
-              }}
-            >
+          <View style={[styles.container]}>
+            <Text style={[styles.actionCardLabel]}>
               Water
             </Text>
-            <Text
-              style={{
-                fontFamily: 'Proxima Nova',
-                color: '#666',
-                fontSize: 8,
-                textAlign: 'center',
-              }}
-            >
+            <Text style={[styles.actionCardTinyLabel]}>
               (gal)
             </Text>
-            <Text
-              style={{
-                fontSize: 20,
-                fontWeight: 'bold',
-                fontFamily: 'Proxima Nova Bold',
-                color: '#666',
-                textAlign: 'center',
-              }}
-            >
+            <Text style={[styles.actionCardValue]}>
               {item.water}
             </Text>
           </View>
-          <View style={{ flex: 1 }}>
-            <Text
-              style={{
-                fontFamily: 'Proxima Nova',
-                color: '#666',
-                textAlign: 'center',
-              }}
-            >
+          <View style={[styles.container]}>
+            <Text style={[styles.actionCardLabel]}>
               Waste
             </Text>
-            <Text
-              style={{
-                fontFamily: 'Proxima Nova',
-                color: '#666',
-                fontSize: 8,
-                textAlign: 'center',
-              }}
-            >
+            <Text style={[styles.actionCardTinyLabel]}>
               (lbs)
             </Text>
-            <Text
-              style={{
-                fontSize: 20,
-                fontWeight: 'bold',
-                fontFamily: 'Proxima Nova Bold',
-                color: '#666',
-                textAlign: 'center',
-              }}
-            >
+            <Text style={[styles.actionCardValue]}>
               {item.waste}
             </Text>
           </View>
@@ -169,70 +112,38 @@ export default class ActionDetails extends React.Component {
         </View>
 
         {this.props.zipcode && (
-        <View style={{flex:1}}>
-        <Text
-            style={{
-              fontSize: 22,
-              fontWeight: 'bold',
-              fontFamily: 'Proxima Nova Bold',
-              color: '#eee',
-            }}
-          >
-            {this.props.zipcode}
-          </Text>
+          <View style={[styles.container]}>
+            <Text style={[styles.actionCardPlaceholderText]}>
+                {this.props.zipcode}
+              </Text>
           </View>
         )}
         {!this.props.zipcode && (
-        <TouchableOpacity style={{ flex: 1 }} onPress={()=> {
-          if(this.props.visible){
-            this.props.openZipCodeModal()
-          }
+          <TouchableOpacity style={[styles.container]} onPress={()=> {
+            if(this.props.visible){
+              this.props.openZipCodeModal()
+            }
           }}>
-
-          <Text
-            style={{
-              fontSize: 22,
-              fontWeight: 'bold',
-              fontFamily: 'Proxima Nova Bold',
-              color: '#eee',
-            }}
-          >
-            Zip Code
-          </Text>
-
-
-        </TouchableOpacity>
-          )}
+            <Text style={[styles.actionCardPlaceholderText]}>
+              Zip Code
+            </Text>
+          </TouchableOpacity>
+        )}
         </View>
-
-
-        {/* <View style={{ flex: 1, marginBottom: 10 }}>
-          <Text
-            style={{
-              fontSize: 10,
-              fontFamily: 'Proxima Nova',
-              color: '#666',
-            }}
-          >
-            You’ve offset the equivalent of 50 showers.
-          </Text>
-        </View> */}
         <TouchableOpacity
-
-                  onPress={() => {
-                    if(this.props.visible){
-                      this._takeInAction()
-                    }
-                  }}
-                  disabled={this.props.canDelete ? !this.props.canGoThrough : false}
-                  style={{flexDirection:'row', justifyContent:'flex-end', alignContent:"center"}}
-                >
-                  <Text style={{fontSize: 18,fontWeight: '700', fontFamily: 'Proxima Nova Bold',color:'#000000', paddingRight:10}}>{!this.props.canDelete || this.props.canGoThrough ? "I'm In!":"Can't Take Yet!"}</Text>
-                  <Icon.MaterialCommunityIcons
-                    name={status_icon_name}
-                    style={{ color: color, fontSize: 18 }}
-                  />
-
+          onPress={() => {
+            if(this.props.visible){
+              this._takeInAction()
+            }
+          }}
+          disabled={this.props.canDelete ? !this.props.canGoThrough : false}
+          style={{flexDirection:'row', justifyContent:'flex-end', alignContent:"center"}}
+        >
+          <Text style={{fontSize: 18,fontWeight: '700', fontFamily: 'Proxima Nova Bold',color:'#000000', paddingRight:10}}>{!this.props.canDelete || this.props.canGoThrough ? "I'm In!":"Can't Take Yet!"}</Text>
+          <Icon.MaterialCommunityIcons
+            name={status_icon_name}
+            style={{ color: color, fontSize: 18 }}
+          />
         </TouchableOpacity>
       </View>
     );
