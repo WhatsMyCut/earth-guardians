@@ -437,7 +437,7 @@ class ActionCardSmall extends React.Component {
           width: null,
           height: null,
           borderRadius: defaults.borderRadius,
-          backgroundColor: 'red'
+//          backgroundColor: 'red'
         }}
         source={[preview, {uri: canDelete ? item.action.primary_image : item.primary_image}]}
       />
