@@ -51,7 +51,15 @@ class MyActionsStackScreen extends React.Component {
     return (
       <View style={[styles.container]}>
         <FlatList
-          style={[styles.container, styles.coverScreen, styles.coverAll]}
+          style={[
+            styles.container,
+            styles.coverScreen,
+            styles.coverAll,
+            {
+              paddingLeft: 10,
+              paddingRight: defaults.paddingHorizontal
+            }
+          ]}
           numColumns={2}
           data={actions}
           keyExtractor={(item, index) => item.id}

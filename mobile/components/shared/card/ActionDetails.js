@@ -43,6 +43,7 @@ export default class ActionDetails extends React.Component {
 
     const status_icon_name = this.state.in ? 'circle-slice-8' : 'circle-outline';
     const color = this.state.in ? 'green' : '#aaa';
+    const yourverbiage = !this.props.canDelete || this.props.canGoThrough ? "I'm In!":"Can't Take Yet!"
 
     let item = data.action ? data.action : data;
 
@@ -127,7 +128,7 @@ export default class ActionDetails extends React.Component {
           disabled={this.props.canDelete ? !this.props.canGoThrough : false}
           style={{flexDirection:'row', justifyContent:'flex-end', alignContent:"center"}}
         >
-          <Text style={{fontSize: 18,fontWeight: '700', fontFamily: 'Proxima Nova Bold',color:'#000000', paddingRight:10}}>{!this.props.canDelete || this.props.canGoThrough ? "I'm In!":"Can't Take Yet!"}</Text>
+          <Text style={[styles.actionCardSubHeader]}>{ yourverbiage }</Text>
           <Icon.MaterialCommunityIcons
             name={status_icon_name}
             style={{ color: color, fontSize: 18 }}

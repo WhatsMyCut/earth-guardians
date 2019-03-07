@@ -230,11 +230,13 @@ export const styles = ScaledSheet.create({
     textAlign: 'center',
   },
   textWhite: {
+    fontFamily: 'Proxima Nova',
     color: Colors.white,
     fontSize: moderateScale(14),
     fontWeight: 'normal'
   },
   textWhiteBold: {
+    fontFamily: 'Proxima Nova Bold',
     color: Colors.white,
     fontSize: moderateScale(14),
     fontWeight: 'bold'
@@ -250,9 +252,9 @@ export const styles = ScaledSheet.create({
     fontWeight: 'bold'
   },
   smallTextShadow: {
-    textShadowColor: Colors.darkGray,
+    textShadowColor: Colors.black,
     textShadowOffset: {width: 1, height: 1},
-    textShadowRadius: 1
+    textShadowRadius: 2
   },
   gradientContainer: {
     position: 'absolute',
@@ -350,16 +352,16 @@ export const styles = ScaledSheet.create({
   },
   actionCard: {
     alignContent: 'space-between',
-    shadowColor: Colors.black,
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
     marginTop: 10,
     paddingLeft:10,
     borderColor: 'transparent',
-    borderWidth: 1,
+    borderWidth: 0,
     backfaceVisibility: 'hidden',
     height: 250,
+    shadowColor: Colors.black,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.35,
+    shadowRadius: 2,
   },
   actionCardBack: {
     position: 'absolute',
@@ -371,6 +373,10 @@ export const styles = ScaledSheet.create({
     padding: 5,
     backgroundColor: Colors.white,
     borderRadius: defaults.borderRadius,
+    shadowColor: Colors.black,
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.35,
+    shadowRadius: 2,
   },
   actionCardHeader: {
     fontSize: moderateScale(20),
@@ -515,7 +521,7 @@ export const styles = ScaledSheet.create({
     alignItems: 'center',
     shadowColor: Colors.black,
     shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.6,
+    shadowOpacity: 0.35,
     shadowRadius: 2,
     elevation: 1,
     borderColor: 'transparent',
@@ -545,7 +551,7 @@ export const styles = ScaledSheet.create({
     borderRadius: 50,
     shadowColor: Colors.black,
     shadowRadius: 2,
-    shadowOpacity: 0.32,
+    shadowOpacity: 0.35,
     shadowOffset: {
        width: 0,
        height: 0

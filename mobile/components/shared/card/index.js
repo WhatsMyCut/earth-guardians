@@ -299,87 +299,85 @@ class ActionCardSmall extends React.Component {
             }
           }}
         >
-        <Animated.View>
-          <Animated.View
-            style={[
-              styles.actionCard,
-              frontAnimatedStyle,
-              {
-                opacity:takingAction ? 0 : 1
-              }
-            ]}
-          >
-            <Image
-              style={{
-                flex: 1,
-                width: null,
-                height: null,
-                borderRadius: defaults.borderRadius,
-              }}
-              source={[preview, { uri: item.action.primary_image } ]}
-            />
-            <LinearGradient
-              colors={['rgba(0,0,0,0.1)', 'rgba(0,0,0,0.85)']}
-              locations={[0.0, 1]}
-              style={[styles.gradient, { height: 250}]}
-            />
-            <Text
-              style={{
-                position: 'absolute',
-                bottom: 10,
-                left: 15,
-                paddingRight:5,
-                fontWeight: 'bold',
-                fontFamily: 'Proxima Nova Bold',
-                color: '#fff',
-                fontSize: 18,
-              }}
-          >
-        {canDelete && (
-          item.action.action_taken_description.length > 48 ? `${item.action.action_taken_description.substring(0, 40)}...` : item.action.action_taken_description
-        )}
-      </Text>
+          <Animated.View>
+            <Animated.View
+              style={[
+                styles.actionCard,
+                frontAnimatedStyle,
+                {
+                  opacity:takingAction ? 0 : 1
+                }
+              ]}
+            >
+              <Image
+                style={{
+                  flex: 1,
+                  width: null,
+                  height: null,
+                  borderRadius: defaults.borderRadius,
+                }}
+                source={[preview, { uri: item.action.primary_image } ]}
+              />
+              <LinearGradient
+                colors={['rgba(0,0,0,0.1)', 'rgba(0,0,0,0.85)']}
+                locations={[0.0, 1]}
+                style={[styles.gradient, { height: 250}]}
+              />
+              <Text
+                style={{
+                  position: 'absolute',
+                  bottom: 10,
+                  left: 15,
+                  paddingRight:5,
+                  fontWeight: 'bold',
+                  fontFamily: 'Proxima Nova Bold',
+                  color: '#fff',
+                  fontSize: 18,
+                }}
+              >
+                {canDelete && (
+                  item.action.action_taken_description.length > 48 ? `${item.action.action_taken_description.substring(0, 40)}...` : item.action.action_taken_description
+                )}
+              </Text>
 
-      {!timeInfo.canGoThrough && (
+              {!timeInfo.canGoThrough && (
+                <LinearGradient
+                  colors={['rgba(0,0,0,0.8)', 'rgba(0,0,0,0.8)']}
+                  locations={[0.0, 1]}
+                  style={[styles.gradient, { height: 250}]}
+                />
+              )}
 
-        <LinearGradient
-          colors={['rgba(0,0,0,0.8)', 'rgba(0,0,0,0.8)']}
-          locations={[0.0, 1]}
-          style={[styles.gradient, { height: 250}]}
-        />
-      )}
+              {!timeInfo.canGoThrough && (
+                <Text
+                  style={[styles.textWhiteBold, styles.smallTextShadow, {
+                    position: 'absolute',
+                    top: 10,
+                    left: 15,
+                    paddingRight:5,
+                    fontWeight: 'bold',
+                  }]}
+                >
+                  Take action again {timeInfo.nextDate}
 
-      {!timeInfo.canGoThrough && (
-      <Text
-        style={[styles.textWhite, styles.smallTextShadow, {
-          position: 'absolute',
-          top: 10,
-          left: 15,
-          paddingRight:5,
-          fontWeight: 'bold',
-        }]}
-      >
-        Take action again {timeInfo.nextDate}
-
-      </Text>
-      )}
-      {this.state.delete && this.showDelete()}
-    </Animated.View>
-    <Animated.View
-      style={[
-        backAnimatedStyle,
-        styles.actionCard,
-        styles.actionCardBack,
-        { opacity: this.backOpacity }
-      ]}
-    >
-      <ActionDetails visible={this.state.backVisible} takeTheAction={this._showTheModal} data={item} canDelete={true} canGoThrough={timeInfo.canGoThrough} zipcode={get_user.me.zipcode} openZipCodeModal={this.openZipCodeModal}/>
-
-    </Animated.View>
-
-    </Animated.View>
-  </TouchableOpacity>
-  </View>)
+                </Text>
+              )}
+              {this.state.delete && this.showDelete()}
+            </Animated.View>
+            <Animated.View
+              style={[
+                backAnimatedStyle,
+                styles.actionCard,
+                styles.actionCardBack,
+                { opacity: this.backOpacity, left: 10, }
+              ]}
+            >
+              <ActionDetails visible={this.state.backVisible} takeTheAction={this._showTheModal} data={item} canDelete={true} canGoThrough={timeInfo.canGoThrough} zipcode={get_user.me.zipcode} openZipCodeModal={this.openZipCodeModal}/>
+            </Animated.View>
+          </Animated.View>
+        </TouchableOpacity>
+      </View>
+    )
   }
 
   _standardItem = () =>{
