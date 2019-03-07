@@ -10,7 +10,7 @@ import {
   Animated,
   View,
 } from 'react-native';
-import { LinearGradient } from 'expo';
+import { LinearGradient, BlurView } from 'expo';
 import ActionDetails from './ActionDetails';
 import { defaults, styles } from '../../../constants/Styles';
 import NavigationService from '../../../navigation/navigationService';
@@ -20,12 +20,6 @@ import DoubleClick from 'react-native-double-tap';
 import moment from 'moment';
 import { TAKE_ACTION } from '../../graphql/mutations/take_action_mutation';
 import { DELETE_ACTION } from '../../graphql/mutations/delete_action';
-import { UPDATE_ZIPCODE } from '../../graphql/mutations/update_zipcode_mutation';
-import WasteModal from '../modals/NotWasteReduceModal';
-import WaterModal from '../modals/NotH2OConsumptionModal';
-import CarbonModal from '../modals/NotCO2EmissionModal';
-
-import ZipCodeModal from '../modals/ZipCodeModal';
 
 import { GET_USER } from '../../graphql/queries/get_user';
 import graphql from '../../hoc/graphql';
@@ -43,9 +37,6 @@ import { moderateScale } from 'react-native-size-matters';
 @graphql(DELETE_ACTION,{
   name:"delete_action"
 })
-@graphql(UPDATE_ZIPCODE,{
-  name:"update_zipcode"
-})
 class ActionCardSmall extends React.Component {
   lastTap=null;
   constructor(props){
@@ -53,14 +44,8 @@ class ActionCardSmall extends React.Component {
   }
 
   state = {
-    showModal: false,
     delete: false,
     takingAction: false,
-    congratulationsModal: false,
-    showWasteModal: false,
-    showWaterModal: false,
-    showCarbonModal: false,
-    showZipcodeModal: false,
     backVisible: false,
     canDelete : this.props.canDelete ? true : null,
     currScreen: this.props.currScreen ? this.props.currScreen : 'Main'
@@ -188,23 +173,6 @@ class ActionCardSmall extends React.Component {
     }
   }
 
-  updateZipCode =(zipcode)=>{
-    const { get_user, update_zipcode} = this.props;
-    if(zipcode){
-      let variables={
-        id:get_user.me.id,
-        zipcode:zipcode
-      }
-      update_zipcode({variables}).then(()=>{
-          this.onModalClose();
-      })
-    }
-  }
-
-  openZipCodeModal = () =>{
-    this.setState({showZipcodeModal: true});
-  }
-
   showDelete = () => {
     if (this.state.delete) {
       return (
@@ -221,22 +189,6 @@ class ActionCardSmall extends React.Component {
     }
   };
 
-  _showTheModal =() => {
-    const { item } = this.props;
-
-      let waste = item.action ? parseFloat(item.action.waste).toFixed(2) : parseFloat(item.waste).toFixed(2);
-      let water = item.action ? parseFloat(item.action.water).toFixed(2) : parseFloat(item.water).toFixed(2);
-      let carbon_dioxide = item.action ? parseFloat(item.action.carbon_dioxide).toFixed(2) : parseFloat(item.carbon_dioxide).toFixed(2);
-      if(this.props.canDelete){
-        if(waste > water && waste > carbon_dioxide){
-          this.setState({showWasteModal:true})
-        }else if(water > waste && water > carbon_dioxide){
-          this.setState({showWaterModal:true})
-        }else{
-          this.setState({showCarbonModal:true})
-        }
-      }
-  }
 
   _takeAction = () => {
     const { take_action, item, get_user, canDelete } = this.props;
@@ -254,16 +206,6 @@ class ActionCardSmall extends React.Component {
         this.flipCard();
       })
   }
-
-  onModalClose = () => {
-    this.setState({showWasteModal: false, showWaterModal : false, showCarbonModal: false, showZipcodeModal:false});
-  }
-
-  onActionModalClose = () => {
-    this.setState({showWasteModal: false, showWaterModal : false, showCarbonModal: false, showZipcodeModal:false});
-    this._takeAction();
-  }
-
 
   _myActionItem =() =>{
     const { item, index, get_user, canDelete } = this.props;
@@ -324,16 +266,12 @@ class ActionCardSmall extends React.Component {
                 style={[styles.gradient, { height: 250}]}
               />
               <Text
-                style={{
+                style={[styles.textWhiteBold, styles.smallTextShadow, {
                   position: 'absolute',
                   bottom: 10,
                   left: 15,
                   paddingRight:5,
-                  fontWeight: 'bold',
-                  fontFamily: 'Proxima Nova Bold',
-                  color: '#fff',
-                  fontSize: 18,
-                }}
+                }]}
               >
                 {canDelete && (
                   item.action.action_taken_description.length > 48 ? `${item.action.action_taken_description.substring(0, 40)}...` : item.action.action_taken_description
@@ -372,7 +310,7 @@ class ActionCardSmall extends React.Component {
                 { opacity: this.backOpacity, left: 10, }
               ]}
             >
-              <ActionDetails visible={this.state.backVisible} takeTheAction={this._showTheModal} data={item} canDelete={true} canGoThrough={timeInfo.canGoThrough} zipcode={get_user.me.zipcode} openZipCodeModal={this.openZipCodeModal}/>
+              <ActionDetails visible={this.state.backVisible} takeTheAction={this._showTheModal} data={item} canDelete={true} canGoThrough={timeInfo.canGoThrough} zipcode={get_user.me.zipcode} openZipCodeModal={this.props.openZipCodeModal}/>
             </Animated.View>
           </Animated.View>
         </TouchableOpacity>
@@ -458,7 +396,7 @@ class ActionCardSmall extends React.Component {
               }
             ]}
           >
-            <ActionDetails visible={this.state.backVisible} data={item} takeTheAction={this._takeAction} canDelete={false} zipcode={get_user.me.zipcode} openZipCodeModal={this.openZipCodeModal}/>
+            <ActionDetails visible={this.state.backVisible} data={item} takeTheAction={this._takeAction} canDelete={false} zipcode={get_user.me.zipcode} openZipCodeModal={this.props.openZipCodeModal}/>
             {this.state.delete && this.showDelete()}
           </Animated.View>
         </DoubleClick>
@@ -474,14 +412,8 @@ class ActionCardSmall extends React.Component {
       return <View></View>
     }
     return (
-      <View style={[styles.container]}>
-        { canDelete ?  this._myActionItem() : this._standardItem() }
-        <ZipCodeModal updateZipcode={this.updateZipCode} onClose={this.onModalClose} visible={this.state.showZipcodeModal} />
-        <WasteModal waste={this.state.waste} onClose={this.onActionModalClose} visible={this.state.showWasteModal}/>
-        <WaterModal water={this.state.water} onClose={this.onActionModalClose} visible={this.state.showWaterModal}/>
-        <CarbonModal carbon_dioxide={this.state.carbon_dioxide} onClose={this.onActionModalClose} visible={this.state.showCarbonModal}/>
-      </View>
-      )
+      canDelete ?  this._myActionItem() : this._standardItem()
+    )
   }
 }
 

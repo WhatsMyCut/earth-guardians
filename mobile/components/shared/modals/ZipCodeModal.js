@@ -7,7 +7,6 @@ import {
   TextInput,
   Modal,
 } from 'react-native';
-import { BlurView } from 'expo';
 import { styles, defaults } from '../../../constants/Styles';
 
 export default class ZipCodeModal extends React.Component {

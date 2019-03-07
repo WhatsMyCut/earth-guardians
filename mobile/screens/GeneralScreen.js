@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  StyleSheet,
   FlatList,
   SafeAreaView,
   TouchableOpacity,
@@ -8,16 +7,24 @@ import {
   Text,
   ScrollView,
 } from 'react-native';
-import { LinearGradient } from 'expo';
+import { LinearGradient, BlurView } from 'expo';
 import { Image } from 'react-native-expo-image-cache';
+import graphql from '../components/hoc/graphql';
 import navigationService from '../navigation/navigationService';
 import _fetchVideoUrl from '../services/fetchVideoUrl';
 import LinearGradientProps from '../constants/LinearGradientProps';
 import ActionCardSmall from '../components/shared/card';
+import WasteModal from '../components/shared/modals/NotWasteReduceModal';
+import WaterModal from '../components/shared/modals/NotH2OConsumptionModal';
+import CarbonModal from '../components/shared/modals/NotCO2EmissionModal';
+import ZipCodeModal from '../components/shared/modals/ZipCodeModal';
 import PrimaryImage from '../constants/PrimaryImage'
 import { FontAwesome } from '@expo/vector-icons';
 import { styles, defaults } from '../constants/Styles';
-
+import { UPDATE_ZIPCODE } from '../components/graphql/mutations/update_zipcode_mutation';
+@graphql(UPDATE_ZIPCODE,{
+  name:"update_zipcode"
+})
 export default class GeneralScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -25,6 +32,11 @@ export default class GeneralScreen extends React.Component {
   state = {
     video_url: null,
     picture_url: null,
+    congratulationsModal: false,
+    showWasteModal: false,
+    showWaterModal: false,
+    showCarbonModal: false,
+    showZipcodeModal: false,
   };
 
   componentDidMount() {
@@ -42,6 +54,50 @@ export default class GeneralScreen extends React.Component {
 
   componentWillUnmount() {
     this.props.primary_video = null
+  }
+
+  updateZipCode =(zipcode)=>{
+    const { get_user, update_zipcode} = this.props;
+    if(zipcode){
+      let variables={
+        id:get_user.me.id,
+        zipcode:zipcode
+      }
+      update_zipcode({variables}).then(()=>{
+          this.onModalClose();
+      })
+    }
+  }
+
+  openZipCodeModal = () =>{
+    this.setState({showZipcodeModal: true});
+  }
+
+  _showTheModal =() => {
+    const { item } = this.props;
+
+      let waste = item.action ? parseFloat(item.action.waste).toFixed(2) : parseFloat(item.waste).toFixed(2);
+      let water = item.action ? parseFloat(item.action.water).toFixed(2) : parseFloat(item.water).toFixed(2);
+      let carbon_dioxide = item.action ? parseFloat(item.action.carbon_dioxide).toFixed(2) : parseFloat(item.carbon_dioxide).toFixed(2);
+      if(this.props.canDelete){
+        if(waste > water && waste > carbon_dioxide){
+          this.setState({showWasteModal:true})
+        }else if(water > waste && water > carbon_dioxide){
+          this.setState({showWaterModal:true})
+        }else{
+          this.setState({showCarbonModal:true})
+        }
+      }
+  }
+
+
+  onModalClose = () => {
+    this.setState({showWasteModal: false, showWaterModal : false, showCarbonModal: false, showZipcodeModal:false});
+  }
+
+  onActionModalClose = () => {
+    this.setState({showWasteModal: false, showWaterModal : false, showCarbonModal: false, showZipcodeModal:false});
+    this._takeAction();
   }
 
   renderPrimaryImage = () => {
@@ -121,37 +177,63 @@ export default class GeneralScreen extends React.Component {
         </SafeAreaView>
       );
     }
+    const showAModal = this.state.showWasteModal ||
+      this.state.showWaterModal ||
+      this.state.showCarbonModal ||
+      this.state.showZipcodeModal;
 
     return (
-      <SafeAreaView style={[styles.container]}>
-        <ScrollView style={[styles.container, {flexDirection: 'column'}]}>
-          <View style={[styles.container]}>{this.primaryView()}</View>
-          <View style={[styles.container, {
-              marginLeft: 10,
-              marginRight: defaults.marginHorizontal,
-              marginTop: 20,
-            }]}
+      <View style={[styles.container]}>
+        <SafeAreaView style={[styles.container]}>
+          <ScrollView style={[styles.container, {flexDirection: 'column'}]}>
+            <View style={[styles.container]}>{this.primaryView()}</View>
+            <View style={[styles.container, {
+                marginLeft: 10,
+                marginRight: defaults.marginHorizontal,
+                marginTop: 20,
+              }]}
+            >
+              <FlatList
+                style={[styles.container]}
+                numColumns={2}
+                style={{
+                  paddingRight: defaults.paddingRight,
+                  paddingBottom: 20
+                }}
+                data={this.props.data[0].actions}
+                keyExtractor={(item, index) => item.id}
+                renderItem={({ item, index }) => (
+                  <ActionCardSmall
+                    item={item}
+                    index={index}
+                    currScreen={this.props.screen}
+                    openZipCodeModal={this.openZipCodeModal}
+                  />
+                )}
+              />
+            </View>
+          </ScrollView>
+        </SafeAreaView>
+        {showAModal &&
+          <BlurView
+            tint="dark"
+            intensity={80}
+            style={[
+              styles.container,
+              styles.coverScreen,
+              styles.coverAll,
+              {
+                zIndex: 2
+              }
+            ]}
           >
-            <FlatList
-              style={[styles.container]}
-              numColumns={2}
-              style={{
-                paddingRight: defaults.paddingRight,
-                paddingBottom: 20
-              }}
-              data={this.props.data[0].actions}
-              keyExtractor={(item, index) => item.id}
-              renderItem={({ item, index }) => (
-                <ActionCardSmall
-                  item={item}
-                  index={index}
-                  currScreen={this.props.screen}
-                />
-              )}
-            />
-          </View>
-        </ScrollView>
-      </SafeAreaView>
+            <ZipCodeModal updateZipcode={this.updateZipCode} onClose={this.onModalClose} visible={this.state.showZipcodeModal} />
+            <WasteModal waste={this.state.waste} onClose={this.onActionModalClose} visible={this.state.showWasteModal}/>
+            <WaterModal water={this.state.water} onClose={this.onActionModalClose} visible={this.state.showWaterModal}/>
+            <CarbonModal carbon_dioxide={this.state.carbon_dioxide} onClose={this.onActionModalClose} visible={this.state.showCarbonModal}/>
+          </BlurView>
+        }
+      </View>
     );
   }
 }
