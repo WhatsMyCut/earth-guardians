@@ -71,14 +71,8 @@ export const styles = ScaledSheet.create({
     position: "absolute",
     padding: 0,
     top: 0,
+    left: 0,
     borderRadius: defaults.borderRadius,
-    shadowColor: Colors.darkGray,
-    shadowRadius: 2,
-    shadowOpacity: 0.75,
-    shadowOffset: {
-        width: 0,
-        height: 0
-    },
     backgroundColor: Colors.white
   },
   cardHeaderText: {
@@ -218,19 +212,6 @@ export const styles = ScaledSheet.create({
   padRight50: {
     paddingRight: 50
   },
-  item: {
-    alignContent: 'space-between',
-    shadowColor: Colors.black,
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
-    marginTop: 10,
-    paddingLeft:10,
-    borderColor: 'transparent',
-    borderWidth: 1,
-    borderRadius: defaults.borderRadius,
-    backfaceVisibility: 'hidden',
-  },
   gradient: {
     position: 'absolute',
     borderRadius: defaults.borderRadius,
@@ -252,6 +233,11 @@ export const styles = ScaledSheet.create({
     color: Colors.white,
     fontSize: moderateScale(14),
     fontWeight: 'normal'
+  },
+  textWhiteBold: {
+    color: Colors.white,
+    fontSize: moderateScale(14),
+    fontWeight: 'bold'
   },
   textWhite18B: {
     color: Colors.white,
@@ -363,14 +349,28 @@ export const styles = ScaledSheet.create({
     paddingRight:10
   },
   actionCard: {
-    backgroundColor: Colors.white,
+    alignContent: 'space-between',
+    shadowColor: Colors.black,
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    marginTop: 10,
+    paddingLeft:10,
+    borderColor: 'transparent',
+    borderWidth: 1,
+    backfaceVisibility: 'hidden',
+    height: 250,
+  },
+  actionCardBack: {
     position: 'absolute',
-    marginLeft: 10,
     top:0,
     bottom:0,
     left:0,
     right:0,
-    height:250
+    height:250,
+    padding: 5,
+    backgroundColor: Colors.white,
+    borderRadius: defaults.borderRadius,
   },
   actionCardHeader: {
     fontSize: moderateScale(20),
@@ -379,17 +379,18 @@ export const styles = ScaledSheet.create({
     color: Colors.mediumGray,
   },
   actionCardSubHeader: {
-    fontSize: moderateScale(18),
+    fontSize: moderateScale(14),
     fontFamily: 'Proxima Nova Bold',
     color: Colors.mediumGray,
   },
   actionCardLabel: {
+    fontSize: moderateScale(12),
     fontFamily: 'Proxima Nova',
     color: Colors.mediumGray,
     textAlign: 'center',
   },
   actionCardValue: {
-    fontSize: moderateScale(18),
+    fontSize: moderateScale(16),
     fontWeight: 'bold',
     fontFamily: 'Proxima Nova Bold',
     color: Colors.mediumGray,

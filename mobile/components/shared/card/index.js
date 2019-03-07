@@ -288,48 +288,53 @@ class ActionCardSmall extends React.Component {
     let timeInfo = this.canTakeAgain(item);
 
     return (
-    <View style={{flex:1, height:250, marginVertical:10}}>
-    <TouchableOpacity
-    onPress={() => {
-        this.flipCard()
-    }}
-
-    onLongPress={() => {
-
-      if(canDelete){
-        this.setState({ delete: !this.state.delete })
-      }
-    }}
-  >
-    {/* <PasswordModal isVisible={this.state.showModal}/> */}
-    <Animated.View>
-    <Animated.View style={[styles.item,frontAnimatedStyle, , {height: 250, opacity:takingAction ? 0 : 1}]}>
-      <Image
-        style={{
-          flex: 1,
-          width: null,
-          height: null,
-          borderRadius: defaults.borderRadius,
-        }}
-        source={[preview, { uri: item.action.primary_image } ]}
-      />
-      <LinearGradient
-        colors={['rgba(0,0,0,0.1)', 'rgba(0,0,0,0.85)']}
-        locations={[0.0, 1]}
-        style={[styles.gradient, { height: 250}]}
-      />
-      <Text
-        style={{
-          position: 'absolute',
-          bottom: 10,
-          left: 15,
-          paddingRight:5,
-          fontWeight: 'bold',
-          fontFamily: 'Proxima Nova Bold',
-          color: '#fff',
-          fontSize: 18,
-        }}
-    >
+      <View style={[styles.container, {height:250, marginVertical:10}]}>
+        <TouchableOpacity
+          onPress={() => {
+              this.flipCard()
+          }}
+          onLongPress={() => {
+            if(canDelete){
+              this.setState({ delete: !this.state.delete })
+            }
+          }}
+        >
+        <Animated.View>
+          <Animated.View
+            style={[
+              styles.actionCard,
+              frontAnimatedStyle,
+              {
+                opacity:takingAction ? 0 : 1
+              }
+            ]}
+          >
+            <Image
+              style={{
+                flex: 1,
+                width: null,
+                height: null,
+                borderRadius: defaults.borderRadius,
+              }}
+              source={[preview, { uri: item.action.primary_image } ]}
+            />
+            <LinearGradient
+              colors={['rgba(0,0,0,0.1)', 'rgba(0,0,0,0.85)']}
+              locations={[0.0, 1]}
+              style={[styles.gradient, { height: 250}]}
+            />
+            <Text
+              style={{
+                position: 'absolute',
+                bottom: 10,
+                left: 15,
+                paddingRight:5,
+                fontWeight: 'bold',
+                fontFamily: 'Proxima Nova Bold',
+                color: '#fff',
+                fontSize: 18,
+              }}
+          >
         {canDelete && (
           item.action.action_taken_description.length > 48 ? `${item.action.action_taken_description.substring(0, 40)}...` : item.action.action_taken_description
         )}
@@ -337,26 +342,23 @@ class ActionCardSmall extends React.Component {
 
       {!timeInfo.canGoThrough && (
 
-      <LinearGradient
-        colors={['rgba(0,0,0,0.8)', 'rgba(0,0,0,0.8)']}
-        locations={[0.0, 1]}
-        style={[styles.gradient, { height: 250}]}
-      />
+        <LinearGradient
+          colors={['rgba(0,0,0,0.8)', 'rgba(0,0,0,0.8)']}
+          locations={[0.0, 1]}
+          style={[styles.gradient, { height: 250}]}
+        />
       )}
 
       {!timeInfo.canGoThrough && (
       <Text
-      style={{
+        style={[styles.textWhite, styles.smallTextShadow, {
           position: 'absolute',
           top: 10,
           left: 15,
           paddingRight:5,
           fontWeight: 'bold',
-          fontFamily: 'Proxima Nova Bold',
-          color: '#fff',
-          fontSize: 18,
-        }}
-    >
+        }]}
+      >
         Take action again {timeInfo.nextDate}
 
       </Text>
@@ -366,20 +368,15 @@ class ActionCardSmall extends React.Component {
     <Animated.View
       style={[
         backAnimatedStyle,
-        styles.item,
         styles.actionCard,
-        { height: 250 },
-        { opacity: this.backOpacity}
+        styles.actionCardBack,
+        { opacity: this.backOpacity }
       ]}
     >
       <ActionDetails visible={this.state.backVisible} takeTheAction={this._showTheModal} data={item} canDelete={true} canGoThrough={timeInfo.canGoThrough} zipcode={get_user.me.zipcode} openZipCodeModal={this.openZipCodeModal}/>
 
     </Animated.View>
-    <WasteModal waste={waste} onClose={this.onActionModalClose} visible={this.state.showWasteModal}/>
-    <WaterModal water={water} onClose={this.onActionModalClose} visible={this.state.showWaterModal}/>
-    <ZipCodeModal updateZipcode={this.updateZipCode} onClose={this.onModalClose} visible={this.state.showZipcodeModal} />
 
-    <CarbonModal carbon_dioxide={carbon_dioxide} onClose={this.onActionModalClose} visible={this.state.showCarbonModal}/>
     </Animated.View>
   </TouchableOpacity>
   </View>)
@@ -403,67 +400,73 @@ class ActionCardSmall extends React.Component {
     let waste = item.waste;
     let water = item.water;
     let carbon_dioxide = item.carbon_dioxide;
-    return <View style={{flex:1, height:250, marginVertical:10}}>
+    return (
+      <View style={[styles.container, {height:250, marginBottom: 10}]}>
+        <DoubleClick
+          style={[styles.container]}
+          singleTap={async () => {
+            this.flipCard()
+          }}
+          doubleTap={() => {
+            if(!canDelete) {
+              this._takeAction()
+            }
+          }}
+          delay={200}
+        >
+          <Animated.View
+            style={[
+              styles.actionCard,
+              frontAnimatedStyle,
+              {
+                opacity: takingAction ? 0 : 1
+              }
+            ]}
+          >
+            <LinearGradient
+              colors={['rgba(0,0,0,0.1)', 'rgba(0,0,0,0.8)']}
+              locations={[0, 1]}
+              style={[styles.gradient, { height: 250}]}
+            />
+            <Image
+              style={[styles.container, {
+                width: null,
+                height: null,
+                borderRadius: defaults.borderRadius,
+              }]}
+              source={[preview, {uri: canDelete ? item.action.primary_image : item.primary_image}]}
+            />
+            <Text
+              style={[styles.textWhiteBold, styles.smallTextShadow, {
+                position: 'absolute',
+                bottom: 10,
+                left: 15,
+                paddingRight: 5,
+              }]}
+            >
+              {canDelete && (item.action.action_taken_description.length > 48 ? `${item.action.action_taken_description.substring(0, 40)}...` : item.action.action_taken_description)}
+              {!canDelete && (item.short_description.length > 48 ? `${item.short_description.substring(0, 40)}...` : item.short_description)}
+            </Text>
+            {this.state.delete && this.showDelete()}
+          </Animated.View>
+          <Animated.View
+            style={[
+              backAnimatedStyle,
+              styles.actionCard,
+              styles.actionCardBack,
+              {
+                opacity: this.backOpacity,
+                left: 10,
+              }
+            ]}
+          >
+            <ActionDetails visible={this.state.backVisible} data={item} takeTheAction={this._takeAction} canDelete={false} zipcode={get_user.me.zipcode} openZipCodeModal={this.openZipCodeModal}/>
+            {this.state.delete && this.showDelete()}
+          </Animated.View>
+        </DoubleClick>
 
-    <DoubleClick
-      style={[styles.container]}
-      singleTap={async () => {
-        this.flipCard()
-      }}
-      doubleTap={() => {
-        if(!canDelete) {
-          this._takeAction()
-        }
-      }}
-      delay={200}
-    >
-    {/* <PasswordModal isVisible={this.state.showModal}/> */}
-
-    <Animated.View style={[styles.item, frontAnimatedStyle, {height: 250, opacity: takingAction ? 0 : 1}]}>
-    <LinearGradient
-        colors={['rgba(0,0,0,0.1)', 'rgba(0,0,0,0.8)']}
-        locations={[0, 1]}
-        style={[styles.gradient, { height: 250}]}
-      />
-      <Image
-        style={[styles.container, {
-          width: null,
-          height: null,
-          borderRadius: defaults.borderRadius,
-        }]}
-        source={[preview, {uri: canDelete ? item.action.primary_image : item.primary_image}]}
-      />
-      <Text
-        style={[styles.textWhite, styles.smallTextShadow, {
-          position: 'absolute',
-          bottom: 10,
-          left: 15,
-          paddingRight:5,
-          fontWeight: "bold",
-        }]}
-      >
-        {canDelete && (item.action.action_taken_description.length > 48 ? `${item.action.action_taken_description.substring(0, 40)}...` : item.action.action_taken_description)}
-        {!canDelete && (item.short_description.length > 48 ? `${item.short_description.substring(0, 40)}...` : item.short_description)}
-      </Text>
-      {this.state.delete && this.showDelete()}
-    </Animated.View>
-    <Animated.View
-      style={[
-        backAnimatedStyle,
-        styles.item,
-        styles.actionCard,
-        { height: 250 },
-        { opacity: this.backOpacity}
-      ]}
-    >
-      <ActionDetails visible={this.state.backVisible} data={item} takeTheAction={this._takeAction} canDelete={false} zipcode={get_user.me.zipcode} openZipCodeModal={this.openZipCodeModal}/>
-      <ZipCodeModal updateZipcode={this.updateZipCode} onClose={this.onModalClose} visible={this.state.showZipcodeModal} />
-      {this.state.delete && this.showDelete()}
-    </Animated.View>
-  </DoubleClick>
-
-    </View>
-
+      </View>
+    )
 
   }
 
@@ -472,7 +475,15 @@ class ActionCardSmall extends React.Component {
     if(get_user.loading){
       return <View></View>
     }
-    return canDelete ?  this._myActionItem() : this._standardItem()
+    return (
+      <View style={[styles.container]}>
+        { canDelete ?  this._myActionItem() : this._standardItem() }
+        <ZipCodeModal updateZipcode={this.updateZipCode} onClose={this.onModalClose} visible={this.state.showZipcodeModal} />
+        <WasteModal waste={this.state.waste} onClose={this.onActionModalClose} visible={this.state.showWasteModal}/>
+        <WaterModal water={this.state.water} onClose={this.onActionModalClose} visible={this.state.showWaterModal}/>
+        <CarbonModal carbon_dioxide={this.state.carbon_dioxide} onClose={this.onActionModalClose} visible={this.state.showCarbonModal}/>
+      </View>
+      )
   }
 }
 
