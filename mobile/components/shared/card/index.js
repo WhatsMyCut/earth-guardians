@@ -31,6 +31,7 @@ import { GET_USER } from '../../graphql/queries/get_user';
 import graphql from '../../hoc/graphql';
 import { MY_ACTIONS_QUERY } from '../../graphql/queries/my_actions_query';
 import { PrimaryImage } from '../../../constants/PrimaryImage';
+import { moderateScale } from 'react-native-size-matters';
 
 
 @graphql(GET_USER, {
@@ -366,7 +367,7 @@ class ActionCardSmall extends React.Component {
       style={[
         backAnimatedStyle,
         styles.item,
-        styles.flippedItem,
+        styles.actionCard,
         { height: 250 },
         { opacity: this.backOpacity}
       ]}
@@ -405,68 +406,52 @@ class ActionCardSmall extends React.Component {
     return <View style={{flex:1, height:250, marginVertical:10}}>
 
     <DoubleClick
-    style={{ flex: 1}}
-    singleTap={async () => {
-      // if(!canDelete){
+      style={[styles.container]}
+      singleTap={async () => {
         this.flipCard()
-      // } else{
-      //   console.log('this is also firing');
-      //   this._takeAction();
-      // }
-    }}
-
-    doubleTap={() => {
-     if(!canDelete){
-        this._takeAction()
-      }
-    }}
-    delay={200}
-
-  >
+      }}
+      doubleTap={() => {
+        if(!canDelete) {
+          this._takeAction()
+        }
+      }}
+      delay={200}
+    >
     {/* <PasswordModal isVisible={this.state.showModal}/> */}
 
-    <Animated.View style={[styles.item,frontAnimatedStyle, {height: 250, opacity:takingAction ? 0 : 1}]}>
+    <Animated.View style={[styles.item, frontAnimatedStyle, {height: 250, opacity: takingAction ? 0 : 1}]}>
     <LinearGradient
         colors={['rgba(0,0,0,0.1)', 'rgba(0,0,0,0.8)']}
         locations={[0, 1]}
         style={[styles.gradient, { height: 250}]}
       />
       <Image
-        style={{
-          flex: 1,
+        style={[styles.container, {
           width: null,
           height: null,
           borderRadius: defaults.borderRadius,
-//          backgroundColor: 'red'
-        }}
+        }]}
         source={[preview, {uri: canDelete ? item.action.primary_image : item.primary_image}]}
       />
       <Text
-        style={{
+        style={[styles.textWhite, styles.smallTextShadow, {
           position: 'absolute',
           bottom: 10,
           left: 15,
           paddingRight:5,
-          fontWeight: 'bold',
-          fontFamily: 'Proxima Nova Bold',
-          color: '#fff',
-          fontSize: 18,
-        }}
+          fontWeight: "bold",
+        }]}
       >
-        {canDelete && (
-
-          item.action.action_taken_description.length > 48 ? `${item.action.action_taken_description.substring(0, 40)}...` : item.action.action_taken_description
-        )}
+        {canDelete && (item.action.action_taken_description.length > 48 ? `${item.action.action_taken_description.substring(0, 40)}...` : item.action.action_taken_description)}
         {!canDelete && (item.short_description.length > 48 ? `${item.short_description.substring(0, 40)}...` : item.short_description)}
       </Text>
-
       {this.state.delete && this.showDelete()}
     </Animated.View>
     <Animated.View
       style={[
         backAnimatedStyle,
         styles.item,
-        styles.flippedItem,
+        styles.actionCard,
         { height: 250 },
         { opacity: this.backOpacity}
       ]}
@@ -474,7 +459,6 @@ class ActionCardSmall extends React.Component {
       <ActionDetails visible={this.state.backVisible} data={item} takeTheAction={this._takeAction} canDelete={false} zipcode={get_user.me.zipcode} openZipCodeModal={this.openZipCodeModal}/>
       <ZipCodeModal updateZipcode={this.updateZipCode} onClose={this.onModalClose} visible={this.state.showZipcodeModal} />
       {this.state.delete && this.showDelete()}
-
     </Animated.View>
   </DoubleClick>
 

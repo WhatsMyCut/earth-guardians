@@ -49,86 +49,76 @@ export default class ActionDetails extends React.Component {
     let item = data.action ? data.action : data;
 
     return (
-      <View style={{ flex: 1, margin: 5 }}>
-        <View style={{ flex: 1, marginTop: 10, marginBottom: 3 }}>
-          <Text
-            style={{
-              fontSize: 20,
-              fontWeight: 'bold',
-              fontFamily: 'Proxima Nova Bold',
-              color: '#666',
-            }}
-          >
+      <View style={[styles.container, { justifyContent: 'space-between', flexDirection: 'column'}]}>
+        <View style={[styles.contianer, { marginTop: 10, marginBottom: 3 }]}>
+          <Text style={[styles.actionCardHeader, styles.centerText]}>
             {this.props.canDelete ? 'METRICS EARNED' : 'METRICS'}
           </Text>
         </View>
 
-        <View style={[styles.container, { flexDirection: 'row', marginLeft:-16, alignContent:"flex-start"}]}>
-          <View style={[styles.container]}>
-            <Text style={[styles.actionCardLabel]}>
-              CO2
-            </Text>
-            <Text style={[styles.actionCardTinyLabel]}>
-              (lbs)
-            </Text>
-            <Text style={[styles.actionCardValue]}>
-              {item.carbon_dioxide || 0}
-            </Text>
-          </View>
-          <View style={[styles.container]}>
-            <Text style={[styles.actionCardLabel]}>
-              Water
-            </Text>
-            <Text style={[styles.actionCardTinyLabel]}>
-              (gal)
-            </Text>
-            <Text style={[styles.actionCardValue]}>
-              {item.water}
-            </Text>
-          </View>
-          <View style={[styles.container]}>
-            <Text style={[styles.actionCardLabel]}>
-              Waste
-            </Text>
-            <Text style={[styles.actionCardTinyLabel]}>
-              (lbs)
-            </Text>
-            <Text style={[styles.actionCardValue]}>
-              {item.waste}
-            </Text>
+        <View style={[styles.container, { marginLeft: -16, marginVertical: '10%'}]}>
+          <View style={[styles.container, { flexDirection: 'row', alignContent:" flex-start"}]}>
+            <View style={[styles.container]}>
+              <Text style={[styles.actionCardLabel]}>
+                CO2
+              </Text>
+              <Text style={[styles.actionCardTinyLabel]}>
+                (lbs)
+              </Text>
+              <Text style={[styles.actionCardValue]}>
+                {item.carbon_dioxide || 0}
+              </Text>
+            </View>
+            <View style={[styles.container]}>
+              <Text style={[styles.actionCardLabel]}>
+                Water
+              </Text>
+              <Text style={[styles.actionCardTinyLabel]}>
+                (gal)
+              </Text>
+              <Text style={[styles.actionCardValue]}>
+                {item.water}
+              </Text>
+            </View>
+            <View style={[styles.container]}>
+              <Text style={[styles.actionCardLabel]}>
+                Waste
+              </Text>
+              <Text style={[styles.actionCardTinyLabel]}>
+                (lbs)
+              </Text>
+              <Text style={[styles.actionCardValue]}>
+                {item.waste}
+              </Text>
+            </View>
           </View>
         </View>
 
-
-         <View style={{flex:1}}>
-       <View style={{ flex: 1 }}>
-
-          <Text
-            style={{ fontFamily: 'Proxima Nova', color: '#666', marginTop: 20 }}
-          >
-            {' '}
-            COMMUNITY
-          </Text>
-        </View>
-
-        {this.props.zipcode && (
+        <View style={[styles.container, { marginVertical: '5%'}]}>
           <View style={[styles.container]}>
-            <Text style={[styles.actionCardPlaceholderText]}>
+            <Text style={[styles.actionCardSubHeader]}>
+              COMMUNITY
+            </Text>
+          </View>
+
+          {this.props.zipcode && (
+            <View style={[styles.contianer]}>
+              <Text style={[styles.actionCardValue]}>
                 {this.props.zipcode}
               </Text>
-          </View>
-        )}
-        {!this.props.zipcode && (
-          <TouchableOpacity style={[styles.container]} onPress={()=> {
-            if(this.props.visible){
-              this.props.openZipCodeModal()
-            }
-          }}>
-            <Text style={[styles.actionCardPlaceholderText]}>
-              Zip Code
-            </Text>
-          </TouchableOpacity>
-        )}
+            </View>
+          )}
+          {!this.props.zipcode && (
+            <TouchableOpacity style={[styles.container]} onPress={()=> {
+              if(this.props.visible){
+                this.props.openZipCodeModal()
+              }
+            }}>
+              <Text style={[styles.actionCardPlaceholderText]}>
+                Zip Code
+              </Text>
+            </TouchableOpacity>
+          )}
         </View>
         <TouchableOpacity
           onPress={() => {
