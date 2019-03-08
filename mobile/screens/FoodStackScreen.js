@@ -77,6 +77,8 @@ class FoodStackScreen extends React.Component {
           screen={'Food'}
           primary_image={actions[0].primary_image}
           primary_video={actions[0].video_id}
+          openZipCodeModal={this.props.openModal}
+          onModalClose={this.props.closeModal}
         />
       </LinearGradient>
     );

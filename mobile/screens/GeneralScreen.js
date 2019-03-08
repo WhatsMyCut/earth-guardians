@@ -14,10 +14,13 @@ import navigationService from '../navigation/navigationService';
 import _fetchVideoUrl from '../services/fetchVideoUrl';
 import LinearGradientProps from '../constants/LinearGradientProps';
 import ActionCardSmall from '../components/shared/card';
-import WasteModal from '../components/shared/modals/NotWasteReduceModal';
-import WaterModal from '../components/shared/modals/NotH2OConsumptionModal';
-import CarbonModal from '../components/shared/modals/NotCO2EmissionModal';
-import ZipCodeModal from '../components/shared/modals/ZipCodeModal';
+import {
+  WasteModal,
+  WaterModal,
+  CarbonModal,
+  ZipCodeModal,
+  ModalComponent,
+} from '../components/shared/modals/';
 import PrimaryImage from '../constants/PrimaryImage'
 import { FontAwesome } from '@expo/vector-icons';
 import { styles, defaults } from '../constants/Styles';
@@ -28,6 +31,7 @@ import { UPDATE_ZIPCODE } from '../components/graphql/mutations/update_zipcode_m
 export default class GeneralScreen extends React.Component {
   constructor(props) {
     super(props);
+    this.openZipCodeModal = this.props.openZipCodeModal.bind(this)
   }
   state = {
     video_url: null,
@@ -92,6 +96,7 @@ export default class GeneralScreen extends React.Component {
 
 
   onModalClose = () => {
+    console.log('HERE2')
     this.setState({showWasteModal: false, showWaterModal : false, showCarbonModal: false, showZipcodeModal:false});
   }
 
@@ -184,6 +189,25 @@ export default class GeneralScreen extends React.Component {
 
     return (
       <View style={[styles.container]}>
+        {showAModal &&
+          <BlurView
+            tint="dark"
+            intensity={80}
+            style={[
+              styles.container,
+              styles.coverScreen,
+              styles.coverAll,
+              {
+                zIndex: 2000
+              }
+            ]}
+          >
+            {/* <ZipCodeModal updateZipcode={this.updateZipCode} onClose={this.onModalClose} visible={this.state.showZipcodeModal} />
+            <WasteModal waste={this.state.waste} onClose={this.onActionModalClose} visible={this.state.showWasteModal}/>
+            <WaterModal water={this.state.water} onClose={this.onActionModalClose} visible={this.state.showWaterModal}/>
+            <CarbonModal carbon_dioxide={this.state.carbon_dioxide} onClose={this.onActionModalClose} visible={this.state.showCarbonModal}/> */}
+          </BlurView>
+        }
         <SafeAreaView style={[styles.container]}>
           <ScrollView style={[styles.container, {flexDirection: 'column'}]}>
             <View style={[styles.container]}>{this.primaryView()}</View>
@@ -207,32 +231,14 @@ export default class GeneralScreen extends React.Component {
                     item={item}
                     index={index}
                     currScreen={this.props.screen}
-                    openZipCodeModal={this.openZipCodeModal}
+                    openZipCodeModal={this.props.openZipCodeModal}
+                    closeModal={this.props.onModalClose}
                   />
                 )}
               />
             </View>
           </ScrollView>
         </SafeAreaView>
-        {showAModal &&
-          <BlurView
-            tint="dark"
-            intensity={80}
-            style={[
-              styles.container,
-              styles.coverScreen,
-              styles.coverAll,
-              {
-                zIndex: 2
-              }
-            ]}
-          >
-            <ZipCodeModal updateZipcode={this.updateZipCode} onClose={this.onModalClose} visible={this.state.showZipcodeModal} />
-            <WasteModal waste={this.state.waste} onClose={this.onActionModalClose} visible={this.state.showWasteModal}/>
-            <WaterModal water={this.state.water} onClose={this.onActionModalClose} visible={this.state.showWaterModal}/>
-            <CarbonModal carbon_dioxide={this.state.carbon_dioxide} onClose={this.onActionModalClose} visible={this.state.showCarbonModal}/>
-          </BlurView>
-        }
       </View>
     );
   }

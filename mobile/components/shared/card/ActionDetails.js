@@ -6,6 +6,11 @@ import { Analytics, Event } from 'expo-analytics';
 import { RetrieveData } from '../../../store/AsyncStore';
 import { styles } from '../../../constants/Styles'
 export default class ActionDetails extends React.Component {
+
+  constructor(props) {
+    super(props)
+    this.openModal = this.props.openModal.bind(this)
+  }
   state = {
     in: false
   };
@@ -110,7 +115,8 @@ export default class ActionDetails extends React.Component {
           {!this.props.zipcode && (
             <TouchableOpacity style={[styles.container]} onPress={()=> {
               if(this.props.visible){
-                this.props.openZipCodeModal()
+                console.log('here2', this.props)
+                this.openModal
               }
             }}>
               <Text style={[styles.actionCardPlaceholderText]}>

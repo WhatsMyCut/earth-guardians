@@ -25,7 +25,6 @@ import { GET_USER } from '../../graphql/queries/get_user';
 import graphql from '../../hoc/graphql';
 import { MY_ACTIONS_QUERY } from '../../graphql/queries/my_actions_query';
 import { PrimaryImage } from '../../../constants/PrimaryImage';
-import { moderateScale } from 'react-native-size-matters';
 
 
 @graphql(GET_USER, {
@@ -38,11 +37,13 @@ import { moderateScale } from 'react-native-size-matters';
   name:"delete_action"
 })
 class ActionCardSmall extends React.Component {
-  lastTap=null;
   constructor(props){
     super(props);
+    //console.log('here4', this.props)
+    //this.openModal = this.props.openZipCodeModal.bind(this);
   }
 
+  lastTap=null;
   state = {
     delete: false,
     takingAction: false,
@@ -310,7 +311,14 @@ class ActionCardSmall extends React.Component {
                 { opacity: this.backOpacity, left: 10, }
               ]}
             >
-              <ActionDetails visible={this.state.backVisible} takeTheAction={this._showTheModal} data={item} canDelete={true} canGoThrough={timeInfo.canGoThrough} zipcode={get_user.me.zipcode} openZipCodeModal={this.props.openZipCodeModal}/>
+              <ActionDetails
+                visible={this.state.backVisible}
+                takeTheAction={this._showTheModal}
+                data={item}
+                canDelete={true}
+                canGoThrough={timeInfo.canGoThrough}
+                zipcode={get_user.me.zipcode}
+                openModal={this.props.openModal}/>
             </Animated.View>
           </Animated.View>
         </TouchableOpacity>
@@ -396,7 +404,14 @@ class ActionCardSmall extends React.Component {
               }
             ]}
           >
-            <ActionDetails visible={this.state.backVisible} data={item} takeTheAction={this._takeAction} canDelete={false} zipcode={get_user.me.zipcode} openZipCodeModal={this.props.openZipCodeModal}/>
+            <ActionDetails
+              visible={this.state.backVisible}
+              data={item}
+              takeTheAction={this._takeAction}
+              canDelete={false}
+              zipcode={get_user.me.zipcode}
+              openModal={this.props.openModal}
+            />
             {this.state.delete && this.showDelete()}
           </Animated.View>
         </DoubleClick>
