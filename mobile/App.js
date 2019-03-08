@@ -14,18 +14,14 @@ import {
 } from './components/shared/modals/NotificationModal';
 import { styles, defaults } from './constants/Styles';
 import ModalComponent from './components/shared/modals/ModalComponent';
+import {
+  ZipCodeModal
+} from './components/shared/modals/'
 export default class App extends React.Component {
-  // feed the store to the app
-  constructor(props) {
-    super(props);
-    this.openModal = this.openAModal.bind(this);
-    this.closeModal = this.closeAModal.bind(this);
-  }
-
   state = {
     fontLoaded: false,
     showGameComplete: false,
-    showAModal: false,
+    showZipCodeModal: false,
     showNotificationModal: false,
   };
 
@@ -35,7 +31,8 @@ export default class App extends React.Component {
       'Proxima Nova Bold': require('./assets/fonts/ProximaNovaBold.ttf'),
     });
 
-    var token = PubSub.subscribe('GameComplete', this.modalHandler);
+    PubSub.subscribe('openZipCodeModal', this.openZipCodeModal);
+    PubSub.subscribe('closeModal', this.closeModal);
     this._notificationSubscription = Notifications.addListener(this._handleNotification);
     this.setState({ fontLoaded: true });
   }
@@ -58,14 +55,14 @@ export default class App extends React.Component {
     this.setState({ showNotificationModal : false, notification: null})
   }
 
-  openAModal() {
-    console.log("openAModal", this.state)
-    this.setState({showAModal: true, });
+  openZipCodeModal = (data) => {
+    console.log("openAModal", data)
+    this.setState({showZipCodeModal: true});
   }
 
-  closeAModal = () => {
+  closeModal = () => {
     console.log('closeAModal', this.state)
-    this.setState({showAModal: false, showWaterModal : false, showCarbonModal: false, showZipcodeModal:false});
+    this.setState({ showZipCodeModal:false });
   }
 
   render() {
@@ -84,9 +81,9 @@ export default class App extends React.Component {
             }}
           />
 
-          {this.state.showAModal &&
-            <ModalComponent openModal={() => this.openAModal()} closeModal={() => this.closeAModal()}>
-              <Text style={[styles.centerAll, styles.textWhiteBold]}>Modal Component</Text>
+          {this.state.showZipCodeModal &&
+            <ModalComponent closeModal={() => this.closeModal()}>
+              <Text style={[styles.textGrey18B]}>YO YOYO</Text>
             </ModalComponent>
           }
           {this.state.showGameComplete && (

@@ -2,6 +2,7 @@ import React from 'react';
 
 import { View, Text, TouchableOpacity } from 'react-native';
 import { Icon } from 'expo';
+import PubSub from 'pubsub-js'
 import { Analytics, Event } from 'expo-analytics';
 import { RetrieveData } from '../../../store/AsyncStore';
 import { styles } from '../../../constants/Styles'
@@ -9,12 +10,18 @@ export default class ActionDetails extends React.Component {
 
   constructor(props) {
     super(props)
-    this.openModal = this.props.openModal.bind(this)
+    this.openModal = this.openModal.bind(this)
   }
   state = {
     in: false
   };
-
+  openModal() {
+    console.log('here3')
+    PubSub.publish('openZipCodeModal', { showZipCodeModal: true });
+  }
+  closeModal() {
+    PubSub.publish('closeModal');
+  }
   _takeInAction = async () => {
     try {
       // TODO update Database
@@ -115,8 +122,8 @@ export default class ActionDetails extends React.Component {
           {!this.props.zipcode && (
             <TouchableOpacity style={[styles.container]} onPress={()=> {
               if(this.props.visible){
-                console.log('here2', this.props)
-                this.openModal
+                //console.log('here2', this.props)
+                this.openModal()
               }
             }}>
               <Text style={[styles.actionCardPlaceholderText]}>
