@@ -14,16 +14,11 @@ import NavigationService from '../../../navigation/navigationService';
 import graphql from '../../hoc/graphql';
 import { SIGNUP } from '../../graphql/mutations/signup_mutation';
 import { LOGIN } from '../../graphql/mutations/login_mutation';
-//import { TOKEN } from '../../graphql/mutations/token_mutation';
 import { USER_EXISTS_QUERY } from '../../graphql/queries/UserExistsQuery';
 import { StoreData } from '../../../store/AsyncStore';
-import { Permissions, Notifications } from 'expo';
+import { Permissions, Notifications, Location } from 'expo';
 
-/*
-@graphql(TOKEN, {
- 	name: 'token_mutation',
-})
-*/
+
 @graphql(SIGNUP, {
 	name: 'signup_mutation',
 })
@@ -49,6 +44,7 @@ export default class PasswordModal extends React.Component {
 		existsPassword: null,
 		standardError: null,
 		token: null,
+		location: null
 	};
 
 	constructor(props) {
@@ -57,7 +53,22 @@ export default class PasswordModal extends React.Component {
 
 	componentDidMount() {
 		this.registerForPushNotificationsAsync();
+		this._getLocationAsync();
 	}
+
+	_getLocationAsync = async () => {
+		let { status } = await Permissions.askAsync(Permissions.LOCATION);
+		if (status !== 'granted') {
+		  return;
+		}
+	
+		let location = await Location.getCurrentPositionAsync({});
+		let address = await Location.reverseGeocodeAsync(location.coords);
+
+		console.log('location', address);
+		this.setState({ location: address[0] });
+	};
+
 
 	registerForPushNotificationsAsync = async () => {
 		const { status: existingStatus } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
@@ -77,33 +88,9 @@ export default class PasswordModal extends React.Component {
 			return;
 		}
 
-		// Get the token that uniquely identifies this device
 		let token = await Notifications.getExpoPushTokenAsync();
 		console.log('Token is ', token);
 
-		// POST the token to your backend server from where you can retrieve it to send push notifications.
-		/*return fetch(PUSH_ENDPOINT, {
-		method: 'POST',
-		headers: {
-			Accept: 'application/json',
-			'Content-Type': 'application/json',
-		},
-		body: JSON.stringify({
-			token: {
-				value: token,
-			},
-			user: {
-				username: username,
-			},
-		}),
-  });
-  */
-		//update the graphql
-		/*
-		token_mutation({ variables: { token: token } }).then((res) => {
-			//TBD
-    });
-    */
 		this.setState({ token: token });
 	};
 
@@ -112,10 +99,10 @@ export default class PasswordModal extends React.Component {
 	}
 
 	signup = async () => {
-		const { password, confirmPassword, token } = this.state;
+		const { password, confirmPassword, token, location } = this.state;
 		const { signup_mutation, username } = this.props;
 		if (password === confirmPassword) {
-			signup_mutation({ variables: { username: username, password: password, token: token } }).then((res) => {
+			signup_mutation({ variables: { username: username, password: password, token: token, country: location ? location.country : null, country_name: location ? location.isoCountryCode : null, state: location ? location.region : null, zipcode: location ? location.postalCode : null } }).then((res) => {
 				this.props.setToken(res.data.signup.token);
 				this.props.phone_signup();
 			});

@@ -3,11 +3,13 @@ import navigationService from '../navigation/navigationService';
 import { StoreData, RetrieveData } from './AsyncStore';
 import { Permissions } from 'expo';
 import { Analytics, Event } from 'expo-analytics';
+
 // a store to hold the react context api
 const Store = React.createContext();
 
 // create a provide
 //create a provider
+
 export class StoreProvider extends React.Component {
 	state = {
 		isLoading: true,
@@ -70,6 +72,7 @@ export class StoreProvider extends React.Component {
 		}
 		// for now, turn autheticate to true
 		if (finalStatus !== 'granted') {
+
 		}
 		// registerForPushNotificationsAsync
 
