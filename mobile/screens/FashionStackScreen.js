@@ -55,8 +55,6 @@ class FashionStackScreen extends React.Component {
           screen={'Fashion'}
           primary_image={this.state.primary_image}
           primary_video={this.state.primary_video}
-          openZipCodeModal={this.props.openModal}
-          onModalClose={this.props.closeModal}
         />
       </LinearGradient>
     );

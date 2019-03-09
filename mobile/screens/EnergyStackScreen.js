@@ -25,7 +25,6 @@ import { Modal } from 'react-native-paper';
 class EnergyStackScreen extends React.Component {
   constructor(props) {
     super(props)
-    console.log('EnergyStackScreen', client.store)
   }
   state = { primary_image: '', primary_video: '', actions: [] };
   componentDidMount() {
@@ -67,8 +66,6 @@ class EnergyStackScreen extends React.Component {
           screen={'Energy'}
           primary_image={actions[0].primary_image}
           primary_video={actions[0].video_id}
-          openZipCodeModal={this.props.openModal}
-          onModalClose={this.props.closeModal}
         />
       </LinearGradient>
     );
