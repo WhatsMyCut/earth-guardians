@@ -48,7 +48,7 @@ export default class ProfileComponent extends React.Component {
         >
           <LinearGradient
           {...LinearGradientProps.profileItem}
-          style={[styles.linearGradientBox, styles.centerAll, {width: '100%'}]}>
+          style={[styles.container, styles.linearGradientBox, styles.centerAll, {width: '100%', padding: 20}]}>
             <Image source={profilepic} style={styles.profileImage} />
             <Text style={[styles.smallWhiteText, {paddingTop: 10}]}>Click to Update</Text>
           </LinearGradient>
