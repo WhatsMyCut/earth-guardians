@@ -1,0 +1,13 @@
+{
+    "bucketName": "eg-profile-pics",
+    "authPolicyName": "s3_amplify_31137c2a",
+    "unauthPolicyName": "s3_amplify_31137c2a",
+    "authRoleName": {
+        "Ref": "AuthRoleName"
+    },
+    "unauthRoleName": {
+        "Ref": "UnauthRoleName"
+    },
+    "authPermissions": "rw",
+    "unauthPermissions": "r"
+}
