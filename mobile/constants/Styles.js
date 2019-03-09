@@ -435,7 +435,7 @@ export const styles = ScaledSheet.create({
     paddingBottom: 5,
   },
   detailRow: {
-    flexDirection: 'row',
+    flexDirection: 'column',
     width: '90%',
     alignSelf: 'center',
     paddingBottom: 5,

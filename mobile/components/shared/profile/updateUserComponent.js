@@ -16,7 +16,7 @@ import NavigationService from '../../../navigation/navigationService';
 import graphql from '../../hoc/graphql';
 import { UPDATE_USER } from '../../graphql/mutations/update_user_mutation';
 import { GET_USER } from '../../graphql/queries/get_user';
-import { fromPromise } from 'apollo-link';
+import { styles } from '../../../constants/Styles';
 
 @graphql(UPDATE_USER, {
   name: 'update_user_mutation',
@@ -70,13 +70,10 @@ export default class UpdateUserComponent extends React.Component {
           }}
         >
           <View
-            style={{
-              flex: 1,
-              justifyContent: 'center',
+            style={[styles.container, styles.centerAll, {
               flexDirection: 'column',
-              alignItems: 'center',
               paddingHorizontal: 5,
-            }}
+            }]}
           >
             <View
               style={{
@@ -118,7 +115,6 @@ export default class UpdateUserComponent extends React.Component {
       { value: 'Crew' },
     ];
 
-    const { me } = this.props.my_user;
 
     return (
       <Modal

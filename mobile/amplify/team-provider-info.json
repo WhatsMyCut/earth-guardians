@@ -1,0 +1,19 @@
+{
+    "production": {
+        "awscloudformation": {
+            "AuthRoleName": "earth-guardians-20190309011033-authRole",
+            "UnauthRoleArn": "arn:aws:iam::144898161734:role/earth-guardians-20190309011033-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::144898161734:role/earth-guardians-20190309011033-authRole",
+            "Region": "us-east-1",
+            "DeploymentBucketName": "earth-guardians-20190309011033-deployment",
+            "UnauthRoleName": "earth-guardians-20190309011033-unauthRole",
+            "StackName": "earth-guardians-20190309011033",
+            "StackId": "arn:aws:cloudformation:us-east-1:144898161734:stack/earth-guardians-20190309011033/32072420-424b-11e9-be64-12391cfc54f4"
+        },
+        "categories": {
+            "auth": {
+                "cognito66e60abd": {}
+            }
+        }
+    }
+}

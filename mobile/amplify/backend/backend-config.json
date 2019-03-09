@@ -1,0 +1,14 @@
+{
+	"auth": {
+		"cognito66e60abd": {
+			"service": "Cognito",
+			"providerPlugin": "awscloudformation"
+		}
+	},
+	"storage": {
+		"earthguardianss3bucket": {
+			"service": "S3",
+			"providerPlugin": "awscloudformation"
+		}
+	}
+}

@@ -19,6 +19,7 @@ import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_
 import graphql from '../components/hoc/graphql';
 import NavigationService from '../navigation/navigationService';
 import ProfileComponent from '../components/shared/profile/ProfileComponent';
+import UpdateUserComponent from '../components/shared/profile/UpdateUserComponent';
 import CommunityEventModal from '../components/shared/modals/CommunityEventModal';
 import { GET_USER } from '../components/graphql/queries/get_user';
 import client from '../Apollo';
@@ -84,8 +85,8 @@ class ProfileStackScreen extends React.Component {
     //console.log('this.props', this.props);
     if (this.props.user.loading) {
       return (
-        <SafeAreaView style={{ flex: 1 }}>
-          <View style={ styles.containerGrey }>
+        <SafeAreaView style={[styles.container]}>
+          <View style={[ styles.modalView ]}>
             <ActivityIndicator size={'large'} />
           </View>
         </SafeAreaView>
@@ -97,8 +98,8 @@ class ProfileStackScreen extends React.Component {
 
     return (
       <SafeAreaView style={[styles.greyCard]}>
-        <ScrollView contentContainerStyle={[{}]}>
-          <View style={[styles.containerGrey, defaults.SCREEN_HEIGHT]}>
+        <ScrollView contentContainerStyle={[styles.modalView, {}]}>
+          <View style={[]}>
             <ProfileComponent user={this.state.user}/>
           </View>
 
