@@ -71,20 +71,22 @@ class ProfileStackScreen extends React.Component {
   }
 
   async updatePic() {
-    _pickImage()
-    .then(res => {
-      console.log('_pickImage', res)
-      update_user({variables:{profile_pic: res.url}})
-      this.setState(
-        { user:
-          { me:
-            {
-              profile_pic: res.url
-            }
-          }
-        }
-      )
-    })
+    const image = _pickImage
+    console.log('updatePic', image)
+    // .then(res => {
+    //   console.log('_pickImage', res)
+    //   update_user({variables:{profile_pic: res.url}})
+    //   this.setState(
+    //     { user:
+    //       { me:
+    //         {
+    //           profile_pic: res.url
+    //         }
+    //       }
+    //     }
+    //   )
+    // })
+    // .catch(e => console.log(e))
   }
 
   async _aggregateProfile() {
