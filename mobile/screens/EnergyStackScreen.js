@@ -1,14 +1,15 @@
 import React from 'react';
 import { all } from 'rsvp';
-import { ActivityIndicator } from 'react-native';
+import { ActivityIndicator, View } from 'react-native';
 import { LinearGradient, AppLoading } from 'expo';
-
+import ModalComponent from '../components/shared/modals/ModalComponent';
 import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_categories_query';
 import graphql from '../components/hoc/graphql';
 import HeaderNavBar from '../components/shared/navBar/HeaderNavBar';
 import LinearGradientProps from '../constants/LinearGradientProps';
 import GeneralScreen from './GeneralScreen';
 import { Analytics, PageHit } from 'expo-analytics';
+import { Modal } from 'react-native-paper';
 
 //import { energy_data, primary_energy_id } from './dummy/data';
 
@@ -22,6 +23,9 @@ import { Analytics, PageHit } from 'expo-analytics';
   },
 })
 class EnergyStackScreen extends React.Component {
+  constructor(props) {
+    super(props)
+  }
   state = { primary_image: '', primary_video: '', actions: [] };
   componentDidMount() {
     // Analytics
@@ -54,7 +58,7 @@ class EnergyStackScreen extends React.Component {
         <LinearGradient {...LinearGradientProps.energy} style={{ flex: 1 }} />
       );
     }
-    
+
     return (
       <LinearGradient {...LinearGradientProps.energy} style={{ flex: 1 }}>
         <GeneralScreen
