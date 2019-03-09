@@ -23,6 +23,7 @@ export const CARD_WIDTH = Dimensions.get("window").width * 0.87;
 export const CARD_HEIGHT = Dimensions.get("window").height * 0.65;
 defaults.primaryHeight = SCREEN_HEIGHT
 defaults.width = SAFE_WIDTH
+defaults.fullWidth = SCREEN_WIDTH
 defaults.hairline = StyleSheet.hairlineWidth
 
 export const styles = ScaledSheet.create({
@@ -443,6 +444,7 @@ export const styles = ScaledSheet.create({
     paddingBottom: 5,
   },
   detailRow: {
+    flex: 1,
     flexDirection: 'column',
     width: '90%',
     alignSelf: 'center',
@@ -584,9 +586,35 @@ export const styles = ScaledSheet.create({
     color: Colors.white,
   },
   profileImage: {
-    width: 50,
-    height: 50,
-    marginVertical: 10,
+    width: 150,
+    height: 150,
+    margin: 10,
+    borderColor: Colors.white,
+    borderWidth: 3,
+    borderRadius: 75,
+    shadowColor: Colors.black,
+    shadowOpacity: 0.5,
+    shadowRadius: 2,
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    }
+  },
+  profileRow: {
+    flex: 1,
+    width: '90%',
+    paddingBottom: 5,
+  },
+  profileCell: {
+    flex: 1,
+    color: Colors.white,
+    justifyContent: 'center',
+  },
+  profilePlaceholerText: {
+    fontSize: moderateScale(22),
+    fontWeight: 'bold',
+    fontFamily: 'Proxima Nova Bold',
+    color: Colors.mediumGray,
   },
   social: {
     borderRadius: defaults.borderRadius,
