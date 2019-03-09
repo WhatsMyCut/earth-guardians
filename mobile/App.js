@@ -17,8 +17,11 @@ export default class App extends React.Component {
   state = {
     fontLoaded: false,
     showGameComplete: false,
-    showZipCodeModal: false,
     showNotificationModal: false,
+    showWasteModal: false,
+    showWaterModal: false,
+    showCarbonModal:false,
+    showZipCodeModal: false,
   };
 
   async componentDidMount() {
@@ -77,6 +80,11 @@ export default class App extends React.Component {
       return null;
     }
 
+    const showModal = this.state.showZipCodeModal ||
+    this.state.showCarbonModal ||
+    this.state.showWasteModal ||
+    this.state.showWaterModal
+
     return (
       <StoreProvider>
         <ApolloProvider client={client}>
@@ -86,7 +94,7 @@ export default class App extends React.Component {
             }}
           />
 
-          {showZipCodeModal &&
+          {showModal &&
             <ModalComponent
               display={'ZipCodeModal'}
               onClose={() => this.closeModal()}

@@ -169,32 +169,8 @@ export default class GeneralScreen extends React.Component {
         </SafeAreaView>
       );
     }
-    const showAModal = this.state.showWasteModal ||
-      this.state.showWaterModal ||
-      this.state.showCarbonModal ||
-      this.state.showZipcodeModal;
-
     return (
       <View style={[styles.container]}>
-        {showAModal &&
-          <BlurView
-            tint="dark"
-            intensity={80}
-            style={[
-              styles.container,
-              styles.coverScreen,
-              styles.coverAll,
-              {
-                zIndex: 2000
-              }
-            ]}
-          >
-            {/* <ZipCodeModal updateZipcode={this.updateZipCode} onClose={this.onModalClose} visible={this.state.showZipcodeModal} />
-            <WasteModal waste={this.state.waste} onClose={this.onActionModalClose} visible={this.state.showWasteModal}/>
-            <WaterModal water={this.state.water} onClose={this.onActionModalClose} visible={this.state.showWaterModal}/>
-            <CarbonModal carbon_dioxide={this.state.carbon_dioxide} onClose={this.onActionModalClose} visible={this.state.showCarbonModal}/> */}
-          </BlurView>
-        }
         <SafeAreaView style={[styles.container]}>
           <ScrollView style={[styles.container, {flexDirection: 'column'}]}>
             <View style={[styles.container]}>{this.primaryView()}</View>
