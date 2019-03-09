@@ -39,8 +39,6 @@ import { PrimaryImage } from '../../../constants/PrimaryImage';
 class ActionCardSmall extends React.Component {
   constructor(props){
     super(props);
-    //console.log('here4', this.props)
-    //this.openModal = this.props.openZipCodeModal.bind(this);
   }
 
   lastTap=null;

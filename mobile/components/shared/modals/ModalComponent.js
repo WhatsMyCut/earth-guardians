@@ -1,20 +1,42 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import {
-  TouchableWithoutFeedback,
+  View,
+  TouchableWithoutFeedback
 } from 'react-native';
-import {BlurView} from 'expo';
+import { BlurView } from 'expo';
 import { styles } from '../../../constants/Styles'
+import ZipCodeModal from '../modals/ZipCodeModal';
+import { Modal } from 'react-native-paper';
 
 export default class ModalComponent extends React.Component {
   constructor(props) {
     super(props)
+    this.state = {
+      component: null,
+      showZipCodeModal: false,
+    }
+  }
+  componentDidMount() {
+    this.getComponent()
+  }
+
+  getComponent() {
+    switch (this.props.display) {
+      case 'ZipCodeModal':
+        this.setState({ showZipCodeModal: true })
+        break;
+      default:
+        this.setState({ showZipCodeModal: true })
+        break;
+    }
   }
 
   render() {
     return (
       <TouchableWithoutFeedback
         onPress={() => {
-          this.props.closeModal()
+          this.props.onClose()
         }}
       >
         <BlurView
@@ -32,9 +54,15 @@ export default class ModalComponent extends React.Component {
             }
           ]}
         >
-          {this.props.children}
+          { this.state.showZipCodeModal &&
+            <ZipCodeModal visible={true} onClose={() => this.props.onClose() } />
+          }
         </BlurView>
       </TouchableWithoutFeedback>
     )
   }
+}
+
+ModalComponent.propTypes = {
+  children: PropTypes.node
 }

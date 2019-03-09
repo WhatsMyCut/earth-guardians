@@ -11,9 +11,6 @@ import { styles, defaults } from '../../../constants/Styles';
 
 export default class ZipCodeModal extends React.Component {
   state = { zipcode: true };
-  toggleModalVisible = () => {
-    this.setState({ modalVisible: !this.state.modalVisible });
-  };
   render() {
     return (
       <Modal
@@ -51,7 +48,7 @@ export default class ZipCodeModal extends React.Component {
                   <TouchableOpacity
                     style={[styles.buttonContainer]}
                     onPress={() => {
-                      this.props.updateZipcode(this.state.zipcode);
+                      //this.props.updateZipcode(this.state.zipcode);
                     }}
                   >
                     <Text style={[styles.textGrey18B]}>

@@ -11,13 +11,13 @@ export default class ActionDetails extends React.Component {
   constructor(props) {
     super(props)
     this.openModal = this.openModal.bind(this)
+    this.closeModal = this.closeModal.bind(this)
   }
   state = {
     in: false
   };
   openModal() {
-    console.log('here3')
-    PubSub.publish('openZipCodeModal', { showZipCodeModal: true });
+    PubSub.publish('showZipCodeModal', true);
   }
   closeModal() {
     PubSub.publish('closeModal');
@@ -43,7 +43,7 @@ export default class ActionDetails extends React.Component {
         })
         .catch(e => console.log(e.message));
     } catch (e) {
-      console.log(e);
+      console.log(e.message);
     }
   };
 

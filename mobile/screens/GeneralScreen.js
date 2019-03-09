@@ -14,13 +14,6 @@ import navigationService from '../navigation/navigationService';
 import _fetchVideoUrl from '../services/fetchVideoUrl';
 import LinearGradientProps from '../constants/LinearGradientProps';
 import ActionCardSmall from '../components/shared/card';
-import {
-  WasteModal,
-  WaterModal,
-  CarbonModal,
-  ZipCodeModal,
-  ModalComponent,
-} from '../components/shared/modals/';
 import PrimaryImage from '../constants/PrimaryImage'
 import { FontAwesome } from '@expo/vector-icons';
 import { styles, defaults } from '../constants/Styles';
@@ -31,7 +24,6 @@ import { UPDATE_ZIPCODE } from '../components/graphql/mutations/update_zipcode_m
 export default class GeneralScreen extends React.Component {
   constructor(props) {
     super(props);
-    this.openZipCodeModal = this.props.openZipCodeModal.bind(this)
   }
   state = {
     video_url: null,
@@ -44,8 +36,9 @@ export default class GeneralScreen extends React.Component {
   };
 
   componentDidMount() {
-    if (this.props.primary_video) {
-      _fetchVideoUrl(this.props.primary_video)
+    const {primary_video} = this.props;
+    if (primary_video) {
+      _fetchVideoUrl(primary_video)
       .then(data => {
         this.setState({
           picture_url: data.picture_url,
@@ -96,7 +89,6 @@ export default class GeneralScreen extends React.Component {
 
 
   onModalClose = () => {
-    console.log('HERE2')
     this.setState({showWasteModal: false, showWaterModal : false, showCarbonModal: false, showZipcodeModal:false});
   }
 
@@ -202,8 +194,7 @@ export default class GeneralScreen extends React.Component {
               }
             ]}
           >
-            {/* <ZipCodeModal updateZipcode={this.updateZipCode} onClose={this.onModalClose} visible={this.state.showZipcodeModal} />
-            <WasteModal waste={this.state.waste} onClose={this.onActionModalClose} visible={this.state.showWasteModal}/>
+            {/* <WasteModal waste={this.state.waste} onClose={this.onActionModalClose} visible={this.state.showWasteModal}/>
             <WaterModal water={this.state.water} onClose={this.onActionModalClose} visible={this.state.showWaterModal}/>
             <CarbonModal carbon_dioxide={this.state.carbon_dioxide} onClose={this.onActionModalClose} visible={this.state.showCarbonModal}/> */}
           </BlurView>
@@ -231,8 +222,6 @@ export default class GeneralScreen extends React.Component {
                     item={item}
                     index={index}
                     currScreen={this.props.screen}
-                    openZipCodeModal={this.props.openZipCodeModal}
-                    closeModal={this.props.onModalClose}
                   />
                 )}
               />

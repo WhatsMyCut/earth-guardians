@@ -10,14 +10,15 @@ import client from './Apollo';
 import PubSub from 'pubsub-js'
 import {
   GameCompleteModal,
-  NotificationModal
-} from './components/shared/modals/NotificationModal';
+  NotificationModal,
+  ZipCodeModal
+} from './components/shared/modals/';
 import { styles, defaults } from './constants/Styles';
 import ModalComponent from './components/shared/modals/ModalComponent';
-import {
-  ZipCodeModal
-} from './components/shared/modals/'
 export default class App extends React.Component {
+  constructor(props) {
+    super(props)
+  }
   state = {
     fontLoaded: false,
     showGameComplete: false,
@@ -31,7 +32,7 @@ export default class App extends React.Component {
       'Proxima Nova Bold': require('./assets/fonts/ProximaNovaBold.ttf'),
     });
 
-    PubSub.subscribe('openZipCodeModal', this.openZipCodeModal);
+    PubSub.subscribe('showZipCodeModal', data => this.openZipCodeModal(data));
     PubSub.subscribe('closeModal', this.closeModal);
     this._notificationSubscription = Notifications.addListener(this._handleNotification);
     this.setState({ fontLoaded: true });
@@ -56,18 +57,15 @@ export default class App extends React.Component {
   }
 
   openZipCodeModal = (data) => {
-    console.log("openAModal", data)
-    this.setState({showZipCodeModal: true});
+    console.log('here2', data)
+    this.setState({ showZipCodeModal: true});
   }
 
-  closeModal = () => {
-    console.log('closeAModal', this.state)
-    this.setState({ showZipCodeModal:false });
-  }
+  closeModal = () => this.setState({ showZipCodeModal : false });
 
   render() {
     // console.disableYellowBox = true;
-    const { fontLoaded } = this.state;
+    const { fontLoaded, showZipCodeModal } = this.state;
     if (!fontLoaded) {
       return null;
     }
@@ -81,12 +79,10 @@ export default class App extends React.Component {
             }}
           />
 
-          {this.state.showZipCodeModal &&
-            <ModalComponent closeModal={() => this.closeModal()}>
-              <Text style={[styles.textGrey18B]}>YO YOYO</Text>
-            </ModalComponent>
+          {showZipCodeModal &&
+            <ModalComponent display={'ZipCodeModal'} onClose={() => this.closeModal()} />
           }
-          {this.state.showGameComplete && (
+          {/* {this.state.showGameComplete && (
             <ModalComponent>
               <GameCompleteModal onClose={this.closeGameCompleteModal}/>
             </ModalComponent>
@@ -95,7 +91,7 @@ export default class App extends React.Component {
             <ModalComponent>
               <NotificationModal onClose={this.closeNotificationModal} notification={this.state.notification}/>
             </ModalComponent>
-          )}
+          )} */}
         </ApolloProvider>
       </StoreProvider>
     );
