@@ -2,7 +2,8 @@ import {
   StyleSheet,
   Dimensions
 } from 'react-native';
-import Layout from '../constants/Layout';
+import Layout from './Layout';
+import Colors from './Colors';
 import { moderateScale, ScaledSheet } from 'react-native-size-matters';
 
 export const defaults = {
@@ -30,20 +31,20 @@ export const styles = ScaledSheet.create({
     flex: 1,
   },
   blackBG: {
-    backgroundColor: '#000',
+    backgroundColor: Colors.black,
   },
   title: {
     fontSize: moderateScale(22),
-    color: '#fff',
+    color: Colors.white,
     fontWeight: 'bold',
     paddingBottom: 10,
   },
   promo: {
     fontSize: moderateScale(16),
-    color: '#fff'
+    color: Colors.white
   },
   buttonContainer: {
-    backgroundColor: '#fff',
+    backgroundColor: Colors.white,
     minWidth: 130,
     height: 50,
     borderRadius: 5,
@@ -71,17 +72,17 @@ export const styles = ScaledSheet.create({
     padding: 0,
     top: 0,
     borderRadius: defaults.borderRadius,
-    shadowColor: "#000",
+    shadowColor: Colors.darkGray,
     shadowRadius: 2,
     shadowOpacity: 0.75,
     shadowOffset: {
         width: 0,
         height: 0
     },
-    backgroundColor: "white"
+    backgroundColor: Colors.white
   },
   cardHeaderText: {
-    color: '#fff',
+    color: Colors.white,
     height: 30,
     width: 200,
     textAlign: 'left',
@@ -93,7 +94,7 @@ export const styles = ScaledSheet.create({
     fontSize: moderateScale(22),
     fontWeight: 'bold',
     fontFamily: 'Proxima Nova Bold',
-    color: '#eee',
+    color: Colors.lightGray,
   },
   indexGradient: {
     position: 'absolute',
@@ -116,14 +117,15 @@ export const styles = ScaledSheet.create({
   // Info Views
   greyCard: {
     flex: 1,
-    backgroundColor: '#333',
+    backgroundColor: Colors.darkGray,
   },
   greyCardHeader: {
-    backgroundColor: '#333',
+    backgroundColor: Colors.darkGray,
     borderBottomWidth: 0,
     shadowColor: 'transparent',
     shadowRadius: 0,
     shadowOffset: {
+      width: 0,
       height: 0,
     },
   },
@@ -131,14 +133,14 @@ export const styles = ScaledSheet.create({
     flexShrink: 0,
     flexGrow: 1,
     minHeight: 250,
-    backgroundColor: '#333',
+    backgroundColor: Colors.darkGray,
     justifyContent: 'center',
     alignItems: 'center',
     alignContent: 'center',
     borderRadius: defaults.borderRadius,
     padding: 30,
     marginHorizontal: 20,
-    shadowColor: "#000",
+    shadowColor: Colors.black,
     shadowRadius: 3,
     shadowOpacity: 0.35,
     shadowOffset: {
@@ -151,10 +153,10 @@ export const styles = ScaledSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#333',
+    backgroundColor: Colors.darkGray,
   },
   containerTitle: {
-    color: '#fff',
+    color: Colors.white,
     fontWeight: '700',
     fontSize: moderateScale(24),
     fontVariant: [ 'small-caps' ],
@@ -164,22 +166,23 @@ export const styles = ScaledSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignContent: 'center',
+    alignItems: 'center',
     paddingVertical: 10,
     height: 80,
   },
   headerText: {
-    color: '#ffffff',
+    color: Colors.white,
     fontSize: moderateScale(24),
     fontFamily: 'Proxima Nova Bold',
     textAlign: 'center',
   },
   smallWhiteText: {
-    color: '#fff',
+    color: Colors.white,
     marginBottom: 10,
     fontSize: moderateScale(12),
   },
   smallGreyText: {
-    color: '#ccc',
+    color: Colors.lightGray,
     marginBottom: 10,
     fontSize: moderateScale(12),
   },
@@ -193,7 +196,7 @@ export const styles = ScaledSheet.create({
   },
   underline: {
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: '#fff',
+    borderBottomColor: Colors.white,
   },
   padded: {
     padding: defaults.padding
@@ -208,7 +211,7 @@ export const styles = ScaledSheet.create({
     marginBottom: 10
   },
   itemName: {
-    color: '#fff',
+    color: Colors.white,
     fontSize: moderateScale(12),
     marginRight: 5
   },
@@ -217,7 +220,7 @@ export const styles = ScaledSheet.create({
   },
   item: {
     alignContent: 'space-between',
-    shadowColor: '#000',
+    shadowColor: Colors.black,
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.8,
     shadowRadius: 2,
@@ -238,37 +241,32 @@ export const styles = ScaledSheet.create({
     right:0,
     height:250
   },
-  flippedItem: {
-    backgroundColor: '#ffffff',
-    position: 'absolute',
-    marginLeft: 10,
-    top:0,
-    bottom:0,
-    left:0,
-    right:-5,
-    height:250
-  },
   componentHeader: {
-    color: '#fff',
+    color: Colors.white,
     fontSize: moderateScale(18),
     fontWeight: 'bold',
     marginVertical: 10,
     textAlign: 'center',
   },
   textWhite: {
-    color: "#fff",
-    fontSize: moderateScale(defaults.fontSize),
+    color: Colors.white,
+    fontSize: moderateScale(14),
     fontWeight: 'normal'
   },
   textWhite18B: {
-    color: '#fff',
+    color: Colors.white,
     fontSize: moderateScale(18),
     fontWeight: 'bold'
   },
   textGrey18B: {
-    color: '#333',
+    color: Colors.darkGray,
     fontSize: moderateScale(18),
     fontWeight: 'bold'
+  },
+  smallTextShadow: {
+    textShadowColor: Colors.darkGray,
+    textShadowOffset: {width: 1, height: 1},
+    textShadowRadius: 1
   },
   gradientContainer: {
     position: 'absolute',
@@ -314,13 +312,13 @@ export const styles = ScaledSheet.create({
   },
   petitionTitle: {
     fontSize: moderateScale(18),
-    color: '#fff',
+    color: Colors.white,
     fontWeight: 'bold',
     paddingBottom: 10,
   },
   petitionText: {
     fontSize: moderateScale(16),
-    color: '#fff',
+    color: Colors.white,
     paddingBottom: 10,
   },
   linearGradientBox: {
@@ -328,7 +326,7 @@ export const styles = ScaledSheet.create({
     borderRadius: defaults.borderRadius,
     elevation: 1,
     marginVertical: 5,
-    shadowColor: "#000",
+    shadowColor: Colors.black,
     shadowRadius: 2,
     shadowOpacity: 0.35,
     shadowOffset: {
@@ -343,7 +341,7 @@ export const styles = ScaledSheet.create({
     paddingBottom:10,
     elevation: 1,
     marginVertical: 5,
-    shadowColor: "#000",
+    shadowColor: Colors.black,
     shadowRadius: 2,
     shadowOpacity: 0.35,
     shadowOffset: {
@@ -352,41 +350,62 @@ export const styles = ScaledSheet.create({
     },
   },
   graphContainer: {
-    //backgroundColor: '#666',
+    //backgroundColor: Colors.mediumGray,
     justifyContent: 'center',
     alignItems: 'center',
     width: SCREEN_WIDTH * 0.9,
     height: 150,
   },
   graphLabel: {
-    color:"white",
+    color: Colors.white,
     fontFamily:"Proxima Nova Bold",
-    fontSize:14,
+    fontSize: moderateScale(14),
     paddingRight:10
+  },
+  actionCard: {
+    backgroundColor: Colors.white,
+    position: 'absolute',
+    marginLeft: 10,
+    top:0,
+    bottom:0,
+    left:0,
+    right:0,
+    height:250
+  },
+  actionCardHeader: {
+    fontSize: moderateScale(20),
+    fontWeight: 'bold',
+    fontFamily: 'Proxima Nova Bold',
+    color: Colors.mediumGray,
+  },
+  actionCardSubHeader: {
+    fontSize: moderateScale(18),
+    fontFamily: 'Proxima Nova Bold',
+    color: Colors.mediumGray,
   },
   actionCardLabel: {
     fontFamily: 'Proxima Nova',
-    color: '#666',
+    color: Colors.mediumGray,
     textAlign: 'center',
   },
   actionCardValue: {
     fontSize: moderateScale(18),
     fontWeight: 'bold',
     fontFamily: 'Proxima Nova Bold',
-    color: '#666',
+    color: Colors.mediumGray,
     textAlign: 'center',
   },
   actionCardTinyLabel: {
     fontFamily: 'Proxima Nova',
-    color: '#666',
-    fontSize: moderateScale(8),
+    color: Colors.mediumGray,
+    fontSize: moderateScale(9),
     textAlign: 'center',
   },
   actionCardPlaceholderText: {
     fontSize: moderateScale(18),
     fontWeight: 'bold',
     fontFamily: 'Proxima Nova Bold',
-    color: '#eee',
+    color: Colors.lightGray,
   },
   detailedPoints: {
     flex: 1,
@@ -397,7 +416,7 @@ export const styles = ScaledSheet.create({
   },
 
   itemPoint: {
-    color: '#fff',
+    color: Colors.white,
     fontWeight: '900',
     fontSize: moderateScale(20)
   },
@@ -410,7 +429,7 @@ export const styles = ScaledSheet.create({
     flexDirection: 'row',
     width: '90%',
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: '#fff',
+    borderBottomColor: Colors.white,
     alignSelf: 'center',
     padding: 10,
     paddingBottom: 5,
@@ -423,7 +442,7 @@ export const styles = ScaledSheet.create({
   },
   detailCell: {
     flexDirection: 'column',
-    color: '#fff',
+    color: Colors.white,
     justifyContent: 'center',
     flexBasis: '50%'
   },
@@ -435,7 +454,7 @@ export const styles = ScaledSheet.create({
   },
   rankNumber: {
     flexBasis: '15%',
-    color: '#fff',
+    color: Colors.white,
     fontWeight: '500',
     fontSize: moderateScale(36),
     justifyContent: 'center',
@@ -444,7 +463,7 @@ export const styles = ScaledSheet.create({
   },
   rankState: {
     flexBasis: '15%',
-    color: '#fff',
+    color: Colors.white,
     fontSize: moderateScale(22),
     fontWeight: '500',
     justifyContent: 'center',
@@ -457,20 +476,20 @@ export const styles = ScaledSheet.create({
     fontWeight: '500',
   },
   rankName: {
-    color: '#fff',
+    color: Colors.white,
     fontSize: moderateScale(22),
     fontWeight: '500',
     paddingBottom: 10
   },
   socialRankHeader: {
-    color: '#fff',
+    color: Colors.white,
     fontSize: moderateScale(16),
     fontWeight: '500',
     paddingBottom: 10
   },
   socialRankNumber: {
     flexBasis: '25%',
-    color: '#fff',
+    color: Colors.white,
     fontSize: moderateScale(22),
     fontWeight: '500',
     paddingRight: 15,
@@ -493,7 +512,7 @@ export const styles = ScaledSheet.create({
     marginVertical: 35,
     justifyContent: 'center',
     alignItems: 'center',
-    shadowColor: '#000',
+    shadowColor: Colors.black,
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.6,
     shadowRadius: 2,
@@ -523,7 +542,7 @@ export const styles = ScaledSheet.create({
     padding: 20,
     marginHorizontal: 14,
     borderRadius: 50,
-    shadowColor: "#000",
+    shadowColor: Colors.black,
     shadowRadius: 2,
     shadowOpacity: 0.32,
     shadowOffset: {
@@ -554,7 +573,7 @@ export const styles = ScaledSheet.create({
     borderWidth: 0,
     width: '100%',
     paddingBottom: 15,
-    color: '#fff',
+    color: Colors.white,
   },
   profileImage: {
     width: 50,
@@ -564,14 +583,14 @@ export const styles = ScaledSheet.create({
   social: {
     borderRadius: defaults.borderRadius,
     borderWidth: 1,
-    backgroundColor: '#666',
+    backgroundColor: Colors.mediumGray,
     width: 350,
     paddingVertical: 20,
     marginVertical: 10,
     alignItems: 'center',
   },
   socialItem: {
-    color: '#fff',
+    color: Colors.white,
     fontSize: moderateScale(18),
   },
   videoPlayIcon: {
@@ -591,7 +610,7 @@ export const styles = ScaledSheet.create({
     marginHorizontal: defaults.margin
   },
   notification: {
-    color: '#fff',
+    color: Colors.white,
     marginVertical: 20
   },
 });
