@@ -150,6 +150,49 @@ class ActionCardSmall extends React.Component {
 
   }
 
+  onActionModalClose = () => {
+    this._takeAction()
+    .then(() => this.setState({showWasteModal: false, showWaterModal : false, showCarbonModal: false, showZipcodeModal:false}))
+    .then(this.props.onClose());
+  }
+
+
+  _takeAction = () => {
+    const { take_action, item, get_user, canDelete } = this.props;
+    const { currScreen } = this.state;
+      let variables = {
+        id: get_user.me.id,
+        action : item.action ? item.action.id : item.id
+      }
+      take_action({variables})
+      .then(response => {
+        if(item.related_actions){
+          if(item.related_actions.length > 0){
+            NavigationService.navigate('Game',{ previousScreen: currScreen, games:item.related_actions, game_title:item.game_title ? item.game_title : null});
+          }
+        }
+        this.flipCard();
+      })
+  }
+
+  _showTheModal =() => {
+    const { item } = this.props;
+
+      let waste = item.action ? parseFloat(item.action.waste).toFixed(2) : parseFloat(item.waste).toFixed(2);
+      let water = item.action ? parseFloat(item.action.water).toFixed(2) : parseFloat(item.water).toFixed(2);
+      let carbon_dioxide = item.action ? parseFloat(item.action.carbon_dioxide).toFixed(2) : parseFloat(item.carbon_dioxide).toFixed(2);
+      if(this.props.canDelete){
+        if(waste > water && waste > carbon_dioxide){
+          this.setState({showWasteModal:true})
+        }else if(water > waste && water > carbon_dioxide){
+          this.setState({showWaterModal:true})
+        }else{
+          this.setState({showCarbonModal:true})
+        }
+      }
+  }
+
+
   flipCard() {
     this.setState({backVisible:!this.state.backVisible})
     if(this.state.delete){
@@ -187,24 +230,6 @@ class ActionCardSmall extends React.Component {
       );
     }
   };
-
-
-  _takeAction = () => {
-    const { take_action, item, get_user, canDelete } = this.props;
-    const { currScreen } = this.state;
-      let variables = {
-        id: get_user.me.id,
-        action : item.action ? item.action.id : item.id
-      }
-      take_action({variables}).then(response => {
-        if(item.related_actions){
-          if(item.related_actions.length > 0){
-            NavigationService.navigate('Game',{ previousScreen: currScreen, games:item.related_actions, game_title:item.game_title ? item.game_title : null});
-          }
-        }
-        this.flipCard();
-      })
-  }
 
   _myActionItem =() =>{
     const { item, index, get_user, canDelete } = this.props;

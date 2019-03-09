@@ -15,10 +15,26 @@ export default class ModalComponent extends React.Component {
     this.state = {
       component: null,
       showZipCodeModal: false,
+      showWasteModal: false,
+      showWaterModal: false,
+      showCarbonModal: false,
     }
   }
   componentDidMount() {
     this.getComponent()
+  }
+
+  updateZipCode =(zipcode)=>{
+    const { get_user, update_zipcode} = this.props;
+    if(zipcode){
+      let variables={
+        id:get_user.me.id,
+        zipcode:zipcode
+      }
+      update_zipcode({variables}).then(()=>{
+          this.onModalClose();
+      })
+    }
   }
 
   getComponent() {
@@ -55,7 +71,21 @@ export default class ModalComponent extends React.Component {
           ]}
         >
           { this.state.showZipCodeModal &&
-            <ZipCodeModal visible={true} onClose={() => this.props.onClose() } />
+            <ZipCodeModal
+              zipcode={this.state.zipcode}
+              onClose={() => this.props.onClose()}
+              visible={this.state.showZipCodeModal}
+              updateZipCode={this.props.updateZipCode}
+            />
+          }
+          { this.state.showWasteModal &&
+            <WasteModal waste={this.state.waste} onClose={() => this.onActionModalClose()} visible={this.state.showWasteModal}/>
+          }
+          { this.state.showWaterModal &&
+            <WaterModal water={this.state.water} onClose={() => this.onActionModalClose()} visible={this.state.showWaterModal}/>
+          }
+          { this.state.showCarbonModal &&
+            <CarbonModal carbon_dioxide={this.state.carbon_dioxide} onClose={() => this.onActionModalClose()} visible={this.state.showCarbonModal}/>
           }
         </BlurView>
       </TouchableWithoutFeedback>

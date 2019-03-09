@@ -124,7 +124,8 @@ export const styles = ScaledSheet.create({
     },
   },
   modalView: {
-    flexShrink: 0,
+    flex: 1,
+    flexShrink: 1,
     flexGrow: 1,
     minHeight: 250,
     backgroundColor: Colors.darkGray,
@@ -135,8 +136,8 @@ export const styles = ScaledSheet.create({
     padding: 30,
     marginHorizontal: 20,
     shadowColor: Colors.black,
-    shadowRadius: 3,
-    shadowOpacity: 0.35,
+    shadowRadius: 2,
+    shadowOpacity: 0.5,
     shadowOffset: {
       width: 0,
       height: 2
@@ -316,7 +317,7 @@ export const styles = ScaledSheet.create({
     marginVertical: 5,
     shadowColor: Colors.black,
     shadowRadius: 2,
-    shadowOpacity: 0.35,
+    shadowOpacity: 0.5,
     shadowOffset: {
       width: 0,
       height: 2
@@ -331,7 +332,7 @@ export const styles = ScaledSheet.create({
     marginVertical: 5,
     shadowColor: Colors.black,
     shadowRadius: 2,
-    shadowOpacity: 0.35,
+    shadowOpacity: 0.5,
     shadowOffset: {
       width: 0,
       height: 2
@@ -360,7 +361,7 @@ export const styles = ScaledSheet.create({
     height: 250,
     shadowColor: Colors.black,
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.35,
+    shadowOpacity: 0.5,
     shadowRadius: 2,
   },
   actionCardBack: {
@@ -375,7 +376,7 @@ export const styles = ScaledSheet.create({
     borderRadius: defaults.borderRadius,
     shadowColor: Colors.black,
     shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.35,
+    shadowOpacity: 0.5,
     shadowRadius: 2,
   },
   actionCardHeader: {
@@ -521,7 +522,7 @@ export const styles = ScaledSheet.create({
     alignItems: 'center',
     shadowColor: Colors.black,
     shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.35,
+    shadowOpacity: 0.5,
     shadowRadius: 2,
     elevation: 1,
     borderColor: 'transparent',
@@ -551,7 +552,7 @@ export const styles = ScaledSheet.create({
     borderRadius: 50,
     shadowColor: Colors.black,
     shadowRadius: 2,
-    shadowOpacity: 0.35,
+    shadowOpacity: 0.5,
     shadowOffset: {
        width: 0,
        height: 0

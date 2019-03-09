@@ -28,8 +28,8 @@ export default class ZipCodeModal extends React.Component {
             <TouchableWithoutFeedback style={[styles.container, styles.coverScreen]} onPress={() => {
               return false
             }}>
-              <View style={[styles.modalView, styles.centerAll, {
-                marginVertical: (defaults.primaryHeight / 2) - 80,
+              <View style={[styles.container, styles.modalView, styles.centerAll, {
+                marginVertical: (defaults.primaryHeight / 2) - 150,
               }]}>
                 <View style={[styles.container, styles.centerAll]}>
                   <View style={[styles.componentHeader]}>
@@ -38,7 +38,7 @@ export default class ZipCodeModal extends React.Component {
                   <TextInput
                     style={[styles.cardHeaderText]}
                     onChangeText={password => this.setState({ zipcode:password })}
-                    placeholder="Zipcode"
+                    placeholder={this.props.zipcode || "Zipcode"}
                     placeholderTextColor="#fff"
                     keyboardType="default"
                     returnKeyType="done"
@@ -48,7 +48,7 @@ export default class ZipCodeModal extends React.Component {
                   <TouchableOpacity
                     style={[styles.buttonContainer]}
                     onPress={() => {
-                      //this.props.updateZipcode(this.state.zipcode);
+                      this.props.updateZipCode(this.state.zipcode);
                     }}
                   >
                     <Text style={[styles.textGrey18B]}>

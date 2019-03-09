@@ -9,7 +9,6 @@ import {
 } from 'react-native';
 import { LinearGradient, BlurView } from 'expo';
 import { Image } from 'react-native-expo-image-cache';
-import graphql from '../components/hoc/graphql';
 import navigationService from '../navigation/navigationService';
 import _fetchVideoUrl from '../services/fetchVideoUrl';
 import LinearGradientProps from '../constants/LinearGradientProps';
@@ -17,10 +16,6 @@ import ActionCardSmall from '../components/shared/card';
 import PrimaryImage from '../constants/PrimaryImage'
 import { FontAwesome } from '@expo/vector-icons';
 import { styles, defaults } from '../constants/Styles';
-import { UPDATE_ZIPCODE } from '../components/graphql/mutations/update_zipcode_mutation';
-@graphql(UPDATE_ZIPCODE,{
-  name:"update_zipcode"
-})
 export default class GeneralScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -194,7 +189,8 @@ export default class GeneralScreen extends React.Component {
               }
             ]}
           >
-            {/* <WasteModal waste={this.state.waste} onClose={this.onActionModalClose} visible={this.state.showWasteModal}/>
+            {/* <ZipCodeModal updateZipcode={this.updateZipCode} onClose={this.onModalClose} visible={this.state.showZipcodeModal} />
+            <WasteModal waste={this.state.waste} onClose={this.onActionModalClose} visible={this.state.showWasteModal}/>
             <WaterModal water={this.state.water} onClose={this.onActionModalClose} visible={this.state.showWaterModal}/>
             <CarbonModal carbon_dioxide={this.state.carbon_dioxide} onClose={this.onActionModalClose} visible={this.state.showCarbonModal}/> */}
           </BlurView>

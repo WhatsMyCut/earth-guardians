@@ -5,14 +5,9 @@ import { StoreProvider } from './store/Store';
 import { Font } from 'expo';
 import AppNavigator from './navigation/AppNavigator';
 import NavigationService from './navigation/navigationService';
-import { graphql, ApolloProvider } from 'react-apollo';
+import { ApolloProvider } from 'react-apollo';
 import client from './Apollo';
 import PubSub from 'pubsub-js'
-import {
-  GameCompleteModal,
-  NotificationModal,
-  ZipCodeModal
-} from './components/shared/modals/';
 import { styles, defaults } from './constants/Styles';
 import ModalComponent from './components/shared/modals/ModalComponent';
 export default class App extends React.Component {
@@ -44,6 +39,19 @@ export default class App extends React.Component {
     this.setState({showNotificationModal: true, notification: notification});
   };
 
+  updateZipCode =(zipcode)=>{
+    const { get_user, update_zipcode} = this.props;
+    if(zipcode){
+      let variables={
+        id:get_user.me.id,
+        zipcode:zipcode
+      }
+      update_zipcode({variables}).then(()=>{
+          this.onModalClose();
+      })
+    }
+  }
+
   modalHandler = (msg, data) => {
     this.setState({showGameComplete:true})
   }
@@ -57,7 +65,6 @@ export default class App extends React.Component {
   }
 
   openZipCodeModal = (data) => {
-    console.log('here2', data)
     this.setState({ showZipCodeModal: true});
   }
 
@@ -80,7 +87,12 @@ export default class App extends React.Component {
           />
 
           {showZipCodeModal &&
-            <ModalComponent display={'ZipCodeModal'} onClose={() => this.closeModal()} />
+            <ModalComponent
+              display={'ZipCodeModal'}
+              onClose={() => this.closeModal()}
+              onActionModalClose={() => this.onActionModalClose() }
+              updateZipCode={() => this.updateZipCode() }
+            />
           }
           {/* {this.state.showGameComplete && (
             <ModalComponent>

@@ -122,7 +122,6 @@ export default class ActionDetails extends React.Component {
           {!this.props.zipcode && (
             <TouchableOpacity style={[styles.container]} onPress={()=> {
               if(this.props.visible){
-                //console.log('here2', this.props)
                 this.openModal()
               }
             }}>
