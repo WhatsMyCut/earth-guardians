@@ -24,6 +24,7 @@ import CommunityEventModal from '../components/shared/modals/CommunityEventModal
 import { GET_USER } from '../components/graphql/queries/get_user';
 import client from '../Apollo';
 import { StoreData } from '../store/AsyncStore';
+import { _pickImage } from '../services/uploadS3Image';
 import { styles, defaults } from '../constants/Styles'
 
 @graphql(GET_USER, {
@@ -69,6 +70,23 @@ class ProfileStackScreen extends React.Component {
     clearInterval(this.interval);
   }
 
+  async updatePic() {
+    _pickImage()
+    .then(res => {
+      console.log('_pickImage', res)
+      update_user({variables:{profile_pic: res.url}})
+      this.setState(
+        { user:
+          { me:
+            {
+              profile_pic: res.url
+            }
+          }
+        }
+      )
+    })
+  }
+
   async _aggregateProfile() {
     const { loading } = this.state;
     if (!loading) {
@@ -98,28 +116,29 @@ class ProfileStackScreen extends React.Component {
 
     return (
       <SafeAreaView style={[styles.greyCard]}>
-        <ScrollView contentContainerStyle={[styles.modalView, {}]}>
-          <View style={[]}>
-            <ProfileComponent user={this.state.user}/>
-          </View>
+        <View style={[styles.container, styles.centerText, { padding: 20, }]}>
+          <ProfileComponent
+            user={this.props.user}
+            updatePic={this.updatePic}
+          />
+        </View>
 
-          {this.state.openModal ? (
-            <BlurView
-              tint="dark"
-              intensity={80}
-              style={[styles.container, styles.coverScreen, {
-                height: defaults.primaryHeight - 150,
+        {this.state.openModal ? (
+          <BlurView
+            tint="dark"
+            intensity={80}
+            style={[styles.container, styles.coverScreen, {
+              height: defaults.primaryHeight - 150,
 
-              }]}
-            >
-              <CommunityEventModal
-                onClose={() => {
-                  this.setState({ openModal: false, loading: true });
-                }}
-              />
-            </BlurView>
-          ) : null}
-        </ScrollView>
+            }]}
+          >
+            <CommunityEventModal
+              onClose={() => {
+                this.setState({ openModal: false, loading: true });
+              }}
+            />
+          </BlurView>
+        ) : null}
       </SafeAreaView>
     );
   }
