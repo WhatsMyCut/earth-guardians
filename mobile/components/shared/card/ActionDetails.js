@@ -1,17 +1,27 @@
 import React from 'react';
 
 import { View, Text, TouchableOpacity } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import { LinearGradient, Icon } from 'expo';
-import { TouchableRipple, Button } from 'react-native-paper';
+import { Icon } from 'expo';
+import PubSub from 'pubsub-js'
 import { Analytics, Event } from 'expo-analytics';
 import { RetrieveData } from '../../../store/AsyncStore';
 import { styles } from '../../../constants/Styles'
 export default class ActionDetails extends React.Component {
+
+  constructor(props) {
+    super(props)
+    this.openModal = this.openModal.bind(this)
+    this.closeModal = this.closeModal.bind(this)
+  }
   state = {
     in: false
   };
-
+  openModal() {
+    PubSub.publish('showZipCodeModal', true);
+  }
+  closeModal() {
+    PubSub.publish('closeModal');
+  }
   _takeInAction = async () => {
     try {
       // TODO update Database
@@ -33,7 +43,7 @@ export default class ActionDetails extends React.Component {
         })
         .catch(e => console.log(e.message));
     } catch (e) {
-      console.log(e);
+      console.log(e.message);
     }
   };
 
@@ -45,18 +55,19 @@ export default class ActionDetails extends React.Component {
 
     const status_icon_name = this.state.in ? 'circle-slice-8' : 'circle-outline';
     const color = this.state.in ? 'green' : '#aaa';
+    const yourverbiage = !this.props.canDelete || this.props.canGoThrough ? "I'm In!":"Can't Take Yet!"
 
     let item = data.action ? data.action : data;
 
     return (
       <View style={[styles.container, { justifyContent: 'space-between', flexDirection: 'column'}]}>
-        <View style={[styles.contianer, { marginTop: 10, marginBottom: 3 }]}>
+        <View style={[styles.contianer, { marginTop: 5, marginBottom: 3 }]}>
           <Text style={[styles.actionCardHeader, styles.centerText]}>
             {this.props.canDelete ? 'METRICS EARNED' : 'METRICS'}
           </Text>
         </View>
 
-        <View style={[styles.container, { marginLeft: -16, marginVertical: '10%'}]}>
+        <View style={[styles.container, {}]}>
           <View style={[styles.container, { flexDirection: 'row', alignContent:" flex-start"}]}>
             <View style={[styles.container]}>
               <Text style={[styles.actionCardLabel]}>
@@ -111,7 +122,7 @@ export default class ActionDetails extends React.Component {
           {!this.props.zipcode && (
             <TouchableOpacity style={[styles.container]} onPress={()=> {
               if(this.props.visible){
-                this.props.openZipCodeModal()
+                this.openModal()
               }
             }}>
               <Text style={[styles.actionCardPlaceholderText]}>
@@ -129,7 +140,7 @@ export default class ActionDetails extends React.Component {
           disabled={this.props.canDelete ? !this.props.canGoThrough : false}
           style={{flexDirection:'row', justifyContent:'flex-end', alignContent:"center"}}
         >
-          <Text style={{fontSize: 18,fontWeight: '700', fontFamily: 'Proxima Nova Bold',color:'#000000', paddingRight:10}}>{!this.props.canDelete || this.props.canGoThrough ? "I'm In!":"Can't Take Yet!"}</Text>
+          <Text style={[styles.actionCardSubHeader]}>{ yourverbiage }</Text>
           <Icon.MaterialCommunityIcons
             name={status_icon_name}
             style={{ color: color, fontSize: 18 }}

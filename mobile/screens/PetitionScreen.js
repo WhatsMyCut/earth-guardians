@@ -67,7 +67,8 @@ class PetitionScreen extends React.Component {
           video_url: data.video_url,
         },
         () => this._sendAnalytics);
-      });
+      })
+      .catch(e => e);
     }
 
     const petitionids = my_user.me.petitions_signed.map(x => x.id);

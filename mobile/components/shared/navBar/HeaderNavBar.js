@@ -61,6 +61,7 @@ export default class HeaderNavBar extends React.Component {
           alignItems: 'baseline',
           paddingHorizontal: 20,
           paddingTop: 5,
+          zIndex:1,
         }}
       >
         <CommunityIcon />

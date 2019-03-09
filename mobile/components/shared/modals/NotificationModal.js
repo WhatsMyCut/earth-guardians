@@ -59,9 +59,9 @@ export default class NotificationModal extends React.Component {
               marginTop:10
             }}
             >
-               {this.props.notification.data.message}
+              {this.props.notification.data.message}
             </Text>
-           
+
             <TouchableOpacity
               onPress={() => {
                 this.props.onClose();

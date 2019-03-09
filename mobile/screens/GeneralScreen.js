@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  StyleSheet,
   FlatList,
   SafeAreaView,
   TouchableOpacity,
@@ -8,7 +7,7 @@ import {
   Text,
   ScrollView,
 } from 'react-native';
-import { LinearGradient } from 'expo';
+import { LinearGradient, BlurView } from 'expo';
 import { Image } from 'react-native-expo-image-cache';
 import navigationService from '../navigation/navigationService';
 import _fetchVideoUrl from '../services/fetchVideoUrl';
@@ -17,7 +16,6 @@ import ActionCardSmall from '../components/shared/card';
 import PrimaryImage from '../constants/PrimaryImage'
 import { FontAwesome } from '@expo/vector-icons';
 import { styles, defaults } from '../constants/Styles';
-
 export default class GeneralScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -25,11 +23,17 @@ export default class GeneralScreen extends React.Component {
   state = {
     video_url: null,
     picture_url: null,
+    congratulationsModal: false,
+    showWasteModal: false,
+    showWaterModal: false,
+    showCarbonModal: false,
+    showZipcodeModal: false,
   };
 
   componentDidMount() {
-    if (this.props.primary_video) {
-      _fetchVideoUrl(this.props.primary_video)
+    const {primary_video} = this.props;
+    if (primary_video) {
+      _fetchVideoUrl(primary_video)
       .then(data => {
         this.setState({
           picture_url: data.picture_url,
@@ -42,6 +46,50 @@ export default class GeneralScreen extends React.Component {
 
   componentWillUnmount() {
     this.props.primary_video = null
+  }
+
+  updateZipCode =(zipcode)=>{
+    const { get_user, update_zipcode} = this.props;
+    if(zipcode){
+      let variables={
+        id:get_user.me.id,
+        zipcode:zipcode
+      }
+      update_zipcode({variables}).then(()=>{
+          this.onModalClose();
+      })
+    }
+  }
+
+  openZipCodeModal = () =>{
+    this.setState({showZipcodeModal: true});
+  }
+
+  _showTheModal =() => {
+    const { item } = this.props;
+
+      let waste = item.action ? parseFloat(item.action.waste).toFixed(2) : parseFloat(item.waste).toFixed(2);
+      let water = item.action ? parseFloat(item.action.water).toFixed(2) : parseFloat(item.water).toFixed(2);
+      let carbon_dioxide = item.action ? parseFloat(item.action.carbon_dioxide).toFixed(2) : parseFloat(item.carbon_dioxide).toFixed(2);
+      if(this.props.canDelete){
+        if(waste > water && waste > carbon_dioxide){
+          this.setState({showWasteModal:true})
+        }else if(water > waste && water > carbon_dioxide){
+          this.setState({showWaterModal:true})
+        }else{
+          this.setState({showCarbonModal:true})
+        }
+      }
+  }
+
+
+  onModalClose = () => {
+    this.setState({showWasteModal: false, showWaterModal : false, showCarbonModal: false, showZipcodeModal:false});
+  }
+
+  onActionModalClose = () => {
+    this.setState({showWasteModal: false, showWaterModal : false, showCarbonModal: false, showZipcodeModal:false});
+    this._takeAction();
   }
 
   renderPrimaryImage = () => {
@@ -121,37 +169,38 @@ export default class GeneralScreen extends React.Component {
         </SafeAreaView>
       );
     }
-
     return (
-      <SafeAreaView style={[styles.container]}>
-        <ScrollView style={[styles.container, {flexDirection: 'column'}]}>
-          <View style={[styles.container]}>{this.primaryView()}</View>
-          <View style={[styles.container, {
-              marginLeft: 10,
-              marginRight: defaults.marginHorizontal,
-              marginTop: 20,
-            }]}
-          >
-            <FlatList
-              style={[styles.container]}
-              numColumns={2}
-              style={{
-                paddingRight: defaults.paddingRight,
-                paddingBottom: 20
-              }}
-              data={this.props.data[0].actions}
-              keyExtractor={(item, index) => item.id}
-              renderItem={({ item, index }) => (
-                <ActionCardSmall
-                  item={item}
-                  index={index}
-                  currScreen={this.props.screen}
-                />
-              )}
-            />
-          </View>
-        </ScrollView>
-      </SafeAreaView>
+      <View style={[styles.container]}>
+        <SafeAreaView style={[styles.container]}>
+          <ScrollView style={[styles.container, {flexDirection: 'column'}]}>
+            <View style={[styles.container]}>{this.primaryView()}</View>
+            <View style={[styles.container, {
+                marginLeft: 10,
+                marginRight: defaults.marginHorizontal,
+                marginTop: 20,
+              }]}
+            >
+              <FlatList
+                style={[styles.container]}
+                numColumns={2}
+                style={{
+                  paddingRight: defaults.paddingRight,
+                  paddingBottom: 20
+                }}
+                data={this.props.data[0].actions}
+                keyExtractor={(item, index) => item.id}
+                renderItem={({ item, index }) => (
+                  <ActionCardSmall
+                    item={item}
+                    index={index}
+                    currScreen={this.props.screen}
+                  />
+                )}
+              />
+            </View>
+          </ScrollView>
+        </SafeAreaView>
+      </View>
     );
   }
 }

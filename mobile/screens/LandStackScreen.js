@@ -33,7 +33,7 @@ class LandStackScreen extends React.Component {
     const actions = all_categories.sectorActionsByName;
     if (!actions[0].video_id && !actions[0].primary_image) {
       return <LinearGradient {...LinearGradientProps.travel} style={{ flex: 1 }}>
-      
+
     </LinearGradient>;
     }
     return (

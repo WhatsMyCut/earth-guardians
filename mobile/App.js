@@ -1,23 +1,27 @@
 import React from 'react';
-import { AsyncStorage, Dimensions } from 'react-native';
+import { TouchableWithoutFeedback, Text } from 'react-native';
 import { BlurView, Notifications } from 'expo';
 import { StoreProvider } from './store/Store';
 import { Font } from 'expo';
 import AppNavigator from './navigation/AppNavigator';
 import NavigationService from './navigation/navigationService';
-import { graphql, ApolloProvider } from 'react-apollo';
+import { ApolloProvider } from 'react-apollo';
 import client from './Apollo';
 import PubSub from 'pubsub-js'
-import GameCompleteModal from './components/shared/modals/GameCompleteModal';
-import NotificationModal from './components/shared/modals/NotificationModal';
-const SCREEN_HEIGHT = Dimensions.get('window').height;
-const SCREEN_WIDTH = Dimensions.get('window').width;
-
+import { styles, defaults } from './constants/Styles';
+import ModalComponent from './components/shared/modals/ModalComponent';
 export default class App extends React.Component {
-  // feed the store to the app
+  constructor(props) {
+    super(props)
+  }
   state = {
     fontLoaded: false,
-    showGameComplete: false
+    showGameComplete: false,
+    showNotificationModal: false,
+    showWasteModal: false,
+    showWaterModal: false,
+    showCarbonModal:false,
+    showZipCodeModal: false,
   };
 
   async componentDidMount() {
@@ -26,9 +30,9 @@ export default class App extends React.Component {
       'Proxima Nova Bold': require('./assets/fonts/ProximaNovaBold.ttf'),
     });
 
-    var token = PubSub.subscribe('GameComplete', this.modalHandler);
+    PubSub.subscribe('showZipCodeModal', data => this.openZipCodeModal(data));
+    PubSub.subscribe('closeModal', this.closeModal);
     this._notificationSubscription = Notifications.addListener(this._handleNotification);
-    
     this.setState({ fontLoaded: true });
   }
 
@@ -37,6 +41,19 @@ export default class App extends React.Component {
     // this.setState({notification: notification});
     this.setState({showNotificationModal: true, notification: notification});
   };
+
+  updateZipCode =(zipcode)=>{
+    const { get_user, update_zipcode} = this.props;
+    if(zipcode){
+      let variables={
+        id:get_user.me.id,
+        zipcode:zipcode
+      }
+      update_zipcode({variables}).then(()=>{
+          this.onModalClose();
+      })
+    }
+  }
 
   modalHandler = (msg, data) => {
     this.setState({showGameComplete:true})
@@ -50,12 +67,24 @@ export default class App extends React.Component {
     this.setState({ showNotificationModal : false, notification: null})
   }
 
+  openZipCodeModal = (data) => {
+    this.setState({ showZipCodeModal: true});
+  }
+
+  closeModal = () => this.setState({ showZipCodeModal : false });
+
   render() {
     // console.disableYellowBox = true;
-    const { fontLoaded } = this.state;
+    const { fontLoaded, showZipCodeModal } = this.state;
     if (!fontLoaded) {
       return null;
     }
+
+    const showModal = this.state.showZipCodeModal ||
+    this.state.showCarbonModal ||
+    this.state.showWasteModal ||
+    this.state.showWaterModal
+
     return (
       <StoreProvider>
         <ApolloProvider client={client}>
@@ -64,24 +93,25 @@ export default class App extends React.Component {
               NavigationService.setTopLevelNavigator(navigatorRef);
             }}
           />
-          {this.state.showGameComplete && (
-             <BlurView
-             tint="dark" 
-             intensity={80}
-             style={{height:SCREEN_HEIGHT, width:SCREEN_WIDTH, position:"absolute"}}
-             >
-            <GameCompleteModal onClose={this.closeGameCompleteModal}/>
-            </BlurView>
+
+          {showModal &&
+            <ModalComponent
+              display={'ZipCodeModal'}
+              onClose={() => this.closeModal()}
+              onActionModalClose={() => this.onActionModalClose() }
+              updateZipCode={() => this.updateZipCode() }
+            />
+          }
+          {/* {this.state.showGameComplete && (
+            <ModalComponent>
+              <GameCompleteModal onClose={this.closeGameCompleteModal}/>
+            </ModalComponent>
           )}
           {this.state.showNotificationModal && (
-             <BlurView
-             tint="dark" 
-             intensity={80}
-             style={{height:SCREEN_HEIGHT, width:SCREEN_WIDTH, position:"absolute"}}
-             >
+            <ModalComponent>
               <NotificationModal onClose={this.closeNotificationModal} notification={this.state.notification}/>
-            </BlurView>
-          )}
+            </ModalComponent>
+          )} */}
         </ApolloProvider>
       </StoreProvider>
     );

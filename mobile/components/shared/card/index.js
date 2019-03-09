@@ -10,7 +10,7 @@ import {
   Animated,
   View,
 } from 'react-native';
-import { LinearGradient } from 'expo';
+import { LinearGradient, BlurView } from 'expo';
 import ActionDetails from './ActionDetails';
 import { defaults, styles } from '../../../constants/Styles';
 import NavigationService from '../../../navigation/navigationService';
@@ -20,18 +20,11 @@ import DoubleClick from 'react-native-double-tap';
 import moment from 'moment';
 import { TAKE_ACTION } from '../../graphql/mutations/take_action_mutation';
 import { DELETE_ACTION } from '../../graphql/mutations/delete_action';
-import { UPDATE_ZIPCODE } from '../../graphql/mutations/update_zipcode_mutation';
-import WasteModal from '../modals/NotWasteReduceModal';
-import WaterModal from '../modals/NotH2OConsumptionModal';
-import CarbonModal from '../modals/NotCO2EmissionModal';
-
-import ZipCodeModal from '../modals/ZipCodeModal';
 
 import { GET_USER } from '../../graphql/queries/get_user';
 import graphql from '../../hoc/graphql';
 import { MY_ACTIONS_QUERY } from '../../graphql/queries/my_actions_query';
 import { PrimaryImage } from '../../../constants/PrimaryImage';
-import { moderateScale } from 'react-native-size-matters';
 
 
 @graphql(GET_USER, {
@@ -43,24 +36,15 @@ import { moderateScale } from 'react-native-size-matters';
 @graphql(DELETE_ACTION,{
   name:"delete_action"
 })
-@graphql(UPDATE_ZIPCODE,{
-  name:"update_zipcode"
-})
 class ActionCardSmall extends React.Component {
-  lastTap=null;
   constructor(props){
     super(props);
   }
 
+  lastTap=null;
   state = {
-    showModal: false,
     delete: false,
     takingAction: false,
-    congratulationsModal: false,
-    showWasteModal: false,
-    showWaterModal: false,
-    showCarbonModal: false,
-    showZipcodeModal: false,
     backVisible: false,
     canDelete : this.props.canDelete ? true : null,
     currScreen: this.props.currScreen ? this.props.currScreen : 'Main'
@@ -166,6 +150,49 @@ class ActionCardSmall extends React.Component {
 
   }
 
+  onActionModalClose = () => {
+    this._takeAction()
+    .then(() => this.setState({showWasteModal: false, showWaterModal : false, showCarbonModal: false, showZipcodeModal:false}))
+    .then(this.props.onClose());
+  }
+
+
+  _takeAction = () => {
+    const { take_action, item, get_user, canDelete } = this.props;
+    const { currScreen } = this.state;
+      let variables = {
+        id: get_user.me.id,
+        action : item.action ? item.action.id : item.id
+      }
+      take_action({variables})
+      .then(response => {
+        if(item.related_actions){
+          if(item.related_actions.length > 0){
+            NavigationService.navigate('Game',{ previousScreen: currScreen, games:item.related_actions, game_title:item.game_title ? item.game_title : null});
+          }
+        }
+        this.flipCard();
+      })
+  }
+
+  _showTheModal =() => {
+    const { item } = this.props;
+
+      let waste = item.action ? parseFloat(item.action.waste).toFixed(2) : parseFloat(item.waste).toFixed(2);
+      let water = item.action ? parseFloat(item.action.water).toFixed(2) : parseFloat(item.water).toFixed(2);
+      let carbon_dioxide = item.action ? parseFloat(item.action.carbon_dioxide).toFixed(2) : parseFloat(item.carbon_dioxide).toFixed(2);
+      if(this.props.canDelete){
+        if(waste > water && waste > carbon_dioxide){
+          this.setState({showWasteModal:true})
+        }else if(water > waste && water > carbon_dioxide){
+          this.setState({showWaterModal:true})
+        }else{
+          this.setState({showCarbonModal:true})
+        }
+      }
+  }
+
+
   flipCard() {
     this.setState({backVisible:!this.state.backVisible})
     if(this.state.delete){
@@ -188,23 +215,6 @@ class ActionCardSmall extends React.Component {
     }
   }
 
-  updateZipCode =(zipcode)=>{
-    const { get_user, update_zipcode} = this.props;
-    if(zipcode){
-      let variables={
-        id:get_user.me.id,
-        zipcode:zipcode
-      }
-      update_zipcode({variables}).then(()=>{
-          this.onModalClose();
-      })
-    }
-  }
-
-  openZipCodeModal = () =>{
-    this.setState({showZipcodeModal: true});
-  }
-
   showDelete = () => {
     if (this.state.delete) {
       return (
@@ -220,50 +230,6 @@ class ActionCardSmall extends React.Component {
       );
     }
   };
-
-  _showTheModal =() => {
-    const { item } = this.props;
-
-      let waste = item.action ? parseFloat(item.action.waste).toFixed(2) : parseFloat(item.waste).toFixed(2);
-      let water = item.action ? parseFloat(item.action.water).toFixed(2) : parseFloat(item.water).toFixed(2);
-      let carbon_dioxide = item.action ? parseFloat(item.action.carbon_dioxide).toFixed(2) : parseFloat(item.carbon_dioxide).toFixed(2);
-      if(this.props.canDelete){
-        if(waste > water && waste > carbon_dioxide){
-          this.setState({showWasteModal:true})
-        }else if(water > waste && water > carbon_dioxide){
-          this.setState({showWaterModal:true})
-        }else{
-          this.setState({showCarbonModal:true})
-        }
-      }
-  }
-
-  _takeAction = () => {
-    const { take_action, item, get_user, canDelete } = this.props;
-    const { currScreen } = this.state;
-      let variables = {
-        id: get_user.me.id,
-        action : item.action ? item.action.id : item.id
-      }
-      take_action({variables}).then(response => {
-        if(item.related_actions){
-          if(item.related_actions.length > 0){
-            NavigationService.navigate('Game',{ previousScreen: currScreen, games:item.related_actions, game_title:item.game_title ? item.game_title : null});
-          }
-        }
-        this.flipCard();
-      })
-  }
-
-  onModalClose = () => {
-    this.setState({showWasteModal: false, showWaterModal : false, showCarbonModal: false, showZipcodeModal:false});
-  }
-
-  onActionModalClose = () => {
-    this.setState({showWasteModal: false, showWaterModal : false, showCarbonModal: false, showZipcodeModal:false});
-    this._takeAction();
-  }
-
 
   _myActionItem =() =>{
     const { item, index, get_user, canDelete } = this.props;
@@ -288,101 +254,99 @@ class ActionCardSmall extends React.Component {
     let timeInfo = this.canTakeAgain(item);
 
     return (
-    <View style={{flex:1, height:250, marginVertical:10}}>
-    <TouchableOpacity
-    onPress={() => {
-        this.flipCard()
-    }}
+      <View style={[styles.container, {height:250, marginVertical:10}]}>
+        <TouchableOpacity
+          onPress={() => {
+              this.flipCard()
+          }}
+          onLongPress={() => {
+            if(canDelete){
+              this.setState({ delete: !this.state.delete })
+            }
+          }}
+        >
+          <Animated.View>
+            <Animated.View
+              style={[
+                styles.actionCard,
+                frontAnimatedStyle,
+                {
+                  opacity:takingAction ? 0 : 1
+                }
+              ]}
+            >
+              <Image
+                style={{
+                  flex: 1,
+                  width: null,
+                  height: null,
+                  borderRadius: defaults.borderRadius,
+                }}
+                source={[preview, { uri: item.action.primary_image } ]}
+              />
+              <LinearGradient
+                colors={['rgba(0,0,0,0.1)', 'rgba(0,0,0,0.85)']}
+                locations={[0.0, 1]}
+                style={[styles.gradient, { height: 250}]}
+              />
+              <Text
+                style={[styles.textWhiteBold, styles.smallTextShadow, {
+                  position: 'absolute',
+                  bottom: 10,
+                  left: 15,
+                  paddingRight:5,
+                }]}
+              >
+                {canDelete && (
+                  item.action.action_taken_description.length > 48 ? `${item.action.action_taken_description.substring(0, 40)}...` : item.action.action_taken_description
+                )}
+              </Text>
 
-    onLongPress={() => {
+              {!timeInfo.canGoThrough && (
+                <LinearGradient
+                  colors={['rgba(0,0,0,0.8)', 'rgba(0,0,0,0.8)']}
+                  locations={[0.0, 1]}
+                  style={[styles.gradient, { height: 250}]}
+                />
+              )}
 
-      if(canDelete){
-        this.setState({ delete: !this.state.delete })
-      }
-    }}
-  >
-    {/* <PasswordModal isVisible={this.state.showModal}/> */}
-    <Animated.View>
-    <Animated.View style={[styles.item,frontAnimatedStyle, , {height: 250, opacity:takingAction ? 0 : 1}]}>
-      <Image
-        style={{
-          flex: 1,
-          width: null,
-          height: null,
-          borderRadius: defaults.borderRadius,
-        }}
-        source={[preview, { uri: item.action.primary_image } ]}
-      />
-      <LinearGradient
-        colors={['rgba(0,0,0,0.1)', 'rgba(0,0,0,0.85)']}
-        locations={[0.0, 1]}
-        style={[styles.gradient, { height: 250}]}
-      />
-      <Text
-        style={{
-          position: 'absolute',
-          bottom: 10,
-          left: 15,
-          paddingRight:5,
-          fontWeight: 'bold',
-          fontFamily: 'Proxima Nova Bold',
-          color: '#fff',
-          fontSize: 18,
-        }}
-    >
-        {canDelete && (
-          item.action.action_taken_description.length > 48 ? `${item.action.action_taken_description.substring(0, 40)}...` : item.action.action_taken_description
-        )}
-      </Text>
+              {!timeInfo.canGoThrough && (
+                <Text
+                  style={[styles.textWhiteBold, styles.smallTextShadow, {
+                    position: 'absolute',
+                    top: 10,
+                    left: 15,
+                    paddingRight:5,
+                    fontWeight: 'bold',
+                  }]}
+                >
+                  Take action again {timeInfo.nextDate}
 
-      {!timeInfo.canGoThrough && (
-
-      <LinearGradient
-        colors={['rgba(0,0,0,0.8)', 'rgba(0,0,0,0.8)']}
-        locations={[0.0, 1]}
-        style={[styles.gradient, { height: 250}]}
-      />
-      )}
-
-      {!timeInfo.canGoThrough && (
-      <Text
-      style={{
-          position: 'absolute',
-          top: 10,
-          left: 15,
-          paddingRight:5,
-          fontWeight: 'bold',
-          fontFamily: 'Proxima Nova Bold',
-          color: '#fff',
-          fontSize: 18,
-        }}
-    >
-        Take action again {timeInfo.nextDate}
-
-      </Text>
-      )}
-      {this.state.delete && this.showDelete()}
-    </Animated.View>
-    <Animated.View
-      style={[
-        backAnimatedStyle,
-        styles.item,
-        styles.actionCard,
-        { height: 250 },
-        { opacity: this.backOpacity}
-      ]}
-    >
-      <ActionDetails visible={this.state.backVisible} takeTheAction={this._showTheModal} data={item} canDelete={true} canGoThrough={timeInfo.canGoThrough} zipcode={get_user.me.zipcode} openZipCodeModal={this.openZipCodeModal}/>
-
-    </Animated.View>
-    <WasteModal waste={waste} onClose={this.onActionModalClose} visible={this.state.showWasteModal}/>
-    <WaterModal water={water} onClose={this.onActionModalClose} visible={this.state.showWaterModal}/>
-    <ZipCodeModal updateZipcode={this.updateZipCode} onClose={this.onModalClose} visible={this.state.showZipcodeModal} />
-
-    <CarbonModal carbon_dioxide={carbon_dioxide} onClose={this.onActionModalClose} visible={this.state.showCarbonModal}/>
-    </Animated.View>
-  </TouchableOpacity>
-  </View>)
+                </Text>
+              )}
+              {this.state.delete && this.showDelete()}
+            </Animated.View>
+            <Animated.View
+              style={[
+                backAnimatedStyle,
+                styles.actionCard,
+                styles.actionCardBack,
+                { opacity: this.backOpacity, left: 10, }
+              ]}
+            >
+              <ActionDetails
+                visible={this.state.backVisible}
+                takeTheAction={this._showTheModal}
+                data={item}
+                canDelete={true}
+                canGoThrough={timeInfo.canGoThrough}
+                zipcode={get_user.me.zipcode}
+                openModal={this.props.openModal}/>
+            </Animated.View>
+          </Animated.View>
+        </TouchableOpacity>
+      </View>
+    )
   }
 
   _standardItem = () =>{
@@ -403,67 +367,80 @@ class ActionCardSmall extends React.Component {
     let waste = item.waste;
     let water = item.water;
     let carbon_dioxide = item.carbon_dioxide;
-    return <View style={{flex:1, height:250, marginVertical:10}}>
+    return (
+      <View style={[styles.container, {height:250, marginBottom: 10}]}>
+        <DoubleClick
+          style={[styles.container]}
+          singleTap={async () => {
+            this.flipCard()
+          }}
+          doubleTap={() => {
+            if(!canDelete) {
+              this._takeAction()
+            }
+          }}
+          delay={200}
+        >
+          <Animated.View
+            style={[
+              styles.actionCard,
+              frontAnimatedStyle,
+              {
+                opacity: takingAction ? 0 : 1
+              }
+            ]}
+          >
+            <LinearGradient
+              colors={['rgba(0,0,0,0.1)', 'rgba(0,0,0,0.8)']}
+              locations={[0, 1]}
+              style={[styles.gradient, { height: 250}]}
+            />
+            <Image
+              style={[styles.container, {
+                width: null,
+                height: null,
+                borderRadius: defaults.borderRadius,
+              }]}
+              source={[preview, {uri: canDelete ? item.action.primary_image : item.primary_image}]}
+            />
+            <Text
+              style={[styles.textWhiteBold, styles.smallTextShadow, {
+                position: 'absolute',
+                bottom: 10,
+                left: 15,
+                paddingRight: 5,
+              }]}
+            >
+              {canDelete && (item.action.action_taken_description.length > 48 ? `${item.action.action_taken_description.substring(0, 40)}...` : item.action.action_taken_description)}
+              {!canDelete && (item.short_description.length > 48 ? `${item.short_description.substring(0, 40)}...` : item.short_description)}
+            </Text>
+            {this.state.delete && this.showDelete()}
+          </Animated.View>
+          <Animated.View
+            style={[
+              backAnimatedStyle,
+              styles.actionCard,
+              styles.actionCardBack,
+              {
+                opacity: this.backOpacity,
+                left: 10,
+              }
+            ]}
+          >
+            <ActionDetails
+              visible={this.state.backVisible}
+              data={item}
+              takeTheAction={this._takeAction}
+              canDelete={false}
+              zipcode={get_user.me.zipcode}
+              openModal={this.props.openModal}
+            />
+            {this.state.delete && this.showDelete()}
+          </Animated.View>
+        </DoubleClick>
 
-    <DoubleClick
-      style={[styles.container]}
-      singleTap={async () => {
-        this.flipCard()
-      }}
-      doubleTap={() => {
-        if(!canDelete) {
-          this._takeAction()
-        }
-      }}
-      delay={200}
-    >
-    {/* <PasswordModal isVisible={this.state.showModal}/> */}
-
-    <Animated.View style={[styles.item, frontAnimatedStyle, {height: 250, opacity: takingAction ? 0 : 1}]}>
-    <LinearGradient
-        colors={['rgba(0,0,0,0.1)', 'rgba(0,0,0,0.8)']}
-        locations={[0, 1]}
-        style={[styles.gradient, { height: 250}]}
-      />
-      <Image
-        style={[styles.container, {
-          width: null,
-          height: null,
-          borderRadius: defaults.borderRadius,
-        }]}
-        source={[preview, {uri: canDelete ? item.action.primary_image : item.primary_image}]}
-      />
-      <Text
-        style={[styles.textWhite, styles.smallTextShadow, {
-          position: 'absolute',
-          bottom: 10,
-          left: 15,
-          paddingRight:5,
-          fontWeight: "bold",
-        }]}
-      >
-        {canDelete && (item.action.action_taken_description.length > 48 ? `${item.action.action_taken_description.substring(0, 40)}...` : item.action.action_taken_description)}
-        {!canDelete && (item.short_description.length > 48 ? `${item.short_description.substring(0, 40)}...` : item.short_description)}
-      </Text>
-      {this.state.delete && this.showDelete()}
-    </Animated.View>
-    <Animated.View
-      style={[
-        backAnimatedStyle,
-        styles.item,
-        styles.actionCard,
-        { height: 250 },
-        { opacity: this.backOpacity}
-      ]}
-    >
-      <ActionDetails visible={this.state.backVisible} data={item} takeTheAction={this._takeAction} canDelete={false} zipcode={get_user.me.zipcode} openZipCodeModal={this.openZipCodeModal}/>
-      <ZipCodeModal updateZipcode={this.updateZipCode} onClose={this.onModalClose} visible={this.state.showZipcodeModal} />
-      {this.state.delete && this.showDelete()}
-    </Animated.View>
-  </DoubleClick>
-
-    </View>
-
+      </View>
+    )
 
   }
 
@@ -472,7 +449,9 @@ class ActionCardSmall extends React.Component {
     if(get_user.loading){
       return <View></View>
     }
-    return canDelete ?  this._myActionItem() : this._standardItem()
+    return (
+      canDelete ?  this._myActionItem() : this._standardItem()
+    )
   }
 }
 
