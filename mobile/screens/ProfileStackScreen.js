@@ -34,6 +34,7 @@ import { styles, defaults } from '../constants/Styles'
 })
 @graphql(GET_USER, {
   name: 'user',
+  fetchPolicy: 'network_only',
   options: {
     pollingInterval: 2000
   }
@@ -105,27 +106,25 @@ class ProfileStackScreen extends React.Component {
   }
 
   async updatePic() {
-    const image = _pickImage
-    console.log('updatePic', image)
-    // .then(res => {
-    //   console.log('_pickImage', res)
-    //   update_user({variables:{profile_pic: res.url}})
-    //   this.setState(
-    //     { user:
-    //       { me:
-    //         {
-    //           profile_pic: res.url
-    //         }
-    //       }
-    //     }
-    //   )
-    // })
-    // .catch(e => console.log(e))
+    _pickImage()
+    .then(res => {
+      console.log('_pickImage', res)
+      update_user({variables:{photo: res.resource}})
+      this.setState(
+        { user:
+          { me:
+            {
+              photo: res.resource
+            }
+          }
+        }
+      )
+    })
+    .catch(e => console.log(e))
   }
 
   render() {
     const { user } = this.props
-    console.log('this.props', this.props.user);
     if (user.loading) {
       return (
         <SafeAreaView style={[styles.container]}>
