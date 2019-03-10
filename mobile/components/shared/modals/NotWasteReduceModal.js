@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, Modal, Image } from 'react-native';
-import { AntDesign, Entypo } from '@expo/vector-icons';
+import { styles } from '../../../constants/Styles';
 
 export default class WasteModal extends React.Component {
   state = { modalVisible: true };
@@ -16,73 +16,16 @@ export default class WasteModal extends React.Component {
         animationType="slide"
         transparent={true}
         visible={this.props.visible}
-        style={{
-          backgroundColor: '#333',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
       >
-        <View style={{ marginTop: 200, marginHorizontal: 20 }}>
-          <View
-            style={{
-              backgroundColor: '#333',
-              justifyContent: 'center',
-              alignItems: 'center',
-              borderRadius: 20,
-              padding: 30,
-            }}
-          >
-            {/* <Entypo name="trash" color="white" size={50} /> */}
+        <View style={[styles.modalView, { marginTop: 200, marginHorizontal: 20 }]}>
+          <View style={[styles.headerContainer]}>
             <Image
               source={require('../../../assets/waste.png')}
               style={{ width: 138, height: 100, margin: 20 }}
             />
-            <Text
-              style={{
-                color: '#fff',
-                marginHorizontal: 5,
-                fontSize: 18,
-                fontWeight: 'bold',
-                textAlign: 'center',
-              }}
-            >
+            <Text style={[styles.headerText]}>
               YOU'VE REDUCED YOUR WASTE BY {parseFloat(this.props.waste || 0 ).toFixed(2)} POUNDS!
             </Text>
-
-            {/* <Text
-              style={{
-                color: '#fff',
-                fontSize: 12,
-                paddingTop: 10,
-                textAlign: 'center',
-              }}
-            >
-              You've offset the equivalent of
-            </Text>
-            <Text
-              style={{
-                color: '#fff',
-                fontSize: 12,
-                paddingBottom: 10,
-                textAlign: 'center',
-              }}
-            >
-              buying 3000 water bottles
-            </Text> */}
-            <TouchableOpacity
-              onPress={() => {
-                this.props.onClose();
-              }}
-              hitSlop={{ top: 15, left: 15, right: 15, bottom: 15 }}
-              style={{ position: 'absolute', right: -2, top: -5 }}
-            >
-              <AntDesign
-                name="close"
-                size={32}
-                color="white"
-                style={{ padding: 5 }}
-              />
-            </TouchableOpacity>
           </View>
         </View>
       </Modal>

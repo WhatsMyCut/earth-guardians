@@ -616,6 +616,15 @@ export const styles = ScaledSheet.create({
     fontFamily: 'Proxima Nova Bold',
     color: Colors.mediumGray,
   },
+  textInput: {
+    color: '#fff',
+    height: 30,
+    width: 200,
+    textAlign: 'center',
+    marginVertical: 30,
+    borderColor: 'gray',
+    borderBottomWidth: 1,
+  },
   social: {
     borderRadius: defaults.borderRadius,
     borderWidth: 1,
