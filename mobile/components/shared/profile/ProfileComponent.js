@@ -10,6 +10,7 @@ import {
 import { LinearGradient } from 'expo';
 import LinearGradientProps from '../../../constants/LinearGradientProps';
 import graphql from '../../hoc/graphql';
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { GET_USER } from '../../graphql/queries/get_user';
 import { styles, defaults } from '../../../constants/Styles'
 
@@ -49,8 +50,18 @@ export default class ProfileComponent extends React.Component {
           <LinearGradient
           {...LinearGradientProps.profileItem}
           style={[styles.container, styles.linearGradientBox, styles.centerAll, {width: '100%', padding: 20}]}>
-            <Image source={profilepic} style={styles.profileImage} />
-            <Text style={[styles.smallWhiteText, {paddingTop: 10}]}>Click to Update</Text>
+            <View style={[styles.container, {position: 'relative', width: '100%'}]}>
+              <Image source={profilepic} style={[styles.profileImage, {alignSelf: 'center'}]} />
+              <View style={[styles.container, {position: 'absolute', left: 105, right: 105, bottom: 0, paddingTop: 10}]}>
+                <Text style={[styles.container,styles.smallWhiteText, {position: 'absolute', right: 0, top: 5,}]}>Click to Update</Text>
+                <MaterialCommunityIcons
+                  name="camera-front-variant"
+                  size={22}
+                  color={'#fff'}
+                  style={[styles.container, {position: 'absolute', left: 0}]}
+                />
+              </View>
+            </View>
           </LinearGradient>
         </TouchableOpacity>
         <View style={[styles.container, styles.centerText, , { marginTop: 20,}]}>
