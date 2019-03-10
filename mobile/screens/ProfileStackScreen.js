@@ -19,16 +19,25 @@ import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_
 import graphql from '../components/hoc/graphql';
 import NavigationService from '../navigation/navigationService';
 import ProfileComponent from '../components/shared/profile/ProfileComponent';
+import PubSub from 'pubsub-js'
 import UpdateUserComponent from '../components/shared/profile/UpdateUserComponent';
 import CommunityEventModal from '../components/shared/modals/CommunityEventModal';
 import { GET_USER } from '../components/graphql/queries/get_user';
+import { UPDATE_USER } from '../components/graphql/mutations/update_user_mutation';
 import client from '../Apollo';
 import { StoreData } from '../store/AsyncStore';
 import { _pickImage } from '../services/uploadS3Image';
 import { styles, defaults } from '../constants/Styles'
 
+
+@graphql(UPDATE_USER, {
+  name: 'update_user_mutation',
+})
 @graphql(GET_USER, {
   name: 'user',
+  options: {
+    pollingInterval: 2000
+  }
 })
 class ProfileStackScreen extends React.Component {
   state = {
@@ -61,13 +70,37 @@ class ProfileStackScreen extends React.Component {
         console.log(e);
       }
     };
-    this.interval = setInterval(() => {
-      this.props.user.refetch();
-    }, 2000)
   }
 
   componentWillUnmount = ()=>{
-    clearInterval(this.interval);
+    this.props.user = null;
+  }
+
+  updateUser = () => {
+    const { password, confirmPassword } = this.state;
+    const { user } = this.props;
+    let variables = {
+      id: user.me.id,
+      phone: this.state.phone ? this.state.phone : user.me.username,
+      username: this.state.phone ? this.state.phone : user.me.username,
+      name: this.state.name ? this.state.name : user.me.name,
+      zipcode: this.state.zipcode ? this.state.zipcode : user.me.zipcode,
+      crew: this.state.crew ? this.state.crew : user.me.crew,
+      email: this.state.email ? this.state.email : user.me.email,
+      crew_type: this.state.crew_type
+        ? this.state.crew_type
+        : user.me.crew_type,
+    };
+    update_user_mutation({ variables }).then(res => {
+      this.props.onClose();
+    });
+  };
+
+
+  updateProfile() {
+    const { user } = this.state.props;
+    console.log('updateProfile', user)
+    PubSub.publish('showUpdateProfileModal', user);
   }
 
   async updatePic() {
@@ -89,21 +122,10 @@ class ProfileStackScreen extends React.Component {
     // .catch(e => console.log(e))
   }
 
-  async _aggregateProfile() {
-    const { loading } = this.state;
-    if (!loading) {
-      return;
-    }
-
-    this.setState({
-      loading: false,
-      user: this.props.user
-    });
-  }
-
   render() {
-    //console.log('this.props', this.props);
-    if (this.props.user.loading) {
+    const { user } = this.props
+    console.log('this.props', this.props);
+    if (user.loading) {
       return (
         <SafeAreaView style={[styles.container]}>
           <View style={[ styles.modalView ]}>
@@ -112,35 +134,20 @@ class ProfileStackScreen extends React.Component {
         </SafeAreaView>
       );
     } else {
-      this._aggregateProfile()
-      console.log('this.props.user', this.props.user)
+      // this._aggregateProfile()
+      console.log('this.props.user', user)
+      //this.setState({ user: user})
     }
 
     return (
       <SafeAreaView style={[styles.greyCard]}>
         <View style={[styles.container, styles.centerText, { padding: 20, }]}>
           <ProfileComponent
-            user={this.props.user}
+            user={user}
             updatePic={this.updatePic}
+            updateProfile={this.updateProfile}
           />
         </View>
-
-        {this.state.openModal ? (
-          <BlurView
-            tint="dark"
-            intensity={80}
-            style={[styles.container, styles.coverScreen, {
-              height: defaults.primaryHeight - 150,
-
-            }]}
-          >
-            <CommunityEventModal
-              onClose={() => {
-                this.setState({ openModal: false, loading: true });
-              }}
-            />
-          </BlurView>
-        ) : null}
       </SafeAreaView>
     );
   }

@@ -7,7 +7,8 @@ import {
 import { BlurView } from 'expo';
 import { styles } from '../../../constants/Styles'
 import ZipCodeModal from '../modals/ZipCodeModal';
-import { Modal } from 'react-native-paper';
+import UpdateUserModal from '../profile/updateUserComponent';
+import UpdateUserComponent from '../profile/updateUserComponent';
 
 export default class ModalComponent extends React.Component {
   constructor(props) {
@@ -24,6 +25,15 @@ export default class ModalComponent extends React.Component {
     this.getComponent()
   }
 
+  closeAll() {
+    this.setState({
+      showZipCodeModal: false,
+      showWasteModal: false,
+      showWaterModal: false,
+      showCarbonModal: false,
+    })
+  }
+
   updateZipCode =(zipcode)=>{
     const { get_user, update_zipcode} = this.props;
     if(zipcode){
@@ -38,9 +48,14 @@ export default class ModalComponent extends React.Component {
   }
 
   getComponent() {
+    console.log('getComponent', this.props.display)
+    this.closeAll()
     switch (this.props.display) {
       case 'ZipCodeModal':
         this.setState({ showZipCodeModal: true })
+        break;
+      case 'UpdateUserModal':
+        this.setState({ showUpateUserModal: true })
         break;
       default:
         this.setState({ showZipCodeModal: true })
@@ -77,6 +92,9 @@ export default class ModalComponent extends React.Component {
               visible={this.state.showZipCodeModal}
               updateZipCode={this.props.updateZipCode}
             />
+          }
+          { this.state.showUpateUserModal &&
+            <UpdateUserComponent my_user={this.props.my_user} onClose={() => this.onModalClose()} visible={this.state.showUpdateUser}/>
           }
           { this.state.showWasteModal &&
             <WasteModal waste={this.state.waste} onClose={() => this.onActionModalClose()} visible={this.state.showWasteModal}/>

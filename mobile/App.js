@@ -22,6 +22,7 @@ export default class App extends React.Component {
     showWaterModal: false,
     showCarbonModal:false,
     showZipCodeModal: false,
+    showUpdateProfileModal: false,
   };
 
   async componentDidMount() {
@@ -31,6 +32,7 @@ export default class App extends React.Component {
     });
 
     PubSub.subscribe('showZipCodeModal', data => this.openZipCodeModal(data));
+    PubSub.subscribe('showUpdateProfileModal', data => this.openUpdateUserModal(data));
     PubSub.subscribe('closeModal', this.closeModal);
     this._notificationSubscription = Notifications.addListener(this._handleNotification);
     this.setState({ fontLoaded: true });
@@ -60,18 +62,33 @@ export default class App extends React.Component {
   }
 
   closeGameCompleteModal = () =>{
+    this.closeAll()
     this.setState({showGameComplete:false});
   }
 
   closeNotificationModal = () => {
+    this.closeAll()
     this.setState({ showNotificationModal : false, notification: null})
   }
 
   openZipCodeModal = (data) => {
+    this.closeAll()
     this.setState({ showZipCodeModal: true});
   }
 
-  closeModal = () => this.setState({ showZipCodeModal : false });
+  openUpdateUserModal = (data) => {
+    this.closeAll()
+    this.setState({ showUpdateProfileModal: true });
+  }
+
+  closeAll = () => this.setState({
+    showNotificationModal: false,
+    showWasteModal: false,
+    showWaterModal: false,
+    showCarbonModal:false,
+    showZipCodeModal: false,
+    showUpdateProfileModal: false,
+  });
 
   render() {
     // console.disableYellowBox = true;
@@ -83,7 +100,25 @@ export default class App extends React.Component {
     const showModal = this.state.showZipCodeModal ||
     this.state.showCarbonModal ||
     this.state.showWasteModal ||
-    this.state.showWaterModal
+    this.state.showWaterModal ||
+    this.state.showUpdateProfileModal ||
+    this.state.showNotificationModal
+    let displayModal;
+    if (showModal) {
+      if (this.state.showZipCodeModal) {
+        displayModal = 'ZipCodeModal'
+      } else if (this.state.showCarbonModal) {
+        displayModal = 'NotC02EmissionModal'
+      } else if (this.state.showWasteModal) {
+        displayModal = 'NotWasteReduceModal'
+      } else if (this.state.showWaterModal) {
+        displayModal = 'NotH2OConsumptionModal'
+      } else if (this.state.showUpdateProfileModal) {
+        displayModal = 'UpdateUserModal'
+      } else if (this.state.showNotificationModal) {
+        displayModal = 'NotificationModal'
+      }
+    }
 
     return (
       <StoreProvider>
@@ -96,7 +131,7 @@ export default class App extends React.Component {
 
           {showModal &&
             <ModalComponent
-              display={'ZipCodeModal'}
+              display={displayModal}
               onClose={() => this.closeModal()}
               onActionModalClose={() => this.onActionModalClose() }
               updateZipCode={() => this.updateZipCode() }

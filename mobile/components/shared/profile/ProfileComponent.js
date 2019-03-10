@@ -14,12 +14,8 @@ import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { GET_USER } from '../../graphql/queries/get_user';
 import { styles, defaults } from '../../../constants/Styles'
 
-@graphql(GET_USER,{
-  name:"user",
-})
 export default class ProfileComponent extends React.Component {
   componentWillUnmount() {
-    this.props.user = null
   }
   greyOrWhite = (el) => {
     return (el !== null) ? styles.textWhite18B : styles.profilePlaceholerText;
@@ -88,7 +84,7 @@ export default class ProfileComponent extends React.Component {
           <TouchableOpacity
             style={[styles.buttonContainer]}
             onPress={() => {
-              this.props.onPress;
+              this.props.updateProfile();
             }}
           >
             <Text style={[styles.textGrey18B]}>Update Profile</Text>
