@@ -13,6 +13,7 @@ import {
 
 import { Dropdown } from 'react-native-material-dropdown';
 import { styles } from '../../../constants/Styles';
+import Colors from '../../../constants/Colors';
 
 export default class UpdateUserComponent extends React.Component {
   state = {
@@ -26,6 +27,7 @@ export default class UpdateUserComponent extends React.Component {
 
   constructor(props) {
     super(props);
+    console.log('UpdateUserComponent', this.props)
   }
 
   render() {
@@ -36,7 +38,6 @@ export default class UpdateUserComponent extends React.Component {
       { value: 'Business' },
       { value: 'Crew' },
     ];
-
 
     return (
       <Modal
@@ -51,7 +52,7 @@ export default class UpdateUserComponent extends React.Component {
           contentContainerStyle={[styles.container, styles.centerAll, {
             flexDirection: 'column',
             borderRadius: 15,
-            backgroundColor: '#333',
+            backgroundColor: Colors.darkGray,
           }]}
         >
           <KeyboardAvoidingView
@@ -62,7 +63,7 @@ export default class UpdateUserComponent extends React.Component {
               flexDirection: 'column',
               alignItems: 'center',
               borderRadius: 15,
-              backgroundColor: '#333',
+              backgroundColor: Colors.darkGray,
             }}
           >
             <View style={[styles.headerContainer]}>
@@ -72,54 +73,28 @@ export default class UpdateUserComponent extends React.Component {
             </View>
             <View style={[styles.container]}>
               <TextInput
-                style={{
-                  color: '#fff',
-                  height: 30,
-                  width: 200,
-                  textAlign: 'left',
-                  marginVertical: 10,
-                  borderColor: 'gray',
-                  borderBottomWidth: 1,
-                }}
+                style={[styles.textInput]}
                 onChangeText={phone => this.setState({ phone })}
-                placeholder={my_user.me.username || 'Phone'}
-                placeholderTextColor="#fff"
+                placeholder={'Phone'}
+                placeholderTextColor={Colors.white}
                 keyboardType="default"
                 returnKeyType="done"
                 value={this.state.phone}
               />
               <TextInput
-                style={{
-                  color: '#fff',
-                  height: 30,
-                  width: 200,
-                  textAlign: 'left',
-                  marginTop: 10,
-                  marginBottom: 10,
-                  borderColor: 'gray',
-                  borderBottomWidth: 1,
-                }}
+                style={[styles.textInput]}
                 onChangeText={name => this.setState({ name })}
-                placeholder={my_user.me.name || 'Name'}
-                placeholderTextColor="#fff"
+                placeholder={'Name'}
+                placeholderTextColor={Colors.white}
                 keyboardType="default"
                 returnKeyType="done"
                 value={this.state.name}
               />
               <TextInput
-                style={{
-                  color: '#fff',
-                  height: 30,
-                  width: 200,
-                  textAlign: 'left',
-                  marginTop: 5,
-                  marginBottom: 8,
-                  borderColor: 'gray',
-                  borderBottomWidth: 1,
-                }}
+                style={[styles.textInput]}
                 onChangeText={email => this.setState({ email })}
-                placeholder={my_user.me.email || 'Email'}
-                placeholderTextColor="#fff"
+                placeholder={'Email'}
+                placeholderTextColor={Colors.white}
                 keyboardType="email-address"
                 returnKeyType="done"
                 value={this.state.email}
@@ -128,47 +103,36 @@ export default class UpdateUserComponent extends React.Component {
                 label="Affiliation Type"
                 data={typesOfCrews}
                 containerStyle={{
-                  // height: 10,
                   width: 200,
                   marginBottom: 10,
                 }}
-                baseColor={'#ffffff'}
-                textColor={'#ffffff'}
-                itemColor={'#000000'}
-                selectedItemColor="rgba(0, 0, 0, .87)"
+                baseColor={Colors.white}
+                textColor={Colors.white}
+                itemColor={Colors.black}
+                selectedItemColor="rgba(0, 0, 0, .5)"
                 onChangeText={arg => {
                   this.setState({ crew_type: arg });
                 }}
               />
               <TextInput
-                style={{
-                  color: '#fff',
-                  height: 30,
-                  width: 200,
-                  textAlign: 'left',
-                  marginTop: 10,
-                  marginBottom: 10,
-                  borderColor: 'gray',
-                  borderBottomWidth: 1,
-                }}
+                style={[styles.textInput]}
                 onChangeText={crew => this.setState({ crew })}
-                placeholder={my_user.me.crew || 'Affiliation'}
-                placeholderTextColor="#fff"
+                placeholder={'Affiliation'}
+                placeholderTextColor={Colors.white}
                 keyboardType="default"
                 returnKeyType="done"
                 value={this.state.crew}
               />
               <TextInput
-                style={[styles.textWhite]}
+                style={[styles.textInput]}
                 onChangeText={zipcode => this.setState({ zipcode })}
-                placeholder={my_user.me.zipcode || 'Zipcode'}
+                placeholder={'Zipcode'}
                 placeholderTextColor={styles.placeholderTextColor}
                 keyboardType="numeric"
                 secureTextEntry={false}
                 returnKeyType="done"
                 value={this.state.zipCode}
               />
-
               <TouchableOpacity
                 style={[styles.buttonContainer]}
                 onPress={() => this.updateUser()}
@@ -178,7 +142,7 @@ export default class UpdateUserComponent extends React.Component {
                 </Text>
               </TouchableOpacity>
               <TouchableHighlight onPress={() => this.props.onClose()}>
-                <Text style={{ color: 'white' }}>Go Back</Text>
+                <Text style={[styles.textWhite]}>Go Back</Text>
               </TouchableHighlight>
             </View>
           </KeyboardAvoidingView>

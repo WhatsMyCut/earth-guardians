@@ -29,7 +29,6 @@ import { StoreData } from '../store/AsyncStore';
 import { _pickImage } from '../services/uploadS3Image';
 import { styles, defaults } from '../constants/Styles'
 
-
 @graphql(UPDATE_USER, {
   name: 'update_user_mutation',
 })
@@ -56,6 +55,10 @@ class ProfileStackScreen extends React.Component {
   };
 
   componentWillMount() {
+    const { user } = this.props
+    if (!user.loading) {
+      PubSub.publish('setUser', { user: user })
+    }
   }
 
   componentDidMount() {
@@ -97,10 +100,8 @@ class ProfileStackScreen extends React.Component {
   };
 
 
-  updateProfile() {
-    const { user } = this.state.props;
-    console.log('updateProfile', user)
-    PubSub.publish('showUpdateProfileModal', user);
+  updateProfileModal() {
+    PubSub.publish('showUpdateProfileModal');
   }
 
   async updatePic() {
@@ -124,7 +125,7 @@ class ProfileStackScreen extends React.Component {
 
   render() {
     const { user } = this.props
-    console.log('this.props', this.props);
+    console.log('this.props', this.props.user);
     if (user.loading) {
       return (
         <SafeAreaView style={[styles.container]}>
@@ -133,19 +134,15 @@ class ProfileStackScreen extends React.Component {
           </View>
         </SafeAreaView>
       );
-    } else {
-      // this._aggregateProfile()
-      console.log('this.props.user', user)
-      //this.setState({ user: user})
     }
 
     return (
       <SafeAreaView style={[styles.greyCard]}>
         <View style={[styles.container, styles.centerText, { padding: 20, }]}>
           <ProfileComponent
-            user={user}
+            my_user={user}
             updatePic={this.updatePic}
-            updateProfile={this.updateProfile}
+            updateProfileModal={this.updateProfileModal}
           />
         </View>
       </SafeAreaView>

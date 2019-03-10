@@ -31,6 +31,7 @@ export default class App extends React.Component {
       'Proxima Nova Bold': require('./assets/fonts/ProximaNovaBold.ttf'),
     });
 
+    PubSub.subscribe('setUser', data => this.setUser(data))
     PubSub.subscribe('showZipCodeModal', data => this.openZipCodeModal(data));
     PubSub.subscribe('showUpdateProfileModal', data => this.openUpdateUserModal(data));
     PubSub.subscribe('closeModal', this.closeModal);
@@ -79,6 +80,11 @@ export default class App extends React.Component {
   openUpdateUserModal = (data) => {
     this.closeAll()
     this.setState({ showUpdateProfileModal: true });
+  }
+
+  setUser = (data) => {
+    console.log('setUser', data)
+    this.setState({ user: data.user })
   }
 
   closeAll = () => this.setState({
@@ -135,6 +141,7 @@ export default class App extends React.Component {
               onClose={() => this.closeModal()}
               onActionModalClose={() => this.onActionModalClose() }
               updateZipCode={() => this.updateZipCode() }
+              my_user={this.props.user}
             />
           }
           {/* {this.state.showGameComplete && (

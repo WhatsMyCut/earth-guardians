@@ -48,7 +48,7 @@ export default class ModalComponent extends React.Component {
   }
 
   getComponent() {
-    console.log('getComponent', this.props.display)
+    console.log('getComponent', this.props)
     this.closeAll()
     switch (this.props.display) {
       case 'ZipCodeModal':

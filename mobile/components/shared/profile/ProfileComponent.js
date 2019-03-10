@@ -21,22 +21,22 @@ export default class ProfileComponent extends React.Component {
     return (el !== null) ? styles.textWhite18B : styles.profilePlaceholerText;
   }
   render() {
-    const { user } = this.props;
+    const { my_user } = this.props;
 
-    if(user.loading){
+    if(my_user.loading){
       return (
         <View style={styles.container}>
           <ActivityIndicator size="large"/>
         </View>
       )
     }
-    const profilepic= user.me.profile_pic || require('../../../assets/Group_427.png')
-    const namestyle = this.greyOrWhite(user.me.name);
-    const zipstyle = this.greyOrWhite(user.me.zipcode);
-    const phonestyle = this.greyOrWhite(user.me.phone);
-    const emailstyle = this.greyOrWhite(user.me.email);
-    const crewstyle = this.greyOrWhite(user.me.crew);
-    const crewtypestyle = this.greyOrWhite(user.me.crew_type);
+    const profilepic= my_user.me.profile_pic || require('../../../assets/Group_427.png')
+    const namestyle = this.greyOrWhite(my_user.me.name);
+    const zipstyle = this.greyOrWhite(my_user.me.zipcode);
+    const phonestyle = this.greyOrWhite(my_user.me.phone);
+    const emailstyle = this.greyOrWhite(my_user.me.email);
+    const crewstyle = this.greyOrWhite(my_user.me.crew);
+    const crewtypestyle = this.greyOrWhite(my_user.me.crew_type);
     return (
       <View style={[styles.container]}>
         <TouchableOpacity
@@ -62,29 +62,29 @@ export default class ProfileComponent extends React.Component {
         </TouchableOpacity>
         <View style={[styles.container, styles.centerText, , { marginTop: 20,}]}>
           <View style={[styles.profileRow]}>
-            <Text style={[styles.profileCell, styles.underline, namestyle]}>{user.me.name || 'Name'}</Text>
+            <Text style={[styles.profileCell, styles.underline, namestyle]}>{my_user.me.name || 'Name'}</Text>
           </View>
           <View style={[styles.profileRow]}>
-            <Text style={[styles.profileCell, styles.underline, zipstyle]}>{user.me.zipcode || 'Zipcode'}</Text>
+            <Text style={[styles.profileCell, styles.underline, zipstyle]}>{my_user.me.zipcode || 'Zipcode'}</Text>
           </View>
           <View style={[styles.profileRow]}>
-            <Text style={[styles.profileCell, styles.underline, phonestyle]}>{user.me.phone || 'Phone'}</Text>
+            <Text style={[styles.profileCell, styles.underline, phonestyle]}>{my_user.me.phone || 'Phone'}</Text>
           </View>
           <View style={[styles.profileRow]}>
-            <Text style={[styles.profileCell, styles.underline, emailstyle]}>{user.me.email ? user.me.email.length > 15 ? `${user.me.email.substring(0, 15)}...` :user.me.email : 'Email' }</Text>
+            <Text style={[styles.profileCell, styles.underline, emailstyle]}>{my_user.me.email ? my_user.me.email.length > 15 ? `${my_user.me.email.substring(0, 15)}...` :my_user.me.email : 'Email' }</Text>
           </View>
           <View style={[styles.profileRow]}>
-            <Text style={[styles.profileCell, styles.underline, crewstyle]}>{user.me.crew || 'Affiliation'}</Text>
+            <Text style={[styles.profileCell, styles.underline, crewstyle]}>{my_user.me.crew || 'Affiliation'}</Text>
           </View>
           <View style={[styles.profileRow]}>
-            <Text style={[styles.profileCell, styles.underline, crewtypestyle]}>{user.me.crew_type || 'Affiliation Type'}</Text>
+            <Text style={[styles.profileCell, styles.underline, crewtypestyle]}>{my_user.me.crew_type || 'Affiliation Type'}</Text>
           </View>
         </View>
         <View style={[styles.container]}>
           <TouchableOpacity
             style={[styles.buttonContainer]}
             onPress={() => {
-              this.props.updateProfile();
+              this.props.updateProfileModal();
             }}
           >
             <Text style={[styles.textGrey18B]}>Update Profile</Text>
