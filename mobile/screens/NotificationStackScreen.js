@@ -1,8 +1,9 @@
 import React from 'react';
-
-import { SafeAreaView, View, Text, Switch, StyleSheet } from 'react-native';
+import NavigationService from '../navigation/navigationService';
+import { SafeAreaView, View, Text, Switch, TouchableOpacity } from 'react-native';
 import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_categories_query';
 import graphql from '../components/hoc/graphql';
+import { Ionicons } from '@expo/vector-icons';
 import { styles } from '../constants/Styles';
 
 //import { data } from './dummy/actions.json';
@@ -80,6 +81,16 @@ class NotificationStackScreen extends React.Component {
 }
 
 NotificationStackScreen.navigationOptions = {
+  headerLeft: (
+    <TouchableOpacity onPress={() => NavigationService.navigate('Impact')}>
+      <Ionicons
+        name="ios-arrow-round-back"
+        size={42}
+        color="white"
+        style={{ paddingLeft: 15, opacity: 0.7 }}
+      />
+    </TouchableOpacity>
+  ),
   headerTitle: (
     <Text style={[styles.headerText]}>
       NOTIFICATIONS
