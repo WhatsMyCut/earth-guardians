@@ -31,7 +31,9 @@ export default class ModalComponent extends React.Component {
       showWasteModal: false,
       showWaterModal: false,
       showCarbonModal: false,
+      showUpateUserModal: false,
     })
+    this.props.onClose()
   }
 
   updateZipCode =(zipcode)=>{
@@ -42,14 +44,13 @@ export default class ModalComponent extends React.Component {
         zipcode:zipcode
       }
       update_zipcode({variables}).then(()=>{
-          this.onModalClose();
+          this.closeAll();
       })
     }
   }
 
   getComponent() {
     console.log('getComponent', this.props)
-    this.closeAll()
     switch (this.props.display) {
       case 'ZipCodeModal':
         this.setState({ showZipCodeModal: true })
@@ -94,7 +95,7 @@ export default class ModalComponent extends React.Component {
             />
           }
           { this.state.showUpateUserModal &&
-            <UpdateUserComponent my_user={this.props.my_user} onClose={() => this.onModalClose()} visible={this.state.showUpdateUser}/>
+            <UpdateUserComponent my_user={this.props.my_user} updateUser={() => this.updateUser() } onClose={() => this.props.onClose()} visible={this.state.showUpateUserModal}/>
           }
           { this.state.showWasteModal &&
             <WasteModal waste={this.state.waste} onClose={() => this.onActionModalClose()} visible={this.state.showWasteModal}/>

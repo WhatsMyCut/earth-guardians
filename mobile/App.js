@@ -138,9 +138,10 @@ export default class App extends React.Component {
           {showModal &&
             <ModalComponent
               display={displayModal}
-              onClose={() => this.closeModal()}
+              onClose={() => this.closeAll()}
               onActionModalClose={() => this.onActionModalClose() }
               updateZipCode={() => this.updateZipCode() }
+              updateUser={() => this.updateUser()}
               my_user={this.props.user}
             />
           }

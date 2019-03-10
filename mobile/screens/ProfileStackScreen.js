@@ -138,7 +138,7 @@ class ProfileStackScreen extends React.Component {
 
     return (
       <SafeAreaView style={[styles.greyCard]}>
-        <View style={[styles.container, styles.centerText, { padding: 20, }]}>
+        <View style={[styles.container, styles.centerText, { paddingHorizontal: 20, }]}>
           <ProfileComponent
             my_user={user}
             updatePic={this.updatePic}

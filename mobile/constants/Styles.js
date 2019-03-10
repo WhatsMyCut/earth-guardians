@@ -617,12 +617,12 @@ export const styles = ScaledSheet.create({
     color: Colors.mediumGray,
   },
   textInput: {
-    color: '#fff',
-    height: 30,
+    color: Colors.white,
+    fontSize: moderateScale(18),
     width: 200,
     textAlign: 'center',
-    marginVertical: 30,
-    borderColor: 'gray',
+    marginVertical: 10,
+    borderColor: Colors.mediumGray,
     borderBottomWidth: 1,
   },
   social: {

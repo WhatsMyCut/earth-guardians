@@ -7,6 +7,7 @@ import {
   Modal,
   Alert,
   TouchableHighlight,
+  TouchableWithoutFeedback,
   KeyboardAvoidingView,
   ScrollView,
 } from 'react-native';
@@ -48,105 +49,98 @@ export default class UpdateUserComponent extends React.Component {
           Alert.alert('Modal has been closed.');
         }}
       >
-        <ScrollView
-          contentContainerStyle={[styles.container, styles.centerAll, {
-            flexDirection: 'column',
-            borderRadius: 15,
-            backgroundColor: Colors.darkGray,
-          }]}
-        >
+        <TouchableWithoutFeedback style={[styles.container, styles.centerAll]} onPress={() => {
+          this.props.onClose()
+        }}>
           <KeyboardAvoidingView
-            behavior="padding"
-            style={{
-              flex: 1,
-              justifyContent: 'center',
+            behavior="position"
+            style={[styles.container, styles.centerAll, {
               flexDirection: 'column',
-              alignItems: 'center',
-              borderRadius: 15,
-              backgroundColor: Colors.darkGray,
-            }}
+            }]}
           >
-            <View style={[styles.headerContainer]}>
-              <Text style={[styles.headerText]}>
-                Update Profile
-              </Text>
-            </View>
-            <View style={[styles.container]}>
-              <TextInput
-                style={[styles.textInput]}
-                onChangeText={phone => this.setState({ phone })}
-                placeholder={'Phone'}
-                placeholderTextColor={Colors.white}
-                keyboardType="default"
-                returnKeyType="done"
-                value={this.state.phone}
-              />
-              <TextInput
-                style={[styles.textInput]}
-                onChangeText={name => this.setState({ name })}
-                placeholder={'Name'}
-                placeholderTextColor={Colors.white}
-                keyboardType="default"
-                returnKeyType="done"
-                value={this.state.name}
-              />
-              <TextInput
-                style={[styles.textInput]}
-                onChangeText={email => this.setState({ email })}
-                placeholder={'Email'}
-                placeholderTextColor={Colors.white}
-                keyboardType="email-address"
-                returnKeyType="done"
-                value={this.state.email}
-              />
-              <Dropdown
-                label="Affiliation Type"
-                data={typesOfCrews}
-                containerStyle={{
-                  width: 200,
-                  marginBottom: 10,
-                }}
-                baseColor={Colors.white}
-                textColor={Colors.white}
-                itemColor={Colors.black}
-                selectedItemColor="rgba(0, 0, 0, .5)"
-                onChangeText={arg => {
-                  this.setState({ crew_type: arg });
-                }}
-              />
-              <TextInput
-                style={[styles.textInput]}
-                onChangeText={crew => this.setState({ crew })}
-                placeholder={'Affiliation'}
-                placeholderTextColor={Colors.white}
-                keyboardType="default"
-                returnKeyType="done"
-                value={this.state.crew}
-              />
-              <TextInput
-                style={[styles.textInput]}
-                onChangeText={zipcode => this.setState({ zipcode })}
-                placeholder={'Zipcode'}
-                placeholderTextColor={styles.placeholderTextColor}
-                keyboardType="numeric"
-                secureTextEntry={false}
-                returnKeyType="done"
-                value={this.state.zipCode}
-              />
-              <TouchableOpacity
-                style={[styles.buttonContainer]}
-                onPress={() => this.updateUser()}
-              >
-                <Text style={[styles.textGrey18B]}>
-                  SUBMIT
-                </Text>
-              </TouchableOpacity>
-              <TouchableHighlight onPress={() => this.props.onClose()}>
-                <Text style={[styles.textWhite]}>Go Back</Text>
-              </TouchableHighlight>
-            </View>
+            <TouchableWithoutFeedback style={[styles.container, styles.coverScreen]} onPress={() => {
+              return false
+            }}>
+              <View style={[styles.modalView, {width: '100%', maxHeight: 500}]}>
+                <ScrollView containerStyle={[styles.container]}>
+                  <View style={[styles.headerContainer]}>
+                    <Text style={[styles.headerText]}>
+                      Update Profile
+                    </Text>
+                  </View>
+                  <View style={[styles.container]}>
+                    <TextInput
+                      style={[styles.textInput]}
+                      onChangeText={phone => this.setState({ phone })}
+                      placeholder={'Phone'}
+                      placeholderTextColor={Colors.white}
+                      keyboardType="default"
+                      returnKeyType="done"
+                      value={this.state.phone}
+                    />
+                    <TextInput
+                      style={[styles.textInput]}
+                      onChangeText={name => this.setState({ name })}
+                      placeholder={'Name'}
+                      placeholderTextColor={Colors.white}
+                      keyboardType="default"
+                      returnKeyType="done"
+                      value={this.state.name}
+                    />
+                    <TextInput
+                      style={[styles.textInput]}
+                      onChangeText={email => this.setState({ email })}
+                      placeholder={'Email'}
+                      placeholderTextColor={Colors.white}
+                      keyboardType="email-address"
+                      returnKeyType="done"
+                      value={this.state.email}
+                    />
+                    <Dropdown
+                      label="Affiliation Type"
+                      data={typesOfCrews}
+                      style={[styles.textInput]}
+                      baseColor={Colors.white}
+                      textColor={Colors.white}
+                      itemColor={Colors.black}
+                      selectedItemColor="rgba(0, 0, 0, .5)"
+                      onChangeText={arg => {
+                        this.setState({ crew_type: arg });
+                      }}
+                    />
+                    <TextInput
+                      style={[styles.textInput]}
+                      onChangeText={crew => this.setState({ crew })}
+                      placeholder={'Affiliation'}
+                      placeholderTextColor={Colors.white}
+                      keyboardType="default"
+                      returnKeyType="done"
+                      value={this.state.crew}
+                    />
+                    <TextInput
+                      style={[styles.textInput]}
+                      onChangeText={zipcode => this.setState({ zipcode })}
+                      placeholder={'Zipcode'}
+                      placeholderTextColor={styles.placeholderTextColor}
+                      keyboardType="numeric"
+                      secureTextEntry={false}
+                      returnKeyType="done"
+                      value={this.state.zipcode}
+                    />
+                    <TouchableOpacity
+                      style={[styles.buttonContainer]}
+                      onPress={() => this.props.updateUser()}
+                    >
+                      <Text style={[styles.textGrey18B]}>
+                        SUBMIT
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                </ScrollView>
+              </View>
+            </TouchableWithoutFeedback>
           </KeyboardAvoidingView>
-        </ScrollView>
+        </TouchableWithoutFeedback>
       </Modal>
     );
   }

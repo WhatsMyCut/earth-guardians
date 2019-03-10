@@ -146,7 +146,7 @@ class ImpactStackScreen extends React.Component {
 
     return (
       <SafeAreaView style={[styles.greyCard]}>
-        <ScrollView contentContainerStyle={[{}]}>
+        <ScrollView contentContainerStyle={[]}>
           <View style={[styles.containerGrey, defaults.SCREEN_HEIGHT]}>
             <GraphComponent
               carbon_dioxide={this.state.carbon_dioxide}
