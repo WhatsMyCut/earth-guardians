@@ -12,11 +12,11 @@ export default class BadgeComponent extends React.Component {
   render() {
     return (
       <LinearGradient
-          {...LinearGradientProps.profileItem}
-          style={[styles.linearGradientBox]}>
-      <View style={[styles.componentContainer, styles.centerAll]}>
+        {...LinearGradientProps.profileItem}
+        style={[styles.linearGradientBoxPadded]}>
+        <View style={[styles.componentContainer, styles.centerAll]}>
           <View style={[styles.componentHeader]}>
-            <Text style={[styles.textWhite18B]}>MY BADGES</Text>
+            <Text style={[styles.headerText]}>MY BADGES</Text>
           </View>
           <View style={[styles.container, {flexDirection: 'row', marginBottom: 20}]}>
             {this.props.points === 0 &&
@@ -33,8 +33,8 @@ export default class BadgeComponent extends React.Component {
               source={require('../../../assets/badge-EG.png')} />
             }
           </View>
-      </View>
-        </LinearGradient>
+        </View>
+      </LinearGradient>
     );
   }
 }

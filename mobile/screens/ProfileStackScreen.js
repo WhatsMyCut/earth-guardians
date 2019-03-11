@@ -98,6 +98,7 @@ class ProfileStackScreen extends React.Component {
     };
     update_user({ variables }).then(res => {
       PubSub.publish('closeModal');
+      this.closeAll();
     });
   };
 

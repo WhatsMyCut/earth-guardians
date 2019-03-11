@@ -20,12 +20,12 @@ export default class ModalComponent extends React.Component {
     this.state = {
       component: null,
       showZipCodeModal: false,
-      showWasteModal: false,
-      showWaterModal: false,
-      showCarbonModal: false,
       showNotificationModal: false,
       showUpdateUserModal: false,
       showCommunityEventModal: false,
+      showWasteModal: false,
+      showWaterModal: false,
+      showCarbonModal: false,
     }
   }
   componentDidMount() {
@@ -100,8 +100,8 @@ export default class ModalComponent extends React.Component {
 
   closeCommunityEventModal() {
     console.log('closeCommunityEventModal: closing')
-    this.setState({showCommunityEventModal: false})
     PubSub.publish('closeBlur')
+    this.setState({showCommunityEventModal: false})
   }
 
   getComponent() {
@@ -175,7 +175,7 @@ export default class ModalComponent extends React.Component {
           }
           { this.state.showCommunityEventModal &&
             <CommunityEventModal
-              onClose={() => this.props.onClose()}
+              onClose={() => this.closeCommunityEventModal()}
               visible={this.state.showCommunityEventModal}
               submitEvent={() => this.props.submitEvent()}
             />

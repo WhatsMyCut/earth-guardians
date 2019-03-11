@@ -40,58 +40,63 @@ export default class CommunityEventModal extends React.Component {
         }}>
           <KeyboardAvoidingView
             behavior="position"
-            contentContainerStyle={[styles.centerAll, {
-              marginVertical: (defaults.primaryHeight / 2) - 150,
-            }]}
+            contentContainerStyle={[styles.centerAll, styles.coverAll]}
           >
             <TouchableWithoutFeedback style={[styles.container, styles.coverScreen]} onPress={() => {
               return false
             }}>
-              <View style={[styles.modalView, styles.centerAll, ]}>
-                <Text style={[styles.componentHeader]}>
+              <View style={[styles.container, styles.modalView, styles.centerAll, {
+                height: 350,
+                marginVertical: (defaults.primaryHeight / 2),
+              }]}>
+                <View style={[styles.headerContainer]}>
+                  <Text style={[styles.headerText]}>
                   HOST A COMMUNITY EVENT
-                </Text>
-
-                <Dropdown
-                  label="Event Type"
-                  data={typesOfEvents}
-                  style={[styles.textInput]}
-                  containerStyle={{
-                    height: 30,
-                    width: 200,
-                    marginBottom: 40,
-                  }}
-                  baseColor={'#fff'}
-                  textColor={'#000000'}
-                  itemColor={'#000000'}
-                  onChangeText={arg => {
-                    this.setState({ typeOfEvent: arg });
-                    this.numbOfPeople.focus();
-                  }}
-                />
-                <TextInput
-                  ref={input => {
-                    this.numbOfPeople = input;
-                  }}
-                  style={[styles.textInput]}
-                  onChangeText={numberOfPeople => this.setState({ numberOfPeople })}
-                  value={this.state.numberOfPeople}
-                  placeholder="Number of People"
-                  placeholderTextColor="#fff"
-                  keyboardType="numeric"
-                  returnKeyType="done"
-                />
-                <TouchableOpacity
-                  style={[styles.buttonContainer]}
-                  disabled={!this.state.numberOfPeople || !this.state.typeOfEvent}
-                  onPress={() => {
-                    this.props.submitEvent(this.state);
-                  }}
-                >
-                  <Text style={[styles.textGrey18B]}>
-                    SUBMIT
                   </Text>
-                </TouchableOpacity>
+                </View>
+                <View style={[styles.container]}>
+
+                  <Dropdown
+                    label="Event Type"
+                    data={typesOfEvents}
+                    style={[styles.textInput]}
+                    containerStyle={{
+                      height: 30,
+                      width: 200,
+                      marginBottom: 40,
+                    }}
+                    baseColor={'#fff'}
+                    textColor={'#000000'}
+                    itemColor={'#000000'}
+                    onChangeText={arg => {
+                      this.setState({ typeOfEvent: arg });
+                      this.numbOfPeople.focus();
+                    }}
+                  />
+                  <TextInput
+                    ref={input => {
+                      this.numbOfPeople = input;
+                    }}
+                    style={[styles.textInput]}
+                    onChangeText={numberOfPeople => this.setState({ numberOfPeople })}
+                    value={this.state.numberOfPeople}
+                    placeholder="Number of People"
+                    placeholderTextColor="#fff"
+                    keyboardType="numeric"
+                    returnKeyType="done"
+                  />
+                  <TouchableOpacity
+                    style={[styles.buttonContainer]}
+                    disabled={!this.state.numberOfPeople || !this.state.typeOfEvent}
+                    onPress={() => {
+                      this.props.submitEvent(this.state);
+                    }}
+                  >
+                    <Text style={[styles.textGrey18B]}>
+                      SUBMIT
+                    </Text>
+                  </TouchableOpacity>
+                </View>
               </View>
             </TouchableWithoutFeedback>
           </KeyboardAvoidingView>

@@ -80,7 +80,7 @@ class ImpactStackScreen extends React.Component {
     this.setState({openCommunityEventModal: true})
   };
 
-  closeModal = (response) => {
+  closeModal = () => {
     PubSub.publish('closeCommunityEventModal')
     this.setState({openCommunityEventModal: false})
   };
@@ -100,15 +100,9 @@ class ImpactStackScreen extends React.Component {
         console.log(e);
       }
     };
-
-    this.interval = setInterval(()=>{
-      this.props.all_metrics.refetch();
-    }, 2000)
-
   }
 
-  componentWillUnmount = ()=>{
-    clearInterval(this.interval);
+  componentWillUnmount = () => {
   }
 
   componentWillReceiveProps= () => {
@@ -195,12 +189,12 @@ class ImpactStackScreen extends React.Component {
               water={this.state.water}
               waste={this.state.waste}
             />
+            <PointsComponent points={this.state.points} aggregate={this.state.aggregateObj}/>
             <ReachComponent
               communityEvents={this.state.communityEvents}
               openModal={this.openCommunityEventModal}
               closeModal={this.closeModal}
             />
-            <PointsComponent points={this.state.points} aggregate={this.state.aggregateObj}/>
             <BadgeComponent points={this.state.points} showEGBadge={showEGBadge}/>
           </View>
           {this.state.openCommunityEventModal &&

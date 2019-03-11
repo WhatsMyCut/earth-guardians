@@ -16,9 +16,8 @@ export default class ReachComponent extends React.Component {
     const style = reach > 0 ? styles.textWhite18B : styles.textGrey18B;
 
     return (
-      <View style={[styles.centerAll, style]}>
-        <Text style={[styles.componentHeader, style]}>PEOPLE I'VE REACHED</Text>
-        <Text style={[styles.componentHeader, style, { fontSize: 24 }]}>{reach}</Text>
+      <View style={[styles.container, styles.centerAll, style]}>
+        <Text style={[styles.componentHeader, style, styles.largeWhiteTextBold]}>{reach}</Text>
       </View>
     );
   }
@@ -27,9 +26,14 @@ export default class ReachComponent extends React.Component {
     return (
       <LinearGradient
         {...LinearGradientProps.profileItem}
-        style={styles.linearGradientBox }>
+        style={styles.linearGradientBoxPadded }>
         <TouchableOpacity style={ styles.componentContainer } onPress={() => this.props.openModal()}>
-          <View style={ styles.componentHeader }>
+          <View style={ styles.componentContainer }>
+            <View style={styles.componentHeader}>
+              <Text style={[styles.headerText]}>
+                PEOPLE I'VE REACHED
+              </Text>
+            </View>
             {this._returnPeopleReached()}
           </View>
         </TouchableOpacity>

@@ -228,7 +228,7 @@ export const styles = ScaledSheet.create({
     color: Colors.white,
     fontSize: moderateScale(18),
     fontWeight: 'bold',
-    marginVertical: 10,
+    marginBottom: 10,
     textAlign: 'center',
   },
   textWhite: {
@@ -251,6 +251,11 @@ export const styles = ScaledSheet.create({
   textGrey18B: {
     color: Colors.darkGray,
     fontSize: moderateScale(18),
+    fontWeight: 'bold'
+  },
+  largeWhiteTextBold: {
+    color: Colors.white,
+    fontSize: moderateScale(28),
     fontWeight: 'bold'
   },
   smallTextShadow: {
@@ -327,10 +332,11 @@ export const styles = ScaledSheet.create({
   linearGradientBoxPadded: {
     flex: 1,
     borderRadius: defaults.borderRadius,
-    paddingTop:20,
-    paddingBottom:10,
+    padding:20,
+    width: SCREEN_WIDTH * 0.9,
     elevation: 1,
     marginVertical: 5,
+    marginHorizontal: 10,
     shadowColor: Colors.black,
     shadowRadius: 2,
     shadowOpacity: 0.5,
@@ -338,13 +344,6 @@ export const styles = ScaledSheet.create({
       width: 0,
       height: 2
     },
-  },
-  graphContainer: {
-    //backgroundColor: Colors.mediumGray,
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: SCREEN_WIDTH * 0.9,
-    padding: 20,
   },
   graphLabel: {
     color: Colors.white,
@@ -431,7 +430,6 @@ export const styles = ScaledSheet.create({
   },
   componentContainer: {
     flexDirection: 'column',
-    width: SCREEN_WIDTH * 0.9,
     justifyContent: 'center'
   },
   rankRow: {
@@ -445,12 +443,12 @@ export const styles = ScaledSheet.create({
   },
   detailRow: {
     flex: 1,
-    flexDirection: 'column',
+    flexDirection: 'row',
     width: '90%',
     alignSelf: 'center',
-    paddingBottom: 5,
   },
   detailCell: {
+    flex: 1,
     flexDirection: 'column',
     color: Colors.white,
     justifyContent: 'center',

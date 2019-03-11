@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import { LinearGradient } from 'expo';
 import { DonutGraph } from './DonutGraph';
 import LinearGradientProps from '../../../constants/LinearGradientProps';
-import { styles } from '../../../constants/Styles';
+import { styles, defaults } from '../../../constants/Styles';
 export default class GraphComponent extends React.Component {
   constructor(props) {
     super(props);
@@ -12,8 +12,8 @@ export default class GraphComponent extends React.Component {
     return (
       <LinearGradient
         {...LinearGradientProps.profileItem}
-        style={ styles.linearGradientBox } >
-        <View style={ styles.graphContainer } >
+        style={ styles.linearGradientBoxPadded } >
+        <View style={[styles.componentContainer ]} >
           <DonutGraph
             height={120}
             width={120}
