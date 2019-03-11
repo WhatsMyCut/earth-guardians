@@ -1,27 +1,25 @@
 import { Analytics, PageHit } from 'expo-analytics';
 export const analytics = new Analytics('UA-131896215-1');
-export const pageHit = (page_name) => {
+export const pageHit = (params, callback) => {
   return () => {
-    console.log('googleAnalytics.pageHit', page_name)
+    console.log('googleAnalytics.pageHit', params)
     try {
       analytics
-        .hit(new PageHit(page_name))
-        .then(() => console.log('GA success'))
+        .hit(new PageHit(params))
+        .then(() => (typeOf(callback) === 'function' ? callback() : callback))
         .catch(e => console.log(e.message));
     } catch (e) {
       console.log(e);
     }
   };
 }
-export const eventHit = (phone, item_id) => {
+export const eventHit = (params, callback) => {
   return () => {
     console.log('googleAnalytics.eventHit', phone, item_id)
     try {
       analytics
-        .event(new Event('MyAction', 'Press', phone, item_id))
-        .then(() => {
-          this.setState({in:false})
-        })
+        .event(new Event(params))
+        .then(() => (typeOf(callback) === 'function' ? callback() : callback))
         .catch(e => console.log(e.message));
     } catch (e) {
       console.log(e);
