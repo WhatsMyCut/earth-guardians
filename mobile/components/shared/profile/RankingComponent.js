@@ -73,7 +73,7 @@ export default class RankingComponent extends React.Component {
     return (
       <LinearGradient
         {...LinearGradientProps.profileItem}
-        style={ styles.linearGradientBox} >
+        style={ styles.linearGradientBoxPadded} >
         <TouchableOpacity
           onPress={() =>
             this.setState({

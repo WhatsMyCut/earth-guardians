@@ -61,7 +61,7 @@ export default class ActionDetails extends React.Component {
 
     return (
       <View style={[styles.container, { justifyContent: 'space-between', flexDirection: 'column'}]}>
-        <View style={[styles.contianer, { marginTop: 5, marginBottom: 3 }]}>
+        <View style={[styles.contianer, { marginTop: 5, marginBottom: 20 }]}>
           <Text style={[styles.actionCardHeader, styles.centerText]}>
             {this.props.canDelete ? 'METRICS EARNED' : 'METRICS'}
           </Text>
@@ -105,7 +105,7 @@ export default class ActionDetails extends React.Component {
           </View>
         </View>
 
-        <View style={[styles.container, { marginVertical: '5%'}]}>
+        <View style={[styles.container, { marginVertical: 10}]}>
           <View style={[styles.container]}>
             <Text style={[styles.actionCardSubHeader]}>
               COMMUNITY
@@ -114,7 +114,7 @@ export default class ActionDetails extends React.Component {
 
           {this.props.zipcode && (
             <View style={[styles.contianer]}>
-              <Text style={[styles.actionCardValue]}>
+              <Text style={[styles.actionCardValue, {paddingBottom:10}]}>
                 {this.props.zipcode}
               </Text>
             </View>

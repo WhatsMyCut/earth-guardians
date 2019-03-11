@@ -27,7 +27,10 @@ export default class ReachComponent extends React.Component {
       <LinearGradient
         {...LinearGradientProps.profileItem}
         style={styles.linearGradientBoxPadded }>
-        <TouchableOpacity style={ styles.componentContainer } onPress={() => this.props.openModal()}>
+        <TouchableOpacity
+          style={ styles.componentContainer }
+          onPress={() => this.props.openModal()}
+        >
           <View style={ styles.componentContainer }>
             <View style={styles.componentHeader}>
               <Text style={[styles.headerText]}>

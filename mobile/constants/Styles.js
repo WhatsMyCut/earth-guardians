@@ -386,6 +386,8 @@ export const styles = ScaledSheet.create({
     color: Colors.mediumGray,
   },
   actionCardSubHeader: {
+    flexShrink: 1,
+    alignSelf: 'center',
     fontSize: moderateScale(14),
     fontFamily: 'Proxima Nova Bold',
     color: Colors.mediumGray,
@@ -397,11 +399,11 @@ export const styles = ScaledSheet.create({
     textAlign: 'center',
   },
   actionCardValue: {
-    fontSize: moderateScale(16),
-    fontWeight: 'bold',
+    fontSize: moderateScale(20),
     fontFamily: 'Proxima Nova Bold',
     color: Colors.mediumGray,
     textAlign: 'center',
+    justifyContent: 'center'
   },
   actionCardTinyLabel: {
     fontFamily: 'Proxima Nova',

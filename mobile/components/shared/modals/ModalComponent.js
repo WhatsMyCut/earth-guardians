@@ -10,6 +10,8 @@ import { styles } from '../../../constants/Styles'
 import ZipCodeModal from '../modals/ZipCodeModal';
 import NotificationModal from '../modals/NotificationModal'
 import WaterModal from '../modals/NotH2OConsumptionModal'
+import WasteModal from '../modals/NotWasteReduceModal'
+import CarbonModal from '../modals/NotCO2EmissionModal'
 import UpdateUserModal from '../modals/UpdateUserModal';
 import CommunityEventModal from '../modals/CommunityEventModal';
 
@@ -22,16 +24,18 @@ export default class ModalComponent extends React.Component {
       showZipCodeModal: false,
       showNotificationModal: false,
       showUpdateUserModal: false,
-      showCommunityEventModal: false,
+      showCommunityEventModal: true,
       showWasteModal: false,
       showWaterModal: false,
       showCarbonModal: false,
     }
   }
   componentDidMount() {
+    this.setState({user: this.props.user})
     this.getComponent()
-    PubSub.subscribe('closeCommunityEventModal', () => this.closeCommunityEventModal())
-    PubSub.subscribe('openCommunityEventModal', () => this.openCommunityEventModal())
+    PubSub.subscribe('showZipCodeModal', data => this.openZipCodeModal(data));
+    PubSub.subscribe('closeCommunityEventModal', data => this.closeCommunityEventModal(data))
+    PubSub.subscribe('openCommunityEventModal', data => this.openCommunityEventModal(data))
   }
 
   componentWillUnmount() {
@@ -44,18 +48,26 @@ export default class ModalComponent extends React.Component {
       showNotificationModal: false,
       showCommunityEventModal: false,
     })
+    this.isMounted = false;
   }
 
   closeAll() {
-    this.setState({
-      showZipCodeModal: false,
-      showWasteModal: false,
-      showWaterModal: false,
-      showCarbonModal: false,
-      showUpdateUserModal: false,
-      showNotificationModal: false,
-      showCommunityEventModal: false,
-    })
+    if(this.isMounted){
+      this.setState({
+        showZipCodeModal: false,
+        showWasteModal: false,
+        showWaterModal: false,
+        showCarbonModal: false,
+        showUpdateUserModal: false,
+        showNotificationModal: false,
+        showCommunityEventModal: false,
+      })
+    }
+  }
+
+  openZipCodeModal = (data) => {
+    this.closeModal()
+    this.setState({ showZipCodeModal: true});
   }
 
   updateZipCode =(zipcode)=>{
@@ -73,15 +85,15 @@ export default class ModalComponent extends React.Component {
 
   onActionModalClose = () => {
     this._takeAction()
-    .then(() => this.setState({showWasteModal: false, showWaterModal : false, showCarbonModal: false, showZipcodeModal:false}))
+    .then(() => this.closeAll())
     .then(this.props.onClose());
   }
 
   _takeAction = () => {
-    const { take_action, item, get_user, canDelete } = this.props;
-    const { currScreen } = this.state;
+    const { take_action, item, canDelete } = this.props;
+    const { currScreen, user } = this.state;
       let variables = {
-        id: get_user.me.id,
+        id: user.me.id,
         action : item.action ? item.action.id : item.id
       }
       take_action({variables})
@@ -96,11 +108,13 @@ export default class ModalComponent extends React.Component {
   }
 
   openCommunityEventModal() {
+    PubSub.publish('showBlur')
+    this.setState({showCommunityEventModal: true})
   }
 
   closeCommunityEventModal() {
     console.log('closeCommunityEventModal: closing')
-    PubSub.publish('closeBlur')
+    PubSub.publish('closeModal')
     this.setState({showCommunityEventModal: false})
   }
 
@@ -121,11 +135,17 @@ export default class ModalComponent extends React.Component {
       case 'WaterModal':
         this.setState({ showWaterModal: true })
         break;
+      case 'WasteModal':
+        this.setState({ showWasteModal: true })
+        break;
+      case 'CarbonModal':
+        this.setState({ showWasteModal: true })
+        break;
       case 'CommunityEventModal':
         this.setState({ showCommunityEventModal: true })
         break;
       default:
-        this.setState({ showNotificationModal: true })
+        this.setState({ showCarbonModal: true })
         break;
     }
   }
