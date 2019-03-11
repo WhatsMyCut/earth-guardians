@@ -115,9 +115,9 @@ class ProfileStackScreen extends React.Component {
   };
 
   async updatePic() {
-    const { update_user } = this.props;
     _pickImage()
-    .then(res => {
+    .then(res =>
+      {
       console.log('_pickImage', res)
       update_user({variables:{photo: res.location}})
       this.setState(
