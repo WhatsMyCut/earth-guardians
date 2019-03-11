@@ -1,15 +1,14 @@
 import React from 'react';
-
 import {
   TouchableOpacity,
   SafeAreaView,
   View,
   Text,
-  StyleSheet,
   Share,
 } from 'react-native';
-
+import { Ionicons } from '@expo/vector-icons';
 import { Analytics, PageHit } from 'expo-analytics';
+import NavigationService from '../navigation/navigationService';
 import { styles } from '../constants/Styles';
 
 class SocialStackScreen extends React.Component {
@@ -64,6 +63,16 @@ class SocialStackScreen extends React.Component {
 
 
 SocialStackScreen.navigationOptions = {
+  headerLeft: (
+    <TouchableOpacity onPress={() => NavigationService.navigate('MyActions')}>
+      <Ionicons
+        name="ios-arrow-round-back"
+        size={42}
+        color="white"
+        style={{ paddingLeft: 15, opacity: 0.7 }}
+      />
+    </TouchableOpacity>
+  ),
   headerTitle: (
     <View style={ styles.headerContainer }>
       <Text style={ styles.headerText }>
