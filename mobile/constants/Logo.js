@@ -13,10 +13,12 @@ export default class Logo extends React.Component {
   }
 
   render() {
+    const { style } = this.props
+    console.log('stle', style)
     return (
-      <View style={[styles.splashLogoContainer]}>
-        <Image source={require('../assets/eye_w.png')}/>
-        { this.props.beta === 'true' &&
+      <View style={[styles.container]}>
+        <Image source={require('../assets/eye_w.png')} style={[this.props.style, { resizeMode: 'contain',}]}/>
+        {this.props.beta === 'true' &&
           <View style={[styles.container]}>
             <Text style={styles.headerText}>BETA</Text>
           </View>

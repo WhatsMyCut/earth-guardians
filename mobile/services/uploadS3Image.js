@@ -14,19 +14,32 @@ export const _pickImage = async () => {
     });
     _handleImagePicked(pickerResult);
   }
+  if (cameraRollPerm !== 'granted') {
+    const {
+      status: cameraRollPerm
+    } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+
+    let pickerResult = await ImagePicker.launchImageLibraryAsync({
+      allowsEditing: true,
+      aspect: [4, 3],
+    });
+    _handleImagePicked(pickerResult);
+  }
 };
 // this handles the image upload to S3
 export const _handleImagePicked = async (pickerResult) => {
-  console.log('_handleImagePicked');
+  if (!pickerResult) return
   const imageName = pickerResult.uri.replace(/^.*[\\\/]/, '');
   const fileType = mime.lookup(pickerResult.uri);
-  const access = { level: "public", contentType: fileType };
+  const access = { level: "public", contentType: 'image/jpeg' };
   const imageData = await fetch(pickerResult.uri)
   const blobData = await imageData.blob()
+  console.log('_handleImagePicked', fileType);
 
   try {
     await Storage.put(imageName, blobData, access)
     .then(res => res)
+    .catch(e => console.log(e))
   } catch (err) {
     console.log('error: ', err)
   }

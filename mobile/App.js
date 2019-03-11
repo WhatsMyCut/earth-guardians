@@ -18,11 +18,12 @@ export default class App extends React.Component {
     fontLoaded: false,
     showGameComplete: false,
     showNotificationModal: false,
-    showWasteModal: false,
-    showWaterModal: false,
-    showCarbonModal:false,
-    showZipCodeModal: false,
-    showUpdateProfileModal: false,
+    showModal: false,
+    notification: {
+      data: {
+        message: 'Here I am. Rock me like a hurricane.'
+      }
+    }
   };
 
   async componentDidMount() {
@@ -31,10 +32,11 @@ export default class App extends React.Component {
       'Proxima Nova Bold': require('./assets/fonts/ProximaNovaBold.ttf'),
     });
 
-    PubSub.subscribe('setUser', data => this.setUser(data))
     PubSub.subscribe('showZipCodeModal', data => this.openZipCodeModal(data));
-    PubSub.subscribe('showUpdateProfileModal', data => this.openUpdateUserModal(data));
-    PubSub.subscribe('closeModal', this.closeModal);
+    PubSub.subscribe('showNotificationModal', data => this.showNotificationModal(data));
+    PubSub.subscribe('closeBlur', this.closeBlur);
+    PubSub.subscribe('closeNotificationModal', this.closeNotificationModal);
+    PubSub.subscribe('openBlur', this.openBlur);
     this._notificationSubscription = Notifications.addListener(this._handleNotification);
     this.setState({ fontLoaded: true });
   }
@@ -42,7 +44,7 @@ export default class App extends React.Component {
   _handleNotification = (notification) => {
     console.log('incoming notification', notification)
     // this.setState({notification: notification});
-    this.setState({showNotificationModal: true, notification: notification});
+    this.setState({ showNotificationModal: true, notification: notification });
   };
 
   updateZipCode =(zipcode)=>{
@@ -58,43 +60,33 @@ export default class App extends React.Component {
     }
   }
 
-  modalHandler = (msg, data) => {
-    this.setState({showGameComplete:true})
+  openBlur = () => {
+    this.setState({showModal:true})
   }
 
+  closeBlur = () => {
+    console.log('App.closeModal')
+    if (this.state.showModal) PubSub.publish('closeModal')
+    this.setState({
+      showNotificationModal: false,
+      showModal: false,
+    })
+  };
+
   closeGameCompleteModal = () =>{
-    this.closeAll()
+    this.closeModal()
     this.setState({showGameComplete:false});
   }
 
   closeNotificationModal = () => {
-    this.closeAll()
-    this.setState({ showNotificationModal : false, notification: null})
+    this.closeBlur()
+    this.setState({ notification: null})
   }
 
   openZipCodeModal = (data) => {
-    this.closeAll()
+    this.closeModal()
     this.setState({ showZipCodeModal: true});
   }
-
-  openUpdateUserModal = (data) => {
-    this.closeAll()
-    this.setState({ showUpdateProfileModal: true });
-  }
-
-  setUser = (data) => {
-    console.log('setUser', data)
-    this.setState({ user: data.user })
-  }
-
-  closeAll = () => this.setState({
-    showNotificationModal: false,
-    showWasteModal: false,
-    showWaterModal: false,
-    showCarbonModal:false,
-    showZipCodeModal: false,
-    showUpdateProfileModal: false,
-  });
 
   render() {
     // console.disableYellowBox = true;
@@ -103,29 +95,7 @@ export default class App extends React.Component {
       return null;
     }
 
-    const showModal = this.state.showZipCodeModal ||
-    this.state.showCarbonModal ||
-    this.state.showWasteModal ||
-    this.state.showWaterModal ||
-    this.state.showUpdateProfileModal ||
-    this.state.showNotificationModal
-    let displayModal;
-    if (showModal) {
-      if (this.state.showZipCodeModal) {
-        displayModal = 'ZipCodeModal'
-      } else if (this.state.showCarbonModal) {
-        displayModal = 'NotC02EmissionModal'
-      } else if (this.state.showWasteModal) {
-        displayModal = 'NotWasteReduceModal'
-      } else if (this.state.showWaterModal) {
-        displayModal = 'NotH2OConsumptionModal'
-      } else if (this.state.showUpdateProfileModal) {
-        displayModal = 'UpdateUserModal'
-      } else if (this.state.showNotificationModal) {
-        displayModal = 'NotificationModal'
-      }
-    }
-
+    const showBlur = (this.state.showModal || this.state.showNotificationModal)
     return (
       <StoreProvider>
         <ApolloProvider client={client}>
@@ -134,17 +104,39 @@ export default class App extends React.Component {
               NavigationService.setTopLevelNavigator(navigatorRef);
             }}
           />
-
-          {showModal &&
-            <ModalComponent
-              display={displayModal}
-              onClose={() => this.closeAll()}
-              onActionModalClose={() => this.onActionModalClose() }
-              updateZipCode={() => this.updateZipCode() }
-              updateUser={() => this.updateUser()}
-              my_user={this.props.user}
-            />
+          {showBlur &&
+            <TouchableWithoutFeedback
+              onPress={() => {
+                this.closeBlur()
+              }}
+            >
+              <BlurView
+                tint="dark"
+                intensity={80}
+                style={[
+                  styles.container,
+                  styles.coverScreen,
+                  styles.coverAll,
+                  {
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    zIndex: 20
+                  }
+                ]}
+              />
+            </TouchableWithoutFeedback>
           }
+          {this.state.showNotificationModal && (
+            <ModalComponent
+              showModal={'NotificationModal'}
+              display={showBlur}
+              onClose={() => this.closeBlur}
+              notification={this.state.notification}
+              notificationClose={this.closeNotificationModal}
+            />
+          )}
+
           {/* {this.state.showGameComplete && (
             <ModalComponent>
               <GameCompleteModal onClose={this.closeGameCompleteModal}/>

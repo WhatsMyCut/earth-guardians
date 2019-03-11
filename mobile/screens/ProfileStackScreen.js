@@ -20,7 +20,7 @@ import graphql from '../components/hoc/graphql';
 import NavigationService from '../navigation/navigationService';
 import ProfileComponent from '../components/shared/profile/ProfileComponent';
 import PubSub from 'pubsub-js'
-import UpdateUserComponent from '../components/shared/profile/updateUserComponent';
+import ModalComponent from '../components/shared/modals/ModalComponent';
 import CommunityEventModal from '../components/shared/modals/CommunityEventModal';
 import { GET_USER } from '../components/graphql/queries/get_user';
 import { UPDATE_USER } from '../components/graphql/mutations/update_user_mutation';
@@ -30,10 +30,10 @@ import { _pickImage } from '../services/uploadS3Image';
 import { styles, defaults } from '../constants/Styles'
 
 @graphql(UPDATE_USER, {
-  name: 'update_user_mutation',
+  name: 'update_user',
 })
 @graphql(GET_USER, {
-  name: 'user',
+  name: 'my_user',
   fetchPolicy: 'network_only',
   options: {
     pollingInterval: 2000
@@ -56,9 +56,9 @@ class ProfileStackScreen extends React.Component {
   };
 
   componentWillMount() {
-    const { user } = this.props
-    if (!user.loading) {
-      PubSub.publish('setUser', { user: user })
+    const { my_user } = this.props
+    if (!my_user.loading) {
+      PubSub.publish('setUser', { my_user: my_user })
     }
   }
 
@@ -77,44 +77,53 @@ class ProfileStackScreen extends React.Component {
   }
 
   componentWillUnmount = ()=>{
-    this.props.user = null;
+    this.props.my_user = null;
   }
 
-  updateUser = () => {
+  updateMyUser = () => {
+    console.log('updating user', this.props)
     const { password, confirmPassword } = this.state;
-    const { user } = this.props;
+    const { my_user, update_user } = this.props;
     let variables = {
-      id: user.me.id,
-      phone: this.state.phone ? this.state.phone : user.me.username,
-      username: this.state.phone ? this.state.phone : user.me.username,
-      name: this.state.name ? this.state.name : user.me.name,
-      zipcode: this.state.zipcode ? this.state.zipcode : user.me.zipcode,
-      crew: this.state.crew ? this.state.crew : user.me.crew,
-      email: this.state.email ? this.state.email : user.me.email,
+      id: my_user.me.id,
+      phone: this.state.phone ? this.state.phone : my_user.me.username,
+      username: this.state.phone ? this.state.phone : my_user.me.username,
+      name: this.state.name ? this.state.name : my_user.me.name,
+      zipcode: this.state.zipcode ? this.state.zipcode : my_user.me.zipcode,
+      crew: this.state.crew ? this.state.crew : my_user.me.crew,
+      email: this.state.email ? this.state.email : my_user.me.email,
       crew_type: this.state.crew_type
         ? this.state.crew_type
-        : user.me.crew_type,
+        : my_user.me.crew_type,
     };
-    update_user_mutation({ variables }).then(res => {
-      this.props.onClose();
+    update_user({ variables }).then(res => {
+      PubSub.publish('closeModal');
     });
   };
 
-
-  updateProfileModal() {
-    PubSub.publish('showUpdateProfileModal');
+  openUpdateUserModal = (data) => {
+    PubSub.publish('openBlur')
+    this.setState({ showUpdateProfileModal: true });
   }
 
+  closeAll = () => {
+    PubSub.publish('closeBlur')
+    this.setState({
+      showUpdateProfileModal: false,
+    })
+  };
+
   async updatePic() {
+    const { update_user } = this.props;
     _pickImage()
     .then(res => {
       console.log('_pickImage', res)
-      update_user({variables:{photo: res.resource}})
+      update_user({variables:{photo: res.location}})
       this.setState(
-        { user:
+        { my_user:
           { me:
             {
-              photo: res.resource
+              photo: res.location
             }
           }
         }
@@ -124,8 +133,9 @@ class ProfileStackScreen extends React.Component {
   }
 
   render() {
-    const { user } = this.props
-    if (user.loading) {
+    const { my_user } = this.props
+    console.log('this.props', my_user);
+    if (my_user.loading) {
       return (
         <SafeAreaView style={[styles.container]}>
           <View style={[ styles.modalView ]}>
@@ -139,10 +149,19 @@ class ProfileStackScreen extends React.Component {
       <SafeAreaView style={[styles.greyCard]}>
         <View style={[styles.container, styles.centerText, { paddingHorizontal: 20, }]}>
           <ProfileComponent
-            my_user={user}
+            my_user={my_user}
             updatePic={this.updatePic}
-            updateProfileModal={this.updateProfileModal}
+            openModal={this.openUpdateUserModal}
           />
+          {this.state.showUpdateProfileModal &&
+            <ModalComponent
+              display={'UpdateUserModal'}
+              showModal={this.state.showUpdateProfileModal}
+              onClose={() => this.closeAll}
+              updateUser={() => this.updateMyUser()}
+              user={my_user}
+            />
+          }
         </View>
       </SafeAreaView>
     );
