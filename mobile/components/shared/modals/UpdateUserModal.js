@@ -16,7 +16,7 @@ import { Dropdown } from 'react-native-material-dropdown';
 import { styles } from '../../../constants/Styles';
 import Colors from '../../../constants/Colors';
 
-export default class UpdateUserComponent extends React.Component {
+export default class UpdateUserModal extends React.Component {
   state = {
     phone: null,
     zipcode: null,
@@ -129,7 +129,7 @@ export default class UpdateUserComponent extends React.Component {
                     />
                     <TouchableOpacity
                       style={[styles.buttonContainer]}
-                      onPress={() => this.props.updateUser()}
+                      onPress={() => this.props.saveUser()}
                     >
                       <Text style={[styles.textGrey18B]}>
                         SUBMIT
