@@ -43,7 +43,7 @@ import BadgeComponent from '../components/shared/profile/BadgeComponent';
 
 class ImpactStackScreen extends React.Component {
   state = {
-    openCommunityEventModal: false,
+    openModal: false,
     points: 0,
     waste: 0,
     water: 0,
@@ -72,17 +72,12 @@ class ImpactStackScreen extends React.Component {
       });
     }
   }
-
-  openCommunityEventModal = () => {
-    console.log('openCommunityEventModal')
-    PubSub.publish('openBlur')
-    PubSub.publish('openCommunityEventModal')
-    this.setState({openCommunityEventModal: true})
-  };
+  openModal() {
+    PubSub.publish('openCommunityEventModal', true);
+  }
 
   closeModal = () => {
-    PubSub.publish('closeCommunityEventModal')
-    this.setState({openCommunityEventModal: false})
+    PubSub.publish('closeModal')
   };
 
   componentWillMount() {
@@ -192,15 +187,15 @@ class ImpactStackScreen extends React.Component {
             <PointsComponent points={this.state.points} aggregate={this.state.aggregateObj}/>
             <ReachComponent
               communityEvents={this.state.communityEvents}
-              openModal={this.openCommunityEventModal}
-              closeModal={this.closeModal}
+              openModal={() => this.openModal()}
+              closeModal={() => this.closeModal()}
             />
             <BadgeComponent points={this.state.points} showEGBadge={showEGBadge}/>
           </View>
-          {this.state.openCommunityEventModal &&
+          {this.state.openModal &&
             <ModalComponent
               display={'CommunityEventModal'}
-              showModal={this.state.openCommunityEventModal}
+              showModal={this.state.openModal}
               onClose={() => this.closeModal()}
               submitEvent={() => this._submitCommunityEvent()}
             />

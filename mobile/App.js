@@ -32,7 +32,6 @@ export default class App extends React.Component {
       'Proxima Nova Bold': require('./assets/fonts/ProximaNovaBold.ttf'),
     });
 
-    PubSub.subscribe('showZipCodeModal', data => this.openZipCodeModal(data));
     PubSub.subscribe('showNotificationModal', data => this.showNotificationModal(data));
     PubSub.subscribe('closeBlur', this.closeBlur);
     PubSub.subscribe('closeNotificationModal', this.closeNotificationModal);
@@ -65,7 +64,6 @@ export default class App extends React.Component {
   }
 
   closeBlur = () => {
-    console.log('App.closeModal')
     this.setState({
       showNotificationModal: false,
       showModal: false,
@@ -82,19 +80,14 @@ export default class App extends React.Component {
     this.setState({ notification: null})
   }
 
-  openZipCodeModal = (data) => {
-    this.closeModal()
-    this.setState({ showZipCodeModal: true});
-  }
-
   render() {
     // console.disableYellowBox = true;
-    const { fontLoaded, showZipCodeModal } = this.state;
+    const { fontLoaded, showModal, showNotificationModal } = this.state;
     if (!fontLoaded) {
       return null;
     }
 
-    const showBlur = (this.state.showModal || this.state.showNotificationModal)
+    const showBlur = (showModal || showNotificationModal)
     return (
       <StoreProvider>
         <ApolloProvider client={client}>
@@ -128,8 +121,8 @@ export default class App extends React.Component {
           }
           {this.state.showNotificationModal && (
             <ModalComponent
-              showModal={'NotificationModal'}
-              display={showBlur}
+              display={'NotificationModal'}
+              visible={showBlur}
               onClose={() => this.closeBlur}
               notification={this.state.notification}
               notificationClose={this.closeNotificationModal}
