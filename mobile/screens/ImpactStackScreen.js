@@ -143,7 +143,8 @@ class ImpactStackScreen extends React.Component {
         );
       }
     }
-
+    // Petition ID for EG Badge : cjr111ekt1qk0088479se0aue
+    const showEGBadge = this.props.all_metrics.me.recent_actions.filter(id => id === 'cjr111ekt1qk0088479se0aue')
     return (
       <SafeAreaView style={[styles.greyCard]}>
         <ScrollView contentContainerStyle={[]}>
@@ -163,7 +164,7 @@ class ImpactStackScreen extends React.Component {
               communityEvents={this.state.communityEvents}
             />
             <PointsComponent points={this.state.points} aggregate={this.state.aggregateObj}/>
-            <BadgeComponent points={this.state.points}/>
+            <BadgeComponent points={this.state.points} showEGBadge={showEGBadge}/>
           </View>
 
           {this.state.openModal ? (

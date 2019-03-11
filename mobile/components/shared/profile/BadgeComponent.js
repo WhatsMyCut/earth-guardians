@@ -8,11 +8,8 @@ import { LinearGradient } from 'expo';
 import LinearGradientProps from '../../../constants/LinearGradientProps';
 import { styles } from '../../../constants/Styles'
 
-
 export default class BadgeComponent extends React.Component {
   render() {
-    let len = this.props.points;
-    console.log("BadgePoints", this.props.points)
     return (
       <LinearGradient
           {...LinearGradientProps.profileItem}
@@ -22,7 +19,7 @@ export default class BadgeComponent extends React.Component {
             <Text style={[styles.textWhite18B]}>MY BADGES</Text>
           </View>
           <View style={[styles.container, {flexDirection: 'row', marginBottom: 20}]}>
-            {this.props.points == 0 &&
+            {this.props.points === 0 &&
               <Text style={[styles.textWhite]}>Take action and earn your first badge!</Text>
             }
             {this.props.points > 0 &&
@@ -30,7 +27,7 @@ export default class BadgeComponent extends React.Component {
               style={[styles.badgeImage]}
               source={require('../../../assets/badge-first.png')} />
             }
-            {this.props.points > 1000 &&
+            {this.props.showEGBadge &&
               <Image
               style={[styles.badgeImage]}
               source={require('../../../assets/badge-EG.png')} />
