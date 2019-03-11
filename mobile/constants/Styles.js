@@ -344,7 +344,7 @@ export const styles = ScaledSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     width: SCREEN_WIDTH * 0.9,
-    height: 150,
+    padding: 20,
   },
   graphLabel: {
     color: Colors.white,

@@ -28,7 +28,20 @@ export default class UpdateUserModal extends React.Component {
 
   constructor(props) {
     super(props);
-    console.log('UpdateUserComponent', this.props)
+    console.log('UpdateUserModal', this.props.my_user.me)
+  }
+
+  componentDidMount() {
+    const { my_user } = this.props
+    if (!my_user) return
+    this.setState({
+      phone: my_user.me.phone || my_user.me.username,
+      zipcode: my_user.me.zipcode,
+      crew: my_user.me.crew,
+      name: my_user.me.name,
+      email: my_user.me.email,
+      crew_type: my_user.me.crew_type
+    })
   }
 
   render() {
@@ -50,6 +63,7 @@ export default class UpdateUserModal extends React.Component {
         }}
       >
         <TouchableWithoutFeedback style={[styles.container, styles.centerAll]} onPress={() => {
+          console.log('here99')
           this.props.onClose()
         }}>
           <KeyboardAvoidingView
@@ -71,21 +85,31 @@ export default class UpdateUserModal extends React.Component {
                   <View style={[styles.container]}>
                     <TextInput
                       style={[styles.textInput]}
-                      onChangeText={phone => this.setState({ phone })}
-                      placeholder={'Phone'}
-                      placeholderTextColor={Colors.white}
-                      keyboardType="default"
-                      returnKeyType="done"
-                      value={this.state.phone}
-                    />
-                    <TextInput
-                      style={[styles.textInput]}
                       onChangeText={name => this.setState({ name })}
                       placeholder={'Name'}
                       placeholderTextColor={Colors.white}
                       keyboardType="default"
                       returnKeyType="done"
                       value={this.state.name}
+                    />
+                    <TextInput
+                      style={[styles.textInput]}
+                      onChangeText={zipcode => this.setState({ zipcode })}
+                      placeholder={'Zipcode'}
+                      placeholderTextColor={Colors.white}
+                      keyboardType="numeric"
+                      secureTextEntry={false}
+                      returnKeyType="done"
+                      value={this.state.zipcode}
+                    />
+                    <TextInput
+                      style={[styles.textInput]}
+                      onChangeText={phone => this.setState({ phone })}
+                      placeholder={'Phone'}
+                      placeholderTextColor={Colors.white}
+                      keyboardType="default"
+                      returnKeyType="done"
+                      value={this.state.phone}
                     />
                     <TextInput
                       style={[styles.textInput]}
@@ -102,7 +126,7 @@ export default class UpdateUserModal extends React.Component {
                       style={[styles.textInput]}
                       baseColor={Colors.white}
                       textColor={Colors.white}
-                      itemColor={Colors.black}
+                      itemColor={Colors.errorText}
                       selectedItemColor="rgba(0, 0, 0, .5)"
                       onChangeText={arg => {
                         this.setState({ crew_type: arg });
@@ -117,19 +141,9 @@ export default class UpdateUserModal extends React.Component {
                       returnKeyType="done"
                       value={this.state.crew}
                     />
-                    <TextInput
-                      style={[styles.textInput]}
-                      onChangeText={zipcode => this.setState({ zipcode })}
-                      placeholder={'Zipcode'}
-                      placeholderTextColor={styles.placeholderTextColor}
-                      keyboardType="numeric"
-                      secureTextEntry={false}
-                      returnKeyType="done"
-                      value={this.state.zipcode}
-                    />
                     <TouchableOpacity
                       style={[styles.buttonContainer]}
-                      onPress={() => this.props.saveUser()}
+                      onPress={() => this.props.saveUser(this.state)}
                     >
                       <Text style={[styles.textGrey18B]}>
                         SUBMIT

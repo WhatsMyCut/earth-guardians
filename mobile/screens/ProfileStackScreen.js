@@ -156,7 +156,7 @@ class ProfileStackScreen extends React.Component {
             <ModalComponent
               display={'UpdateUserModal'}
               showModal={this.state.showUpdateProfileModal}
-              onClose={() => this.closeAll}
+              onClose={() => this.closeAll()}
               updateUser={() => this.updateMyUser()}
               user={my_user}
             />

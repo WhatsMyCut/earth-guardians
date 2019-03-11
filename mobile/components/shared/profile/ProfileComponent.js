@@ -49,7 +49,7 @@ export default class ProfileComponent extends React.Component {
           style={[styles.container, styles.linearGradientBox, styles.centerAll, {width: '100%', padding: 20}]}>
             <View style={[styles.container, {position: 'relative', width: '100%'}]}>
               <Image source={profilepic} style={[styles.profileImage, {alignSelf: 'center'}]} />
-              <View style={[styles.container, {position: 'absolute', left: 105, right: 105, bottom: 0, paddingTop: 10}]}>
+              <View style={[styles.container, {position: 'absolute', left: 105, right: 105, bottom: 20}]}>
                 <Text style={[styles.container,styles.smallWhiteText, {position: 'absolute', right: 0, top: 5,}]}>Click to Update</Text>
                 <MaterialCommunityIcons
                   name="camera-front-variant"
