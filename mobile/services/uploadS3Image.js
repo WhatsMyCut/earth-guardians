@@ -16,17 +16,20 @@ export const _pickImage = async () => {
   }
 };
 // this handles the image upload to S3
-export const _handleImagePicked = async (pickerResult) => {
-  console.log('_handleImagePicked');
+export const _handleImagePicked =
+ async (pickerResult) => {
+  if (!pickerResult) return
   const imageName = pickerResult.uri.replace(/^.*[\\\/]/, '');
   const fileType = mime.lookup(pickerResult.uri);
-  const access = { level: "public", contentType: fileType };
+  const access = { level: "public", contentType: 'image/jpeg' };
   const imageData = await fetch(pickerResult.uri)
   const blobData = await imageData.blob()
+  console.log('_handleImagePicked', fileType);
 
   try {
     await Storage.put(imageName, blobData, access)
     .then(res => res)
+    .catch(e => console.log(e))
   } catch (err) {
     console.log('error: ', err)
   }
