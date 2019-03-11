@@ -4,36 +4,45 @@ import {
   View,
   TouchableWithoutFeedback
 } from 'react-native';
+import PubSub from 'pubsub-js'
 import { BlurView } from 'expo';
 import { styles } from '../../../constants/Styles'
 import ZipCodeModal from '../modals/ZipCodeModal';
-import UpdateUserModal from '../profile/updateUserComponent';
-import UpdateUserComponent from '../profile/updateUserComponent';
+import NotificationModal from '../modals/NotificationModal'
+import WaterModal from '../modals/NotH2OConsumptionModal'
+import UpdateUserModal from '../modals/UpdateUserModal';
 
 export default class ModalComponent extends React.Component {
   constructor(props) {
     super(props)
+    this.isMounted = false,
     this.state = {
       component: null,
       showZipCodeModal: false,
       showWasteModal: false,
       showWaterModal: false,
       showCarbonModal: false,
+      showNotificationModal: false,
+      showUpdateUserModal: false,
     }
   }
   componentDidMount() {
     this.getComponent()
+    PubSub.subscribe('closeModal', this.closeAll)
+    this.isMounted = true
   }
 
   closeAll() {
-    this.setState({
-      showZipCodeModal: false,
-      showWasteModal: false,
-      showWaterModal: false,
-      showCarbonModal: false,
-      showUpateUserModal: false,
-    })
-    this.props.onClose()
+    if (this.isMounted){
+      this.setState({
+        showZipCodeModal: false,
+        showWasteModal: false,
+        showWaterModal: false,
+        showCarbonModal: false,
+        showUpdateUserModal: false,
+        showNotificationModal: false,
+      })
+    }
   }
 
   updateZipCode =(zipcode)=>{
@@ -49,17 +58,50 @@ export default class ModalComponent extends React.Component {
     }
   }
 
+  onActionModalClose = () => {
+    this._takeAction()
+    .then(() => this.setState({showWasteModal: false, showWaterModal : false, showCarbonModal: false, showZipcodeModal:false}))
+    .then(this.props.onClose());
+  }
+
+  _takeAction = () => {
+    const { take_action, item, get_user, canDelete } = this.props;
+    const { currScreen } = this.state;
+      let variables = {
+        id: get_user.me.id,
+        action : item.action ? item.action.id : item.id
+      }
+      take_action({variables})
+      .then(response => {
+        if(item.related_actions){
+          if(item.related_actions.length > 0){
+            NavigationService.navigate('Game',{ previousScreen: currScreen, games:item.related_actions, game_title:item.game_title ? item.game_title : null});
+          }
+        }
+        this.flipCard();
+      })
+  }
+
+
   getComponent() {
-    console.log('getComponent', this.props)
+    const notification = this.props.notification || { data: { message: 'Here 2'}}
+    console.log('getComponent', this.props.display)
     switch (this.props.display) {
       case 'ZipCodeModal':
         this.setState({ showZipCodeModal: true })
         break;
       case 'UpdateUserModal':
-        this.setState({ showUpateUserModal: true })
+        this.setState({ showUpdateUserModal: true })
+        break;
+      case 'NotificationModal':
+        const notification = this.props.notification || { data: { message: 'Here 2'}}
+        this.setState({ showNotificationModal: true, notification: notification })
+        break;
+      case 'showWaterModal':
+        this.setState({ showWaterModal: true })
         break;
       default:
-        this.setState({ showZipCodeModal: true })
+        this.setState({ showNotificationModal: true })
         break;
     }
   }
@@ -71,9 +113,7 @@ export default class ModalComponent extends React.Component {
           this.props.onClose()
         }}
       >
-        <BlurView
-          tint="dark"
-          intensity={80}
+        <View
           style={[
             styles.container,
             styles.coverScreen,
@@ -94,19 +134,22 @@ export default class ModalComponent extends React.Component {
               updateZipCode={this.props.updateZipCode}
             />
           }
-          { this.state.showUpateUserModal &&
-            <UpdateUserComponent my_user={this.props.my_user} updateUser={() => this.updateUser() } onClose={() => this.props.onClose()} visible={this.state.showUpateUserModal}/>
+          { (this.state.showNotificationModal && this.props.notification) &&
+            <NotificationModal notification={this.props.notification} onClose={() => this.props.notificationClose()} visible={this.state.showNotificationModal}/>
+          }
+          { this.state.showUpdateUserModal &&
+            <UpdateUserModal my_user={this.props.user} saveUser={() => this.props.updateUser() } onClose={() => this.props.onClose()} visible={this.state.showUpdateUserModal}/>
           }
           { this.state.showWasteModal &&
             <WasteModal waste={this.state.waste} onClose={() => this.onActionModalClose()} visible={this.state.showWasteModal}/>
           }
           { this.state.showWaterModal &&
-            <WaterModal water={this.state.water} onClose={() => this.onActionModalClose()} visible={this.state.showWaterModal}/>
+            <WaterModal water={this.props.water} onClose={() => this.onActionModalClose()} visible={this.state.showWaterModal}/>
           }
           { this.state.showCarbonModal &&
             <CarbonModal carbon_dioxide={this.state.carbon_dioxide} onClose={() => this.onActionModalClose()} visible={this.state.showCarbonModal}/>
           }
-        </BlurView>
+        </View>
       </TouchableWithoutFeedback>
     )
   }

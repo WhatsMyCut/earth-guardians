@@ -15,7 +15,8 @@ import { GET_USER } from '../../graphql/queries/get_user';
 import { styles, defaults } from '../../../constants/Styles'
 
 export default class ProfileComponent extends React.Component {
-  componentWillUnmount() {
+  constructor(props) {
+    super(props)
   }
   greyOrWhite = (el) => {
     return (el !== null) ? styles.textWhite18B : styles.profilePlaceholerText;
@@ -83,9 +84,7 @@ export default class ProfileComponent extends React.Component {
         <View style={[styles.container]}>
           <TouchableOpacity
             style={[styles.buttonContainer]}
-            onPress={() => {
-              this.props.updateProfileModal();
-            }}
+            onPress={() => this.props.openModal()}
           >
             <Text style={[styles.textGrey18B]}>Update Profile</Text>
           </TouchableOpacity>
