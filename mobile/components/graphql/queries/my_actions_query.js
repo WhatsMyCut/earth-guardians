@@ -10,6 +10,9 @@ export const MY_ACTIONS_QUERY = gql`
       primary_image
       action_taken_description
       carbon_dioxide
+      carbon_community
+      water_community
+      waste_community
       water
       waste
       schedule

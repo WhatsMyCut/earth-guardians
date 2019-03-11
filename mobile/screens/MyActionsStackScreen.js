@@ -45,6 +45,7 @@ class MyActionsStackScreen extends React.Component {
     }
 
     const actions = available.map(event =>{
+      console.log('event', event);
       return { id: event.id, action:event.action, createdAt:event.createdAt}
     });
 

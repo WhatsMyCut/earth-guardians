@@ -14,10 +14,20 @@ export const _pickImage = async () => {
     });
     _handleImagePicked(pickerResult);
   }
+  if (cameraRollPerm !== 'granted') {
+    const {
+      status: cameraRollPerm
+    } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+
+    let pickerResult = await ImagePicker.launchImageLibraryAsync({
+      allowsEditing: true,
+      aspect: [4, 3],
+    });
+    _handleImagePicked(pickerResult);
+  }
 };
 // this handles the image upload to S3
-export const _handleImagePicked =
- async (pickerResult) => {
+export const _handleImagePicked = async (pickerResult) => {
   if (!pickerResult) return
   const imageName = pickerResult.uri.replace(/^.*[\\\/]/, '');
   const fileType = mime.lookup(pickerResult.uri);
