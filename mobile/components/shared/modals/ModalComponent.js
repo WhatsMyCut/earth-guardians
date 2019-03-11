@@ -7,7 +7,6 @@ import {
 import { BlurView } from 'expo';
 import { styles } from '../../../constants/Styles'
 import ZipCodeModal from '../modals/ZipCodeModal';
-import UpdateUserModal from '../profile/updateUserComponent';
 import UpdateUserComponent from '../profile/updateUserComponent';
 
 export default class ModalComponent extends React.Component {

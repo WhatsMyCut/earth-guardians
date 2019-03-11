@@ -20,7 +20,7 @@ import graphql from '../components/hoc/graphql';
 import NavigationService from '../navigation/navigationService';
 import ProfileComponent from '../components/shared/profile/ProfileComponent';
 import PubSub from 'pubsub-js'
-import UpdateUserComponent from '../components/shared/profile/UpdateUserComponent';
+import UpdateUserComponent from '../components/shared/profile/updateUserComponent';
 import CommunityEventModal from '../components/shared/modals/CommunityEventModal';
 import { GET_USER } from '../components/graphql/queries/get_user';
 import { UPDATE_USER } from '../components/graphql/mutations/update_user_mutation';
