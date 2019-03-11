@@ -19,17 +19,31 @@ import GraphComponent from '../components/shared/profile/GraphComponent';
 import ImpactComponent from '../components/shared/profile/ImpactComponent';
 import ReachComponent from '../components/shared/profile/ReachComponent';
 import PointsComponent from '../components/shared/profile/PointsComponent';
-import CommunityEventModal from '../components/shared/modals/CommunityEventModal';
+import ModalComponent from '../components/shared/modals/ModalComponent';
 import { ALL_MY_METRICS } from '../components/graphql/queries/all_my_metrics_query';
+import { GET_USER } from '../components/graphql/queries/get_user';
+import { CREATE_COMMUNITY_EVENT } from '../components/graphql/mutations/create_community_mutation';
 import { styles, defaults } from '../constants/Styles'
 import BadgeComponent from '../components/shared/profile/BadgeComponent';
 
 @graphql(ALL_MY_METRICS, {
   name: 'all_metrics',
+  fetchPolicy: 'network_only',
+  options: {
+    pollingInterval: 2000,
+  }
 })
+@graphql(CREATE_COMMUNITY_EVENT, {
+  name: 'community_mutation',
+})
+
+@graphql(GET_USER, {
+  name: 'my_user',
+})
+
 class ImpactStackScreen extends React.Component {
   state = {
-    openModal: false,
+    openCommunityEventModal: false,
     points: 0,
     waste: 0,
     water: 0,
@@ -43,10 +57,32 @@ class ImpactStackScreen extends React.Component {
     header: null,
   };
 
-  toggleModal = () => {
-    this.setState({
-      openModal: !this.state.openModal,
-    });
+  _submitCommunityEvent() {
+    const { community_mutation } = this.props;
+    const { me } = this.props.my_user;
+    if (me.id) {
+      let variables = {
+        id: me.id,
+        type: this.state.typeOfEvent,
+        number_of_people: parseInt(this.state.numberOfPeople),
+      };
+
+      community_mutation({ variables }).then(response => {
+        this.closeModal(response);
+      });
+    }
+  }
+
+  openCommunityEventModal = () => {
+    console.log('openCommunityEventModal')
+    PubSub.publish('openBlur')
+    PubSub.publish('openCommunityEventModal')
+    this.setState({openCommunityEventModal: true})
+  };
+
+  closeModal = (response) => {
+    PubSub.publish('closeCommunityEventModal')
+    this.setState({openCommunityEventModal: false})
   };
 
   componentWillMount() {
@@ -160,29 +196,21 @@ class ImpactStackScreen extends React.Component {
               waste={this.state.waste}
             />
             <ReachComponent
-              toggleModal={this.toggleModal}
               communityEvents={this.state.communityEvents}
+              openModal={this.openCommunityEventModal}
+              closeModal={this.closeModal}
             />
             <PointsComponent points={this.state.points} aggregate={this.state.aggregateObj}/>
             <BadgeComponent points={this.state.points} showEGBadge={showEGBadge}/>
           </View>
-
-          {this.state.openModal ? (
-            <BlurView
-              tint="dark"
-              intensity={80}
-              style={[styles.container, styles.coverScreen, {
-                height: defaults.primaryHeight - 150,
-
-              }]}
-            >
-              <CommunityEventModal
-                onClose={() => {
-                  this.setState({ openModal: false, loading: true });
-                }}
-              />
-            </BlurView>
-          ) : null}
+          {this.state.openCommunityEventModal &&
+            <ModalComponent
+              display={'CommunityEventModal'}
+              showModal={this.state.openCommunityEventModal}
+              onClose={() => this.closeModal()}
+              submitEvent={() => this._submitCommunityEvent()}
+            />
+          }
         </ScrollView>
       </SafeAreaView>
     );

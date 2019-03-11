@@ -11,6 +11,7 @@ import ZipCodeModal from '../modals/ZipCodeModal';
 import NotificationModal from '../modals/NotificationModal'
 import WaterModal from '../modals/NotH2OConsumptionModal'
 import UpdateUserModal from '../modals/UpdateUserModal';
+import CommunityEventModal from '../modals/CommunityEventModal';
 
 export default class ModalComponent extends React.Component {
   constructor(props) {
@@ -24,25 +25,37 @@ export default class ModalComponent extends React.Component {
       showCarbonModal: false,
       showNotificationModal: false,
       showUpdateUserModal: false,
+      showCommunityEventModal: false,
     }
   }
   componentDidMount() {
     this.getComponent()
-    PubSub.subscribe('closeModal', this.closeAll)
-    this.isMounted = true
+    PubSub.subscribe('closeCommunityEventModal', () => this.closeCommunityEventModal())
+    PubSub.subscribe('openCommunityEventModal', () => this.openCommunityEventModal())
+  }
+
+  componentWillUnmount() {
+    this.setState({
+      showZipCodeModal: false,
+      showWasteModal: false,
+      showWaterModal: false,
+      showCarbonModal: false,
+      showUpdateUserModal: false,
+      showNotificationModal: false,
+      showCommunityEventModal: false,
+    })
   }
 
   closeAll() {
-    if (this.isMounted){
-      this.setState({
-        showZipCodeModal: false,
-        showWasteModal: false,
-        showWaterModal: false,
-        showCarbonModal: false,
-        showUpdateUserModal: false,
-        showNotificationModal: false,
-      })
-    }
+    this.setState({
+      showZipCodeModal: false,
+      showWasteModal: false,
+      showWaterModal: false,
+      showCarbonModal: false,
+      showUpdateUserModal: false,
+      showNotificationModal: false,
+      showCommunityEventModal: false,
+    })
   }
 
   updateZipCode =(zipcode)=>{
@@ -53,7 +66,7 @@ export default class ModalComponent extends React.Component {
         zipcode:zipcode
       }
       update_zipcode({variables}).then(()=>{
-          this.closeAll();
+        this.setState({showZipCodeModal: false});
       })
     }
   }
@@ -82,6 +95,14 @@ export default class ModalComponent extends React.Component {
       })
   }
 
+  openCommunityEventModal() {
+  }
+
+  closeCommunityEventModal() {
+    console.log('closeCommunityEventModal: closing')
+    this.setState({showCommunityEventModal: false})
+    PubSub.publish('closeBlur')
+  }
 
   getComponent() {
     const notification = this.props.notification || { data: { message: 'Here 2'}}
@@ -97,8 +118,11 @@ export default class ModalComponent extends React.Component {
         const notification = this.props.notification || { data: { message: 'Here 2'}}
         this.setState({ showNotificationModal: true, notification: notification })
         break;
-      case 'showWaterModal':
+      case 'WaterModal':
         this.setState({ showWaterModal: true })
+        break;
+      case 'CommunityEventModal':
+        this.setState({ showCommunityEventModal: true })
         break;
       default:
         this.setState({ showNotificationModal: true })
@@ -148,6 +172,13 @@ export default class ModalComponent extends React.Component {
           }
           { this.state.showCarbonModal &&
             <CarbonModal carbon_dioxide={this.state.carbon_dioxide} onClose={() => this.onActionModalClose()} visible={this.state.showCarbonModal}/>
+          }
+          { this.state.showCommunityEventModal &&
+            <CommunityEventModal
+              onClose={() => this.props.onClose()}
+              visible={this.state.showCommunityEventModal}
+              submitEvent={() => this.props.submitEvent()}
+            />
           }
         </View>
       </TouchableWithoutFeedback>

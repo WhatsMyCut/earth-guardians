@@ -21,7 +21,6 @@ export default class WaterModal extends React.Component {
         animationType="slide"
         transparent={true}
         visible={this.props.visible}
-        style={{}}
       >
         <TouchableWithoutFeedback style={[styles.container, styles.coverScreen]} onPress={() => {
           this.props.onClose()

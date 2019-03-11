@@ -63,7 +63,6 @@ export default class UpdateUserModal extends React.Component {
         }}
       >
         <TouchableWithoutFeedback style={[styles.container, styles.centerAll]} onPress={() => {
-          console.log('here99')
           this.props.onClose()
         }}>
           <KeyboardAvoidingView

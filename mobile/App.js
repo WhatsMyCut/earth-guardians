@@ -66,7 +66,6 @@ export default class App extends React.Component {
 
   closeBlur = () => {
     console.log('App.closeModal')
-    if (this.state.showModal) PubSub.publish('closeModal')
     this.setState({
       showNotificationModal: false,
       showModal: false,
