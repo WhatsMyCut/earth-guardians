@@ -1,16 +1,12 @@
 import React from 'react';
-import {
-  StyleSheet,
-  SafeAreaView,
+import {  SafeAreaView,
   View,
   Animated,
   Text,
   Linking,
-  ImageBackground,
   TouchableOpacity,
   PanResponder,
   Platform,
-  Dimensions,
   KeyboardAvoidingView
 } from 'react-native';
 import { LinearGradient, Asset, AppLoading, BlurView, Video } from 'expo';
@@ -151,18 +147,9 @@ export default class PhoneSignup extends React.Component {
               height: SCREEN_HEIGHT,
             }}
           />
-          <Logo beta={ 'true' } />
-
-          {/* <ImageBackground
-            source={require('../../assets/earth_guardians_main.gif')}
-            style={{
-              flex: 1,
-              width: SCREEN_WIDTH,
-              height: SCREEN_HEIGHT,
-              position: 'absolute',
-            }}
-            resizeMode="cover"
-          > */}
+            <View style={[styles.splashLogoContainer]}>
+              <Logo beta={ 'true' } />
+            </View>
             <View
               style={{
                 flex: 1,
