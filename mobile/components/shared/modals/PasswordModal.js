@@ -61,7 +61,7 @@ export default class PasswordModal extends React.Component {
 		if (status !== 'granted') {
 		  return;
 		}
-	
+
 		let location = await Location.getCurrentPositionAsync({});
 		let address = await Location.reverseGeocodeAsync(location.coords);
 
@@ -274,7 +274,7 @@ export default class PasswordModal extends React.Component {
 
 						<TouchableHighlight
 							style={{ paddingTop: 10, paddingBottom: 10 }}
-							onPress={() => Linking.openURL('mailto:reachout@earthguardians.com')}
+							onPress={() => Linking.openURL('mailto:reachout@earthguardians.org')}
 						>
 							<Text style={{ color: 'white' }}>Reset Password</Text>
 						</TouchableHighlight>
