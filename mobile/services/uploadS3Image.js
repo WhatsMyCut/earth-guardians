@@ -1,7 +1,8 @@
 import Storage from '@aws-amplify/storage'
 import { ImagePicker, Permissions } from 'expo';
+import { RNS3 } from 'react-native-aws3';
 import mime from 'mime-types';
-// event handler to pull up camera roll
+  // event handler to pull up camera roll
 export const _pickImage = async () => {
   console.log('_pickImage');
   const {
@@ -14,34 +15,35 @@ export const _pickImage = async () => {
     });
     _handleImagePicked(pickerResult);
   }
-  if (cameraRollPerm !== 'granted') {
-    const {
-      status: cameraRollPerm
-    } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+}
 
-    let pickerResult = await ImagePicker.launchImageLibraryAsync({
-      allowsEditing: true,
-      aspect: [4, 3],
-    });
-    _handleImagePicked(pickerResult);
-  }
-};
-// this handles the image upload to S3
-export const _handleImagePicked = async (pickerResult) => {
-  if (!pickerResult) return
+  // this handles the image upload to S3
+export const  _handleImagePicked = async (pickerResult) => {
   const imageName = pickerResult.uri.replace(/^.*[\\\/]/, '');
   const fileType = mime.lookup(pickerResult.uri);
-  const access = { level: "public", contentType: 'image/jpeg' };
+  const access = { level: "public", contentType: fileType };
   const imageData = await fetch(pickerResult.uri)
   const blobData = await imageData.blob()
-  console.log('_handleImagePicked', fileType);
+
+  const file = {
+    uri: imageData,
+    name: imageName,
+    type: fileType
+  }
+  const options = {
+    keyPrefix: "uploads/",
+    bucket: "your-bucket",
+    region: "us-east-1",
+    accessKey: "AKIAJF5C6HMTBF6R6ERQ",
+    secretKey: "9pAV7PYOa2ktGQ64NKMqiUQNKXVbHdENq7MLa1ty",
+    successActionStatus: 201
+  }
 
   try {
-    await Storage.put(imageName, blobData, access)
+    await RNS3.put(file, options)
     .then(res => res)
     .catch(e => console.log(e))
   } catch (err) {
     console.log('error: ', err)
   }
 }
-

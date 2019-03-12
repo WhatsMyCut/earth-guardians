@@ -92,6 +92,7 @@ class ProfileStackScreen extends React.Component {
       zipcode: this.state.zipcode ? this.state.zipcode : my_user.me.zipcode,
       crew: this.state.crew ? this.state.crew : my_user.me.crew,
       email: this.state.email ? this.state.email : my_user.me.email,
+      photo: this.state.photo ? this.state.photo : my_user.me.photo,
       crew_type: this.state.crew_type
         ? this.state.crew_type
         : my_user.me.crew_type,
