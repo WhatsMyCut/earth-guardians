@@ -136,12 +136,15 @@ class ImpactStackScreen extends React.Component {
     ]);
 
     let additionalPoints = community_events.length * 100;
+    let total_points = points != newPoints ? newPoints + additionalPoints : points
+    let swater = water != newWater ?newWater : water;
+    let swaste = waste != newWaste ? newWaste : waste
+    let sco2 = carbon_dioxide != newCarbonDioxide ? newCarbonDioxide: carbon_dioxide;
     this.setState({
-      points: points != newPoints ? parseFloat(newPoints + additionalPoints).toFixed(2) : parseFloat(points).toFixed(2),
-      water: water != newWater ? parseFloat(newWater).toFixed(2) : parseFloat(water).toFixed(2),
-      waste: waste != newWaste ? parseFloat(newWaste).toFixed(2) : parseFloat(waste).toFixed(2),
-      carbon_dioxide:
-        carbon_dioxide != newCarbonDioxide ? parseFloat(newCarbonDioxide).toFixed(2) : parseFloat(carbon_dioxide).toFixed(2),
+      points: Math.round(parseFloat(total_points)).toFixed(0),
+      water:  Math.round(parseFloat(swater)).toFixed(2),
+      waste: Math.round(parseFloat(swaste)).toFixed(2),
+      carbon_dioxide: Math.round(parseFloat(sco2)).toFixed(2),
       communityEvents: community_events,
       loading: false,
       aggregateObj: aggregateObj
