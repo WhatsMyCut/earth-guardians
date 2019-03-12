@@ -3,8 +3,8 @@ import {
   createMaterialTopTabNavigator,
 } from 'react-navigation';
 import React from 'react';
-import Entypo from '@expo/vector-icons/Entypo';
-import { Text, View, StyleSheet } from 'react-native';
+import { Entypo } from '@expo/vector-icons';
+import { Text, View } from 'react-native';
 import MyActionsStackScreen from '../screens/MyActionsStackScreen';
 import CommunityStackScreen from '../screens/CommunityStackScreen';
 import EnergyStackScreen from '../screens/EnergyStackScreen';
@@ -16,8 +16,9 @@ import ShoppingStackScreen from '../screens/ShoppingStackScreen';
 import TravelStackScreen from '../screens/TravelStackScreen';
 import LandStackScreen from '../screens/LandStackScreen';
 import HeaderNavBar from '../components/shared/navBar/HeaderNavBar';
-import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_categories_query';
-import { all } from 'rsvp';
+import { styles } from '../constants/Styles';
+import { _eventHit } from '../services/googleAnalytics'
+import _ from 'lodash';
 
 const MyActionsStack = createStackNavigator({
   MyActions: MyActionsStackScreen,
@@ -35,7 +36,8 @@ function returnLabel(focused, label) {
       </View>
     );
   }
-
+  const hitLabel = label.charAt(0,0).toUpperCase() + _.camelCase(label).substr(1,label.length).toLowerCase();
+  _eventHit('Navigate', { page: hitLabel} , res => console.log(res.event, res.params.page))
   return (
     <View
       style={{
@@ -137,25 +139,6 @@ const routeConfig = {
   FoodStack,
 };
 
-const styles = {
-  activeLabel: {
-    fontFamily: 'Proxima Nova Bold',
-    fontSize: 15,
-    color: '#ffffff',
-    textAlignVertical: 'center',
-    paddingBottom: 0,
-  },
-  label: {
-    textAlignVertical: 'bottom',
-    fontFamily: 'Proxima Nova Bold',
-    fontSize: 13,
-    color: '#ffffff',
-    paddingBottom: 0,
-  },
-  icon: {
-    lineHeight: 15,
-  },
-};
 
 export default createMaterialTopTabNavigator(routeConfig, {
   navigationOptions: {
@@ -167,15 +150,12 @@ export default createMaterialTopTabNavigator(routeConfig, {
   showLabel: true,
   animationEnabled: false,
   tabBarOptions: {
-    labelStyle: {
-      fontFamily: 'Proxima Nova Bold',
-      fontSize: 13,
-    },
+    labelStyle: styles.textWhite18B,
     style: {
       justifyContent: 'space-between',
       alignContent: 'center',
       backgroundColor: '#000',
-      height: 37,
+      height: 40,
     },
     scrollEnabled: true,
     tabStyle: {

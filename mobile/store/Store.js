@@ -2,7 +2,7 @@ import React from 'react';
 import navigationService from '../navigation/navigationService';
 import { StoreData, RetrieveData } from './AsyncStore';
 import { Permissions } from 'expo';
-import { Analytics, Event } from 'expo-analytics';
+import { _eventHit } from '../services/googleAnalytics';
 
 // a store to hold the react context api
 const Store = React.createContext();
@@ -59,23 +59,16 @@ export class StoreProvider extends React.Component {
 			// store to local storage
 			await StoreData('phone', details.phone);
 			await StoreData('country_dial_code', details.dialCode);
-
 			// analytics
-			const phone = details.phone;
-			const analytics = new Analytics('UA-131896215-1');
-			analytics
-				.event(new Event('Signup', 'Press', phone))
-				.then(() => console.log('success '))
-				.catch((e) => console.log(e.message));
-		} catch (e) {
+      const phone = details.phone;
+      _eventHit('Signup', {action: 'Press', phone }, res => console.log(res.event, res.params))
+    } catch (e) {
 			console.log(e);
 		}
 		// for now, turn autheticate to true
 		if (finalStatus !== 'granted') {
 
 		}
-		// registerForPushNotificationsAsync
-
 		StoreData('EARTH_GUARDIANS_TOKEN', details.token);
 
 		this.setState({ authenticated: true, user: new_user });
@@ -85,11 +78,7 @@ export class StoreProvider extends React.Component {
 	logout = async () => {
 		try {
 			const phone = await RetrieveData('phone');
-			const analytics = new Analytics('UA-131896215-1');
-			analytics
-				.event(new Event('Logout', 'Press', phone))
-				.then(() => console.log('success '))
-				.catch((e) => console.log(e.message));
+      _eventHit('Signup', {action: 'Press', phone }, res => console.log(res.event, res.params))
 
 			await StoreData('phone', null);
 			await StoreData('country_dial_code', null);
@@ -110,7 +99,10 @@ export class StoreProvider extends React.Component {
 			update_user.country_dial_code = phone.country_dial_code;
 
 			// update state
-			this.setState({ user: update_user });
+			this.setState(
+        { user: update_user },
+        _eventHit('UpdateUser', { user: update_user }, res => console.log(res.event, res.params))
+      );
 		}
 	};
 

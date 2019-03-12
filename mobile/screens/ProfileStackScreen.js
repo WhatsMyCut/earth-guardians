@@ -2,30 +2,21 @@ import React from 'react';
 //import { LinearGradient, AppLoading } from 'expo';
 
 import {
-  Animated,
-  PanResponder,
   TouchableOpacity,
   SafeAreaView,
-  ScrollView,
   View,
   Text,
-  KeyboardAvoidingView,
   ActivityIndicator,
 } from 'react-native';
-import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
-import { BlurView } from 'expo';
-import { Analytics, PageHit } from 'expo-analytics';
-import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_categories_query';
+import { Ionicons } from '@expo/vector-icons';
+import { _pageHit } from '../services/googleAnalytics';
 import graphql from '../components/hoc/graphql';
 import NavigationService from '../navigation/navigationService';
 import ProfileComponent from '../components/shared/profile/ProfileComponent';
 import PubSub from 'pubsub-js'
 import ModalComponent from '../components/shared/modals/ModalComponent';
-import CommunityEventModal from '../components/shared/modals/CommunityEventModal';
 import { GET_USER } from '../components/graphql/queries/get_user';
 import { UPDATE_USER } from '../components/graphql/mutations/update_user_mutation';
-import client from '../Apollo';
-import { StoreData } from '../store/AsyncStore';
 import { _pickImage } from '../services/uploadS3Image';
 import { styles, defaults } from '../constants/Styles'
 
@@ -63,17 +54,7 @@ class ProfileStackScreen extends React.Component {
   }
 
   componentDidMount() {
-    () => {
-      try {
-        const analytics = new Analytics('UA-131896215-1');
-        analytics
-          .hit(new PageHit('ProfileScreen'))
-          .then(() => console.log('success '))
-          .catch(e => console.log(e.message));
-      } catch (e) {
-        console.log(e);
-      }
-    };
+    _pageHit('ProfileScreen', res => console.log(res))
   }
 
   componentWillUnmount = ()=>{

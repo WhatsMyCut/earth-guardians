@@ -8,7 +8,7 @@ import {
   Dimensions,
 } from 'react-native';
 import PubSub from 'pubsub-js'
-import { Analytics, PageHit } from 'expo-analytics';
+import { _pageHit } from '../services/googleAnalytics';
 
 import GameControls from '../components/game-stack/GameControls';
 import GameCards from '../components/game-stack';
@@ -31,17 +31,10 @@ class GameScreen extends React.Component {
   };
 
   componentDidMount() {
-    this.setState({ mounted: true }, () => {
-      try {
-        const analytics = new Analytics('UA-131896215-1');
-        analytics
-          .hit(new PageHit('GameScreen'))
-          .then(() => console.log('success '))
-          .catch(e => console.log(e.message));
-      } catch (e) {
-        console.log(e);
-      }
-    });
+    this.setState(
+      { mounted: true },
+      _pageHit('GameScreen', res => console.log(res.page))
+    );
   }
 
   swipeRight = index => {

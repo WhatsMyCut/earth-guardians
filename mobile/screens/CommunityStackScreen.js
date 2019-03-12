@@ -9,10 +9,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { Image } from 'react-native-expo-image-cache';
-import { all } from 'rsvp';
 import { LinearGradient, BlurView, Icon } from 'expo';
-import { Analytics, PageHit } from 'expo-analytics';
-
 import { ALL_PETITIONS } from '../components/graphql/queries/all_petitions';
 import graphql from '../components/hoc/graphql';
 import HeaderNavBar from '../components/shared/navBar/HeaderNavBar';
@@ -153,17 +150,6 @@ class CommunityStackScreen extends React.Component {
     });
   }
 
-  _sendAnalytics = () => {
-    try {
-      const analytics = new Analytics('UA-131896215-1');
-      analytics
-        .hit(new PageHit('CommunityScreen'))
-        .then(() => console.log('success '))
-        .catch(e => console.log(e.message));
-    } catch (e) {
-      console.log(e);
-    }
-  };
 
   _setInitialState = (petitions, video_url) => {
     this.setState(
@@ -174,8 +160,7 @@ class CommunityStackScreen extends React.Component {
         loading: false,
         showRedirectModal: false,
         redirectModalPetition: null,
-      },
-      () => this._sendAnalytics
+      }
     );
   }
 

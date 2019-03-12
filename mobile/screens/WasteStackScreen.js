@@ -1,15 +1,12 @@
 import React from 'react';
-import { all } from 'rsvp';
 import { LinearGradient, AppLoading } from 'expo';
-import { Analytics, PageHit } from 'expo-analytics';
-
+import { _pageHit } from '../services/googleAnalytics';
 import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_categories_query';
 import graphql from '../components/hoc/graphql';
 import HeaderNavBar from '../components/shared/navBar/HeaderNavBar';
-
 import LinearGradientProps from '../constants/LinearGradientProps';
 import GeneralScreen from './GeneralScreen';
-//import { waste_data, primary_waste_id } from './dummy/data';
+import { styles } from '../constants/Styles';
 
 @graphql(ALL_ACTION_CATEGORIES, {
   name: 'all_categories',
@@ -22,45 +19,21 @@ import GeneralScreen from './GeneralScreen';
 })
 class WasteStackScreen extends React.Component {
   state = { primary_image: '', primary_video: '', actions: [] };
-  // async componentDidMount() {
-  //   try {
-  //     // get the data
-  //     const actions = await waste_data();
 
-  //     // set the primary image and video
-  //     const primary_image = actions[primary_waste_id].image;
-  //     const primary_video = actions[primary_waste_id].video;
-
-  //     //update the state
-  //     this.setState({ actions, primary_image, primary_video });
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // }
   componentWillUnmount() {
     this.pollInterval = null
   }
 
   componentDidMount() {
     // Analytics
-    () => {
-      try {
-        const analytics = new Analytics('UA-131896215-1');
-        analytics
-          .hit(new PageHit('WasteScreen'))
-          .then(() => console.log('success '))
-          .catch(e => console.log(e.message));
-      } catch (e) {
-        console.log(e);
-      }
-    };
+    _pageHit('WasteScreen', res => console.log(res.page))
   }
 
   render() {
     const { all_categories } = this.props;
     if (all_categories.loading) {
       return (
-        <LinearGradient {...LinearGradientProps.waste} style={{ flex: 1 }}>
+        <LinearGradient {...LinearGradientProps.waste} style={[styles.container]}>
           <AppLoading />
         </LinearGradient>
       );
@@ -68,10 +41,10 @@ class WasteStackScreen extends React.Component {
 
     const actions = all_categories.sectorActionsByName;
     if (!actions[0].video_id && !actions[0].primary_image) {
-      <LinearGradient {...LinearGradientProps.waste} style={{ flex: 1 }} />;
+      <LinearGradient {...LinearGradientProps.waste} style={[styles.container]} />;
     }
     return (
-      <LinearGradient {...LinearGradientProps.waste} style={{ flex: 1 }}>
+      <LinearGradient {...LinearGradientProps.waste} style={[styles.container]}>
         <GeneralScreen
           data={actions}
           screen={'Waste'}

@@ -1,17 +1,11 @@
 import React from 'react';
-import { all } from 'rsvp';
 import { ActivityIndicator, View } from 'react-native';
 import { LinearGradient, AppLoading } from 'expo';
-import ModalComponent from '../components/shared/modals/ModalComponent';
 import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_categories_query';
 import graphql from '../components/hoc/graphql';
 import HeaderNavBar from '../components/shared/navBar/HeaderNavBar';
 import LinearGradientProps from '../constants/LinearGradientProps';
 import GeneralScreen from './GeneralScreen';
-import { Analytics, PageHit } from 'expo-analytics';
-import { Modal } from 'react-native-paper';
-
-//import { energy_data, primary_energy_id } from './dummy/data';
 
 @graphql(ALL_ACTION_CATEGORIES, {
   name: 'all_categories',
@@ -25,21 +19,14 @@ import { Modal } from 'react-native-paper';
 class EnergyStackScreen extends React.Component {
   constructor(props) {
     super(props)
+    this.setState({
+      primary_image: '',
+      primary_video: '',
+      actions: []
+    })
   }
-  state = { primary_image: '', primary_video: '', actions: [] };
   componentDidMount() {
     // Analytics
-    () => {
-      try {
-        const analytics = new Analytics('UA-131896215-1');
-        analytics
-          .hit(new PageHit('EnergyScreen'))
-          .then(() => console.log('success '))
-          .catch(e => console.log(e.message));
-      } catch (e) {
-        console.log(e);
-      }
-    };
   }
 
   render() {

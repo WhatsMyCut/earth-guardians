@@ -9,24 +9,12 @@ import {
 } from 'react-native';
 import { LinearGradient } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
-import { Analytics, PageHit } from 'expo-analytics';
 import { styles, defaults } from '../constants/Styles'
 
 class EarthGuardiansInfoScreen extends React.Component {
   //TODO, navigate back to the previos screen
   componentDidMount() {
     // Analytics
-    () => {
-      try {
-        const analytics = new Analytics('UA-131896215-1');
-        analytics
-          .hit(new PageHit('EarthGuardianScreen'))
-          .then(() => console.log('success '))
-          .catch(e => console.log(e.message));
-      } catch (e) {
-        console.log(e);
-      }
-    };
   }
 
   render() {

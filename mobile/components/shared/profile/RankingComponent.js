@@ -5,8 +5,9 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { LinearGradient } from 'expo';
+import { _pageHit, _eventHit } from '../../../services/googleAnalytics';
 import LinearGradientProps from '../../../constants/LinearGradientProps';
-import { styles, defaults } from '../../../constants/Styles'
+import { styles, defaults } from '../../../constants/Styles';
 
 
 export default class RankingComponent extends React.Component {
@@ -78,7 +79,8 @@ export default class RankingComponent extends React.Component {
           onPress={() =>
             this.setState({
               front: !this.state.front,
-            })
+            },
+            () => _eventHit('RankingStackScreen', {action: (this.state.front) ? 'openModal.front' : 'openModal.back'}, res => console.log(res.page, res.params.action)))
           }
         >
           {this.state.front ? this._viewA() : this._viewB()}

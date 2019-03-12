@@ -658,4 +658,21 @@ export const styles = ScaledSheet.create({
     color: Colors.white,
     marginVertical: 20
   },
+  activeLabel: {
+    fontFamily: 'Proxima Nova Bold',
+    fontSize: 15,
+    color: '#ffffff',
+    textAlignVertical: 'center',
+    paddingBottom: 0,
+  },
+  label: {
+    textAlignVertical: 'bottom',
+    fontFamily: 'Proxima Nova Bold',
+    fontSize: 13,
+    color: '#ffffff',
+    paddingBottom: 0,
+  },
+  icon: {
+    lineHeight: 15,
+  },
 });

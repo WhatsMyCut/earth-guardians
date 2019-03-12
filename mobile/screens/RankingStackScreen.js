@@ -2,20 +2,14 @@ import React from 'react';
 //import { LinearGradient, AppLoading } from 'expo';
 
 import {
-  Animated,
-  PanResponder,
   TouchableOpacity,
   SafeAreaView,
   ScrollView,
   View,
   Text,
-  KeyboardAvoidingView,
   ActivityIndicator,
 } from 'react-native';
-import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
-import { BlurView } from 'expo';
-import { Analytics, PageHit } from 'expo-analytics';
-import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_categories_query';
+import { Ionicons } from '@expo/vector-icons';
 import graphql from '../components/hoc/graphql';
 import NavigationService from '../navigation/navigationService';
 import RankingComponent from '../components/shared/profile/RankingComponent';
@@ -24,8 +18,7 @@ import { ALL_MY_METRICS } from '../components/graphql/queries/all_my_metrics_que
 import { STATE_RANKINGS } from '../components/graphql/queries/get_state_query';
 import { CREW_RANKINGS } from '../components/graphql/queries/crew_rankings_query';
 import { GET_USER } from '../components/graphql/queries/get_user';
-import client from '../Apollo';
-import { StoreData } from '../store/AsyncStore';
+import { _pageHit } from '../services/googleAnalytics';
 import { styles } from '../constants/Styles'
 
 @graphql(ALL_MY_METRICS, {
@@ -58,31 +51,11 @@ class RankingStackScreen extends React.Component {
   };
 
   toggleModal = () => {
-    this.setState({
-      openModal: !this.state.openModal,
-    });
+    this.setState({ openModal: !this.state.openModal, })
   };
 
-  componentWillMount() {
-  }
-
   componentDidMount() {
-    () => {
-      try {
-        const analytics = new Analytics('UA-131896215-1');
-        analytics
-          .hit(new PageHit('RankingScreen'))
-          .then(() => console.log('success '))
-          .catch(e => console.log(e.message));
-      } catch (e) {
-        console.log(e);
-      }
-    };
-
-    // this.interval = setInterval(()=>{
-    //   this.props.all_metrics.refetch();
-    // }, 2000)
-
+    _pageHit('RankingScreen', res => console.log(res.page))
   }
 
   componentWillUnmount = ()=>{

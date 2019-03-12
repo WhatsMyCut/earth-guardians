@@ -2,7 +2,7 @@ import React from 'react';
 import { all } from 'rsvp';
 import { LinearGradient, AppLoading } from 'expo';
 
-import { Analytics, PageHit } from 'expo-analytics';
+import { _pageHit } from '../services/googleAnalytics';
 
 import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_categories_query';
 import graphql from '../components/hoc/graphql';
@@ -35,17 +35,7 @@ class TravelStackScreen extends React.Component {
       this.setState(
         { actions, primary_image, primary_video },
         // Analytics
-        () => {
-          try {
-            const analytics = new Analytics('UA-131896215-1');
-            analytics
-              .hit(new PageHit('TravelScreen'))
-              .then(() => console.log('success '))
-              .catch(e => console.log(e.message));
-          } catch (e) {
-            console.log(e);
-          }
-        }
+        _pageHit('TravelScreen', res => console.log(res.page))
       );
     } catch (e) {
       console.log(e);

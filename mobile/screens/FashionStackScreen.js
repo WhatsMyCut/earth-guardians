@@ -1,13 +1,12 @@
 import React from 'react';
-import { all } from 'rsvp';
 import { LinearGradient, AppLoading } from 'expo';
-import { Analytics, PageHit } from 'expo-analytics';
+import { _pageHit } from '../services/googleAnalytics';
 import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_categories_query';
 import graphql from '../components/hoc/graphql';
 import HeaderNavBar from '../components/shared/navBar/HeaderNavBar';
-
 import LinearGradientProps from '../constants/LinearGradientProps';
 import GeneralScreen from './GeneralScreen';
+import { styles } from '../constants/Styles';
 
 @graphql(ALL_ACTION_CATEGORIES, {
   name: 'all_categories',
@@ -22,23 +21,13 @@ class FashionStackScreen extends React.Component {
   state = { primary_image: '', primary_video: '', actions: [] };
   componentDidMount() {
     // Analytics
-    () => {
-      try {
-        const analytics = new Analytics('UA-131896215-1');
-        analytics
-          .hit(new PageHit('FashionScreen'))
-          .then(() => console.log('success '))
-          .catch(e => console.log(e.message));
-      } catch (e) {
-        console.log(e);
-      }
-    };
+    _pageHit('FashionScreen', res => console.log(res.page))
   }
   render() {
     const { all_categories } = this.props;
     if (all_categories.loading) {
       return (
-        <LinearGradient {...LinearGradientProps.food} style={{ flex: 1 }}>
+        <LinearGradient {...LinearGradientProps.food} style={[styles.container]}>
           <AppLoading />
         </LinearGradient>
       );
@@ -49,7 +38,7 @@ class FashionStackScreen extends React.Component {
       return null;
     }
     return (
-      <LinearGradient {...LinearGradientProps.default} style={{ flex: 1 }}>
+      <LinearGradient {...LinearGradientProps.default} style={[styles.container]}>
         <GeneralScreen
           data={this.state.actions}
           screen={'Fashion'}

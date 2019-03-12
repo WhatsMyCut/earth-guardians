@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  SafeAreaView,
   Animated,
   PanResponder,
   View,
@@ -12,7 +11,7 @@ import {
 } from 'react-native';
 import { LinearGradient, Icon, BlurView } from 'expo';
 import { AntDesign } from '@expo/vector-icons';
-import { Analytics, Event, PageHit } from 'expo-analytics';
+import { _pageHit, _eventHit } from '../services/googleAnalytics';
 
 import { GET_USER } from '../components/graphql/queries/get_user';
 import {
@@ -66,7 +65,7 @@ class PetitionScreen extends React.Component {
         this.setState({
           video_url: data.video_url,
         },
-        () => this._sendAnalytics);
+        () => _pageHit('Petition', res => console.log(res.page)));
       })
       .catch(e => e);
     }
@@ -99,18 +98,6 @@ class PetitionScreen extends React.Component {
     });
   }
 
-  _sendAnalytics = () =>{
-    try {
-      const analytics = new Analytics('UA-131896215-1');
-      analytics
-        .hit(new PageHit('Petition'))
-        .then(() => console.log('success '))
-        .catch(e => console.log(e.message));
-    } catch (e) {
-      console.log(e);
-    }
-  }
-
   togglePetition = () => {
     // TODO update Database
     const { sign_petition, my_user, unsign_petition } = this.props;
@@ -128,16 +115,8 @@ class PetitionScreen extends React.Component {
             youinverbiage:"I'm In!"
           },
           async () => {
-            try {
-              const phone = await RetrieveData('phone');
-              const analytics = new Analytics('UA-131896215-1');
-              analytics
-                .event(new Event('UnSignPetition', 'Press', phone, this.image.id))
-                .then(() => console.log('success '))
-                .catch(e => console.log(e.message));
-            } catch (e) {
-              console.log(e);
-            }
+            const phone = await RetrieveData('phone');
+            _eventHit('UnSignPetition', {action: 'Press', phone: phone, id: this.image.id}, res => console.log(res.event, res.params))
           }
         );
       });
@@ -155,16 +134,8 @@ class PetitionScreen extends React.Component {
             youinverbiage:"You're In!"
           },
           async () => {
-            try {
-              const phone = await RetrieveData('phone');
-              const analytics = new Analytics('UA-131896215-1');
-              analytics
-                .event(new Event('SignPetition', 'Press', phone, this.image.id))
-                .then(() => console.log('success '))
-                .catch(e => console.log(e.message));
-            } catch (e) {
-              console.log(e);
-            }
+            const phone = await RetrieveData('phone');
+            _eventHit('SignPetition', {action: 'Press', phone: phone, id: this.image.id}, res => console.log(res.event, res.params))
           }
         );
       });
@@ -179,16 +150,8 @@ class PetitionScreen extends React.Component {
     this.setState(
       { showRedirectModal: true, redirectModalPetition: url },
       async () => {
-        try {
-          const phone = await RetrieveData('phone');
-          const analytics = new Analytics('UA-131896215-1');
-          analytics
-            .event(new Event('OpenRedirectModal', 'Press', phone))
-            .then(() => console.log('success '))
-            .catch(e => console.log(e.message));
-        } catch (e) {
-          console.log(e);
-        }
+        const phone = await RetrieveData('phone');
+        _eventHit('OpenRedirectModal', {action: 'Press', phone: phone, id: this.image.id}, res => console.log(res.event, res.params))
       }
     );
   };

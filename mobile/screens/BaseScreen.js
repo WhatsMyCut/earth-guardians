@@ -1,7 +1,7 @@
 import React from 'react';
 import { Dimensions } from 'react-native';
-import { Audio, ScreenOrientation } from 'expo';
-import { Analytics, PageHit } from 'expo-analytics';
+import { ScreenOrientation } from 'expo';
+
 export default class BaseScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     header: null,
@@ -19,19 +19,6 @@ export default class BaseScreen extends React.Component {
     ScreenOrientation.allowAsync(ScreenOrientation.Orientation.ALL)
     .catch(e => console.log(e));
     Dimensions.addEventListener('change', this.orientationChangeHandler);
-
-    // Analytics
-    () => {
-      try {
-        const analytics = new Analytics('UA-131896215-1');
-        analytics
-          .hit(new PageHit('VideoScreen'))
-          .then(() => console.log('success '))
-          .catch(e => console.log(e.message));
-      } catch (e) {
-        console.log(e);
-      }
-    };
   }
 
   componentWillUnmount() {

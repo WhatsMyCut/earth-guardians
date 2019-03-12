@@ -10,9 +10,6 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { Ionicons, FontAwesome } from '@expo/vector-icons';
-import { BlurView } from 'expo';
-import { Analytics, PageHit } from 'expo-analytics';
-import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_categories_query';
 import graphql from '../components/hoc/graphql';
 import NavigationService from '../navigation/navigationService';
 import GraphComponent from '../components/shared/profile/GraphComponent';
@@ -25,6 +22,7 @@ import { GET_USER } from '../components/graphql/queries/get_user';
 import { CREATE_COMMUNITY_EVENT } from '../components/graphql/mutations/create_community_mutation';
 import { styles, defaults } from '../constants/Styles'
 import BadgeComponent from '../components/shared/profile/BadgeComponent';
+import { _pageHit, _eventHit } from '../services/googleAnalytics';
 
 @graphql(ALL_MY_METRICS, {
   name: 'all_metrics',
@@ -84,17 +82,7 @@ class ImpactStackScreen extends React.Component {
   }
 
   componentDidMount() {
-    () => {
-      try {
-        const analytics = new Analytics('UA-131896215-1');
-        analytics
-          .hit(new PageHit('ImpactScreen'))
-          .then(() => console.log('success '))
-          .catch(e => console.log(e.message));
-      } catch (e) {
-        console.log(e);
-      }
-    };
+    _pageHit('ImpactScreen', res => console.log(res))
   }
 
   componentWillUnmount = () => {

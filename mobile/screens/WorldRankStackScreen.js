@@ -12,17 +12,13 @@ import {
   KeyboardAvoidingView,
   ActivityIndicator,
 } from 'react-native';
-import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
-import { Analytics, PageHit } from 'expo-analytics';
-import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_categories_query';
+import { Ionicons,  } from '@expo/vector-icons';
+import { _pageHit } from '../services/googleAnalytics';
 import graphql from '../components/hoc/graphql';
 import NavigationService from '../navigation/navigationService';
 import WorldRankComponent from '../components/shared/profile/WorldRankComponent';
 import { WW_RANKINGS } from '../components/graphql/queries/ww_rankings_query';
-import client from '../Apollo';
-import { StoreData } from '../store/AsyncStore';
 import { styles } from '../constants/Styles'
-import googleAnalytics from '../services/googleAnalytics'
 
 @graphql(WW_RANKINGS, {
   name: 'rankings',
@@ -43,30 +39,12 @@ class WorldRankStackScreen extends React.Component {
     });
   };
 
-  componentWillMount() {
-  }
-
   componentDidMount() {
-    googleAnalytics('WorldRankScreen');
-    () => {
-      console.log('countries', this.props.rankings)
-      try {
-        const analytics = new Analytics('UA-131896215-1');
-        analytics
-          .hit(new PageHit('WorldRankScreen'))
-          .then(() => console.log('success '))
-          .catch(e => console.log(e.message));
-      } catch (e) {
-        console.log(e);
-      }
-    };
+    _pageHit('WorldRankcreen', res => console.log(res.page))
   }
 
   componentWillUnmount() {
     this.props.rankings = null;
-  }
-
-  componentWillReceiveProps() {
   }
 
   render() {

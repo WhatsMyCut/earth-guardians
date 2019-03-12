@@ -7,7 +7,7 @@ import {
   Share,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { Analytics, PageHit } from 'expo-analytics';
+import { _pageHit } from '../services/googleAnalytics';
 import NavigationService from '../navigation/navigationService';
 import { styles } from '../constants/Styles';
 
@@ -32,17 +32,7 @@ class SocialStackScreen extends React.Component {
   };
   componentDidMount() {
     // Analytics
-    () => {
-      try {
-        const analytics = new Analytics('UA-131896215-1');
-        analytics
-          .hit(new PageHit('SocialScreen'))
-          .then(() => console.log('success '))
-          .catch(e => console.log(e.message));
-      } catch (e) {
-        console.log(e);
-      }
-    };
+    _pageHit('SocialScreen', res => console.log(res.page))
   }
 
   render() {

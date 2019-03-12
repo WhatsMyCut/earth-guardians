@@ -3,7 +3,7 @@ import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { Icon } from 'expo';
 import PubSub from 'pubsub-js'
-import { Analytics, Event } from 'expo-analytics';
+import { _eventHit } from '../../../services/googleAnalytics'
 import { RetrieveData } from '../../../store/AsyncStore';
 import { styles } from '../../../constants/Styles'
 export default class ActionDetails extends React.Component {
@@ -33,15 +33,14 @@ export default class ActionDetails extends React.Component {
       );
 
       this.props.takeTheAction();
+      const page = 'MyActionScreen'
       const item_id = await this.props.data.id;
       const phone = await RetrieveData('phone');
-      const analytics = new Analytics('UA-131896215-1');
-      analytics
-        .event(new Event('MyAction', 'Press', phone, item_id))
-        .then(() => {
-          this.setState({in:false})
-        })
-        .catch(e => console.log(e.message));
+      const inout = (this.state.in) ? 'in' : 'out'
+      const params = {
+        page, event: 'TakeAction', in: inout, phone, id: item_id
+      }
+      _eventHit('TakeAction', params, res => console.log(res.event, res.params))
     } catch (e) {
       console.log(e.message);
     }
