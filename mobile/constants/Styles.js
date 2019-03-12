@@ -399,7 +399,7 @@ export const styles = ScaledSheet.create({
     textAlign: 'center',
   },
   actionCardValue: {
-    fontSize: moderateScale(20),
+    fontSize: moderateScale(16),
     fontFamily: 'Proxima Nova Bold',
     color: Colors.mediumGray,
     textAlign: 'center',

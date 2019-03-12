@@ -1,6 +1,6 @@
 import CommunityEventModal from './CommunityEventModal'
 import CommunityImpactModal from './CommunityImpactModal'
-import communitySignedModal from './communitySignedModal'
+import CommunitySignedModal from './CommunitySignedModal'
 import GameCompleteModal from './GameCompleteModal'
 import NotCO2EmissionModal from './NotCO2EmissionModal'
 import NotEarnedPointsModal from './NotEarnedPointsModal'
@@ -16,7 +16,7 @@ import ZipCodeModal from './ZipCodeModal'
 export default {
   CommunityEventModal,
   CommunityImpactModal,
-  communitySignedModal,
+  CommunitySignedModal,
   GameCompleteModal,
   NotCO2EmissionModal,
   NotEarnedPointsModal,

@@ -21,7 +21,7 @@ import {
 } from '../components/graphql/mutations/sign_petition';
 import graphql from '../components/hoc/graphql';
 import NavigationService from '../navigation/navigationService';
-import CommunitySignedModal from '../components/shared/modals/communitySignedModal';
+import CommunitySignedModal from '../components/shared/modals/CommunitySignedModal';
 import RedirectModal from '../components/shared/modals/RedirectModal';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { RetrieveData } from '../store/AsyncStore';
