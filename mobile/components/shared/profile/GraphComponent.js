@@ -17,9 +17,9 @@ export default class GraphComponent extends React.Component {
           <DonutGraph
             height={120}
             width={120}
-            carbon_dioxide={35}
-            water={59}
-            waste={21}
+            carbon_dioxide={this.props.carbon_dioxide}
+            water={this.props.water}
+            waste={this.props.waste}
           />
         </View>
       </LinearGradient>
