@@ -95,20 +95,12 @@ class ProfileStackScreen extends React.Component {
   };
 
   async updatePic() {
+    const { update_user, my_user } = this.props;
     _pickImage()
     .then(res =>
       {
       console.log('_pickImage', res)
-      update_user({variables:{photo: res.location}})
-      this.setState(
-        { my_user:
-          { me:
-            {
-              photo: res.location
-            }
-          }
-        }
-      )
+      update_user({variables:{id: my_user.me.id, photo: res.location}})
     })
     .catch(e => console.log(e))
   }
@@ -131,7 +123,7 @@ class ProfileStackScreen extends React.Component {
         <View style={[styles.container, styles.centerText, { paddingHorizontal: 20, }]}>
           <ProfileComponent
             my_user={my_user}
-            updatePic={this.updatePic}
+            updatePic={() => this.updatePic()}
             openModal={this.openUpdateUserModal}
           />
           {this.state.showUpdateProfileModal &&

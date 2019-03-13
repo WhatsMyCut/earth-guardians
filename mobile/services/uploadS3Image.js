@@ -13,7 +13,7 @@ export const _pickImage = async () => {
       allowsEditing: true,
       aspect: [4, 3],
     });
-    _handleImagePicked(pickerResult);
+    return _handleImagePicked(pickerResult);
   }
 }
 
@@ -24,6 +24,7 @@ export const  _handleImagePicked = async (pickerResult) => {
   const access = { level: "public", contentType: fileType };
   const imageData = await fetch(pickerResult.uri)
   const blobData = await imageData.blob()
+  console.log('_handleImagePicked', {imageName, fileType});
 
   const file = {
     uri: imageData,
@@ -31,16 +32,15 @@ export const  _handleImagePicked = async (pickerResult) => {
     type: fileType
   }
   const options = {
-    keyPrefix: "uploads/",
-    bucket: "your-bucket",
+    keyPrefix: "/uploads",
+    bucket: "eg-profile-pics-production",
     region: "us-east-1",
     accessKey: "AKIAJF5C6HMTBF6R6ERQ",
     secretKey: "9pAV7PYOa2ktGQ64NKMqiUQNKXVbHdENq7MLa1ty",
     successActionStatus: 201
   }
-
   try {
-    await RNS3.put(file, options)
+    return await RNS3.put(file, options)
     .then(res => res)
     .catch(e => console.log(e))
   } catch (err) {
