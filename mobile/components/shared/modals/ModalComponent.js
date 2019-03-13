@@ -77,31 +77,31 @@ export default class ModalComponent extends React.Component {
   }
 
   openWasteModal = (data) => {
-    console.log('openWasteModal', data)
+    // console.log('openWasteModal', data)
     this.closeModal()
     this.setState({ showWasteModal: true });
   }
 
   openWaterodal = (data) => {
-    console.log('openWaterodal', data)
+    // console.log('openWaterodal', data)
     this.closeModal()
     this.setState({ showWaterModal: true});
   }
 
   openCarbonModal = (data) => {
-    console.log('openCarbonModal', data)
+    // console.log('openCarbonModal', data)
     PubSub.publish('showBlur')
     this.setState({ showCarbonModal: true});
   }
 
   openGameCompleteModal = (data) => {
-    console.log('showGameCompleteModal', data)
+    // console.log('showGameCompleteModal', data)
     PubSub.publish('showBlur')
     this.setState({ showGameCompleteModal: true});
   }
 
   openPasswordModal = (data) => {
-    console.log('showPasswordModal', data)
+    // console.log('showPasswordModal', data)
     PubSub.publish('showBlur')
     this.setState({ showPasswordModal: true});
   }
@@ -131,7 +131,7 @@ export default class ModalComponent extends React.Component {
 
   getComponent() {
     const notification = this.props.notification || { data: { message: 'Here 2'}}
-    console.log('getComponent', this.props.display)
+    // console.log('getComponent', this.props.display)
     switch (this.props.display) {
       case 'ZipCodeModal':
         this.setState({ showZipCodeModal: true })
