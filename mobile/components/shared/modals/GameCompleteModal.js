@@ -20,17 +20,15 @@ export default class GameCompleteModal extends React.Component {
               <View style={[styles.modalView, {
                 marginVertical: (defaults.primaryHeight / 2) - 150,
                 marginHorizontal: 20 }]}>
+                <Logo style={[styles.container, { width: 72, height: 72 }]} />
                 <View style={[styles.headerContainer]}>
-                  <Logo style={{ width: 72, height: 72 }} />
-                  <View style={[styles.headerContainer]}>
-                    <Text style={[styles.headerText]}>
-                      Thank You!
-                    </Text>
-                    <Text style={[styles.textWhite18B]}>
-                      Check 'My Actions' to keep track of the action you committed to.
-                    </Text>
-                  </View>
+                  <Text style={[styles.headerText]}>
+                    Thank You!
+                  </Text>
                 </View>
+                <Text style={[styles.textWhite18B]}>
+                  Check 'My Actions' to keep track of the action you committed to.
+                </Text>
               </View>
             </TouchableWithoutFeedback>
           </View>

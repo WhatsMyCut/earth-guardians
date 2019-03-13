@@ -133,19 +133,12 @@ export default class PhoneSignup extends React.Component {
           resizeMode="cover"
           shouldPlay
           isLooping
-          style={{ flex: 1,
-            width: SCREEN_WIDTH,
-            height: SCREEN_HEIGHT,
-            position: 'absolute', }}
+          style={[styles.container, styles.coverScreen,]}
         />
         <LinearGradient
-            colors={['rgba(0,0,0,0.2)', 'rgba(0,0,0,0.9)']}
+            colors={['rgba(0,0,0,0)', 'rgba(0,0,0,0.9)']}
             locations={[0.4, 1]}
-            style={{
-              position: 'absolute',
-              width: SCREEN_WIDTH,
-              height: SCREEN_HEIGHT,
-            }}
+            style={[styles.coverScreen]}
           />
             <View style={[styles.splashLogoContainer]}>
               <Logo beta={ 'true' } />
@@ -155,30 +148,31 @@ export default class PhoneSignup extends React.Component {
                 flex: 1,
                 justifyContent: 'flex-end',
                 alignItems: 'flex-start',
-                paddingBottom: 60,
-
+                paddingBottom: 0,
                 paddingLeft: 30,
                 paddingRight: 70,
               }}
             >
-              <Text style={styles.title}>Welcome to EarthTracks!</Text>
-              <Text style={{...styles.promo, fontWeight:'bold',paddingBottom:5}}>Fitness Tracker for the Planet</Text>
-              <Text style={styles.promo}>The change we need for a</Text>
-              <Text style={{...styles.promo,paddingBottom:5}}>regenerative shift starts with you.</Text>
-              <Text style={{...styles.promo,paddingBottom:8}}>ARE YOU IN?</Text>
+              <View style={[styles.container]}>
+                <Text style={styles.title}>Welcome to EarthTracks!</Text>
+                <Text style={{...styles.promo, fontWeight:'bold',paddingBottom:5}}>Fitness Tracker for the Planet</Text>
+                <Text style={styles.promo}>The change we need for a</Text>
+                <Text style={{...styles.promo,paddingBottom:5}}>regenerative shift starts with you.</Text>
+                <Text style={{...styles.promo,paddingBottom:8}}>ARE YOU IN?</Text>
+              </View>
 
 
 
-
-              <PhoneInputComp
-                updatePhone={this._setPhone}
-                validate_phone={this.is_phone_valid}
-                onChangeUpdatePhone = {this._setPhone}
-              />
-              {this.state.valid_phone && (
-                <Text style={{fontSize:10, color:'#ffffff', paddingTop:3}}>By signing up, you confirm that you agree to our Terms of Use and have read and understood our <Text onPress={()=> Linking.openURL('https://app.termly.io/document/privacy-policy-for-website/ad2b059a-ddec-4f69-97a5-4dc346948ac7')}>Privacy Policy</Text>.</Text>
-              )}
-
+              <View style={[styles.container]}>
+                <PhoneInputComp
+                  updatePhone={this._setPhone}
+                  validate_phone={this.is_phone_valid}
+                  onChangeUpdatePhone = {this._setPhone}
+                />
+                {this.state.valid_phone && (
+                  <Text style={{fontSize:10, color:'#ffffff', paddingTop:3}}>By signing up, you confirm that you agree to our Terms of Use and have read and understood our <Text onPress={()=> Linking.openURL('https://app.termly.io/document/privacy-policy-for-website/ad2b059a-ddec-4f69-97a5-4dc346948ac7')}>Privacy Policy</Text>.</Text>
+                )}
+              </View>
             </View>
             {this.state.showPasswordModal && (
               <BlurView

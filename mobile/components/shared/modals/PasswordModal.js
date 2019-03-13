@@ -413,10 +413,6 @@ export default class PasswordModal extends React.Component {
 						>
 							<Text style={{ color: '#333', fontSize: 18, fontWeight: 'bold' }}>SUBMIT</Text>
 						</TouchableOpacity>
-
-						<TouchableHighlight onPress={this.props.togglePasswordModal}>
-							<Text style={{ color: 'white' }}>Go Back</Text>
-						</TouchableHighlight>
 					</View>
 				</View>
 			</Modal>
