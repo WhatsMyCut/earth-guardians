@@ -22,7 +22,6 @@ import { GET_USER } from '../components/graphql/queries/get_user';
 import { CREATE_COMMUNITY_EVENT } from '../components/graphql/mutations/create_community_mutation';
 import { styles, defaults } from '../constants/Styles'
 import BadgeComponent from '../components/shared/profile/BadgeComponent';
-import { _pageHit, _eventHit } from '../services/googleAnalytics';
 
 @graphql(ALL_MY_METRICS, {
   name: 'all_metrics',
@@ -71,18 +70,17 @@ class ImpactStackScreen extends React.Component {
     }
   }
   openModal() {
-    PubSub.publish('openCommunityEventModal', true);
+    PubSub.publish('openBlur', this.setState({ openModal: true }));
   }
 
   closeModal = () => {
-    PubSub.publish('closeModal')
+    PubSub.publish('closeBlur', this.setState({ openModal: false }))
   };
 
   componentWillMount() {
   }
 
   componentDidMount() {
-    _pageHit('ImpactScreen', res => console.log(res))
   }
 
   componentWillUnmount = () => {

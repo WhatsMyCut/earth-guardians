@@ -3,7 +3,6 @@ import { LinearGradient, AppLoading } from 'expo';
 import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_categories_query';
 import graphql from '../components/hoc/graphql';
 import HeaderNavBar from '../components/shared/navBar/HeaderNavBar';
-import { _pageHit } from '../services/googleAnalytics';
 import LinearGradientProps from '../constants/LinearGradientProps';
 import GeneralScreen from './GeneralScreen';
 import { styles } from '../constants/Styles';
@@ -22,8 +21,6 @@ class WaterStackScreen extends React.Component {
   state = { primary_image: '', primary_video: '', actions: [] };
 
   componentDidMount() {
-    // Analytics
-    _pageHit('WaterScreen', res => console.log(res.page))
   }
 
   render() {

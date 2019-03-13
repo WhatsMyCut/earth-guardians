@@ -1,9 +1,6 @@
 import React from 'react';
 import { all } from 'rsvp';
 import { LinearGradient, AppLoading } from 'expo';
-
-import { _pageHit } from '../services/googleAnalytics';
-
 import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_categories_query';
 import graphql from '../components/hoc/graphql';
 import HeaderNavBar from '../components/shared/navBar/HeaderNavBar';
@@ -32,11 +29,7 @@ class TravelStackScreen extends React.Component {
       const primary_video = actions[primary_travel_id].video;
 
       //update the state
-      this.setState(
-        { actions, primary_image, primary_video },
-        // Analytics
-        _pageHit('TravelScreen', res => console.log(res.page))
-      );
+      this.setState({ actions, primary_image, primary_video });
     } catch (e) {
       console.log(e);
     }

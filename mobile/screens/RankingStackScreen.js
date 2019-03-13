@@ -18,7 +18,6 @@ import { ALL_MY_METRICS } from '../components/graphql/queries/all_my_metrics_que
 import { STATE_RANKINGS } from '../components/graphql/queries/get_state_query';
 import { CREW_RANKINGS } from '../components/graphql/queries/crew_rankings_query';
 import { GET_USER } from '../components/graphql/queries/get_user';
-import { _pageHit } from '../services/googleAnalytics';
 import { styles } from '../constants/Styles'
 
 @graphql(ALL_MY_METRICS, {
@@ -55,7 +54,6 @@ class RankingStackScreen extends React.Component {
   };
 
   componentDidMount() {
-    _pageHit('RankingScreen', res => console.log(res.page))
   }
 
   componentWillUnmount = ()=>{

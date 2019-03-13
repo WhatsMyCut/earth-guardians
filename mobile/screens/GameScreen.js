@@ -8,8 +8,6 @@ import {
   Dimensions,
 } from 'react-native';
 import PubSub from 'pubsub-js'
-import { _pageHit } from '../services/googleAnalytics';
-
 import GameControls from '../components/game-stack/GameControls';
 import GameCards from '../components/game-stack';
 import NavigationService from '../navigation/navigationService';
@@ -31,10 +29,7 @@ class GameScreen extends React.Component {
   };
 
   componentDidMount() {
-    this.setState(
-      { mounted: true },
-      _pageHit('GameScreen', res => console.log(res.page))
-    );
+    this.setState({ mounted: true });
   }
 
   swipeRight = index => {

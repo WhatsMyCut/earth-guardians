@@ -97,11 +97,6 @@ export default class App extends React.Component {
             }}
           />
           {showBlur &&
-            <TouchableWithoutFeedback
-              onPress={() => {
-                this.closeBlur()
-              }}
-            >
               <BlurView
                 tint="dark"
                 intensity={80}
@@ -116,8 +111,10 @@ export default class App extends React.Component {
                     zIndex: 20
                   }
                 ]}
+                onPress={() => {
+                this.closeBlur()
+              }}
               />
-            </TouchableWithoutFeedback>
           }
           {this.state.showNotificationModal && (
             <ModalComponent

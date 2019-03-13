@@ -1,6 +1,5 @@
 import React from 'react';
 import { LinearGradient, AppLoading } from 'expo';
-import { _pageHit } from '../services/googleAnalytics';
 import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_categories_query';
 import graphql from '../components/hoc/graphql';
 import HeaderNavBar from '../components/shared/navBar/HeaderNavBar';
@@ -21,8 +20,6 @@ class ShoppingStackScreen extends React.Component {
   state = { primary_image: '', primary_video: '', actions: [] };
 
   componentDidMount() {
-    // Analytics
-    _pageHit('', res => console.log(res.page))
   }
   render() {
     const { all_categories } = this.props;

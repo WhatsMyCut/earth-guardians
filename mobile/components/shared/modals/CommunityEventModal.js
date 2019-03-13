@@ -9,6 +9,7 @@ import {
   Modal,
 } from 'react-native';
 import { Dropdown } from 'react-native-material-dropdown';
+import Logo from '../../../constants/Logo';
 import { styles, defaults } from '../../../constants/Styles';
 
 export default class CommunityEventModal extends React.Component {
@@ -33,74 +34,79 @@ export default class CommunityEventModal extends React.Component {
       <Modal
         animationType="slide"
         transparent={true}
-        visible={this.state.openModal}
+        visible={this.props.visible}
       >
-        <TouchableWithoutFeedback style={[styles.container, styles.coverScreen]} onPress={() => {
-          this.props.onClose()
-        }}>
-          <KeyboardAvoidingView
-            behavior="position"
-            contentContainerStyle={[styles.centerAll, styles.coverAll]}
-          >
-            <TouchableWithoutFeedback style={[styles.container, styles.coverScreen]} onPress={() => {
-              return false
-            }}>
-              <View style={[styles.container, styles.modalView, styles.centerAll, {
-                height: 350,
-                marginVertical: (defaults.primaryHeight / 2),
-              }]}>
-                <View style={[styles.headerContainer]}>
-                  <Text style={[styles.headerText]}>
-                  HOST A COMMUNITY EVENT
-                  </Text>
-                </View>
-                <View style={[styles.container]}>
+        <KeyboardAvoidingView
+          behavior="position"
+          contentContainerStyle={[styles.centerAll, styles.coverAll]}
+        >
+          <TouchableWithoutFeedback style={[styles.container, styles.coverScreen]} onPress={() => {
+            this.props.onClose()
+          }}>
+            <View style={[styles.container]}>
+              <TouchableWithoutFeedback style={[styles.container, styles.coverScreen]} onPress={() => {
+                  return false
+                }}>
+                <View style={[styles.modalView, {
+                  marginVertical: (defaults.primaryHeight / 2) - 150,
+                  marginHorizontal: 20 }]}>
+                    <View style={[styles.container]} >
+                      <Logo style={[styles.container, {width: 72, height: 72}]}/>
+                    </View>
 
-                  <Dropdown
-                    label="Event Type"
-                    data={typesOfEvents}
-                    style={[styles.textInput]}
-                    containerStyle={{
-                      height: 30,
-                      width: 200,
-                      marginBottom: 40,
-                    }}
-                    baseColor={'#fff'}
-                    textColor={'#000000'}
-                    itemColor={'#000000'}
-                    onChangeText={arg => {
-                      this.setState({ typeOfEvent: arg });
-                      this.numbOfPeople.focus();
-                    }}
-                  />
-                  <TextInput
-                    ref={input => {
-                      this.numbOfPeople = input;
-                    }}
-                    style={[styles.textInput]}
-                    onChangeText={numberOfPeople => this.setState({ numberOfPeople })}
-                    value={this.state.numberOfPeople}
-                    placeholder="Number of People"
-                    placeholderTextColor="#fff"
-                    keyboardType="numeric"
-                    returnKeyType="done"
-                  />
-                  <TouchableOpacity
-                    style={[styles.buttonContainer]}
-                    disabled={!this.state.numberOfPeople || !this.state.typeOfEvent}
-                    onPress={() => {
-                      this.props.submitEvent(this.state);
-                    }}
-                  >
-                    <Text style={[styles.textGrey18B]}>
-                      SUBMIT
-                    </Text>
-                  </TouchableOpacity>
+                    <View style={[styles.headerContainer]}>
+                      <Text style={[styles.headerText]}>
+                      HOST A COMMUNITY EVENT
+                      </Text>
+                    </View>
+                    <View style={[styles.container]}>
+
+                      <Dropdown
+                        label="Event Type"
+                        data={typesOfEvents}
+                        style={[styles.textInput]}
+                        containerStyle={{
+                          height: 30,
+                          width: 200,
+                          marginBottom: 40,
+                        }}
+                        baseColor={'#fff'}
+                        textColor={'#000000'}
+                        itemColor={'#000000'}
+                        onChangeText={arg => {
+                          this.setState({ typeOfEvent: arg });
+                          this.numbOfPeople.focus();
+                        }}
+                      />
+                      <TextInput
+                        ref={input => {
+                          this.numbOfPeople = input;
+                        }}
+                        style={[styles.textInput]}
+                        onChangeText={numberOfPeople => this.setState({ numberOfPeople })}
+                        value={this.state.numberOfPeople}
+                        placeholder="Number of People"
+                        placeholderTextColor="#fff"
+                        keyboardType="numeric"
+                        returnKeyType="done"
+                      />
+                      <TouchableOpacity
+                        style={[styles.buttonContainer]}
+                        disabled={!this.state.numberOfPeople || !this.state.typeOfEvent}
+                        onPress={() => {
+                          this.props.submitEvent(this.state);
+                        }}
+                      >
+                        <Text style={[styles.textGrey18B]}>
+                          SUBMIT
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
                 </View>
-              </View>
-            </TouchableWithoutFeedback>
-          </KeyboardAvoidingView>
-        </TouchableWithoutFeedback>
+              </TouchableWithoutFeedback>
+            </View>
+          </TouchableWithoutFeedback>
+        </KeyboardAvoidingView>
       </Modal>
     );
   }

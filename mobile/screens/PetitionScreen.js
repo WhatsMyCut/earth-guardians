@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import { LinearGradient, Icon, BlurView } from 'expo';
 import { AntDesign } from '@expo/vector-icons';
-import { _pageHit, _eventHit } from '../services/googleAnalytics';
+import { _eventHit } from '../services/googleAnalytics';
 
 import { GET_USER } from '../components/graphql/queries/get_user';
 import {
@@ -64,8 +64,7 @@ class PetitionScreen extends React.Component {
       .then(data => {
         this.setState({
           video_url: data.video_url,
-        },
-        () => _pageHit('Petition', res => console.log(res.page)));
+        });
       })
       .catch(e => e);
     }

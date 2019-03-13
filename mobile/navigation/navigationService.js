@@ -1,5 +1,5 @@
 import { NavigationActions } from 'react-navigation';
-import { _eventHit } from '../services/googleAnalytics'
+import { _pageHit } from '../services/googleAnalytics'
 import _ from 'lodash'
 
 let _navigator;
@@ -17,7 +17,7 @@ function navigate(routeName, params) {
       routeName,
       params,
     }),
-    _eventHit('Navigate', { page: hitName}, res => console.log(res.event, res.params.page))
+    _pageHit(hitName, res => console.log(res.page))
   );
 }
 

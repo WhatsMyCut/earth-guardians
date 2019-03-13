@@ -17,7 +17,7 @@ import TravelStackScreen from '../screens/TravelStackScreen';
 import LandStackScreen from '../screens/LandStackScreen';
 import HeaderNavBar from '../components/shared/navBar/HeaderNavBar';
 import { styles } from '../constants/Styles';
-import { _eventHit } from '../services/googleAnalytics'
+import { _pageHit } from '../services/googleAnalytics'
 import _ from 'lodash';
 
 const MyActionsStack = createStackNavigator({
@@ -37,7 +37,7 @@ function returnLabel(focused, label) {
     );
   }
   const hitLabel = label.charAt(0,0).toUpperCase() + _.camelCase(label).substr(1,label.length).toLowerCase();
-  _eventHit('Navigate', { page: hitLabel} , res => console.log(res.event, res.params.page))
+  _pageHit(hitLabel, res => console.log(res.page))
   return (
     <View
       style={{

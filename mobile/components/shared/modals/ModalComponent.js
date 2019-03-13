@@ -108,14 +108,13 @@ export default class ModalComponent extends React.Component {
   }
 
   openCommunityEventModal() {
-    PubSub.publish('showBlur')
-    this.setState({showCommunityEventModal: true})
+    PubSub.publish('showBlur',
+    this.setState({showCommunityEventModal: true}))
   }
 
   closeCommunityEventModal() {
-    console.log('closeCommunityEventModal: closing')
-    PubSub.publish('closeModal')
-    this.setState({showCommunityEventModal: false})
+    PubSub.publish('closeBlur',
+    this.setState({showCommunityEventModal: false}))
   }
 
   getComponent() {

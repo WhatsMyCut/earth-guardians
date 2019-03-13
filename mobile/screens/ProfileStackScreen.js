@@ -9,7 +9,6 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { _pageHit } from '../services/googleAnalytics';
 import graphql from '../components/hoc/graphql';
 import NavigationService from '../navigation/navigationService';
 import ProfileComponent from '../components/shared/profile/ProfileComponent';
@@ -54,7 +53,6 @@ class ProfileStackScreen extends React.Component {
   }
 
   componentDidMount() {
-    _pageHit('ProfileScreen', res => console.log(res))
   }
 
   componentWillUnmount = ()=>{

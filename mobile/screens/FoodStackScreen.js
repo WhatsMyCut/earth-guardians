@@ -1,7 +1,6 @@
 import React from 'react';
 import { ActivityIndicator } from 'react-native';
 import { LinearGradient, AppLoading } from 'expo';
-import { _pageHit } from '../services/googleAnalytics';
 import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_categories_query';
 import graphql from '../components/hoc/graphql';
 import HeaderNavBar from '../components/shared/navBar/HeaderNavBar';
@@ -23,7 +22,6 @@ class FoodStackScreen extends React.Component {
 
   componentDidMount() {
     // Analytics
-    _pageHit('FoodScreen', res => console.log(res.page))
   }
 
   render() {

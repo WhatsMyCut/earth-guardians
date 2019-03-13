@@ -13,7 +13,6 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { Ionicons,  } from '@expo/vector-icons';
-import { _pageHit } from '../services/googleAnalytics';
 import graphql from '../components/hoc/graphql';
 import NavigationService from '../navigation/navigationService';
 import WorldRankComponent from '../components/shared/profile/WorldRankComponent';
@@ -40,7 +39,6 @@ class WorldRankStackScreen extends React.Component {
   };
 
   componentDidMount() {
-    _pageHit('WorldRankcreen', res => console.log(res.page))
   }
 
   componentWillUnmount() {
