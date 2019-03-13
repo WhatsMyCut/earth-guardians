@@ -222,7 +222,7 @@ class ActionCardSmall extends React.Component {
         page, event: 'AddAction', in: inout, phone, id: item_id
       }
       PubSub.publish('openGameCompleteModal', params);
-      _eventHit('AddAction', params, res => console.log(res.event, res.params))
+      _eventHit('AddAction', params, res => console.log(res.event, res.params.id))
     } catch (e) {
       console.log(e.message);
     }
