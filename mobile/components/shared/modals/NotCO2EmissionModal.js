@@ -9,13 +9,9 @@ import {
 import { styles, defaults } from '../../../constants/Styles';
 
 export default class CarbonModal extends React.Component {
-  state = { modalVisible: true };
-  toggleModalVisible = () => {
-    this.setState({
-      modalVisible: !this.state.modalVisible,
-    });
-  };
   render() {
+    const { carbon_dioxide } = this.props
+    const value = parseFloat(carbon_dioxide.data || 0).toFixed(2);
     return (
       <Modal
         animationType="slide"
@@ -38,7 +34,7 @@ export default class CarbonModal extends React.Component {
                     style={{ width: 106, height: 100, margin: 20 }}
                   />
                   <Text style={[styles.headerText]}>
-                    YOU'VE REDUCED YOUR CO2 EMISSION BY {parseFloat(this.props.carbon_dioxide || 0).toFixed(2)}{' '}
+                    YOU'VE REDUCED YOUR CO2 EMISSION BY { value }{' '}
                     POUNDS!
                   </Text>
                 </View>

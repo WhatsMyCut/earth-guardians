@@ -5,7 +5,6 @@ import {
   TouchableWithoutFeedback
 } from 'react-native';
 import PubSub from 'pubsub-js'
-import { BlurView } from 'expo';
 import { styles } from '../../../constants/Styles'
 import ZipCodeModal from '../modals/ZipCodeModal';
 import NotificationModal from '../modals/NotificationModal'
@@ -14,6 +13,7 @@ import WasteModal from '../modals/NotWasteReduceModal'
 import CarbonModal from '../modals/NotCO2EmissionModal'
 import UpdateUserModal from '../modals/UpdateUserModal';
 import CommunityEventModal from '../modals/CommunityEventModal';
+import GameCompleteModal from '../modals/GameCompleteModal';
 
 export default class ModalComponent extends React.Component {
   constructor(props) {
@@ -28,12 +28,12 @@ export default class ModalComponent extends React.Component {
       showWasteModal: false,
       showWaterModal: false,
       showCarbonModal: false,
+      showGameCompleteModal: false,
     }
   }
   componentDidMount() {
     this.setState({user: this.props.user})
     this.getComponent()
-    PubSub.subscribe('showZipCodeModal', data => this.openZipCodeModal(data));
     PubSub.subscribe('closeCommunityEventModal', data => this.closeCommunityEventModal(data))
     PubSub.subscribe('openCommunityEventModal', data => this.openCommunityEventModal(data))
   }
@@ -47,6 +47,7 @@ export default class ModalComponent extends React.Component {
       showUpdateUserModal: false,
       showNotificationModal: false,
       showCommunityEventModal: false,
+      showGameCompleteModal: false,
     })
     this.isMounted = false;
   }
@@ -61,6 +62,7 @@ export default class ModalComponent extends React.Component {
         showUpdateUserModal: false,
         showNotificationModal: false,
         showCommunityEventModal: false,
+        showGameCompleteModal: false,
       })
     }
   }
@@ -86,6 +88,12 @@ export default class ModalComponent extends React.Component {
     console.log('openCarbonModal', data)
     PubSub.publish('showBlur')
     this.setState({ showCarbonModal: true});
+  }
+
+  openGameCompleteModal = (data) => {
+    console.log('showGameCompleteModal', data)
+    PubSub.publish('showBlur')
+    this.setState({ showGameCompleteModal: true});
   }
 
   updateZipCode =(zipcode)=>{
@@ -132,10 +140,13 @@ export default class ModalComponent extends React.Component {
         this.setState({ showWasteModal: true })
         break;
       case 'CarbonModal':
-        this.setState({ showWasteModal: true })
+        this.setState({ showCarbonModal: true })
         break;
       case 'CommunityEventModal':
         this.setState({ showCommunityEventModal: true })
+        break;
+      case 'GameCompleteModal':
+        this.setState({ showGameCompleteModal: true })
         break;
       default:
         this.setState({ showCarbonModal: true })
@@ -185,6 +196,9 @@ export default class ModalComponent extends React.Component {
           }
           { this.state.showCarbonModal &&
             <CarbonModal carbon_dioxide={this.props.carbon_dioxide} onClose={() => this.props.onClose()} visible={this.state.showCarbonModal}/>
+          }
+          { this.state.showGameCompleteModal &&
+            <GameCompleteModal onClose={() => this.props.onClose()} visible={this.state.showGameCompleteModal}/>
           }
           { this.state.showCommunityEventModal &&
             <CommunityEventModal

@@ -9,13 +9,9 @@ import {
 import { styles, defaults } from '../../../constants/Styles';
 
 export default class WaterModal extends React.Component {
-  state = { modalVisible: true };
-  toggleModalVisible = () => {
-    this.setState({
-      modalVisible: !this.state.modalVisible,
-    });
-  };
   render() {
+    const { water } = this.props
+    const value = parseFloat(water.data || 0).toFixed(2);
     return (
       <Modal
         animationType="slide"
@@ -40,7 +36,7 @@ export default class WaterModal extends React.Component {
                     style={{ width: 100, height: 100, margin: 20, resizeMode: 'contain' }}
                   />
                   <Text style={[styles.headerText]}>
-                    YOU'VE REDUCED YOUR H2O COSUMPTION BY {parseFloat(this.props.water || 0).toFixed(2)} GALLONS!
+                    YOU'VE REDUCED YOUR H2O COSUMPTION BY { value } GALLONS!
                   </Text>
                 </View>
               </View>

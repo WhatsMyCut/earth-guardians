@@ -22,29 +22,6 @@ export default class ActionDetails extends React.Component {
   closeModal() {
     PubSub.publish('closeModal');
   }
-  _takeInAction = async () => {
-    try {
-      // TODO update Database
-
-      this.setState(
-        prevState => ({
-          in: !prevState.in,
-        })
-      );
-
-      ;
-      const page = 'MyActionScreen'
-      const item_id = await this.props.data.id;
-      const phone = await RetrieveData('phone');
-      const inout = (this.state.in) ? 'in' : 'out'
-      const params = {
-        page, event: 'TakeAction', in: inout, phone, id: item_id
-      }
-      _eventHit('TakeAction', params, res => this.props.takeTheAction())
-    } catch (e) {
-      console.log(e.message);
-    }
-  };
 
   render() {
     const { data } = this.props;
@@ -133,7 +110,7 @@ export default class ActionDetails extends React.Component {
         <TouchableOpacity
           onPress={() => {
             if(this.props.visible){
-              this._takeInAction()
+              this.props.takeTheAction()
             }
           }}
           disabled={this.props.canDelete ? !this.props.canGoThrough : false}

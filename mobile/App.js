@@ -18,10 +18,13 @@ export default class App extends React.Component {
     fontLoaded: false,
     showGameComplete: false,
     showNotificationModal: false,
-    showModal: false,
+    showBlur: false,
     showCarbonModal: false,
     showWasteModal: false,
     showWaterModal: false,
+    showZipCodeModal: false,
+    showGameCompleteModal: false,
+    showCongratulationsModal: false,
     notification: {
       data: {
         message: 'Here I am. Rock me like a hurricane.'
@@ -35,21 +38,22 @@ export default class App extends React.Component {
       'Proxima Nova Bold': require('./assets/fonts/ProximaNovaBold.ttf'),
     });
 
-    PubSub.subscribe('showNotificationModal', data => this.showNotificationModal(data));
-    PubSub.subscribe('closeBlur', this.closeBlur);
-    PubSub.subscribe('closeNotificationModal', this.closeNotificationModal);
     PubSub.subscribe('openBlur', this.openBlur);
-    PubSub.subscribe('showWasteModal', data => this.openWasteModal(data))
-    PubSub.subscribe('showWaterModal', data => this.openWaterModal(data));
-    PubSub.subscribe('openCarbonModal', data => this.openCarbonModal(data));
+    PubSub.subscribe('closeBlur', this.closeBlur);
+    PubSub.subscribe('showNotificationModal', (msg, data) => this.showNotificationModal(msg, data));
+    PubSub.subscribe('closeNotificationModal', (msg, data) => this.closeNotificationModal(msg, data));
+    PubSub.subscribe('showWasteModal', (msg, data) => this.openWasteModal((msg, data)))
+    PubSub.subscribe('showWaterModal', (msg, data) => this.openWaterModal((msg, data)));
+    PubSub.subscribe('openCarbonModal', (msg, data) => this.openCarbonModal((msg, data)));
+    PubSub.subscribe('openZipCodeModal', (msg, data) => this.openZipCodeModal((msg, data)));
+    PubSub.subscribe('openGameCompleteModal', (msg, data) => this.openGameCompleteModal((msg, data)));
     this._notificationSubscription = Notifications.addListener(this._handleNotification);
     this.setState({ fontLoaded: true });
   }
 
   _handleNotification = (notification) => {
     console.log('incoming notification', notification)
-    // this.setState({notification: notification});
-    this.setState({ showNotificationModal: true, notification: notification });
+    this.setState({ showBlur: true, showNotificationModal: true, notification: notification });
   };
 
   updateZipCode =(zipcode)=>{
@@ -66,52 +70,88 @@ export default class App extends React.Component {
   }
 
   openBlur = () => {
-    this.setState({showModal:true})
+    this.setState({ showBlur: true })
   }
 
   closeBlur = () => {
-    this.setState({
-      showNotificationModal: false,
-      showModal: false,
-    })
+    this.setState({ showBlur: false, })
   };
 
   closeGameCompleteModal = () =>{
     this.closeModal()
-    this.setState({showGameComplete:false});
+    this.setState({ showGameComplete:false });
   }
 
   closeNotificationModal = () => {
     this.closeBlur()
-    this.setState({ notification: null})
+    this.setState({ showNotificationModal: false, notification: null })
   }
 
   openCarbonModal = (data) => {
     console.log('App.openCarbonModal', data)
-    this.closeBlur()
-    this.setState({ showCarbonModal: true })
+    this.setState({ carbon_dioxide: data, showCarbonModal: true, showBlur: true })
   }
 
   openWaterModal = (data) => {
     console.log('App.openWaterModal', data)
-    this.closeBlur()
-    this.setState({ showWaterModal: true })
+    this.setState({ water: data, showWaterModal: true, showBlur: true })
   }
 
   openWasteModal = (data) => {
     console.log('App.openWasteModal', data)
-    this.closeBlur()
-    this.setState({ showWasteModal: true })
+    this.setState({ waste: data, showWasteModal: true, showBlur: true })
+  }
+
+  openZipCodeModal = (data) => {
+    console.log('App.openZipCodeModal', data)
+    this.setState({ zipcode: data, showZipCodeModal: true, showBlur: true })
+  }
+
+  openGameCompleteModal = (data) => {
+    console.log('App.openGameCompleteModal', data)
+    this.setState({ showGameCompleteModal: true, showBlur: true })
+  }
+
+  closeActionModal = () => {
+    this.setState({
+      showBlur: false,
+      showCarbonModal: false,
+      showWasteModal: false,
+      showWaterModal: false,
+      showZipCodeModal: false,
+      showCongratulationsModal: false,
+      showGameCompleteModal: false,
+    })
   }
 
   render() {
     // console.disableYellowBox = true;
-    const { fontLoaded, showModal, showNotificationModal } = this.state;
+    const {
+      fontLoaded,
+      showBlur,
+      showNotificationModal,
+      showCarbonModal,
+      showWaterModal,
+      showWasteModal,
+      showZipCodeModal,
+      showGameCompleteModal,
+      water,
+      waste,
+      carbon_dioxide,
+      zipcode,
+    } = this.state;
     if (!fontLoaded) {
       return null;
     }
 
-    const showBlur = (showModal || showNotificationModal)
+    const showBlurred = (showBlur || showNotificationModal);
+    let display = '';
+    if (showCarbonModal) display = 'CarbonModal'
+    else if (showWaterModal) display = 'WaterModal'
+    else if (showWasteModal) display = 'WasteModal'
+    else if (showZipCodeModal) display = 'ZipCodeModal'
+    else if (showGameCompleteModal) display = 'GameCompleteModal'
+    const showActionModal = display !== '';
     return (
       <StoreProvider>
         <ApolloProvider client={client}>
@@ -120,46 +160,46 @@ export default class App extends React.Component {
               NavigationService.setTopLevelNavigator(navigatorRef);
             }}
           />
-          {showBlur &&
-              <BlurView
-                tint="dark"
-                intensity={80}
-                style={[
-                  styles.container,
-                  styles.coverScreen,
-                  styles.coverAll,
-                  {
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    zIndex: 20
-                  }
-                ]}
-                onPress={() => {
-                this.closeBlur()
-              }}
-              />
+          {showBlurred &&
+            <BlurView
+              tint="dark"
+              intensity={80}
+              style={[
+                styles.container,
+                styles.coverScreen,
+                styles.coverAll,
+                {
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  zIndex: 20
+                }
+              ]}
+              onPress={() => {
+              this.closeBlur()
+            }}
+            />
           }
-          {this.state.showNotificationModal && (
+          {this.state.showNotificationModal &&
             <ModalComponent
               display={'NotificationModal'}
-              visible={showBlur}
+              visible={this.state.showNotificationModal}
               onClose={() => this.closeBlur}
               notification={this.state.notification}
               notificationClose={this.closeNotificationModal}
             />
+          }
+          {showActionModal && (
+            <ModalComponent
+              display={display}
+              visible={showActionModal}
+              onClose={() => this.closeActionModal()}
+              water={water}
+              waste={waste}
+              carbon_dioxide={carbon_dioxide}
+              zipcode={zipcode}
+            />
           )}
-
-          {/* {this.state.showGameComplete && (
-            <ModalComponent>
-              <GameCompleteModal onClose={this.closeGameCompleteModal}/>
-            </ModalComponent>
-          )}
-          {this.state.showNotificationModal && (
-            <ModalComponent>
-              <NotificationModal onClose={this.closeNotificationModal} notification={this.state.notification}/>
-            </ModalComponent>
-          )} */}
         </ApolloProvider>
       </StoreProvider>
     );

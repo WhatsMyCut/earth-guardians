@@ -13,6 +13,7 @@ import NavigationService from '../../../navigation/navigationService';
 import PubSub from 'pubsub-js'
 // import graphql from '../components/hoc/graphql';
 import DoubleClick from 'react-native-double-tap';
+import { RetrieveData } from '../../../store/AsyncStore';
 // import PasswordModal from '../modals/PasswordModal'
 import moment from 'moment';
 import graphql from '../../hoc/graphql';
@@ -21,6 +22,7 @@ import { DELETE_ACTION } from '../../graphql/mutations/delete_action';
 import { GET_USER } from '../../graphql/queries/get_user';
 import { MY_ACTIONS_QUERY } from '../../graphql/queries/my_actions_query';
 import { PrimaryImage } from '../../../constants/PrimaryImage';
+import { _eventHit } from '../../../services/googleAnalytics';
 
 
 @graphql(GET_USER, {
@@ -171,29 +173,60 @@ class ActionCardSmall extends React.Component {
       })
   }
 
-  _showTheModal = (data) => {
-    const { item } = this.props;
-    //this._takeAction()
+  _showTheModal = async (data) => {
+    const { item, canDelete } = this.props;
+    this._takeAction()
     let waste = item.action ? parseFloat(item.action.waste).toFixed(2) : parseFloat(item.waste).toFixed(2);
     let water = item.action ? parseFloat(item.action.water).toFixed(2) : parseFloat(item.water).toFixed(2);
     let carbon_dioxide = item.action ? parseFloat(item.action.carbon_dioxide).toFixed(2) : parseFloat(item.carbon_dioxide).toFixed(2);
-    if(this.props.canDelete){
+    if(canDelete){
 
       if(waste > water && waste > carbon_dioxide){
         console.log('here')
         data = waste
-        PubSub.publish('showWasteModal', data)
+        PubSub.publish('showWasteModal', {data})
       }else if(water > waste && water > carbon_dioxide){
         console.log('here2')
         data = water
-        PubSub.publish('showWaterModal', data)
+        PubSub.publish('showWaterModal', {data})
       } else {
         data = carbon_dioxide
-        PubSub.publish('openCarbonModal',data)
+        PubSub.publish('openCarbonModal',{data})
         console.log('here3', data)
       }
+      const page = 'MyActionScreen'
+      const item_id = await item.id;
+      const phone = await RetrieveData('phone');
+      const inout = (this.state.in) ? 'in' : 'out'
+      const params = {
+        page, event: 'TakeAction', in: inout, phone, id: item_id
+      }
+      _eventHit('TakeAction', params, res => console.log(res.event, res.params))
     }
   }
+
+  _addAction = async () => {
+    try {
+      // TODO update Database
+      this.setState(
+        prevState => ({
+          in: !prevState.in,
+        })
+      );
+      this._takeAction();
+      const page = 'MyActionScreen'
+      const item_id = await this.props.item.id;
+      const phone = await RetrieveData('phone');
+      const inout = (this.state.in) ? 'in' : 'out'
+      const params = {
+        page, event: 'AddAction', in: inout, phone, id: item_id
+      }
+      PubSub.publish('openGameCompleteModal', params);
+      _eventHit('AddAction', params, res => console.log(res.event, res.params))
+    } catch (e) {
+      console.log(e.message);
+    }
+  };
 
 
   flipCard() {
@@ -339,8 +372,8 @@ class ActionCardSmall extends React.Component {
             >
               <ActionDetails
                 visible={this.state.backVisible}
-                takeTheAction={this._showTheModal}
                 data={item}
+                takeTheAction={this._showTheModal}
                 canDelete={true}
                 canGoThrough={timeInfo.canGoThrough}
                 zipcode={get_user.me.zipcode}
@@ -433,7 +466,7 @@ class ActionCardSmall extends React.Component {
             <ActionDetails
               visible={this.state.backVisible}
               data={item}
-              takeTheAction={this._showTheModal}
+              takeTheAction={this._addAction}
               canDelete={false}
               zipcode={get_user.me.zipcode}
               openModal={this.props.openModal}

@@ -1,36 +1,40 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, Modal } from 'react-native';
-import { styles } from '../../../constants/Styles';
+import { View, Text, TouchableWithoutFeedback, Modal } from 'react-native';
+import { styles, defaults } from '../../../constants/Styles';
+import Logo from '../../../constants/Logo';
 export default class GameCompleteModal extends React.Component {
-  state = { modalVisible: true };
-  toggleModalVisible = () => {
-    this.setState({ modalVisible: !this.state.modalVisible });
-  };
   render() {
     return (
       <Modal
         animationType="slide"
         transparent={true}
-        visible={this.state.modalVisible}
-        onRequestClose={() => {
-
-        }}
+        visible={this.props.visible}
       >
-        <View
-          style={[styles.modalView, {
-            paddingTop: 200,
-            paddingHorizontal: 20
-          }]}
-        >
-          <View style={[styles.headerContainer]}>
-            <Text style={[styles.headerText]}>
-              Thank You!
-            </Text>
-            <Text style={[styles.textWhite18B]}>
-               Check 'My Actions' to keep track of the action you committed to.
-            </Text>
+        <TouchableWithoutFeedback style={[styles.container, styles.coverScreen]} onPress={() => {
+          this.props.onClose()
+        }}>
+          <View style={[styles.container]}>
+            <TouchableWithoutFeedback style={[styles.container, styles.coverScreen]} onPress={() => {
+                return false
+              }}>
+              <View style={[styles.modalView, {
+                marginVertical: (defaults.primaryHeight / 2) - 150,
+                marginHorizontal: 20 }]}>
+                <View style={[styles.headerContainer]}>
+                  <Logo style={{ width: 72, height: 72 }} />
+                  <View style={[styles.headerContainer]}>
+                    <Text style={[styles.headerText]}>
+                      Thank You!
+                    </Text>
+                    <Text style={[styles.textWhite18B]}>
+                      Check 'My Actions' to keep track of the action you committed to.
+                    </Text>
+                  </View>
+                </View>
+              </View>
+            </TouchableWithoutFeedback>
           </View>
-        </View>
+        </TouchableWithoutFeedback>
       </Modal>
     );
   }

@@ -9,14 +9,9 @@ import {
 import { styles, defaults } from '../../../constants/Styles';
 
 export default class WasteModal extends React.Component {
-  state = { modalVisible: true };
-  toggleModalVisible = () => {
-    this.setState({
-      modalVisible: !this.state.modalVisible,
-    });
-  };
-
   render() {
+    const { waste } = this.props
+    const value = parseFloat(waste.data || 0).toFixed(2);
     return (
       <Modal
         animationType="slide"
@@ -42,7 +37,7 @@ export default class WasteModal extends React.Component {
                     style={{ width: 138, height: 100, margin: 20 }}
                   />
                   <Text style={[styles.headerText]}>
-                    YOU'VE REDUCED YOUR WASTE BY {parseFloat(this.props.waste || 0 ).toFixed(2)} POUNDS!
+                    YOU'VE REDUCED YOUR WASTE BY { value } POUNDS!
                   </Text>
                 </View>
               </View>
