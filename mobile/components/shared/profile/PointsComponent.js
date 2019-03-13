@@ -7,6 +7,7 @@ import {
 import { LinearGradient } from 'expo';
 import LinearGradientProps from '../../../constants/LinearGradientProps';
 import { styles, defaults } from '../../../constants/Styles';
+import { _eventHit } from '../../../services/googleAnalytics';
 export default class PointsComponent extends React.Component {
   state = {
     front: true,
@@ -24,7 +25,7 @@ export default class PointsComponent extends React.Component {
   _viewB = () => {
     return (
       <View style={[styles.container]}>
-        <View style={styles.detailRow}>
+        <View style={[styles.detailRow]}>
           <View style={ { flexBasis: '33%' } }>
             <Text style={[styles.detailCell, styles.halfCell, styles.centerText]}>Energy</Text>
             <Text style={[styles.itemPoint, styles.detailCell, styles.halfCell, styles.centerText]}>{this.props.aggregate['Energy'] || 0}</Text>
@@ -38,7 +39,7 @@ export default class PointsComponent extends React.Component {
             <Text style={[styles.itemPoint, styles.detailCell, styles.halfCell, styles.centerText]}>{this.props.aggregate['Waste'] || 0}</Text>
           </View>
         </View>
-        <View style={styles.detailRow}>
+        <View style={[styles.detailRow, {marginTop: 10}]}>
           <View style={ {flexBasis: '33%'} }>
             <Text style={[styles.detailCell, styles.halfCell, styles.centerText]}>Water</Text>
             <Text style={[styles.itemPoint, styles.detailCell, styles.halfCell, styles.centerText]}>{this.props.aggregate['Water'] || 0}</Text>
@@ -64,10 +65,11 @@ export default class PointsComponent extends React.Component {
           onPress={() =>
             this.setState({
               front: !this.state.front,
-            })
-          }
+            },
+            _eventHit('PointsComponent', {action: (this.state.front) ? 'back' : 'front'}, res => console.log(res.event, res.params.action))
+          )}
         >
-          <View style={[styles.componentContainer, styles.centerAll, { height:120, }]}>
+          <View style={[styles.componentContainer, styles.centerAll, { }]}>
             <View style={styles.componentHeader}>
               <Text style={[styles.headerText]}>
                 MY POINTS

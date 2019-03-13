@@ -234,7 +234,7 @@ class PetitionScreen extends React.Component {
                 hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}
               >
                 <FontAwesome name="play" size={52} color="white" />
-                <Text style={[styles.smallWhiteText, {paddingTop: 10}]}>Play Video</Text>
+                <Text style={[styles.smallWhiteText, styles.smallTextShadow, {paddingTop: 10}]}>Play Video</Text>
               </TouchableOpacity>
             )}
 

@@ -3,8 +3,6 @@ import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { Icon } from 'expo';
 import PubSub from 'pubsub-js'
-import { _eventHit } from '../../../services/googleAnalytics'
-import { RetrieveData } from '../../../store/AsyncStore';
 import { styles } from '../../../constants/Styles'
 export default class ActionDetails extends React.Component {
 

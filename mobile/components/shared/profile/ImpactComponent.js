@@ -2,14 +2,12 @@ import React from 'react';
 import {
   View,
   Text,
-  Image,
-  Dimensions,
   TouchableOpacity,
-  StyleSheet,
 } from 'react-native';
 import { LinearGradient } from 'expo';
 import LinearGradientProps from '../../../constants/LinearGradientProps';
 import { styles } from '../../../constants/Styles'
+import { _eventHit } from '../../../services/googleAnalytics'
 
 export default class ImpactComponent extends React.Component {
   state = {
@@ -57,7 +55,7 @@ export default class ImpactComponent extends React.Component {
           </Text>
         </View>
 
-        <View style={[ styles.detailRow] }>
+        <View style={[ styles.detailRow, {marginTop: 10}] }>
           <Text style={[styles.detailCell, { flexBasis: '30%'}]}>
             H2O (gal):
           </Text>
@@ -66,7 +64,7 @@ export default class ImpactComponent extends React.Component {
           </Text>
         </View>
 
-        <View style={[ styles.detailRow] }>
+        <View style={[ styles.detailRow, {marginTop: 10}] }>
           <Text style={[styles.detailCell, { flexBasis: '30%'}]}>
             Waste (lbs):
           </Text>
@@ -87,8 +85,9 @@ export default class ImpactComponent extends React.Component {
           onPress={() =>
             this.setState({
               front: !this.state.front,
-            })
-          }
+            },
+            _eventHit('ImpactComponent', {action: (this.state.front) ? 'back' : 'front'}, res => console.log(res.event, res.params.action))
+          )}
         >
           <View style={[styles.componentContainer] }>
             <View style={styles.componentHeader}>
@@ -96,7 +95,7 @@ export default class ImpactComponent extends React.Component {
                 MY IMPACT
               </Text>
             </View>
-            <View style={[styles.container, { height:100, }]}>
+            <View style={[styles.container]}>
               {this.state.front ? this._viewA() : this._viewB()}
             </View>
           </View>
