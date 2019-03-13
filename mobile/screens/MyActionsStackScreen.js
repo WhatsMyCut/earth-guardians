@@ -4,7 +4,9 @@ import {
   FlatList,
   ActivityIndicator,
   Text,
-  View } from 'react-native';
+  ScrollView,
+  View,
+} from 'react-native';
 import { MY_ACTIONS_QUERY } from '../components/graphql/queries/my_actions_query';
 import HeaderNavBar from '../components/shared/navBar/HeaderNavBar';
 import ModalComponent from '../components/shared/modals/ModalComponent';
@@ -46,17 +48,21 @@ class MyActionsStackScreen extends React.Component {
       //console.log('event', event);
       return { id: event.id, action:event.action, createdAt:event.createdAt}
     });
-
+    const len = actions.length
     return (
-      <View style={[styles.container]}>
+      <ScrollView
+        style={[
+          styles.container,
+          styles.coverScreen,
+          styles.coverAll,
+        ]}>
         <FlatList
           style={[
             styles.container,
-            styles.coverScreen,
-            styles.coverAll,
             {
               paddingLeft: 10,
-              paddingRight: defaults.paddingHorizontal
+              paddingRight: defaults.paddingHorizontal,
+              marginBottom: 30 * (len / 2),
             }
           ]}
           numColumns={2}
@@ -68,7 +74,7 @@ class MyActionsStackScreen extends React.Component {
             )
           }}
         />
-      </View>
+      </ScrollView>
     );
   }
 
