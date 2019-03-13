@@ -14,6 +14,7 @@ import CarbonModal from '../modals/NotCO2EmissionModal'
 import UpdateUserModal from '../modals/UpdateUserModal';
 import CommunityEventModal from '../modals/CommunityEventModal';
 import GameCompleteModal from '../modals/GameCompleteModal';
+import PasswordModal from '../modals/PasswordModal';
 
 export default class ModalComponent extends React.Component {
   constructor(props) {
@@ -29,6 +30,7 @@ export default class ModalComponent extends React.Component {
       showWaterModal: false,
       showCarbonModal: false,
       showGameCompleteModal: false,
+      showPasswordModal: false,
     }
   }
   componentDidMount() {
@@ -48,6 +50,7 @@ export default class ModalComponent extends React.Component {
       showNotificationModal: false,
       showCommunityEventModal: false,
       showGameCompleteModal: false,
+      showPasswordModal: false,
     })
     this.isMounted = false;
   }
@@ -63,6 +66,7 @@ export default class ModalComponent extends React.Component {
         showNotificationModal: false,
         showCommunityEventModal: false,
         showGameCompleteModal: false,
+        showPasswordModal: false,
       })
     }
   }
@@ -94,6 +98,12 @@ export default class ModalComponent extends React.Component {
     console.log('showGameCompleteModal', data)
     PubSub.publish('showBlur')
     this.setState({ showGameCompleteModal: true});
+  }
+
+  openPasswordModal = (data) => {
+    console.log('showPasswordModal', data)
+    PubSub.publish('showBlur')
+    this.setState({ showPasswordModal: true});
   }
 
   updateZipCode =(zipcode)=>{
@@ -148,8 +158,11 @@ export default class ModalComponent extends React.Component {
       case 'GameCompleteModal':
         this.setState({ showGameCompleteModal: true })
         break;
+      case 'PasswordModal':
+        this.setState({ showPasswordModal: true })
+        break;
       default:
-        this.setState({ showCarbonModal: true })
+        this.setState({ showPasswordModal: true })
         break;
     }
   }
@@ -199,6 +212,18 @@ export default class ModalComponent extends React.Component {
           }
           { this.state.showGameCompleteModal &&
             <GameCompleteModal onClose={() => this.props.onClose()} visible={this.state.showGameCompleteModal}/>
+          }
+          { this.state.showPasswordModal &&
+            <PasswordModal
+              phone_signup={this.props.phone_signup}
+              setToken={this.props.setToken}
+              isVisible={this.state.showPasswordModal}
+              username={this.props.phone}
+              togglePasswordModal={this.props.togglePasswordModal}
+              onClose={this.props.onClose}
+              visible={this.state.showPasswordModal}
+              setLocation={this.props.setLocation}
+            />
           }
           { this.state.showCommunityEventModal &&
             <CommunityEventModal

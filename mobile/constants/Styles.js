@@ -65,6 +65,13 @@ export const styles = ScaledSheet.create({
     width: SCREEN_WIDTH,
     height: SCREEN_HEIGHT
   },
+  error: {
+    color: 'red',
+    marginHorizontal: 20,
+    fontSize: moderateScale(18),
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
   // Game Cards
   card: {
     height: CARD_HEIGHT,

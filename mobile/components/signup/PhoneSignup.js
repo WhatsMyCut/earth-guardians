@@ -47,7 +47,7 @@ export default class PhoneSignup extends React.Component {
     this.setState({ showPasswordModal: !this.state.showPasswordModal });
   };
 
-  setToken = (token) => {
+  setToken = token => {
     this.setState({token})
   }
 
@@ -68,12 +68,12 @@ export default class PhoneSignup extends React.Component {
   // }
   _setPhone = numberAndCode => {
     const { valid_phone } = this.state;
+    console.log('_setPhone', numberAndCode, valid_phone)
     if (valid_phone) {
       this.setState({
         phone: numberAndCode.number,
         username: numberAndCode.number,
         dialCode: numberAndCode.country_dial_code
-
       });
     }
   };
@@ -122,8 +122,8 @@ export default class PhoneSignup extends React.Component {
 
 
     return (
-        <Animated.View style={{flex:1}} {...this.viewResponder.panHandlers}>
-        <SafeAreaView style={{ flex: 1 }}>
+        <Animated.View style={[styles.container]} {...this.viewResponder.panHandlers}>
+        <SafeAreaView style={[styles.container]}>
 
          <Video
           source={{uri: this.state.video_url}}
@@ -154,11 +154,11 @@ export default class PhoneSignup extends React.Component {
               }}
             >
               <View style={[styles.container]}>
-                <Text style={styles.title}>Welcome to EarthTracks!</Text>
-                <Text style={{...styles.promo, fontWeight:'bold',paddingBottom:5}}>Fitness Tracker for the Planet</Text>
-                <Text style={styles.promo}>The change we need for a</Text>
-                <Text style={{...styles.promo,paddingBottom:5}}>regenerative shift starts with you.</Text>
-                <Text style={{...styles.promo,paddingBottom:8}}>ARE YOU IN?</Text>
+                <Text style={[styles.title]}>WELCOME TO EARTHTRACKS!</Text>
+                <Text style={[styles.promo, { fontWeight:'bold', paddingBottom:5 }]}>Fitness Tracker for the Planet</Text>
+                <Text style={[styles.promo]}>The change we need for a</Text>
+                <Text style={[styles.promo, { paddingBottom:5 }]}>regenerative shift starts with you.</Text>
+                <Text style={[styles.promo, { paddingBottom:8 }]}>ARE YOU IN?</Text>
               </View>
 
 
@@ -170,7 +170,7 @@ export default class PhoneSignup extends React.Component {
                   onChangeUpdatePhone = {this._setPhone}
                 />
                 {this.state.valid_phone && (
-                  <Text style={{fontSize:10, color:'#ffffff', paddingTop:3}}>By signing up, you confirm that you agree to our Terms of Use and have read and understood our <Text onPress={()=> Linking.openURL('https://app.termly.io/document/privacy-policy-for-website/ad2b059a-ddec-4f69-97a5-4dc346948ac7')}>Privacy Policy</Text>.</Text>
+                  <Text style={[styles.smallWhiteText]}>By signing up, you confirm that you agree to our Terms of Use and have read and understood our <Text onPress={()=> Linking.openURL('https://app.termly.io/document/privacy-policy-for-website/ad2b059a-ddec-4f69-97a5-4dc346948ac7')}>Privacy Policy</Text>.</Text>
                 )}
               </View>
             </View>
@@ -178,13 +178,13 @@ export default class PhoneSignup extends React.Component {
               <BlurView
               tint="dark"
               intensity={80}
-              style={{height:SCREEN_HEIGHT, width:SCREEN_WIDTH, position:"absolute"}}
+              style={[styles.coverScreen, styles.coverAll]}
               >
               <KeyboardAvoidingView behavior="padding" >
                 <PasswordModal phone_signup={this.phone_signup} setToken={this.setToken} isVisible={this.state.showPasswordModal} username={this.state.phone} togglePasswordModal={this.togglePasswordModal}/>
               </KeyboardAvoidingView>
               </BlurView>
-            )}
+             )}
 
             {this.state.valid_phone ? (
               <TouchableOpacity
