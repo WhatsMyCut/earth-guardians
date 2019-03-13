@@ -7,15 +7,15 @@ import {
   Text,
   ScrollView,
 } from 'react-native';
-import { LinearGradient, BlurView } from 'expo';
+import { LinearGradient, } from 'expo';
 import { Image } from 'react-native-expo-image-cache';
 import navigationService from '../navigation/navigationService';
 import _fetchVideoUrl from '../services/fetchVideoUrl';
-import LinearGradientProps from '../constants/LinearGradientProps';
 import ActionCardSmall from '../components/shared/card';
 import PrimaryImage from '../constants/PrimaryImage'
 import { FontAwesome } from '@expo/vector-icons';
 import { styles, defaults } from '../constants/Styles';
+
 export default class GeneralScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -85,11 +85,6 @@ export default class GeneralScreen extends React.Component {
 
   onModalClose = () => {
     this.setState({showWasteModal: false, showWaterModal : false, showCarbonModal: false, showZipcodeModal:false});
-  }
-
-  onActionModalClose = () => {
-    this.setState({showWasteModal: false, showWaterModal : false, showCarbonModal: false, showZipcodeModal:false});
-    this._takeAction();
   }
 
   renderPrimaryImage = () => {
@@ -171,35 +166,33 @@ export default class GeneralScreen extends React.Component {
     }
     return (
       <View style={[styles.container]}>
-        <SafeAreaView style={[styles.container]}>
-          <ScrollView style={[styles.container, {flexDirection: 'column'}]}>
-            <View style={[styles.container]}>{this.primaryView()}</View>
-            <View style={[styles.container, {
-                marginLeft: 10,
-                marginRight: defaults.marginHorizontal,
-                marginTop: 20,
-              }]}
-            >
-              <FlatList
-                style={[styles.container]}
-                numColumns={2}
-                style={{
-                  paddingRight: defaults.paddingRight,
-                  paddingBottom: 20
-                }}
-                data={this.props.data[0].actions}
-                keyExtractor={(item, index) => item.id}
-                renderItem={({ item, index }) => (
-                  <ActionCardSmall
-                    item={item}
-                    index={index}
-                    currScreen={this.props.screen}
-                  />
-                )}
-              />
-            </View>
-          </ScrollView>
-        </SafeAreaView>
+        <ScrollView style={[styles.container, {flexDirection: 'column'}]}>
+          <View style={[styles.container]}>{this.primaryView()}</View>
+          <View style={[styles.container, {
+              marginLeft: 10,
+              marginRight: defaults.marginHorizontal,
+              marginTop: 20,
+            }]}
+          >
+            <FlatList
+              style={[styles.container]}
+              numColumns={2}
+              style={{
+                paddingRight: defaults.paddingRight,
+                paddingBottom: 20
+              }}
+              data={this.props.data[0].actions}
+              keyExtractor={(item, index) => item.id}
+              renderItem={({ item, index }) => (
+                <ActionCardSmall
+                  item={item}
+                  index={index}
+                  currScreen={this.props.screen}
+                />
+              )}
+            />
+          </View>
+        </ScrollView>
       </View>
     );
   }

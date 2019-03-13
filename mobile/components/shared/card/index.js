@@ -1,28 +1,24 @@
 import React from 'react';
 import {
-  SafeAreaView,
-  ImageBackground,
-  Platform,
-  FlatList,
   Text,
   TouchableOpacity,
   Image,
   Animated,
   View,
 } from 'react-native';
-import { LinearGradient, BlurView } from 'expo';
+import { LinearGradient, } from 'expo';
 import ActionDetails from './ActionDetails';
 import { defaults, styles } from '../../../constants/Styles';
 import NavigationService from '../../../navigation/navigationService';
+import PubSub from 'pubsub-js'
 // import graphql from '../components/hoc/graphql';
 import DoubleClick from 'react-native-double-tap';
 // import PasswordModal from '../modals/PasswordModal'
 import moment from 'moment';
+import graphql from '../../hoc/graphql';
 import { TAKE_ACTION } from '../../graphql/mutations/take_action_mutation';
 import { DELETE_ACTION } from '../../graphql/mutations/delete_action';
-
 import { GET_USER } from '../../graphql/queries/get_user';
-import graphql from '../../hoc/graphql';
 import { MY_ACTIONS_QUERY } from '../../graphql/queries/my_actions_query';
 import { PrimaryImage } from '../../../constants/PrimaryImage';
 
@@ -175,21 +171,28 @@ class ActionCardSmall extends React.Component {
       })
   }
 
-  _showTheModal =() => {
+  _showTheModal = (data) => {
     const { item } = this.props;
+    //this._takeAction()
+    let waste = item.action ? parseFloat(item.action.waste).toFixed(2) : parseFloat(item.waste).toFixed(2);
+    let water = item.action ? parseFloat(item.action.water).toFixed(2) : parseFloat(item.water).toFixed(2);
+    let carbon_dioxide = item.action ? parseFloat(item.action.carbon_dioxide).toFixed(2) : parseFloat(item.carbon_dioxide).toFixed(2);
+    if(this.props.canDelete){
 
-      let waste = item.action ? parseFloat(item.action.waste).toFixed(2) : parseFloat(item.waste).toFixed(2);
-      let water = item.action ? parseFloat(item.action.water).toFixed(2) : parseFloat(item.water).toFixed(2);
-      let carbon_dioxide = item.action ? parseFloat(item.action.carbon_dioxide).toFixed(2) : parseFloat(item.carbon_dioxide).toFixed(2);
-      if(this.props.canDelete){
-        if(waste > water && waste > carbon_dioxide){
-          this.setState({showWasteModal:true})
-        }else if(water > waste && water > carbon_dioxide){
-          this.setState({showWaterModal:true})
-        }else{
-          this.setState({showCarbonModal:true})
-        }
+      if(waste > water && waste > carbon_dioxide){
+        console.log('here')
+        data = waste
+        PubSub.publish('showWasteModal', data)
+      }else if(water > waste && water > carbon_dioxide){
+        console.log('here2')
+        data = water
+        PubSub.publish('showWaterModal', data)
+      } else {
+        data = carbon_dioxide
+        PubSub.publish('openCarbonModal',data)
+        console.log('here3', data)
       }
+    }
   }
 
 
@@ -430,7 +433,7 @@ class ActionCardSmall extends React.Component {
             <ActionDetails
               visible={this.state.backVisible}
               data={item}
-              takeTheAction={this._takeAction}
+              takeTheAction={this._showTheModal}
               canDelete={false}
               zipcode={get_user.me.zipcode}
               openModal={this.props.openModal}

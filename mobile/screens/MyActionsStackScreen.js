@@ -1,18 +1,16 @@
 import React from 'react';
-import { SafeAreaView, FlatList, ActivityIndicator, Text, View } from 'react-native';
-import { LinearGradient, AppLoading } from 'expo';
-import { all } from 'rsvp';
-
+import {
+  SafeAreaView,
+  FlatList,
+  ActivityIndicator,
+  Text,
+  View } from 'react-native';
 import { MY_ACTIONS_QUERY } from '../components/graphql/queries/my_actions_query';
 import HeaderNavBar from '../components/shared/navBar/HeaderNavBar';
+import ModalComponent from '../components/shared/modals/ModalComponent';
 import graphql from '../components/hoc/graphql';
 import ActionCardSmall from '../components/shared/card';
-import LinearGradientProps from '../constants/LinearGradientProps';
-import { GET_USER } from '../components/graphql/queries/get_user';
-import { Query } from 'react-apollo';
-//import { data } from './dummy/actions.json';
 import { actions_data } from './dummy/data';
-import NavigationService from '../navigation/navigationService';
 import { styles, defaults } from '../constants/Styles';
 
 @graphql(MY_ACTIONS_QUERY,{
@@ -86,6 +84,15 @@ class MyActionsStackScreen extends React.Component {
     return (
       <SafeAreaView style={[styles.greyCard]}>
         {this._renderActions()}
+        {this.state.showModal &&
+          <ModalComponent
+            display={'NotificationModal'}
+            visible={this.state.showModal}
+            onClose={() => this.closeBlur}
+            notification={this.state.notification}
+            notificationClose={this.closeNotificationModal}
+          />
+        }
       </SafeAreaView>
     );
   }

@@ -70,6 +70,24 @@ export default class ModalComponent extends React.Component {
     this.setState({ showZipCodeModal: true});
   }
 
+  openWasteModal = (data) => {
+    console.log('openWasteModal', data)
+    this.closeModal()
+    this.setState({ showWasteModal: true });
+  }
+
+  openWaterodal = (data) => {
+    console.log('openWaterodal', data)
+    this.closeModal()
+    this.setState({ showWaterModal: true});
+  }
+
+  openCarbonModal = (data) => {
+    console.log('openCarbonModal', data)
+    PubSub.publish('showBlur')
+    this.setState({ showCarbonModal: true});
+  }
+
   updateZipCode =(zipcode)=>{
     const { get_user, update_zipcode} = this.props;
     if(zipcode){
@@ -81,30 +99,6 @@ export default class ModalComponent extends React.Component {
         this.setState({showZipCodeModal: false});
       })
     }
-  }
-
-  onActionModalClose = () => {
-    this._takeAction()
-    .then(() => this.closeAll())
-    .then(this.props.onClose());
-  }
-
-  _takeAction = () => {
-    const { take_action, item, canDelete } = this.props;
-    const { currScreen, user } = this.state;
-      let variables = {
-        id: user.me.id,
-        action : item.action ? item.action.id : item.id
-      }
-      take_action({variables})
-      .then(response => {
-        if(item.related_actions){
-          if(item.related_actions.length > 0){
-            NavigationService.navigate('Game',{ previousScreen: currScreen, games:item.related_actions, game_title:item.game_title ? item.game_title : null});
-          }
-        }
-        this.flipCard();
-      })
   }
 
   openCommunityEventModal() {
@@ -184,13 +178,13 @@ export default class ModalComponent extends React.Component {
             <UpdateUserModal my_user={this.props.user} saveUser={() => this.props.updateUser() } onClose={() => this.props.onClose()} visible={this.state.showUpdateUserModal}/>
           }
           { this.state.showWasteModal &&
-            <WasteModal waste={this.state.waste} onClose={() => this.onActionModalClose()} visible={this.state.showWasteModal}/>
+            <WasteModal waste={this.props.waste} onClose={() => this.props.onClose()} visible={this.state.showWasteModal}/>
           }
           { this.state.showWaterModal &&
-            <WaterModal water={this.props.water} onClose={() => this.onActionModalClose()} visible={this.state.showWaterModal}/>
+            <WaterModal water={this.props.water} onClose={() => this.props.onClose()} visible={this.state.showWaterModal}/>
           }
           { this.state.showCarbonModal &&
-            <CarbonModal carbon_dioxide={this.state.carbon_dioxide} onClose={() => this.onActionModalClose()} visible={this.state.showCarbonModal}/>
+            <CarbonModal carbon_dioxide={this.props.carbon_dioxide} onClose={() => this.props.onClose()} visible={this.state.showCarbonModal}/>
           }
           { this.state.showCommunityEventModal &&
             <CommunityEventModal

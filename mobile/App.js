@@ -19,6 +19,9 @@ export default class App extends React.Component {
     showGameComplete: false,
     showNotificationModal: false,
     showModal: false,
+    showCarbonModal: false,
+    showWasteModal: false,
+    showWaterModal: false,
     notification: {
       data: {
         message: 'Here I am. Rock me like a hurricane.'
@@ -36,6 +39,9 @@ export default class App extends React.Component {
     PubSub.subscribe('closeBlur', this.closeBlur);
     PubSub.subscribe('closeNotificationModal', this.closeNotificationModal);
     PubSub.subscribe('openBlur', this.openBlur);
+    PubSub.subscribe('showWasteModal', data => this.openWasteModal(data))
+    PubSub.subscribe('showWaterModal', data => this.openWaterModal(data));
+    PubSub.subscribe('openCarbonModal', data => this.openCarbonModal(data));
     this._notificationSubscription = Notifications.addListener(this._handleNotification);
     this.setState({ fontLoaded: true });
   }
@@ -78,6 +84,24 @@ export default class App extends React.Component {
   closeNotificationModal = () => {
     this.closeBlur()
     this.setState({ notification: null})
+  }
+
+  openCarbonModal = (data) => {
+    console.log('App.openCarbonModal', data)
+    this.closeBlur()
+    this.setState({ showCarbonModal: true })
+  }
+
+  openWaterModal = (data) => {
+    console.log('App.openWaterModal', data)
+    this.closeBlur()
+    this.setState({ showWaterModal: true })
+  }
+
+  openWasteModal = (data) => {
+    console.log('App.openWasteModal', data)
+    this.closeBlur()
+    this.setState({ showWasteModal: true })
   }
 
   render() {

@@ -32,7 +32,7 @@ export default class ActionDetails extends React.Component {
         })
       );
 
-      this.props.takeTheAction();
+      ;
       const page = 'MyActionScreen'
       const item_id = await this.props.data.id;
       const phone = await RetrieveData('phone');
@@ -40,7 +40,7 @@ export default class ActionDetails extends React.Component {
       const params = {
         page, event: 'TakeAction', in: inout, phone, id: item_id
       }
-      _eventHit('TakeAction', params, res => console.log(res.event, res.params))
+      _eventHit('TakeAction', params, res => this.props.takeTheAction())
     } catch (e) {
       console.log(e.message);
     }
