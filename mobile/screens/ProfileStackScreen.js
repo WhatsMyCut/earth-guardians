@@ -115,7 +115,7 @@ class ProfileStackScreen extends React.Component {
 
   render() {
     const { my_user } = this.props
-    console.log('this.props', my_user);
+    // console.log('this.props', my_user);
     if (my_user.loading) {
       return (
         <SafeAreaView style={[styles.container]}>

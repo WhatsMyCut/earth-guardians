@@ -36,7 +36,7 @@ function returnLabel(focused, label) {
       </View>
     );
   }
-  const hitLabel = label.charAt(0,0).toUpperCase() + _.camelCase(label).substr(1,label.length).toLowerCase();
+  const hitLabel = label.toLowerCase().charAt(0,0).toUpperCase() + _.camelCase(label).substr(1,label.length);
   _pageHit(hitLabel, res => console.log(res.page))
   return (
     <View

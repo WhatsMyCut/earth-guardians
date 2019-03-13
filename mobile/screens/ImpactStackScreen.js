@@ -22,6 +22,7 @@ import { GET_USER } from '../components/graphql/queries/get_user';
 import { CREATE_COMMUNITY_EVENT } from '../components/graphql/mutations/create_community_mutation';
 import { styles, defaults } from '../constants/Styles'
 import BadgeComponent from '../components/shared/profile/BadgeComponent';
+import { _eventHit } from '../services/googleAnalytics';
 
 @graphql(ALL_MY_METRICS, {
   name: 'all_metrics',
@@ -214,7 +215,10 @@ ImpactStackScreen.navigationOptions = {
   ),
   headerRight: (
     <TouchableOpacity
-      onPress={() => NavigationService.navigate('Profile')}
+      onPress={() => {
+        _eventHit('ImpactStackScreen', { action: 'Profile', event: 'click'}, res => console.log(res.event, res.params.action))
+        NavigationService.navigate('Profile')
+      }}
       hitSlop={{top: 15, left: 15, right:15, bottom:15}}
       style={[styles.container, {paddingRight: defaults.padding}]}
     >

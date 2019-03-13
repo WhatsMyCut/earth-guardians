@@ -28,7 +28,6 @@ export default class UpdateUserModal extends React.Component {
 
   constructor(props) {
     super(props);
-    console.log('UpdateUserModal', this.props.my_user.me)
   }
 
   componentDidMount() {

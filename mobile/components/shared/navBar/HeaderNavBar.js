@@ -1,12 +1,20 @@
 import React from 'react';
-import { View, Image, TouchableOpacity } from 'react-native';
+import {
+  View,
+  Image,
+  TouchableOpacity
+} from 'react-native';
+import { _eventHit } from '../../../services/googleAnalytics';
 
 import navigationService from '../../../navigation/navigationService';
 
 const CommunityIcon = () => {
   return (
     <TouchableOpacity
-      onPress={() => navigationService.navigate('Ranking')}
+      onPress={() => {
+        _eventHit('HeaderNav', {action: 'Ranking'}, res => console.log(res.event, res.params.action))
+        navigationService.navigate('Ranking')
+      }}
       hitSlop={{top: 15, left: 15, right:15, bottom:15}}
     >
       <Image
@@ -20,7 +28,10 @@ const CommunityIcon = () => {
 const EyeIcon = () => {
   return (
     <TouchableOpacity
-      onPress={() => navigationService.navigate('EGInfo')}
+      onPress={() => {
+        _eventHit('HeaderNav', {action: 'EGInfo'}, res => console.log(res.event, res.params.action))
+        navigationService.navigate('EGInfo')
+      }}
       hitSlop={{top: 15, left: 15, right:15, bottom:15}}
     >
       <Image
@@ -34,7 +45,10 @@ const EyeIcon = () => {
 const UserIcon = () => {
   return (
     <TouchableOpacity
-      onPress={() => navigationService.navigate('Impact')}
+      onPress={() => {
+        _eventHit('HeaderNav', {action: 'Impact'}, res => console.log(res.event, res.params.action))
+        navigationService.navigate('Impact')
+      }}
       hitSlop={{top: 15, left: 15, right:15, bottom:15}}
     >
       <Image

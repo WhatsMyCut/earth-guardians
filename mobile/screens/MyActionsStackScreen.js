@@ -62,7 +62,7 @@ class MyActionsStackScreen extends React.Component {
             {
               paddingLeft: 10,
               paddingRight: defaults.paddingHorizontal,
-              marginBottom: 30 * (len / 2),
+              marginBottom: 28 * (len / 2),
             }
           ]}
           numColumns={2}
