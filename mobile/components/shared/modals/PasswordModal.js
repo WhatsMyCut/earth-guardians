@@ -69,7 +69,7 @@ export default class PasswordModal extends React.Component {
     let location = await Location.getCurrentPositionAsync({});
     let address = await Location.reverseGeocodeAsync(location.coords);
 
-    console.log('location', location, address[0]);
+    // console.log('location', location, address[0]);
     this.props.setLocation(address[0]);
   };
 
@@ -93,7 +93,7 @@ export default class PasswordModal extends React.Component {
     }
 
     let token = await Notifications.getExpoPushTokenAsync();
-    console.log('Token is ', token);
+    // console.log('Token is ', token);
 
     this.props.setToken(token);
   };
