@@ -62,7 +62,7 @@ class ProfileStackScreen extends React.Component {
   updateMyUser = (state) => {
     const { password, confirmPassword } = this.state;
     const { my_user, update_user } = this.props;
-    
+
     let variables = {
       id: my_user.me.id,
       phone: state.phone ? state.phone : my_user.me.username,
@@ -79,7 +79,7 @@ class ProfileStackScreen extends React.Component {
     console.log('update user variables', variables);
 
     update_user({ variables }).then(res => {
-      console.log('response', res);
+      // console.log('response', res.);
       my_user.refetch();
       PubSub.publish('closeModal');
       this.closeAll();
@@ -145,6 +145,7 @@ class ProfileStackScreen extends React.Component {
               onClose={() => this.closeAll()}
               updateUser={this.updateMyUser}
               user={my_user}
+              inputZipCode={this.inputZipCode}
             />
           }
         </View>

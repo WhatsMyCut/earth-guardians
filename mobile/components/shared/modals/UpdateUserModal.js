@@ -98,7 +98,7 @@ export default class UpdateUserModal extends React.Component {
               return false
             }}>
               <View style={[styles.modalView, styles.centerAll, {
-                marginVertical: (defaults.primaryHeight / 2) - 275,
+                marginVertical: (defaults.primaryHeight / 2) - 225,
               }]}>
           <KeyboardAvoidingView
             behavior="position"
@@ -124,13 +124,13 @@ export default class UpdateUserModal extends React.Component {
                     />
                     <TextInput
                       style={[styles.textInput]}
-                      onChangeText={zipcode => this.props.inputZipCode(zipcode)}
+                      onChangeText={zipcode => this.setState({zipcode})}
                       placeholder={'Zipcode'}
                       placeholderTextColor={Colors.white}
                       keyboardType="numeric"
                       secureTextEntry={false}
                       returnKeyType="done"
-                      value={this.props.zipcode}
+                      value={this.state.zipcode}
                     />
                     <TextInput
                       style={[styles.textInput]}
