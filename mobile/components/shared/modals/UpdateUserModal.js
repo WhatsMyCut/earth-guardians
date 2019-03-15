@@ -11,7 +11,7 @@ import {
   KeyboardAvoidingView,
   ScrollView,
 } from 'react-native';
-
+import { Notifications, Permissions} from 'expo';
 import { Dropdown } from 'react-native-material-dropdown';
 import { styles } from '../../../constants/Styles';
 import Colors from '../../../constants/Colors';
@@ -24,6 +24,7 @@ export default class UpdateUserModal extends React.Component {
     name: null,
     email: null,
     crew_type: null,
+    token: null
   };
 
   constructor(props) {
@@ -40,9 +41,37 @@ export default class UpdateUserModal extends React.Component {
       crew: my_user.me.crew,
       name: my_user.me.name,
       email: my_user.me.email,
-      crew_type: my_user.me.crew_type
+      crew_type: my_user.me.crew_type,
+      token: my_user.me.token
     })
+
+    this.registerForPushNotificationsAsync();
   }
+
+  registerForPushNotificationsAsync = async () => {
+    const { status: existingStatus } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
+    let finalStatus = existingStatus;
+
+    // only ask if permissions have not already been determined, because
+    // iOS won't necessarily prompt the user a second time.
+    if (existingStatus !== 'granted') {
+      // Android remote notification permissions are granted during the app
+      // install, so this will only ask on iOS
+      const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+      finalStatus = status;
+    }
+
+    // Stop here if the user did not grant permissions
+    if (finalStatus !== 'granted') {
+      return;
+    }
+
+    let token = await Notifications.getExpoPushTokenAsync();
+    console.log('token', token);
+    // console.log('Token is ', token);
+
+    this.setState({token});
+  };
 
   render() {
     const { goBack, my_user } = this.props;
