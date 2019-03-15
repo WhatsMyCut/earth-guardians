@@ -38,8 +38,9 @@ export default class RedirectModal extends React.Component {
                     style={[styles.buttonContainer]}
                     onPress={() => {
                       const { external_url } = this.props;
-                      if (_.trim(external_url)) {
-                        WebBrowser.openBrowserAsync();
+                      _.trim(external_url)
+                      if (external_url !== '') {
+                        WebBrowser.openBrowserAsync(external_url);
                       }
                       this.props.onClose();
                     }}
