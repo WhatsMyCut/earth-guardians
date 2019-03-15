@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import { styles, defaults } from '../../../constants/Styles';
 import { WebBrowser } from 'expo';
+import _ from 'lodash';
 export default class RedirectModal extends React.Component {
   render() {
     return (
@@ -36,7 +37,10 @@ export default class RedirectModal extends React.Component {
                   <TouchableOpacity
                     style={[styles.buttonContainer]}
                     onPress={() => {
-                      WebBrowser.openBrowserAsync(this.props.external_url.trim());
+                      const { external_url } = this.props;
+                      if (_.trim(external_url)) {
+                        WebBrowser.openBrowserAsync();
+                      }
                       this.props.onClose();
                     }}
                   >
