@@ -153,7 +153,7 @@ export default class PhoneSignup extends React.Component {
                 paddingRight: 70,
               }}
             >
-              <View style={[styles.container]}>
+              <View style={[styles.container, { marginBottom: 10}]}>
                 <Text style={[styles.title]}>WELCOME TO EARTHTRACKS!</Text>
                 <Text style={[styles.promo, { fontWeight:'bold', paddingBottom:5 }]}>Fitness Tracker for the Planet</Text>
                 <Text style={[styles.promo]}>The change we need for a</Text>
