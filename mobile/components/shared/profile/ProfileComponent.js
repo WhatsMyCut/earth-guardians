@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   View,
+  ScrollView,
   Text,
   ActivityIndicator,
   TouchableHighlight,
@@ -39,29 +40,29 @@ export default class ProfileComponent extends React.Component {
     const crewstyle = this.greyOrWhite(my_user.me.crew);
     const crewtypestyle = this.greyOrWhite(my_user.me.crew_type);
     return (
-      <View style={[styles.container]}>
+      <ScrollView style={[styles.container]}>
         <TouchableOpacity
           onPress={() => this.props.updatePic()}
-          style={[styles.container, {width: '100%'}]}
+          style={[styles.container,]}
         >
           <LinearGradient
           {...LinearGradientProps.profileItem}
-          style={[styles.container, styles.linearGradientBox, styles.centerAll, {width: '100%', padding: 20}]}>
-            <View style={[styles.container, {position: 'relative', width: '100%'}]}>
-              <Image source={profilepic} style={[styles.profileImage, {alignSelf: 'center'}]} />
-              <View style={[styles.container, {position: 'absolute', left: 105, right: 105, bottom: 20}]}>
-                <Text style={[styles.container,styles.smallWhiteText, {position: 'absolute', right: 0, top: 5,}]}>Click to Update</Text>
+          style={[ styles.linearGradientBox, styles.centerAll, {width: '100%', padding: 20}]}>
+            <View style={[styles.container]}>
+              <Image source={profilepic} style={[styles.profileImage, {alignSelf: 'center', marginBottom: 30}]} />
+              <View style={[styles.centerAll, { flexDirection: 'row', top: -10}]}>
                 <MaterialCommunityIcons
                   name="camera-front-variant"
                   size={22}
                   color={'#fff'}
-                  style={[styles.container, {position: 'absolute', left: 0}]}
+                  style={[styles.container, styles.centerText]}
                 />
+                <Text style={[styles.container, styles.smallWhiteText, { whiteSpace: 'nowrap', flexBasis: 80 }]}>Click to Update</Text>
               </View>
             </View>
           </LinearGradient>
         </TouchableOpacity>
-        <View style={[styles.container, styles.centerText, , { marginTop: 20,}]}>
+        <View style={[styles.container, styles.centerText, { marginTop: 20,}]}>
           <View style={[styles.profileRow]}>
             <Text style={[styles.profileCell, styles.underline, namestyle]}>{my_user.me.name || 'Name'}</Text>
           </View>
@@ -81,15 +82,13 @@ export default class ProfileComponent extends React.Component {
             <Text style={[styles.profileCell, styles.underline, crewtypestyle]}>{my_user.me.crew_type || 'Affiliation Type'}</Text>
           </View>
         </View>
-        <View style={[styles.container]}>
-          <TouchableOpacity
-            style={[styles.buttonContainer]}
-            onPress={() => this.props.openModal()}
-          >
-            <Text style={[styles.textGrey18B]}>Update Profile</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
+        <TouchableOpacity
+          style={[styles.buttonContainer]}
+          onPress={() => this.props.openModal()}
+        >
+          <Text style={[styles.textGrey18B]}>Update Profile</Text>
+        </TouchableOpacity>
+      </ScrollView>
     );
   }
 }
