@@ -18,7 +18,6 @@ import NavigationService from '../navigation/navigationService';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import client from '../Apollo';
 import PubSub from 'pubsub-js';
-import RedirectModal from '../components/shared/modals/RedirectModal';
 import { PrimaryImage } from '../constants/PrimaryImage';
 import { styles, SCREEN_HEIGHT, SCREEN_WIDTH, SAFE_WIDTH } from '../constants/Styles';
 import _fetchVideoUrl from '../services/fetchVideoUrl';
@@ -236,7 +235,6 @@ class CommunityStackScreen extends React.Component {
 
   _openRedirectWithUrl = url => {
     PubSub.publish('openRedirectModal', url)
-    // this.setState({ showRedirectModal: true, redirectModalPetition: url });
   };
 
   _renderCard = petition => {
@@ -325,8 +323,6 @@ class CommunityStackScreen extends React.Component {
     const {
       petitions,
       loading,
-      redirectModalPetition,
-      showRedirectModal,
     } = this.state;
 
     if (!petitions) {
