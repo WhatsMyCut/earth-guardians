@@ -183,31 +183,31 @@ export default class PasswordModal extends React.Component {
   _userNotExistsContent() {
     return (
       <View style={[styles.container]}>
-        <Text style={[styles.headerText]}>
-          Create a Password
-        </Text>
-        <KeyboardAvoidingView style={[styles.container]}>
-          <TextInput
-            style={[styles.textInput]}
-            onChangeText={(password) => this.setState({ password, passwordError: null })}
-            placeholder="Password"
-            placeholderTextColor="#fff"
-            keyboardType="default"
-            secureTextEntry={true}
-            returnKeyType="done"
-            // value={this.state.zipCode}
-          />
-          <TextInput
-            style={[styles.textInput]}
-            onChangeText={(confirmPassword) => this.setState({ confirmPassword, passwordError: null })}
-            placeholder="Confirm Password"
-            placeholderTextColor="#fff"
-            keyboardType="default"
-            secureTextEntry={true}
-            returnKeyType="done"
-            // value={this.state.zipCode}
-          />
-        </KeyboardAvoidingView>
+        <View style={[styles.headerContainer]}>
+          <Text style={[styles.headerText]}>
+            Create a Password
+          </Text>
+        </View>
+        <TextInput
+          style={[styles.textInput]}
+          onChangeText={(password) => this.setState({ password, passwordError: null })}
+          placeholder="Password"
+          placeholderTextColor="#fff"
+          keyboardType="default"
+          secureTextEntry={true}
+          returnKeyType="done"
+          // value={this.state.zipCode}
+        />
+        <TextInput
+          style={[styles.textInput, {marginTop: 10}]}
+          onChangeText={(confirmPassword) => this.setState({ confirmPassword, passwordError: null })}
+          placeholder="Confirm Password"
+          placeholderTextColor="#fff"
+          keyboardType="default"
+          secureTextEntry={true}
+          returnKeyType="done"
+          // value={this.state.zipCode}
+        />
         <View style={[styles.container]}>
           <TouchableOpacity
             style={[styles.buttonContainer]}
@@ -228,11 +228,9 @@ export default class PasswordModal extends React.Component {
     }
 
     if (user_exists_query.user) {
-      if (user_exists_query.user.id) {
-        content = this._userExistsContent();
-      } else {
-        content = this._userNotExistsContent();
-      }
+      content = this._userExistsContent();
+    } else {
+      content = this._userNotExistsContent();
     }
 
     return (
@@ -244,30 +242,32 @@ export default class PasswordModal extends React.Component {
         <TouchableWithoutFeedback style={[styles.container, styles.coverScreen]} onPress={() => {
           this.props.onClose()
         }}>
-          <View style={[styles.container]}>
-            <TouchableWithoutFeedback style={[styles.container, styles.coverScreen]} onPress={() => {
-                return false
-              }}>
-              <View style={[styles.modalView, {
-                marginVertical: (defaults.primaryHeight / 2) - 150,
-                marginHorizontal: 20 }]}
-              >
-                {this.state.passwordError && (
-                  <Text style={[styles.error]}>
-                    {this.state.passwordError}
-                  </Text>
-                )}
-                {this.state.standardError && (
-                  <Text style={[styles.error]}>
-                    {this.state.standardError}
-                  </Text>
-                )}
-                {
-                  content
-                }
-              </View>
-            </TouchableWithoutFeedback>
-          </View>
+          <KeyboardAvoidingView style={[styles.container]}>
+            <View style={[styles.container]}>
+              <TouchableWithoutFeedback style={[styles.container, styles.coverScreen]} onPress={() => {
+                  return false
+                }}>
+                <View style={[styles.modalView, {
+                  marginVertical: (defaults.primaryHeight / 2) - 150,
+                  marginHorizontal: 20 }]}
+                >
+                  {this.state.passwordError && (
+                    <Text style={[styles.error]}>
+                      {this.state.passwordError}
+                    </Text>
+                  )}
+                  {this.state.standardError && (
+                    <Text style={[styles.error]}>
+                      {this.state.standardError}
+                    </Text>
+                  )}
+                  {
+                    content
+                  }
+                </View>
+              </TouchableWithoutFeedback>
+            </View>
+          </KeyboardAvoidingView>
         </TouchableWithoutFeedback>
       </Modal>
     );
