@@ -30,6 +30,7 @@ export default class UpdateUserModal extends React.Component {
     super(props);
   }
 
+
   componentDidMount() {
     const { my_user } = this.props
     if (!my_user) return

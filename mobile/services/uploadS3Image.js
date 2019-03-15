@@ -6,14 +6,18 @@ import mime from 'mime-types';
 export const _pickImage = async () => {
   console.log('_pickImage');
   const {
-    status: cameraRollPerm
-  } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
-  if (cameraRollPerm === 'granted') {
+    status
+  } = await Permissions.getAsync(Permissions.CAMERA_ROLL);
+  if (status === 'granted') {
+    console.log('camera roll was granted');
     let pickerResult = await ImagePicker.launchImageLibraryAsync({
       allowsEditing: true,
       aspect: [4, 3],
     });
     return _handleImagePicked(pickerResult);
+  }  else{
+    await Permissions.askAsync(Permissions.CAMERA_ROLL);
+    // _pickImage();
   }
 }
 
@@ -40,6 +44,8 @@ export const  _handleImagePicked = async (pickerResult) => {
     successActionStatus: 201
   }
   try {
+
+    // this call is causing issues
     return await RNS3.put(file, options)
     .then(res => res)
     .catch(e => console.log(e))

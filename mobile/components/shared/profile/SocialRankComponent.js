@@ -7,27 +7,35 @@ import { styles } from '../../../constants/Styles'
 
 
 export default class SocialRankComponent extends React.Component {
+
+
   render() {
+    console.log('this.props._user rankings', this.props);
+
     let len = this.props.user_rankings.length;
     let my_user_rank = this.props.user_rankings.find(user => user.id == this.props.my_user.id);
+    
+    console.log('my_user_rank', my_user_rank);
     return (
       <View style={[styles.greyCard, { margin: 15 }]}>
         <Text style={styles.socialRankHeader}>My Rank</Text>
         <View style={[styles.rankRow, styles.noDivider]}>
-          <Text style={[styles.socialRankNumber]}>{"1"}</Text>
+          <Text style={[styles.socialRankNumber]}>{my_user_rank.rank}</Text>
           <View style={styles.rankDetail}>
             <Text style={styles.rankName}>
-              {"ME ME ME"}
+              {my_user_rank.name}
             </Text>
             <Text style={styles.smallWhiteText}>
-              {"567"}
+              {my_user_rank.total_points}
             </Text>
           </View>
-          <Text style={styles.rankState}>{"Colorado".substr(0,2).toUpperCase()}</Text>
+          <Text style={styles.rankState}>{my_user_rank.state.substr(0,2).toUpperCase()}</Text>
         </View>
         <Text style={styles.socialRankHeader}>My Friends Rank</Text>
         {this.props.user_rankings &&
-          this.props.user_rankings.map((item, index) =>  {
+          this.props.user_rankings.filter(user => {
+            return user.id != my_user_rank.id && user.crew == my_user_rank.crew;
+          }).map((item, index) =>  {
             let rowStyle = (index == len-1) ? styles.noDivider : ''
             return (
               <View key={index} style={[styles.rankRow, rowStyle]}>

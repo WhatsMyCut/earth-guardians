@@ -199,7 +199,7 @@ export default class ModalComponent extends React.Component {
             <NotificationModal notification={this.props.notification} onClose={() => this.props.notificationClose()} visible={this.state.showNotificationModal}/>
           }
           { this.state.showUpdateUserModal &&
-            <UpdateUserModal my_user={this.props.user} saveUser={() => this.props.updateUser() } onClose={() => this.props.onClose()} visible={this.state.showUpdateUserModal}/>
+            <UpdateUserModal my_user={this.props.user} saveUser={this.props.updateUser} onClose={() => this.props.onClose()} visible={this.state.showUpdateUserModal}/>
           }
           { this.state.showWasteModal &&
             <WasteModal waste={this.props.waste} onClose={() => this.props.onClose()} visible={this.state.showWasteModal}/>
