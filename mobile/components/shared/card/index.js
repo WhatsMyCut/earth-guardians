@@ -179,18 +179,14 @@ class ActionCardSmall extends React.Component {
     let carbon_dioxide = item.action ? parseFloat(item.action.carbon_dioxide).toFixed(2) : parseFloat(item.carbon_dioxide).toFixed(2);
     if(canDelete){
 
-      if(waste > water && waste > carbon_dioxide){
-        console.log('here')
+      if (waste > water && waste > carbon_dioxide) {
         data = waste
         PubSub.publish('showWasteModal', {data})
-      }else if(water > waste && water > carbon_dioxide){
-        console.log('here2')
-        data = water
-        PubSub.publish('showWaterModal', {data})
+      } else if (water > waste && water > carbon_dioxide) {
+        PubSub.publish('showWaterModal', { data })
       } else {
         data = carbon_dioxide
         PubSub.publish('openCarbonModal',{data})
-        console.log('here3', data)
       }
       const page = 'MyActionScreen'
       const item_id = await item.id;
@@ -277,9 +273,6 @@ class ActionCardSmall extends React.Component {
     if(!item.action || !get_user.me){
       return <View></View>
     }
-    let waste = item.action ? item.action.waste : item.waste;
-    let water = item.action ? item.action.water : item.water;
-    let carbon_dioxide = item.action ? item.action.carbon_dioxide : item.carbon_dioxide;
 
     const preview = {
       uri: PrimaryImage,
