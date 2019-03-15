@@ -38,7 +38,7 @@ import { styles } from '../constants/Styles'
 })
 class RankingStackScreen extends React.Component {
   state = {
-    openModal: false,
+    openModal: false, 
     points: 0,
     waste: 0,
     water: 0,

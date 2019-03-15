@@ -1,37 +1,63 @@
 import React from 'react';
 import NavigationService from '../navigation/navigationService';
 import { SafeAreaView, View, Text, Switch, TouchableOpacity } from 'react-native';
-import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_categories_query';
+import { BlurView, AppLoading } from 'expo';
+import { GET_USER } from '../components/graphql/queries/get_user';
+import { UPDATE_PROFILE_SETTINGS } from '../components/graphql/mutations/update_profile_settings_mutations';
 import graphql from '../components/hoc/graphql';
 import { Ionicons } from '@expo/vector-icons';
 import { styles } from '../constants/Styles';
 
-//import { data } from './dummy/actions.json';
-@graphql(ALL_ACTION_CATEGORIES, {
-  name: 'all_categories',
-  options: {
-    fetchPolicy: 'network-only',
-    variables: {
-      name: 'Notification',
-    },
-  },
+//import { GET_USER } from './dummy/actions.json';
+@graphql(GET_USER, {
+  name: 'my_user',
+})
+@graphql(UPDATE_PROFILE_SETTINGS, {
+  name: 'update_settings',
 })
 class NotificationStackScreen extends React.Component {
   static navigationOptions = {
     header: null,
   };
-  state = {
-    pushNotifications: false,
-    actionReminders: true,
-    newHighlights: true,
-    newFeatures: false,
-  };
+  state ={
+    loading: false
+  }
+
   toggle = (value, target) => {
-    this.setState({
-      [target]: value,
-    });
+    const { my_user, update_settings } = this.props;
+    console.log('this.props', this.props);
+    console.log('value', value);
+    console.log(typeof value);
+    console.log('target', target);
+
+    let variables = {};
+    if(target == push_notifications_enabled && value == false){
+      variables = {
+        push_notifications_enabled : value,
+        action_reminders: value,
+        new_features_notification: value,
+        new_highlights_notification: value
+      }
+    } else {
+      variables = {
+        id : my_user.me.id,
+        [target] : value
+      }
+    }
+
+
+    if(!my_user.loading){
+      this.setState({loading: true});
+      update_settings({variables}).then(res => {
+        console.log('Response from notifications stack screen', res);
+        my_user.refetch();
+        this.setState({loading: false});
+      })
+    }
   };
   render() {
+    const { my_user} = this.props;
+    const { loading } = this.state;
     // const { all_categories } = this.props;
     // if (all_categories.loading) {
     //   return <LinearGradient {...LinearGradientProps.food} style={{ flex: 1 }}>
@@ -43,36 +69,55 @@ class NotificationStackScreen extends React.Component {
     // if (!this.state.primary_video && !this.state.primary_image) {
     //   return null;
     // }
+    if(my_user.loading){
+      return <LinearGradient style={[styles.container]}>
+           <AppLoading />
+         </LinearGradient>;
+    }
+
     return (
       <SafeAreaView style={[styles.container]}>
         <View style={[styles.greyCard]}>
+        {loading && (
+            <BlurView
+              tint="dark"
+              intensity={80}
+              style={[styles.coverScreen, styles.coverAll]}
+              >
+              <AppLoading />
+              </BlurView>
+          )}
           <View style={styles.notificationWraper}>
             <Text style={styles.notification}>Push Notification</Text>
+            
             <Switch
-              value={this.state.pushNotifications}
-              onValueChange={value => this.toggle(value, 'pushNotifications')}
+              value={my_user.me.push_notifications_enabled}
+              onValueChange={value => this.toggle(value, 'push_notifications_enabled')}
             />
           </View>
+          
+            <View>
           <View style={styles.notificationWraper}>
             <Text style={styles.notification}>Action Reminders</Text>
             <Switch
-              value={this.state.actionReminders}
-              onValueChange={value => this.toggle(value, 'actionReminders')}
+              value={my_user.me.action_reminders}
+              onValueChange={value => this.toggle(value, 'action_reminders')}
             />
           </View>
           <View style={styles.notificationWraper}>
             <Text style={styles.notification}>New Hightlights</Text>
             <Switch
-              value={this.state.newHighlights}
-              onValueChange={value => this.toggle(value, 'newHighlights')}
+              value={my_user.me.new_highlights_notification}
+              onValueChange={value => this.toggle(value, 'new_highlights_notification')}
             />
           </View>
           <View style={styles.notificationWraper}>
             <Text style={styles.notification}>New Features</Text>
             <Switch
-              value={this.state.newFeatures}
-              onValueChange={value => this.toggle(value, 'newFeatures')}
+              value={my_user.me.new_features_notification}
+              onValueChange={value => this.toggle(value, 'new_features_notification')}
             />
+          </View>
           </View>
         </View>
       </SafeAreaView>

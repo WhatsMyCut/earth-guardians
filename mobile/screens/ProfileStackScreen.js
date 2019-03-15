@@ -72,6 +72,7 @@ class ProfileStackScreen extends React.Component {
       crew: state.crew ? state.crew : my_user.me.crew,
       email: state.email ? state.email : my_user.me.email,
       photo: state.photo ? state.photo : my_user.me.photo || null,
+      token: state.token ? state.token : my_user.me.token || null,
       crew_type: state.crew_type
         ? state.crew_type
         : my_user.me.crew_type,
