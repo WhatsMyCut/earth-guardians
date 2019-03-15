@@ -122,13 +122,13 @@ export default class UpdateUserModal extends React.Component {
                     />
                     <TextInput
                       style={[styles.textInput]}
-                      onChangeText={zipcode => this.setState({ zipcode })}
+                      onChangeText={zipcode => this.props.inputZipCode(zipcode)}
                       placeholder={'Zipcode'}
                       placeholderTextColor={Colors.white}
                       keyboardType="numeric"
                       secureTextEntry={false}
                       returnKeyType="done"
-                      value={this.state.zipcode}
+                      value={this.props.zipcode}
                     />
                     <TextInput
                       style={[styles.textInput]}

@@ -12,10 +12,19 @@ import { Image } from 'react-native-expo-image-cache';
 import navigationService from '../navigation/navigationService';
 import _fetchVideoUrl from '../services/fetchVideoUrl';
 import ActionCardSmall from '../components/shared/card';
+import ModalComponent from '../components/shared/modals/ModalComponent';
 import PrimaryImage from '../constants/PrimaryImage'
 import { FontAwesome } from '@expo/vector-icons';
 import { styles, defaults } from '../constants/Styles';
-
+import graphql from '../components/hoc/graphql';
+import { GET_USER } from '../components/graphql/queries/get_user';
+import { UPDATE_ZIPCODE } from '../components/graphql/mutations/update_zipcode_mutation';
+@graphql(UPDATE_ZIPCODE,{
+  name: 'update_zipcode',
+})
+@graphql(GET_USER, {
+  name: 'user',
+})
 export default class GeneralScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -27,7 +36,8 @@ export default class GeneralScreen extends React.Component {
     showWasteModal: false,
     showWaterModal: false,
     showCarbonModal: false,
-    showZipcodeModal: false,
+    showZipCodeModal: false,
+    zipcode: true
   };
 
   componentDidMount() {
@@ -42,49 +52,39 @@ export default class GeneralScreen extends React.Component {
       })
       .catch(e => console.error(e));
     }
+    PubSub.subscribe('showZipCodeModal', (msg, data) => this.openZipCodeModal(msg, data));
   }
 
   componentWillUnmount() {
     this.props.primary_video = null
   }
 
-  updateZipCode =(zipcode)=>{
-    const { get_user, update_zipcode} = this.props;
-    if(zipcode){
-      let variables={
-        id:get_user.me.id,
-        zipcode:zipcode
-      }
-      update_zipcode({variables}).then(()=>{
-          this.onModalClose();
-      })
+  openZipCodeModal = (msg, data) => {
+    PubSub.publish('openBlur')
+    this.setState({ zipcode: data, showZipCodeModal: true})
+  }
+
+  closeZipCodeModal = () => {
+    PubSub.publish('closeBlur')
+    this.setState({ zipcode: null, showZipCodeModal: false})
+  }
+
+
+  inputZipCode = zipcode => {
+    this.setState({zipcode})
+  }
+
+  updateZipCode = () => {
+    const { user, update_zipcode} = this.props;
+    const { zipcode } = this.state;
+    let variables = {
+      id:user.me.id,
+      zipcode: zipcode
     }
-  }
+    update_zipcode({variables}).then(()=>{
+        this.closeZipCodeModal();
+    })
 
-  openZipCodeModal = () =>{
-    this.setState({showZipcodeModal: true});
-  }
-
-  _showTheModal =() => {
-    const { item } = this.props;
-
-      let waste = item.action ? parseFloat(item.action.waste).toFixed(2) : parseFloat(item.waste).toFixed(2);
-      let water = item.action ? parseFloat(item.action.water).toFixed(2) : parseFloat(item.water).toFixed(2);
-      let carbon_dioxide = item.action ? parseFloat(item.action.carbon_dioxide).toFixed(2) : parseFloat(item.carbon_dioxide).toFixed(2);
-      if(this.props.canDelete){
-        if(waste > water && waste > carbon_dioxide){
-          this.setState({showWasteModal:true})
-        }else if(water > waste && water > carbon_dioxide){
-          this.setState({showWaterModal:true})
-        }else{
-          this.setState({showCarbonModal:true})
-        }
-      }
-  }
-
-
-  onModalClose = () => {
-    this.setState({showWasteModal: false, showWaterModal : false, showCarbonModal: false, showZipcodeModal:false});
   }
 
   renderPrimaryImage = () => {
@@ -109,7 +109,8 @@ export default class GeneralScreen extends React.Component {
   };
 
   renderPrimaryVideo = () => {
-    if (!this.state.picture_url && !this.state.video_url) {
+    const { picture_url, video_url } = this.state;
+    if (!picture_url && !video_url) {
       return null;
     }
     const preview = {
@@ -121,15 +122,15 @@ export default class GeneralScreen extends React.Component {
         onPress={() =>
           navigationService.navigate('Video', {
             screen: this.props.screen,
-            video: this.state.video_url,
+            video: video_url,
           })
         }
-        style={[styles.container, { marginLeft: 20}]}
+        style={[styles.container, { marginLeft: 20 }]}
       >
         <View style={styles.container}>
           <Image
             style={styles.primaryMedia}
-            {...{ preview, uri: this.state.picture_url }}
+            {...{ preview, uri: picture_url }}
           />
           <LinearGradient
             locations={[0, 1.0]}
@@ -155,7 +156,9 @@ export default class GeneralScreen extends React.Component {
     }
   };
   render() {
-    if (!this.props.data) {
+    const { data, screen } = this.props;
+    const { showZipCodeModal, zipcode } =  this.state;
+    if (!data) {
       return (
         <SafeAreaView style={[styles.container]}>
           <View style={[styles.container]}>
@@ -164,6 +167,7 @@ export default class GeneralScreen extends React.Component {
         </SafeAreaView>
       );
     }
+
     return (
       <View style={[styles.container]}>
         <ScrollView style={[styles.container, {flexDirection: 'column'}]}>
@@ -181,18 +185,28 @@ export default class GeneralScreen extends React.Component {
                 paddingRight: defaults.paddingRight,
                 paddingBottom: 20
               }}
-              data={this.props.data[0].actions}
+              data={data[0].actions}
               keyExtractor={(item, index) => item.id}
               renderItem={({ item, index }) => (
                 <ActionCardSmall
                   item={item}
                   index={index}
-                  currScreen={this.props.screen}
+                  currScreen={screen}
                 />
               )}
             />
           </View>
         </ScrollView>
+        {showZipCodeModal &&
+          <ModalComponent
+            display={'ZipCodeModal'}
+            visible={showZipCodeModal}
+            onClose={() => this.closeZipCodeModal()}
+            zipcode={zipcode}
+            updateZipCode={this.updateZipCode}
+            inputZipCode={this.inputZipCode}
+          />
+        }
       </View>
     );
   }

@@ -8,19 +8,13 @@ export default class ActionDetails extends React.Component {
 
   constructor(props) {
     super(props)
-    this.openModal = this.openModal.bind(this)
-    this.closeModal = this.closeModal.bind(this)
   }
   state = {
     in: false
   };
   openModal() {
-    PubSub.publish('showZipCodeModal', true);
+    PubSub.publish('showZipCodeModal', this.props.zipcode);
   }
-  closeModal() {
-    PubSub.publish('closeModal');
-  }
-
   render() {
     const { data } = this.props;
     if (!data) {

@@ -116,19 +116,6 @@ export default class ModalComponent extends React.Component {
     this.setState({ showRedirectModal: true});
   }
 
-  updateZipCode =(zipcode)=>{
-    const { get_user, update_zipcode} = this.props;
-    if(zipcode){
-      let variables={
-        id:get_user.me.id,
-        zipcode:zipcode
-      }
-      update_zipcode({variables}).then(()=>{
-        this.setState({showZipCodeModal: false});
-      })
-    }
-  }
-
   openCommunityEventModal() {
     PubSub.publish('showBlur',
     this.setState({showCommunityEventModal: true}))
@@ -202,10 +189,11 @@ export default class ModalComponent extends React.Component {
         >
           { this.state.showZipCodeModal &&
             <ZipCodeModal
-              zipcode={this.state.zipcode}
-              onClose={() => this.props.onClose()}
-              visible={this.state.showZipCodeModal}
+              zipcode={this.props.zipcode}
               updateZipCode={this.props.updateZipCode}
+              inputZipCode={this.props.inputZipCode}
+              onClose={this.props.onClose}
+              visible={this.state.showZipCodeModal}
             />
           }
           { (this.state.showNotificationModal && this.props.notification) &&

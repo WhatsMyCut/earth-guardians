@@ -20,6 +20,7 @@ import ModalComponent from '../components/shared/modals/ModalComponent';
 import { ALL_MY_METRICS } from '../components/graphql/queries/all_my_metrics_query';
 import { GET_USER } from '../components/graphql/queries/get_user';
 import { CREATE_COMMUNITY_EVENT } from '../components/graphql/mutations/create_community_mutation';
+import { UPDATE_ZIPCODE } from '../components/graphql/mutations/update_zipcode_mutation';
 import { styles, defaults } from '../constants/Styles'
 import BadgeComponent from '../components/shared/profile/BadgeComponent';
 import { _eventHit } from '../services/googleAnalytics';
@@ -70,6 +71,7 @@ class ImpactStackScreen extends React.Component {
       });
     }
   }
+
   openModal() {
     PubSub.publish('openBlur', this.setState({ openModal: true }));
   }
@@ -160,6 +162,7 @@ class ImpactStackScreen extends React.Component {
     }
     // Petition ID for EG Badge : cjr111ekt1qk0088479se0aue
     const showEGBadge = this.props.all_metrics.me.recent_actions.filter(id => id === 'cjr111ekt1qk0088479se0aue')
+    const zipcode = this.props.all_metrics.me.zipcode;
     return (
       <SafeAreaView style={[styles.greyCard]}>
         <ScrollView contentContainerStyle={[]}>

@@ -22,7 +22,6 @@ export default class App extends React.Component {
     showCarbonModal: false,
     showWasteModal: false,
     showWaterModal: false,
-    showZipCodeModal: false,
     showUpdateProfileModal: false,
     showRedirectModal: false,
     redirect_url: null,
@@ -41,8 +40,6 @@ export default class App extends React.Component {
       'Proxima Nova Bold': require('./assets/fonts/ProximaNovaBold.ttf'),
     });
 
-    PubSub.subscribe('setUser', data => this.setUser(data))
-    PubSub.subscribe('showZipCodeModal', data => this.openZipCodeModal(data));
     PubSub.subscribe('showUpdateProfileModal', data => this.openUpdateUserModal(data));
     PubSub.subscribe('showRedirectModal', (msg, data) => this.openRedirectModal(msg, data));
     PubSub.subscribe('closeModal', this.closeModal);
@@ -53,7 +50,6 @@ export default class App extends React.Component {
     PubSub.subscribe('showWasteModal', (msg, data) => this.openWasteModal((msg, data)))
     PubSub.subscribe('showWaterModal', (msg, data) => this.openWaterModal((msg, data)));
     PubSub.subscribe('openCarbonModal', (msg, data) => this.openCarbonModal((msg, data)));
-    PubSub.subscribe('openZipCodeModal', (msg, data) => this.openZipCodeModal((msg, data)));
     PubSub.subscribe('openGameCompleteModal', (msg, data) => this.openGameCompleteModal((msg, data)));
     this._notificationSubscription = Notifications.addListener(this._handleNotification);
     this.setState({ fontLoaded: true });
@@ -63,19 +59,6 @@ export default class App extends React.Component {
     console.log('incoming notification', notification)
     this.setState({ showBlur: true, showNotificationModal: true, notification: notification });
   };
-
-  updateZipCode =(zipcode)=>{
-    const { get_user, update_zipcode} = this.props;
-    if(zipcode){
-      let variables={
-        id:get_user.me.id,
-        zipcode:zipcode
-      }
-      update_zipcode({variables}).then(()=>{
-          this.onModalClose();
-      })
-    }
-  }
 
   openBlur = () => {
     this.setState({ showBlur: true })
@@ -110,11 +93,6 @@ export default class App extends React.Component {
     this.setState({ waste: data, showWasteModal: true, showBlur: true })
   }
 
-  openZipCodeModal = (data) => {
-    console.log('App.openZipCodeModal', data)
-    this.setState({ zipcode: data, showZipCodeModal: true, showBlur: true })
-  }
-
   openGameCompleteModal = (data) => {
     console.log('App.openGameCompleteModal', data)
     this.setState({ showGameCompleteModal: true, showBlur: true })
@@ -132,9 +110,10 @@ export default class App extends React.Component {
       showCarbonModal: false,
       showWasteModal: false,
       showWaterModal: false,
-      showZipCodeModal: false,
       showCongratulationsModal: false,
       showGameCompleteModal: false,
+      showRedirectModal: false,
+      redirect_url: null
     })
   }
 
@@ -147,12 +126,10 @@ export default class App extends React.Component {
       showCarbonModal,
       showWaterModal,
       showWasteModal,
-      showZipCodeModal,
       showGameCompleteModal,
       water,
       waste,
       carbon_dioxide,
-      zipcode,
     } = this.state;
     if (!fontLoaded) {
       return null;
@@ -163,7 +140,6 @@ export default class App extends React.Component {
     if (showCarbonModal) display = 'CarbonModal'
     else if (showWaterModal) display = 'WaterModal'
     else if (showWasteModal) display = 'WasteModal'
-    else if (showZipCodeModal) display = 'ZipCodeModal'
     else if (showGameCompleteModal) display = 'GameCompleteModal'
     const showActionModal = display !== '';
     return (
@@ -211,7 +187,6 @@ export default class App extends React.Component {
               water={water}
               waste={waste}
               carbon_dioxide={carbon_dioxide}
-              zipcode={zipcode}
             />
           )}
         </ApolloProvider>

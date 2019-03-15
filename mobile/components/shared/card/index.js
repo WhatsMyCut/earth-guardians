@@ -20,10 +20,8 @@ import graphql from '../../hoc/graphql';
 import { TAKE_ACTION } from '../../graphql/mutations/take_action_mutation';
 import { DELETE_ACTION } from '../../graphql/mutations/delete_action';
 import { GET_USER } from '../../graphql/queries/get_user';
-import { MY_ACTIONS_QUERY } from '../../graphql/queries/my_actions_query';
 import { PrimaryImage } from '../../../constants/PrimaryImage';
 import { _eventHit } from '../../../services/googleAnalytics';
-
 
 @graphql(GET_USER, {
   name:'get_user'
@@ -57,7 +55,7 @@ class ActionCardSmall extends React.Component {
     })
   };
 
-  canTakeAgain(item){
+ canTakeAgain(item){
     let momentDate = moment(item.createdAt);
     let originalDate = moment(item.createdAt);
     let today = moment(new Date());

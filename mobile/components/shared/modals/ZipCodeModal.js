@@ -8,9 +8,14 @@ import {
   Modal,
 } from 'react-native';
 import { styles, defaults } from '../../../constants/Styles';
+import Colors from '../../../constants/Colors';
 
 export default class ZipCodeModal extends React.Component {
-  state = { zipcode: true };
+
+  constructor(props) {
+    super(props)
+    this.setState({zipcode: this.props.zip})
+  }
   render() {
     return (
       <Modal
@@ -37,19 +42,16 @@ export default class ZipCodeModal extends React.Component {
                   </View>
                   <TextInput
                     style={[styles.textInput]}
-                    onChangeText={password => this.setState({ zipcode:password })}
-                    placeholder={this.props.zipcode || "Zipcode"}
-                    placeholderTextColor="#fff"
+                    onChangeText={zipcode => this.props.inputZipCode(zipcode)}
+                    placeholder={ "Zipcode"}
+                    placeholderTextColor={Colors.lightGray}
                     keyboardType="default"
                     returnKeyType="done"
-                    // value={this.state.zipCode}
+                    value={this.props.zipcode}
                   />
-
                   <TouchableOpacity
                     style={[styles.buttonContainer]}
-                    onPress={() => {
-                      this.props.updateZipCode(this.state.zipcode);
-                    }}
+                    onPress={() => this.props.updateZipCode()}
                   >
                     <Text style={[styles.textGrey18B]}>
                       ADD ZIPCODE

@@ -7,13 +7,17 @@ import {
   ScrollView,
   View,
 } from 'react-native';
-import { MY_ACTIONS_QUERY } from '../components/graphql/queries/my_actions_query';
 import HeaderNavBar from '../components/shared/navBar/HeaderNavBar';
 import ModalComponent from '../components/shared/modals/ModalComponent';
-import graphql from '../components/hoc/graphql';
 import ActionCardSmall from '../components/shared/card';
 import { actions_data } from './dummy/data';
 import { styles, defaults } from '../constants/Styles';
+import graphql from '../components/hoc/graphql';
+import { MY_ACTIONS_QUERY } from '../components/graphql/queries/my_actions_query';
+import { UPDATE_ZIPCODE } from '../components/graphql/mutations/update_zipcode_mutation';
+@graphql(UPDATE_ZIPCODE,{
+  name: 'update_zipcode',
+})
 
 @graphql(MY_ACTIONS_QUERY,{
   name: 'all_actions',
@@ -26,6 +30,7 @@ class MyActionsStackScreen extends React.Component {
     primary_photo: '',
     primary_video: '',
     actions: [],
+    zipcode: true,
   };
 
   componentDidMount() {
@@ -33,8 +38,22 @@ class MyActionsStackScreen extends React.Component {
     this.setState({ actions: actions });
   }
 
+  updateZipCode = zipcode => {
+    const { user, update_zipcode} = this.props;
+    if(zipcode.length === 5){
+      let variables={
+        id:user.me.id,
+        zipcode:zipcode
+      }
+      update_zipcode({variables}).then(()=>{
+          this.onModalClose();
+      })
+    }
+  }
+
   _renderActions(){
-    const available = this.props.all_actions.myAvailableActions
+    const { all_actions } = this.props;
+    const available = all_actions.myAvailableActions
 
     if(available.length == 0){
       return (
@@ -70,7 +89,11 @@ class MyActionsStackScreen extends React.Component {
           keyExtractor={(item, index) => item.id}
           renderItem={({ item, index }) => {
             return (
-              <ActionCardSmall item={item} index={index} canDelete={true}/>
+              <ActionCardSmall
+                item={item}
+                index={index}
+                canDelete={true}
+              />
             )
           }}
         />
@@ -90,15 +113,6 @@ class MyActionsStackScreen extends React.Component {
     return (
       <SafeAreaView style={[styles.greyCard]}>
         {this._renderActions()}
-        {this.state.showModal &&
-          <ModalComponent
-            display={'NotificationModal'}
-            visible={this.state.showModal}
-            onClose={() => this.closeBlur}
-            notification={this.state.notification}
-            notificationClose={this.closeNotificationModal}
-          />
-        }
       </SafeAreaView>
     );
   }
