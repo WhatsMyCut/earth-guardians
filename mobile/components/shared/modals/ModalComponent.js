@@ -32,14 +32,14 @@ export default class ModalComponent extends React.Component {
       showCarbonModal: false,
       showGameCompleteModal: false,
       showPasswordModal: false,
-      showRedirectModal: true,
+      showRedirectModal: false,
     }
   }
   componentDidMount() {
     this.setState({user: this.props.user})
     this.getComponent()
-    PubSub.subscribe('closeCommunityEventModal', data => this.closeCommunityEventModal(data))
-    PubSub.subscribe('openCommunityEventModal', data => this.openCommunityEventModal(data))
+    PubSub.subscribe('closeCommunityEventModal', (msg,data) => this.closeCommunityEventModal(msg, data))
+    PubSub.subscribe('openCommunityEventModal', (msg,data) => this.openCommunityEventModal(msg,data))
   }
 
   componentWillUnmount() {
@@ -116,19 +116,19 @@ export default class ModalComponent extends React.Component {
     this.setState({ showRedirectModal: true});
   }
 
-  openCommunityEventModal() {
+  openCommunityEventModal(msg, data) {
     PubSub.publish('showBlur',
     this.setState({showCommunityEventModal: true}))
   }
 
-  closeCommunityEventModal() {
+  closeCommunityEventModal(msg, data) {
     PubSub.publish('closeBlur',
     this.setState({showCommunityEventModal: false}))
   }
 
   getComponent() {
     const notification = this.props.notification || { data: { message: 'Here 2'}}
-    // console.log('getComponent', this.props.display)
+    console.log('getComponent', this.props.display)
     switch (this.props.display) {
       case 'ZipCodeModal':
         this.setState({ showZipCodeModal: true })
@@ -239,6 +239,8 @@ export default class ModalComponent extends React.Component {
               onClose={() => this.closeCommunityEventModal()}
               visible={this.state.showCommunityEventModal}
               submitEvent={() => this.props.submitEvent()}
+              setEventType={this.props.setEventType}
+              setNumPeople={this.props.setNumPeople}
             />
           }
         </View>

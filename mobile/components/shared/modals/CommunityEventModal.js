@@ -51,7 +51,6 @@ export default class CommunityEventModal extends React.Component {
                   marginVertical: (defaults.primaryHeight / 2 ) - 200,
                   marginHorizontal: 20 }]}
                 >
-                  <Logo style={[styles.container, {width: 72, height: 72, alignSelf: 'center',margin:0,padding:0}]}/>
                   <View style={[styles.headerContainer]}>
                     <Text style={[styles.headerText]}>
                     HOST A COMMUNITY EVENT
@@ -71,7 +70,7 @@ export default class CommunityEventModal extends React.Component {
                       textColor={'#000000'}
                       itemColor={'#000000'}
                       onChangeText={arg => {
-                        this.setState({ typeOfEvent: arg });
+                        this.props.setEventType(arg);
                         this.numbOfPeople.focus();
                       }}
                     />
@@ -80,8 +79,8 @@ export default class CommunityEventModal extends React.Component {
                         this.numbOfPeople = input;
                       }}
                       style={[styles.textInput]}
-                      onChangeText={numberOfPeople => this.setState({ numberOfPeople })}
-                      value={this.state.numberOfPeople}
+                      onChangeText={numberOfPeople => this.props.setNumPeople(numberOfPeople)}
+                      value={0}
                       placeholder="Number of People"
                       placeholderTextColor="#fff"
                       keyboardType="numeric"
@@ -89,9 +88,8 @@ export default class CommunityEventModal extends React.Component {
                     />
                     <TouchableOpacity
                       style={[styles.buttonContainer]}
-                      disabled={!this.state.numberOfPeople || !this.state.typeOfEvent}
                       onPress={() => {
-                        this.props.submitEvent(this.state);
+                        this.props.submitEvent();
                       }}
                     >
                       <Text style={[styles.textGrey18B]}>

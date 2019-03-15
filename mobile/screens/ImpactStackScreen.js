@@ -12,17 +12,16 @@ import {
 import { Ionicons, FontAwesome } from '@expo/vector-icons';
 import graphql from '../components/hoc/graphql';
 import NavigationService from '../navigation/navigationService';
+import BadgeComponent from '../components/shared/profile/BadgeComponent';
+import ModalComponent from '../components/shared/modals/ModalComponent';
 import GraphComponent from '../components/shared/profile/GraphComponent';
 import ImpactComponent from '../components/shared/profile/ImpactComponent';
-import ReachComponent from '../components/shared/profile/ReachComponent';
 import PointsComponent from '../components/shared/profile/PointsComponent';
-import ModalComponent from '../components/shared/modals/ModalComponent';
+import ReachComponent from '../components/shared/profile/ReachComponent';
 import { ALL_MY_METRICS } from '../components/graphql/queries/all_my_metrics_query';
 import { GET_USER } from '../components/graphql/queries/get_user';
 import { CREATE_COMMUNITY_EVENT } from '../components/graphql/mutations/create_community_mutation';
-import { UPDATE_ZIPCODE } from '../components/graphql/mutations/update_zipcode_mutation';
 import { styles, defaults } from '../constants/Styles'
-import BadgeComponent from '../components/shared/profile/BadgeComponent';
 import { _eventHit } from '../services/googleAnalytics';
 
 @graphql(ALL_MY_METRICS, {
@@ -35,11 +34,9 @@ import { _eventHit } from '../services/googleAnalytics';
 @graphql(CREATE_COMMUNITY_EVENT, {
   name: 'community_mutation',
 })
-
 @graphql(GET_USER, {
   name: 'my_user',
 })
-
 class ImpactStackScreen extends React.Component {
   state = {
     openModal: false,
@@ -49,6 +46,8 @@ class ImpactStackScreen extends React.Component {
     carbon_dioxide: 0,
     loading: true,
     communityEvents: 0,
+    typeOfEvent: null,
+    numberOfPeople: 0,
   };
 
   interval;
@@ -56,14 +55,15 @@ class ImpactStackScreen extends React.Component {
     header: null,
   };
 
-  _submitCommunityEvent(data) {
-    const { community_mutation } = this.props;
-    const { me } = this.props.my_user;
+  _submitCommunityEvent() {
+    console.log('_submitCommunityEvent', this.props, this.state)
+    const { community_mutation, my_user } = this.props;
+    const { typeOfEvent, numberOfPeople } = this.state;
     if (me.id) {
       let variables = {
-        id: me.id,
-        type: data.typeOfEvent,
-        number_of_people: parseInt(data.numberOfPeople),
+        id: my_user.me.id,
+        type: typeOfEvent,
+        number_of_people: parseInt(numberOfPeople),
       };
 
       community_mutation({ variables }).then(response => {
@@ -77,16 +77,15 @@ class ImpactStackScreen extends React.Component {
   }
 
   closeModal = () => {
-    PubSub.publish('closeBlur', this.setState({ openModal: false }))
+    PubSub.publish('closeblur', this.setState({ openModal: false }))
   };
 
-  componentWillMount() {
+  setEventType = type => {
+    this.setState({eventType: type})
   }
 
-  componentDidMount() {
-  }
-
-  componentWillUnmount = () => {
+  setNumPeople = num => {
+    this.setState({numberOfPeople: num})
   }
 
   componentWillReceiveProps= () => {
@@ -191,6 +190,8 @@ class ImpactStackScreen extends React.Component {
               showModal={this.state.openModal}
               onClose={() => this.closeModal()}
               submitEvent={this._submitCommunityEvent}
+              setEventType={this.setEventType}
+              setNumPeople={this.setNumPeople}
             />
           }
         </ScrollView>
