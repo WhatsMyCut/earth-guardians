@@ -175,7 +175,7 @@ export default class ModalComponent extends React.Component {
         this.setState({ showRedirectModal: true })
         break;
       default:
-        this.setState({ showPasswordModal: true })
+        this.setState({ showNotificationModal: true })
         break;
     }
   }
