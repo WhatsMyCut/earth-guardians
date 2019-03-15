@@ -139,7 +139,7 @@ export default class PasswordModal extends React.Component {
   _userExistsContent() {
     return (
       <View style={[styles.container]}>
-        <Text style={[styles.headerText]}>
+        <Text style={[styles.headerText, {marginBottom: 30,}]}>
           Welcome Back!
         </Text>
         {this.state.passwordError && (
@@ -153,7 +153,7 @@ export default class PasswordModal extends React.Component {
           </Text>
         )}
         <TextInput
-          style={[styles.textInput]}
+          style={[styles.textInput, { alignSelf: 'center', }]}
           onChangeText={(password) =>
             this.setState({ existsPassword: password, passwordError: null, standardError: null })}
           placeholder="Password"

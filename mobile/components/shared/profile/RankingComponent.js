@@ -16,7 +16,7 @@ export default class RankingComponent extends React.Component {
   };
   _viewA = () => {
     return (
-      <View style={[styles.componentContainer, { marginBottom: defaults.margin, height: 275 }]}>
+      <View style={[styles.component,]}>
         <View style={[styles.componentHeader]}>
           <Text style={[styles.headerText]}>User</Text>
         </View>
@@ -26,15 +26,15 @@ export default class RankingComponent extends React.Component {
             return (
               <View key={index} style={[styles.rankRow, rowStyle]}>
                 <Text style={[styles.rankNumber]}>{item.rank}</Text>
-                <View style={styles.rankDetail}>
-                  <Text style={styles.rankName}>
+                <View style={[styles.rankDetail]}>
+                  <Text style={[styles.rankName]}>
                     {item.name}
                   </Text>
                   <Text style={styles.smallWhiteText}>
                     {item.total_points}
                   </Text>
                 </View>
-                <Text style={styles.rankState}>{item.state.substring(0,2).toUpperCase()}</Text>
+                <Text style={[styles.rankState]}>{item.state.substring(0,2).toUpperCase()}</Text>
               </View>
             )
           })
@@ -45,9 +45,9 @@ export default class RankingComponent extends React.Component {
   _viewB = () => {
     var len = this.props.state_rankings.length;
     return (
-      <View style={[styles.componentContainer, { marginBottom: defaults.margin, height:275, justifyContent: 'top'}]}>
+      <View style={[styles.componentContainer, { justifyContent: 'top'}]}>
         <View style={[styles.componentHeader]}>
-          <Text style={styles.headerText}>State</Text>
+          <Text style={[styles.headerText]}>State</Text>
         </View>
         {this.props.state_rankings &&
           this.props.state_rankings.map((item, index) => {
@@ -55,8 +55,8 @@ export default class RankingComponent extends React.Component {
             return (
               <View key={index} style={[styles.rankRow, rowStyle]}>
                 {/* <Text style={styles.rankNumber}>{item}</Text> */}
-                <View style={styles.rankDetail}>
-                  <Text style={styles.rankName}>
+                <View style={[styles.rankDetail]}>
+                  <Text style={[styles.rankName]}>
                     {item.state}
                   </Text>
                   <Text style={styles.smallWhiteText}>

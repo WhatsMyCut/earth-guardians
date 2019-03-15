@@ -56,7 +56,7 @@ export default class ActionDetails extends React.Component {
                 (gal)
               </Text>
               <Text style={[styles.actionCardValue]}>
-                {item.water}
+                {item.water || 0}
               </Text>
             </View>
             <View style={[styles.container]}>
@@ -67,7 +67,7 @@ export default class ActionDetails extends React.Component {
                 (lbs)
               </Text>
               <Text style={[styles.actionCardValue]}>
-                {item.waste}
+                {item.waste || 0}
               </Text>
             </View>
           </View>

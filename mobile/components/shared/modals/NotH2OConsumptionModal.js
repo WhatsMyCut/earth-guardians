@@ -26,7 +26,7 @@ export default class WaterModal extends React.Component {
                 return false
               }}>
               <View style={[styles.modalView, styles.centerAll, {
-                marginVertical: (defaults.primaryHeight / 2) - 80,
+                marginVertical: (defaults.primaryHeight / 2) - 165,
                 flexJustify: 'flex-start',
               }]}>
                 <View style={[styles.headerContainer]}>

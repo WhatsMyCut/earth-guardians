@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 import { Notifications, Permissions} from 'expo';
 import { Dropdown } from 'react-native-material-dropdown';
-import { styles } from '../../../constants/Styles';
+import { styles, defaults } from '../../../constants/Styles';
 import Colors from '../../../constants/Colors';
 
 export default class UpdateUserModal extends React.Component {
@@ -94,16 +94,18 @@ export default class UpdateUserModal extends React.Component {
         <TouchableWithoutFeedback style={[styles.container, styles.centerAll]} onPress={() => {
           this.props.onClose()
         }}>
+            <TouchableWithoutFeedback style={[styles.container, styles.coverScreen]} onPress={() => {
+              return false
+            }}>
+              <View style={[styles.modalView, styles.centerAll, {
+                marginVertical: (defaults.primaryHeight / 2) - 275,
+              }]}>
           <KeyboardAvoidingView
             behavior="position"
             style={[styles.container, styles.centerAll, {
               flexDirection: 'column',
             }]}
           >
-            <TouchableWithoutFeedback style={[styles.container, styles.coverScreen]} onPress={() => {
-              return false
-            }}>
-              <View style={[styles.modalView, {width: '100%', maxHeight: 500}]}>
                 <ScrollView containerStyle={[styles.container]}>
                   <View style={[styles.headerContainer]}>
                     <Text style={[styles.headerText]}>
@@ -179,9 +181,9 @@ export default class UpdateUserModal extends React.Component {
                     </TouchableOpacity>
                   </View>
                 </ScrollView>
+                </KeyboardAvoidingView>
               </View>
             </TouchableWithoutFeedback>
-          </KeyboardAvoidingView>
         </TouchableWithoutFeedback>
       </Modal>
     );

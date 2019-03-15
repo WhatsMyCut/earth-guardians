@@ -484,24 +484,24 @@ export const styles = ScaledSheet.create({
     paddingTop: 5,
   },
   rankState: {
-    flexBasis: '15%',
     color: Colors.white,
     fontSize: moderateScale(22),
     fontWeight: '500',
     justifyContent: 'center',
-    alignItems: 'flex-start',
+    whiteSpace: 'nowrap',
   },
   rankDetail: {
     flexGrow: 1,
     flexShrink: 0,
-    flexBasis: 0,
     fontWeight: '500',
+    whiteSpace: 'nowrap',
   },
   rankName: {
     color: Colors.white,
     fontSize: moderateScale(22),
     fontWeight: '500',
-    paddingBottom: 10
+    paddingBottom: 10,
+    whiteSpace: 'nowrap',
   },
   socialRankHeader: {
     color: Colors.white,
@@ -633,7 +633,6 @@ export const styles = ScaledSheet.create({
     fontSize: moderateScale(18),
     width: 200,
     textAlign: 'center',
-    marginVertical: 10,
     borderColor: Colors.mediumGray,
     borderBottomWidth: 1,
   },

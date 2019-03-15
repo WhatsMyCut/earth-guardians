@@ -83,6 +83,7 @@ export class StoreProvider extends React.Component {
 			await StoreData('phone', null);
 			await StoreData('country_dial_code', null);
       await StoreData('EARTH_GUARDIANS_TOKEN', null);
+      navigationService = null;
 		} catch (e) {
 			console.log(e);
 		}

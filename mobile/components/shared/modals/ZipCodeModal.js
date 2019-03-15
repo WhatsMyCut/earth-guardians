@@ -45,7 +45,7 @@ export default class ZipCodeModal extends React.Component {
                     onChangeText={zipcode => this.props.inputZipCode(zipcode)}
                     placeholder={ "Zipcode"}
                     placeholderTextColor={Colors.lightGray}
-                    keyboardType="default"
+                    keyboardType="number-pad"
                     returnKeyType="done"
                     value={this.props.zipcode}
                   />
