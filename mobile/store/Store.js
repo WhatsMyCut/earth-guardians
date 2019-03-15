@@ -78,11 +78,11 @@ export class StoreProvider extends React.Component {
 	logout = async () => {
 		try {
 			const phone = await RetrieveData('phone');
-      _eventHit('Signup', {action: 'Press', phone }, res => console.log(res.event, res.params))
+      _eventHit('Signup', {action: 'Press', phone }, res => console.log(res.event, res.params.action))
 
 			await StoreData('phone', null);
 			await StoreData('country_dial_code', null);
-			await StoreData('EARTH_GUARDIANS_TOKEN', null);
+      await StoreData('EARTH_GUARDIANS_TOKEN', null);
 		} catch (e) {
 			console.log(e);
 		}
