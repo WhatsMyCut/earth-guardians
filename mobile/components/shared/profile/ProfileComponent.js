@@ -31,7 +31,7 @@ export default class ProfileComponent extends React.Component {
         </View>
       )
     }
-    const profilepic= { uri: my_user.me.photo} || require('../../../assets/Group_427.png')
+    const profilepic= { uri: my_user.me.photo  || require('../../../assets/Group_427.png') }
     const namestyle = this.greyOrWhite(my_user.me.name);
     const zipstyle = this.greyOrWhite(my_user.me.zipcode);
     const phonestyle = this.greyOrWhite(my_user.me.phone);
