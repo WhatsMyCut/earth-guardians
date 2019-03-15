@@ -6,6 +6,7 @@ import graphql from '../components/hoc/graphql';
 import HeaderNavBar from '../components/shared/navBar/HeaderNavBar';
 import LinearGradientProps from '../constants/LinearGradientProps';
 import GeneralScreen from './GeneralScreen';
+import { styles } from '../constants/Styles';
 
 @graphql(ALL_ACTION_CATEGORIES, {
   name: 'all_categories',
@@ -33,7 +34,7 @@ class EnergyStackScreen extends React.Component {
     const { all_categories } = this.props;
     if (all_categories.loading) {
       return (
-        <LinearGradient {...LinearGradientProps.energy} style={{ flex: 1 }}>
+        <LinearGradient {...LinearGradientProps.energy} style={[styles.container]}>
           <ActivityIndicator size={'large'} />
         </LinearGradient>
       );
@@ -42,12 +43,12 @@ class EnergyStackScreen extends React.Component {
     const actions = all_categories.sectorActionsByName;
     if (!actions[0].video_id && !actions[0].primary_image) {
       return (
-        <LinearGradient {...LinearGradientProps.energy} style={{ flex: 1 }} />
+        <LinearGradient {...LinearGradientProps.energy} style={[styles.container]} />
       );
     }
 
     return (
-      <LinearGradient {...LinearGradientProps.energy} style={{ flex: 1 }}>
+      <LinearGradient {...LinearGradientProps.energy} style={[styles.container]}>
         <GeneralScreen
           data={actions}
           screen={'Energy'}

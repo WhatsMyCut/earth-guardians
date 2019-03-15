@@ -6,14 +6,7 @@ import {
   Text,
   View,
 } from 'react-native';
-import { Button } from 'react-native-paper';
-import navigationService from '../navigation/navigationService';
-import RedirectModal from '../components/shared/modals/RedirectModal';
-import CommunityImpactModal from '../components/shared/modals/CommunityImpactModal';
 import CommunityEventModal from '../components/shared/modals/CommunityEventModal';
-import SignPetitionModal from '../components/shared/modals/SignPetitionModal';
-import LinearGradientProps from '../constants/LinearGradientProps';
-import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { styles } from '../constants/Styles'
 
 export default class ModalScreen extends React.Component {

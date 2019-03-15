@@ -115,7 +115,7 @@ class PetitionScreen extends React.Component {
           },
           async () => {
             const phone = await RetrieveData('phone');
-            _eventHit('UnSignPetition', {action: 'Press', phone: phone, id: this.image.id}, res => console.log(res.event, res.params))
+            _eventHit('UnSignPetition', {action: 'Press', phone: phone, id: this.image.id}, res => console.log(res.event, res.params.id))
           }
         );
       });
@@ -134,7 +134,7 @@ class PetitionScreen extends React.Component {
           },
           async () => {
             const phone = await RetrieveData('phone');
-            _eventHit('SignPetition', {action: 'Press', phone: phone, id: this.image.id}, res => console.log(res.event, res.params))
+            _eventHit('SignPetition', {action: 'Press', phone: phone, id: this.image.id}, res => console.log(res.event, res.params.id))
           }
         );
       });
@@ -184,7 +184,7 @@ class PetitionScreen extends React.Component {
         : 'circle-outline';
     }
 
-    console.log('got this far', this.image);
+    //console.log('got this far', this.image);
 
     return (
       <Animated.View style={[styles.container]} {...this.viewResponder.panHandlers}>
