@@ -25,11 +25,6 @@ class NotificationStackScreen extends React.Component {
 
   toggle = (value, target) => {
     const { my_user, update_settings } = this.props;
-    console.log('this.props', this.props);
-    console.log('value', value);
-    console.log(typeof value);
-    console.log('target', target);
-
     let variables = {};
     if(target == push_notifications_enabled && value == false){
       variables = {
@@ -49,7 +44,6 @@ class NotificationStackScreen extends React.Component {
     if(!my_user.loading){
       this.setState({loading: true});
       update_settings({variables}).then(res => {
-        console.log('Response from notifications stack screen', res);
         my_user.refetch();
         this.setState({loading: false});
       })

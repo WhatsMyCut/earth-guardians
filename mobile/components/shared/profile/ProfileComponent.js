@@ -23,7 +23,7 @@ export default class ProfileComponent extends React.Component {
   }
   render() {
     const { my_user } = this.props;
-
+  
     if(my_user.loading){
       return (
         <View style={styles.container}>
@@ -31,11 +31,11 @@ export default class ProfileComponent extends React.Component {
         </View>
       )
     }
-    const profilepic= { uri: my_user.me.photo} || require('../../../assets/Group_427.png')
+    const profilepic= my_user.me.photo ? { uri: my_user.me.photo} : require('../../../assets/Group_427.png')
     const namestyle = this.greyOrWhite(my_user.me.name);
     const zipstyle = this.greyOrWhite(my_user.me.zipcode);
     const phonestyle = this.greyOrWhite(my_user.me.phone);
-    const emailstyle = this.greyOrWhite(my_user.me.email);
+    const emailstyle = this.greyOrWhite(my_user.me.email);  
     const crewstyle = this.greyOrWhite(my_user.me.crew);
     const crewtypestyle = this.greyOrWhite(my_user.me.crew_type);
     return (
