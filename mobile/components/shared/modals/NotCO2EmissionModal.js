@@ -26,7 +26,7 @@ export default class CarbonModal extends React.Component {
                 return false
               }}>
               <View style={[styles.modalView, {
-                marginVertical: (defaults.primaryHeight / 2) - 150,
+                marginVertical: (defaults.primaryHeight / 2) - 180,
                 marginHorizontal: 20 }]}>
                 <View style={[styles.headerContainer]}>
                   <Image
