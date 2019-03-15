@@ -66,7 +66,6 @@ class ProfileStackScreen extends React.Component {
     let variables = {
       id: my_user.me.id,
       phone: state.phone ? state.phone : my_user.me.username,
-      username: state.phone ? state.phone : my_user.me.username,
       name: state.name ? state.name : my_user.me.name,
       zipcode: state.zipcode ? state.zipcode : my_user.me.zipcode,
       crew: state.crew ? state.crew : my_user.me.crew,

@@ -26,7 +26,7 @@ class NotificationStackScreen extends React.Component {
   toggle = (value, target) => {
     const { my_user, update_settings } = this.props;
     let variables = {};
-    if(target == push_notifications_enabled && value == false){
+    if(target == "push_notifications_enabled" && value == false){
       variables = {
         push_notifications_enabled : value,
         action_reminders: value,

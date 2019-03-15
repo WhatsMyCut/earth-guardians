@@ -36,7 +36,7 @@ export default class ZipCodeModal extends React.Component {
                     <Text style={[styles.headerText]}>SET YOUR ZIPCODE TO SEE FUTURE METRICS FROM YOUR COMMUNITY!</Text>
                   </View>
                   <TextInput
-                    style={[styles.cardHeaderText]}
+                    style={[styles.textInput]}
                     onChangeText={password => this.setState({ zipcode:password })}
                     placeholder={this.props.zipcode || "Zipcode"}
                     placeholderTextColor="#fff"
