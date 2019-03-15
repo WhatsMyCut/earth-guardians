@@ -12,9 +12,6 @@ import MainTabNavigator from './MainTabNavigator';
 import EarthGuardiansInfoScreen from '../screens/EarthGuardiansInfoScreen';
 import GameScreen from '../screens/GameScreen';
 
-//TODO this is just for testing purposes, remove
-import ModalScreen from '../screens/ModalScreen';
-
 export default createAppContainer(
   createSwitchNavigator(
     {
@@ -26,7 +23,6 @@ export default createAppContainer(
       Video: VideoScreen,
       Petition: PetitionScreen,
       PetitionText: PetitionTextScreen,
-      Modal: ModalScreen,
       EGInfo: EarthGuardiansInfoScreen,
       Game: GameScreen,
     },
