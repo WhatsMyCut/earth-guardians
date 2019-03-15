@@ -404,25 +404,29 @@ export const styles = ScaledSheet.create({
     fontFamily: 'Proxima Nova',
     color: Colors.mediumGray,
     textAlign: 'center',
+    whiteSpace: 'nowrap',
   },
   actionCardValue: {
     fontSize: moderateScale(16),
     fontFamily: 'Proxima Nova Bold',
     color: Colors.mediumGray,
     textAlign: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    whiteSpace: 'nowrap',
   },
   actionCardTinyLabel: {
     fontFamily: 'Proxima Nova',
     color: Colors.mediumGray,
     fontSize: moderateScale(9),
     textAlign: 'center',
+    whiteSpace: 'nowrap',
   },
   actionCardPlaceholderText: {
     fontSize: moderateScale(18),
     fontWeight: 'bold',
     fontFamily: 'Proxima Nova Bold',
     color: Colors.lightGray,
+    whiteSpace: 'nowrap',
   },
   detailedPoints: {
     flex: 1,
@@ -461,7 +465,8 @@ export const styles = ScaledSheet.create({
     flexDirection: 'column',
     color: Colors.white,
     justifyContent: 'center',
-    flexBasis: '50%'
+    flexBasis: '50%',
+    whiteSpace: 'nowrap',
   },
   halfCell: {
     flexBasis: '50%'
