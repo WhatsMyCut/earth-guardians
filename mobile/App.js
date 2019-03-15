@@ -23,6 +23,8 @@ export default class App extends React.Component {
     showCarbonModal:false,
     showZipCodeModal: false,
     showUpdateProfileModal: false,
+    showRedirectModal: false,
+    redirect_url: null,
   };
 
   async componentDidMount() {
@@ -34,6 +36,7 @@ export default class App extends React.Component {
     PubSub.subscribe('setUser', data => this.setUser(data))
     PubSub.subscribe('showZipCodeModal', data => this.openZipCodeModal(data));
     PubSub.subscribe('showUpdateProfileModal', data => this.openUpdateUserModal(data));
+    PubSub.subscribe('showRedirectModal', (msg, data) => this.openRedirectModal(msg, data));
     PubSub.subscribe('closeModal', this.closeModal);
     this._notificationSubscription = Notifications.addListener(this._handleNotification);
     this.setState({ fontLoaded: true });
@@ -82,6 +85,12 @@ export default class App extends React.Component {
     this.setState({ showUpdateProfileModal: true });
   }
 
+  openRedirectModal = (msg, data) => {
+    console.log('openRedirectModal', msg, data)
+    this.closeAll()
+    this.setState({ showRedirectModal: true, redirect_url: data });
+  }
+
   setUser = (data) => {
     console.log('setUser', data)
     this.setState({ user: data.user })
@@ -94,6 +103,7 @@ export default class App extends React.Component {
     showCarbonModal:false,
     showZipCodeModal: false,
     showUpdateProfileModal: false,
+    showRedirectModal: false,
   });
 
   render() {
@@ -108,7 +118,8 @@ export default class App extends React.Component {
     this.state.showWasteModal ||
     this.state.showWaterModal ||
     this.state.showUpdateProfileModal ||
-    this.state.showNotificationModal
+    this.state.showNotificationModal ||
+    this.state.showRedirectModal
     let displayModal;
     if (showModal) {
       if (this.state.showZipCodeModal) {
@@ -123,6 +134,8 @@ export default class App extends React.Component {
         displayModal = 'UpdateUserModal'
       } else if (this.state.showNotificationModal) {
         displayModal = 'NotificationModal'
+      } else if (this.state.showRedirectModal) {
+        displayModal = 'RedirectModal'
       }
     }
 
@@ -143,6 +156,7 @@ export default class App extends React.Component {
               updateZipCode={() => this.updateZipCode() }
               updateUser={() => this.updateUser()}
               my_user={this.props.user}
+              redirect_url={this.state.redirect_url}
             />
           }
           {/* {this.state.showGameComplete && (

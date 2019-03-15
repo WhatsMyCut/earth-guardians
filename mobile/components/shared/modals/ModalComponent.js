@@ -15,6 +15,7 @@ import UpdateUserModal from '../modals/UpdateUserModal';
 import CommunityEventModal from '../modals/CommunityEventModal';
 import GameCompleteModal from '../modals/GameCompleteModal';
 import PasswordModal from '../modals/PasswordModal';
+import RedirectModal from '../modals/RedirectModal';
 
 export default class ModalComponent extends React.Component {
   constructor(props) {
@@ -31,6 +32,7 @@ export default class ModalComponent extends React.Component {
       showCarbonModal: false,
       showGameCompleteModal: false,
       showPasswordModal: false,
+      showRedirectModal: true,
     }
   }
   componentDidMount() {
@@ -51,6 +53,7 @@ export default class ModalComponent extends React.Component {
       showCommunityEventModal: false,
       showGameCompleteModal: false,
       showPasswordModal: false,
+      showRedirectModal: false,
     })
     this.isMounted = false;
   }
@@ -59,14 +62,15 @@ export default class ModalComponent extends React.Component {
     if(this.isMounted){
       this.setState({
         showZipCodeModal: false,
+        showUpdateUserModal: false,
         showWasteModal: false,
         showWaterModal: false,
         showCarbonModal: false,
-        showUpdateUserModal: false,
         showNotificationModal: false,
         showCommunityEventModal: false,
         showGameCompleteModal: false,
         showPasswordModal: false,
+        showRedirectModal: false,
       })
     }
   }
@@ -104,6 +108,12 @@ export default class ModalComponent extends React.Component {
     // console.log('showPasswordModal', data)
     PubSub.publish('showBlur')
     this.setState({ showPasswordModal: true});
+  }
+
+  openRedirectModal = (data) => {
+    // console.log('showPasswordModal', data)
+    PubSub.publish('showBlur')
+    this.setState({ showRedirectModal: true});
   }
 
   updateZipCode =(zipcode)=>{
@@ -161,6 +171,9 @@ export default class ModalComponent extends React.Component {
       case 'PasswordModal':
         this.setState({ showPasswordModal: true })
         break;
+      case 'RedirectModal':
+        this.setState({ showRedirectModal: true })
+        break;
       default:
         this.setState({ showPasswordModal: true })
         break;
@@ -212,6 +225,14 @@ export default class ModalComponent extends React.Component {
           }
           { this.state.showGameCompleteModal &&
             <GameCompleteModal onClose={() => this.props.onClose()} visible={this.state.showGameCompleteModal}/>
+          }
+          { this.state.showRedirectModal &&
+            <RedirectModal
+              onClose={() => this.props.onClose()}
+              external_url={
+                this.props.redirectModalPetition ? this.props.redirectModalPetition : null
+              }
+            />
           }
           { this.state.showPasswordModal &&
             <PasswordModal

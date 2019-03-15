@@ -17,6 +17,7 @@ import LinearGradientProps from '../constants/LinearGradientProps';
 import NavigationService from '../navigation/navigationService';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import client from '../Apollo';
+import PubSub from 'pubsub-js';
 import RedirectModal from '../components/shared/modals/RedirectModal';
 import { PrimaryImage } from '../constants/PrimaryImage';
 import { styles, SCREEN_HEIGHT, SCREEN_WIDTH, SAFE_WIDTH } from '../constants/Styles';
@@ -158,8 +159,6 @@ class CommunityStackScreen extends React.Component {
         petitions: petitions,
         currentPetition: petitions[0],
         loading: false,
-        showRedirectModal: false,
-        redirectModalPetition: null,
       }
     );
   }
@@ -236,7 +235,8 @@ class CommunityStackScreen extends React.Component {
   };
 
   _openRedirectWithUrl = url => {
-    this.setState({ showRedirectModal: true, redirectModalPetition: url });
+    PubSub.publish('openRedirectModal', url)
+    // this.setState({ showRedirectModal: true, redirectModalPetition: url });
   };
 
   _renderCard = petition => {
@@ -321,10 +321,6 @@ class CommunityStackScreen extends React.Component {
     this.setState({ petitions: petitions, loading: false });
   }
 
-  _modalOnClose = () => {
-    this.setState({ showRedirectModal: false, redirectModalPetition: null });
-  };
-
   render() {
     const {
       petitions,
@@ -358,24 +354,6 @@ class CommunityStackScreen extends React.Component {
             {this._renderOtherCard(petitions[1], 2)}
             {this._renderOtherCard(petitions[2], 1)}
           </View>
-          {showRedirectModal && (
-            <BlurView
-              tint="dark"
-              intensity={80}
-              style={{
-                height: SCREEN_HEIGHT,
-                width: SCREEN_WIDTH,
-                position: 'absolute',
-              }}
-            >
-              <RedirectModal
-                onClose={this._modalOnClose}
-                external_url={
-                  redirectModalPetition ? redirectModalPetition : null
-                }
-              />
-            </BlurView>
-          )}
         </View>
       </LinearGradient>
     );
