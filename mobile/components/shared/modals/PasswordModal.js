@@ -222,11 +222,11 @@ export default class PasswordModal extends React.Component {
 
   render() {
     const { goBack, user_exists_query } = this.props;
+    let content;
     if (user_exists_query.loading) {
-      <ActivityIndicator size={'large'} />
+      content = <ActivityIndicator size={'large'} style={[styles.textWhite]} />
     }
 
-    let content;
     if (user_exists_query.user) {
       if (user_exists_query.user.id) {
         content = this._userExistsContent();

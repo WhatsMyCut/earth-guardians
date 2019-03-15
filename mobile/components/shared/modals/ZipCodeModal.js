@@ -34,7 +34,7 @@ export default class ZipCodeModal extends React.Component {
               return false
             }}>
               <View style={[styles.container, styles.modalView, styles.centerAll, {
-                marginVertical: (defaults.primaryHeight / 2) - 150,
+                marginVertical: (defaults.primaryHeight / 2) - 200,
               }]}>
                 <View style={[styles.container, styles.centerAll]}>
                   <View style={[styles.componentHeader]}>

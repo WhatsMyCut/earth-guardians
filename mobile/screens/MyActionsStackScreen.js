@@ -57,7 +57,7 @@ class MyActionsStackScreen extends React.Component {
 
     if(available.length == 0){
       return (
-        <View style={[styles.container, styles.headerContainer]}>
+        <View style={[styles.container, { margin: 20}]}>
           <Text style={[styles.textWhite18B]}>We Got This! Start Taking Action Now!</Text>
         </View>
       )

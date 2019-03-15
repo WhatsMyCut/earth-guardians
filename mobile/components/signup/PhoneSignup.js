@@ -2,6 +2,7 @@ import React from 'react';
 import {  SafeAreaView,
   View,
   Animated,
+  ActivityIndicator,
   Text,
   Linking,
   TouchableOpacity,
@@ -9,7 +10,7 @@ import {  SafeAreaView,
   Platform,
   KeyboardAvoidingView
 } from 'react-native';
-import { LinearGradient, Asset, AppLoading, BlurView, Video } from 'expo';
+import { LinearGradient, Asset, BlurView, Video } from 'expo';
 
 import Logo from '../../constants/Logo'
 import PhoneInputComp from '../shared/phone/PhoneInputComp';
@@ -61,14 +62,9 @@ export default class PhoneSignup extends React.Component {
     }
   };
 
-  // _setPhone = (number) =>{
-  //   const {valid_phone, phone} = this.state;
-  //   console.log('number', number);
-  //     this.setState({phone: number.number});
-  // }
   _setPhone = numberAndCode => {
     const { valid_phone } = this.state;
-    console.log('_setPhone', numberAndCode, valid_phone)
+    // console.log('_setPhone', numberAndCode, valid_phone)
     if (valid_phone) {
       this.setState({
         phone: numberAndCode.number,
@@ -113,13 +109,9 @@ export default class PhoneSignup extends React.Component {
 
     if (!video_url) {
       return (
-        <AppLoading />
+        <ActivityIndicator />
       );
     }
-
-
-
-
 
     return (
         <Animated.View style={[styles.container]} {...this.viewResponder.panHandlers}>
@@ -144,34 +136,30 @@ export default class PhoneSignup extends React.Component {
               <Logo beta={ 'true' } />
             </View>
             <View
-              style={{
-                flex: 1,
+              style={[styles.container, {
                 justifyContent: 'flex-end',
                 alignItems: 'flex-start',
-                paddingBottom: 0,
-                paddingLeft: 30,
-                paddingRight: 70,
-              }}
+                padding: 20,
+              }]}
             >
-              <View style={[styles.container, { marginBottom: 10}]}>
+              <View style={[styles.container, { marginBottom: 30}]}>
                 <Text style={[styles.title]}>WELCOME TO EARTHTRACKS!</Text>
                 <Text style={[styles.promo, { fontWeight:'bold', paddingBottom:5 }]}>Fitness Tracker for the Planet</Text>
                 <Text style={[styles.promo]}>The change we need for a</Text>
                 <Text style={[styles.promo, { paddingBottom:5 }]}>regenerative shift starts with you.</Text>
                 <Text style={[styles.promo, { paddingBottom:8 }]}>ARE YOU IN?</Text>
-              </View>
-
-
-
-              <View style={[styles.container]}>
-                <PhoneInputComp
-                  updatePhone={this._setPhone}
-                  validate_phone={this.is_phone_valid}
-                  onChangeUpdatePhone = {this._setPhone}
-                />
-                {this.state.valid_phone && (
-                  <Text style={[styles.smallWhiteText]}>By signing up, you confirm that you agree to our Terms of Use and have read and understood our <Text onPress={()=> Linking.openURL('https://app.termly.io/document/privacy-policy-for-website/ad2b059a-ddec-4f69-97a5-4dc346948ac7')}>Privacy Policy</Text>.</Text>
-                )}
+                <View style={[styles.container, { marginTop: 20 }]}>
+                  <KeyboardAvoidingView behavior="padding" >
+                    <PhoneInputComp
+                      updatePhone={this._setPhone}
+                      validate_phone={this.is_phone_valid}
+                      onChangeUpdatePhone = {this._setPhone}
+                    />
+                    {this.state.valid_phone && (
+                      <Text style={[styles.smallWhiteText]}>By signing up, you confirm that you agree to our Terms of Use and have read and understood our <Text onPress={()=> Linking.openURL('https://app.termly.io/document/privacy-policy-for-website/ad2b059a-ddec-4f69-97a5-4dc346948ac7')}>Privacy Policy</Text>.</Text>
+                    )}
+                  </KeyboardAvoidingView>
+                </View>
               </View>
             </View>
             {this.state.showPasswordModal && (
@@ -180,9 +168,16 @@ export default class PhoneSignup extends React.Component {
               intensity={80}
               style={[styles.coverScreen, styles.coverAll]}
               >
-              <KeyboardAvoidingView behavior="padding" >
-                <PasswordModal phone_signup={this.phone_signup} setToken={this.setToken} isVisible={this.state.showPasswordModal} username={this.state.phone} togglePasswordModal={this.togglePasswordModal}/>
-              </KeyboardAvoidingView>
+                <KeyboardAvoidingView behavior="padding" >
+                  <PasswordModal
+                    phone_signup={this.phone_signup}
+                    setToken={this.setToken}
+                    isVisible={this.state.showPasswordModal}
+                    username={this.state.phone}
+                    togglePasswordModal={this.togglePasswordModal}
+                    onClose={this.togglePasswordModal}
+                  />
+                </KeyboardAvoidingView>
               </BlurView>
              )}
 
@@ -194,6 +189,7 @@ export default class PhoneSignup extends React.Component {
                   alignSelf: 'center',
                   paddingBottom: 10,
                 }}
+                hitSlop={{top: 15, left: 15, right:15, bottom:15}}
               >
                 <TabBarIcon
                   name={
