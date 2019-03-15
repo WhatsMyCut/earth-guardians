@@ -59,27 +59,33 @@ class ProfileStackScreen extends React.Component {
     this.props.my_user = null;
   }
 
-  updateMyUser = () => {
-    console.log('updating user', this.props)
+  updateMyUser = (state) => {
     const { password, confirmPassword } = this.state;
     const { my_user, update_user } = this.props;
+    
     let variables = {
       id: my_user.me.id,
-      phone: this.state.phone ? this.state.phone : my_user.me.username,
-      username: this.state.phone ? this.state.phone : my_user.me.username,
-      name: this.state.name ? this.state.name : my_user.me.name,
-      zipcode: this.state.zipcode ? this.state.zipcode : my_user.me.zipcode,
-      crew: this.state.crew ? this.state.crew : my_user.me.crew,
-      email: this.state.email ? this.state.email : my_user.me.email,
-      photo: this.state.photo ? this.state.photo : my_user.me.photo,
-      crew_type: this.state.crew_type
-        ? this.state.crew_type
+      phone: state.phone ? state.phone : my_user.me.username,
+      username: state.phone ? state.phone : my_user.me.username,
+      name: state.name ? state.name : my_user.me.name,
+      zipcode: state.zipcode ? state.zipcode : my_user.me.zipcode,
+      crew: state.crew ? state.crew : my_user.me.crew,
+      email: state.email ? state.email : my_user.me.email,
+      photo: state.photo ? state.photo : my_user.me.photo || null,
+      crew_type: state.crew_type
+        ? state.crew_type
         : my_user.me.crew_type,
     };
+    console.log('update user variables', variables);
+
     update_user({ variables }).then(res => {
+      console.log('response', res);
+      my_user.refetch();
       PubSub.publish('closeModal');
       this.closeAll();
-    });
+    }).catch(err => {
+      console.error('error', err);
+    })
   };
 
   openUpdateUserModal = (data) => {
@@ -96,13 +102,19 @@ class ProfileStackScreen extends React.Component {
 
   async updatePic() {
     const { update_user, my_user } = this.props;
+    try {
     _pickImage()
     .then(res =>
       {
       console.log('_pickImage', res)
-      update_user({variables:{id: my_user.me.id, photo: res.location}})
+      update_user({variables:{id: my_user.me.id, photo: res.body.postResponse.location}}).then(res =>{
+        my_user.refetch();
+      })
     })
     .catch(e => console.log(e))
+  }catch (err){
+    console.error('Error from pick image ', err);
+  }
   }
 
   render() {
@@ -131,7 +143,7 @@ class ProfileStackScreen extends React.Component {
               display={'UpdateUserModal'}
               showModal={this.state.showUpdateProfileModal}
               onClose={() => this.closeAll()}
-              updateUser={() => this.updateMyUser()}
+              updateUser={this.updateMyUser}
               user={my_user}
             />
           }

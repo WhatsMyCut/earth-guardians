@@ -28,6 +28,10 @@ import { styles } from '../constants/Styles'
 })
 @graphql(CREW_RANKINGS, {
   name: 'crew_rankings',
+  options:{
+    pollInterval: 3000
+  }
+  
 })
 @graphql(GET_USER, {
   name: 'my_user',

@@ -12,6 +12,7 @@ export const GET_USER = gql`
     crew
     crew_type
     zipcode
+    photo
     petitions_signed{
       id
     }
