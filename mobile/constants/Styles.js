@@ -403,30 +403,26 @@ export const styles = ScaledSheet.create({
     fontSize: moderateScale(12),
     fontFamily: 'Proxima Nova',
     color: Colors.mediumGray,
-    textAlign: 'center',
-    whiteSpace: 'nowrap',
+    textAlign: 'center'
   },
   actionCardValue: {
     fontSize: moderateScale(16),
     fontFamily: 'Proxima Nova Bold',
     color: Colors.mediumGray,
     textAlign: 'center',
-    justifyContent: 'center',
-    whiteSpace: 'nowrap',
+    justifyContent: 'center'
   },
   actionCardTinyLabel: {
     fontFamily: 'Proxima Nova',
     color: Colors.mediumGray,
     fontSize: moderateScale(9),
     textAlign: 'center',
-    whiteSpace: 'nowrap',
   },
   actionCardPlaceholderText: {
     fontSize: moderateScale(18),
     fontWeight: 'bold',
     fontFamily: 'Proxima Nova Bold',
     color: Colors.lightGray,
-    whiteSpace: 'nowrap',
   },
   detailedPoints: {
     flex: 1,
@@ -466,7 +462,6 @@ export const styles = ScaledSheet.create({
     color: Colors.white,
     justifyContent: 'center',
     flexBasis: '50%',
-    whiteSpace: 'nowrap',
   },
   halfCell: {
     flexBasis: '50%'
@@ -488,20 +483,17 @@ export const styles = ScaledSheet.create({
     fontSize: moderateScale(22),
     fontWeight: '500',
     justifyContent: 'center',
-    whiteSpace: 'nowrap',
   },
   rankDetail: {
     flexGrow: 1,
     flexShrink: 0,
     fontWeight: '500',
-    whiteSpace: 'nowrap',
   },
   rankName: {
     color: Colors.white,
     fontSize: moderateScale(22),
     fontWeight: '500',
-    paddingBottom: 10,
-    whiteSpace: 'nowrap',
+    paddingBottom: 10
   },
   socialRankHeader: {
     color: Colors.white,

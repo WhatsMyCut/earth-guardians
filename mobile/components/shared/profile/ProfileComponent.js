@@ -57,7 +57,7 @@ export default class ProfileComponent extends React.Component {
                   color={'#fff'}
                   style={[styles.container, styles.centerText]}
                 />
-                <Text style={[styles.container, styles.smallWhiteText, { whiteSpace: 'nowrap', flexBasis: 80 }]}>Click to Update</Text>
+                <Text style={[styles.container, styles.smallWhiteText, { flexBasis: 80 }]}>Click to Update</Text>
               </View>
             </View>
           </LinearGradient>
