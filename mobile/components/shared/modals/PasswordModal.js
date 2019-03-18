@@ -70,8 +70,7 @@ export default class PasswordModal extends React.Component {
     let address = await Location.reverseGeocodeAsync(location.coords);
 
     // console.log('location', location, address[0]);
-    this.setState({location: address[0]});
-    // this.props.setLocation(address[0]);
+    this.props.setLocation(address[0]);
   };
 
 
