@@ -74,6 +74,8 @@ export default class PhoneSignup extends React.Component {
     }
   };
 
+
+
   componentWillMount() {
     this.viewResponder = PanResponder.create({
       onStartShouldSetPanResponder: () => true,
