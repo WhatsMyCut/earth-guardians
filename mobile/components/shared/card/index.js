@@ -338,8 +338,9 @@ class ActionCardSmall extends React.Component {
                 <Text
                   style={[styles.textWhiteBold, styles.smallTextShadow, {
                     position: 'absolute',
-                    top: 10,
+                    marginVertical: (250 / 2),
                     left: 15,
+                    paddingLeft: 10,
                     paddingRight:5,
                     fontWeight: 'bold',
                   }]}
