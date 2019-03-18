@@ -11,10 +11,7 @@ import ActionDetails from './ActionDetails';
 import { defaults, styles } from '../../../constants/Styles';
 import NavigationService from '../../../navigation/navigationService';
 import PubSub from 'pubsub-js'
-// import graphql from '../components/hoc/graphql';
-import DoubleClick from 'react-native-double-tap';
 import { RetrieveData } from '../../../store/AsyncStore';
-// import PasswordModal from '../modals/PasswordModal'
 import moment from 'moment';
 import graphql from '../../hoc/graphql';
 import { TAKE_ACTION } from '../../graphql/mutations/take_action_mutation';
@@ -396,17 +393,11 @@ class ActionCardSmall extends React.Component {
     let carbon_dioxide = item.carbon_dioxide;
     return (
       <View style={[styles.container, {height:250, marginBottom: 10}]}>
-        <DoubleClick
+        <TouchableOpacity
           style={[styles.container]}
-          singleTap={async () => {
+          onPress={async () => {
             this.flipCard()
           }}
-          doubleTap={() => {
-            if(!canDelete) {
-              this._takeAction()
-            }
-          }}
-          delay={200}
         >
           <Animated.View
             style={[
@@ -464,7 +455,7 @@ class ActionCardSmall extends React.Component {
             />
             {this.state.delete && this.showDelete()}
           </Animated.View>
-        </DoubleClick>
+        </TouchableOpacity>
 
       </View>
     )
