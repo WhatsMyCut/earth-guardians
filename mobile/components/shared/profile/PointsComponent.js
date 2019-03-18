@@ -57,6 +57,7 @@ export default class PointsComponent extends React.Component {
     );
   };
   render() {
+    const action = (this.state.front) ? 'back' : 'front'
     return (
       <LinearGradient
         {...LinearGradientProps.profileItem}
@@ -66,7 +67,7 @@ export default class PointsComponent extends React.Component {
             this.setState({
               front: !this.state.front,
             },
-            _eventHit('PointsComponent', {action: (this.state.front) ? 'back' : 'front'}, res => console.log(res.event, res.params.action))
+            _eventHit('PointsComponent', {action: action}, res => console.log(res.event, res.params.action))
           )}
         >
           <View style={[styles.componentContainer, styles.centerAll, { }]}>
