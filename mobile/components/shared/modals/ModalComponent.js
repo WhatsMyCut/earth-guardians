@@ -241,6 +241,8 @@ export default class ModalComponent extends React.Component {
               submitEvent={() => this.props.submitEvent()}
               setEventType={this.props.setEventType}
               setNumPeople={this.props.setNumPeople}
+              numberOfPeople={this.props.numberOfPeople}
+              typeOfEvent={this.props.typeOfEvent}
             />
           }
         </View>

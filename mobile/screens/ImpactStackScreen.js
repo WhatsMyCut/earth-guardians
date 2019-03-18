@@ -56,16 +56,15 @@ class ImpactStackScreen extends React.Component {
   };
 
   _submitCommunityEvent() {
-    console.log('_submitCommunityEvent', this.props, this.state)
     const { community_mutation, my_user } = this.props;
     const { typeOfEvent, numberOfPeople } = this.state;
-    if (me.id) {
+    if (my_user.me.id) {
       let variables = {
         id: my_user.me.id,
         type: typeOfEvent,
         number_of_people: parseInt(numberOfPeople),
       };
-
+      console.log('_submitCommunityEvent', variables)
       community_mutation({ variables }).then(response => {
         this.closeModal(response);
       });
@@ -81,7 +80,7 @@ class ImpactStackScreen extends React.Component {
   };
 
   setEventType = type => {
-    this.setState({eventType: type})
+    this.setState({typeOfEvent: type})
   }
 
   setNumPeople = num => {
@@ -191,6 +190,8 @@ class ImpactStackScreen extends React.Component {
               submitEvent={this._submitCommunityEvent}
               setEventType={this.setEventType}
               setNumPeople={this.setNumPeople}
+              typeOfEvent={this.state.typeOfEvent}
+              numberOfPeople={this.state.numberOfPeople}
             />
           }
         </ScrollView>

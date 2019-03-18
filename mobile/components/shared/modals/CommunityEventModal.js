@@ -66,12 +66,12 @@ export default class CommunityEventModal extends React.Component {
                     itemColor={'#000000'}
                     onChangeText={arg => {
                       this.props.setEventType(arg);
-                      this.numbOfPeople.focus();
+                      this.numberOfPeople.focus();
                     }}
                   />
                   <TextInput
                     ref={input => {
-                      this.numbOfPeople = input;
+                      this.numberOfPeople = input;
                     }}
                     style={[styles.textInput, { marginVertical: 10}]}
                     onChangeText={numberOfPeople => this.props.setNumPeople(numberOfPeople)}
