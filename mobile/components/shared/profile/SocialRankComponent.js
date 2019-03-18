@@ -10,7 +10,7 @@ export default class SocialRankComponent extends React.Component {
 
 
   render() {
-    console.log('this.props._user rankings', this.props);
+    // console.log('this.props._user rankings', this.props);
 
     let len = this.props.user_rankings.length;
     let my_user_rank = this.props.user_rankings.find(user => user.id == this.props.my_user.id);
@@ -20,7 +20,7 @@ export default class SocialRankComponent extends React.Component {
       <Text style={styles.socialRankHeader}>My Rank</Text>
       <Text style={styles.socialRankHeader}>No Action recorded, start taking actions today!</Text>
       </View>
-    } 
+    }
     return (
       <View style={[styles.greyCard, { margin: 15 }]}>
         <Text style={styles.socialRankHeader}>My Rank</Text>
