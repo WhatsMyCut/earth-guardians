@@ -18,6 +18,7 @@ import NavigationService from '../navigation/navigationService';
 import WorldRankComponent from '../components/shared/profile/WorldRankComponent';
 import { WW_RANKINGS } from '../components/graphql/queries/ww_rankings_query';
 import { styles } from '../constants/Styles'
+import { _pageHit } from '../services/googleAnalytics'
 
 @graphql(WW_RANKINGS, {
   name: 'rankings',
@@ -56,10 +57,11 @@ class WorldRankStackScreen extends React.Component {
       );
     }
 
+    _pageHit('WorldRankScreen', res => console.log(res.page))
     return (
       <SafeAreaView style={[styles.greyCard]}>
         <ScrollView contentContainerStyle={{}}>
-          <View style={[styles.containerGrey]}>
+          <View style={[styles.containerGrey, { marginTop: 20, }]}>
             <Text style={ styles.containerTitle }>Worldwide Rank</Text>
             <WorldRankComponent rankings={this.props.rankings.getCountryStats}/>
           </View>

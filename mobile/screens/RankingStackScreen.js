@@ -31,14 +31,14 @@ import { styles } from '../constants/Styles'
   options:{
     pollInterval: 3000
   }
-  
+
 })
 @graphql(GET_USER, {
   name: 'my_user',
 })
 class RankingStackScreen extends React.Component {
   state = {
-    openModal: false, 
+    openModal: false,
     points: 0,
     waste: 0,
     water: 0,
@@ -131,11 +131,11 @@ class RankingStackScreen extends React.Component {
         );
       }
     }
-
+    _pageHit('RankingScreen', res => console.log(res.page))
     return (
       <SafeAreaView style={ styles.greyCard }>
         <ScrollView contentContainerStyle={{}}>
-          <View style={ styles.containerGrey }>
+          <View style={[styles.containerGrey, { marginTop: 20, }]}>
             <Text style={ styles.containerTitle }>National Rank</Text>
             <RankingComponent
               state_rankings={this.props.state_rankings.getStateStats}

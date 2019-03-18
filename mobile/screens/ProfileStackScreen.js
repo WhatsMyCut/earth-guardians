@@ -18,6 +18,7 @@ import { GET_USER } from '../components/graphql/queries/get_user';
 import { UPDATE_USER } from '../components/graphql/mutations/update_user_mutation';
 import { _pickImage } from '../services/uploadS3Image';
 import { styles, defaults } from '../constants/Styles'
+import { _pageHit } from '../services/googleAnalytics';
 
 @graphql(UPDATE_USER, {
   name: 'update_user',
@@ -129,10 +130,11 @@ class ProfileStackScreen extends React.Component {
         </SafeAreaView>
       );
     }
+    _pageHit('ProfileScreen', res => console.log(res.page))
 
     return (
       <SafeAreaView style={[styles.greyCard]}>
-        <View style={[styles.container, styles.centerText, { paddingHorizontal: 20, }]}>
+        <View style={[styles.container, styles.centerText, { marginTop: 20, paddingHorizontal: 20, }]}>
           <ProfileComponent
             my_user={my_user}
             updatePic={() => this.updatePic()}

@@ -11,6 +11,7 @@ import NavigationService from '../navigation/navigationService';
 import PhoneSignup from '../components/signup/PhoneSignup';
 import client from '../Apollo';
 import { StoreData } from '../store/AsyncStore';
+import { _eventHit } from '../services/googleAnalytics'
 
 const Logout = ({ focused }) => {
   return (
