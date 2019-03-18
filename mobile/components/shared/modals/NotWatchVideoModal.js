@@ -26,7 +26,7 @@ export default class NotWatchVideoModal extends React.Component {
               style={{ width: 103, height: 100, margin: 20 }}
             />
             <Text style={[styles.headerText]}>
-              YOU EARNED 100 POINTS FOR WATCHING THIS vIDEO
+              YOU EARNED 100 POINTS FOR WATCHING THIS VIDEO
             </Text>
             <Text style={[styles.textWhite, { marginVertical: 20 }]}>
               Join Jackson, take action!

@@ -41,7 +41,7 @@ export default class NotificationModal extends React.Component {
                     <Logo style={{width: 72, height: 72}} />
                   </View>
                   <Text style={[styles.headerText]}>
-                    Notification!
+                    NOTIFICATION!
                   </Text>
                 </View>
                 <View style={[styles.container, { flexDirection: 'column'}]}>

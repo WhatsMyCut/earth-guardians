@@ -140,7 +140,7 @@ export default class PasswordModal extends React.Component {
     return (
       <View style={[styles.container]}>
         <Text style={[styles.headerText, {marginBottom: 30,}]}>
-          Welcome Back!
+          WELCOME BACK!
         </Text>
         {this.state.passwordError && (
           <Text style={[styles.error]}>
@@ -185,7 +185,7 @@ export default class PasswordModal extends React.Component {
       <View style={[styles.container]}>
         <View style={[styles.headerContainer]}>
           <Text style={[styles.headerText]}>
-            Create a Password
+            CREATE A PASSWORD
           </Text>
         </View>
         <TextInput

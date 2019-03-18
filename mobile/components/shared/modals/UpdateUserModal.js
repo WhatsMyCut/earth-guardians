@@ -109,7 +109,7 @@ export default class UpdateUserModal extends React.Component {
                 <ScrollView containerStyle={[styles.container]}>
                   <View style={[styles.headerContainer]}>
                     <Text style={[styles.headerText]}>
-                      Update Profile
+                      UPDATE PROFILE
                     </Text>
                   </View>
                   <View style={[styles.container]}>
@@ -131,15 +131,6 @@ export default class UpdateUserModal extends React.Component {
                       secureTextEntry={false}
                       returnKeyType="done"
                       value={this.state.zipcode}
-                    />
-                    <TextInput
-                      style={[styles.textInput]}
-                      onChangeText={phone => this.setState({ phone })}
-                      placeholder={'Phone'}
-                      placeholderTextColor={Colors.white}
-                      keyboardType="default"
-                      returnKeyType="done"
-                      value={this.state.phone}
                     />
                     <TextInput
                       style={[styles.textInput]}

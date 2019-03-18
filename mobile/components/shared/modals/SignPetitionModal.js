@@ -36,7 +36,7 @@ export default class SignPetitionModal extends React.Component {
         >
           <View style={[styles.headerContainer]}>
             <Text style={[styles.headerText]}>
-              SIGN THE PETITION
+              SIGN THE PETITION!
             </Text>
           </View>
           <View style={[styles.container]}>

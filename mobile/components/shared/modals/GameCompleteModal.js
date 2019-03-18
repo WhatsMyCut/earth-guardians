@@ -23,7 +23,7 @@ export default class GameCompleteModal extends React.Component {
                 <Logo style={[styles.container, { width: 72, height: 72 }]} />
                 <View style={[styles.headerContainer]}>
                   <Text style={[styles.headerText]}>
-                    Thank You!
+                    THANK YOU!
                   </Text>
                 </View>
                 <Text style={[styles.textWhite18B]}>
