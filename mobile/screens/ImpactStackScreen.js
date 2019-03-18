@@ -161,11 +161,10 @@ class ImpactStackScreen extends React.Component {
     }
     // Petition ID for EG Badge : cjr111ekt1qk0088479se0aue
     const showEGBadge = this.props.all_metrics.me.recent_actions.filter(id => id === 'cjr111ekt1qk0088479se0aue')
-    const zipcode = this.props.all_metrics.me.zipcode;
     return (
       <SafeAreaView style={[styles.greyCard]}>
         <ScrollView contentContainerStyle={[]}>
-          <View style={[styles.containerGrey, defaults.SCREEN_HEIGHT]}>
+          <View style={[styles.containerGrey, defaults.SCREEN_HEIGHT, { marginTop: 20, }]}>
             <GraphComponent
               carbon_dioxide={this.state.carbon_dioxide}
               water={this.state.water}
