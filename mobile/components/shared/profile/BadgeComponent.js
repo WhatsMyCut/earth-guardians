@@ -19,7 +19,7 @@ export default class BadgeComponent extends React.Component {
             <Text style={[styles.headerText]}>MY BADGES</Text>
           </View>
           <View style={[styles.container, {flexDirection: 'row', marginBottom: 20}]}>
-            {this.props.points === 0 &&
+            {(this.props.points === 0 && !this.props.showEGBadge) &&
               <Text style={[styles.textWhite]}>Take action and earn your first badge!</Text>
             }
             {this.props.points > 0 &&
