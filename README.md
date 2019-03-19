@@ -38,6 +38,7 @@ Expo offers "managed" and "ejected" versions of React-Native software. The `eart
 
 The backend of the app uses GraphQL and Prisma
 
+
 ### Production Environment URL
 
 The Production Prisma DB is located at [https://eg-production-879cf73477.herokuapp.com/](https://eg-production-879cf73477.herokuapp.com/)
@@ -50,6 +51,9 @@ The Profile Picuture feature in the app utilized [Amazon Web Services S3](https:
 
 The buckets used are located at [https://s3.console.aws.amazon.com/s3/buckets/eg-profile-pics-production/uploads/](https://s3.console.aws.amazon.com/s3/buckets/eg-profile-pics-production/uploads/?region=us-east-1&tab=overview)
 
+### Google Analytics Integration
+
+The app is connected to [Google Analytics](https://analytics.google.com/) and can be acessed with EarthGuardians.org credentials.
 
 ## Developer Notes
 
