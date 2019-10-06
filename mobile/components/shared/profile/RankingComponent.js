@@ -4,7 +4,7 @@ import {
   Text,
   TouchableOpacity,
 } from 'react-native';
-import { LinearGradient } from 'expo';
+import { LinearGradient } from 'expo-linear-gradient';
 import { _eventHit } from '../../../services/googleAnalytics';
 import LinearGradientProps from '../../../constants/LinearGradientProps';
 import { styles, defaults } from '../../../constants/Styles';
@@ -34,7 +34,9 @@ export default class RankingComponent extends React.Component {
                     {item.total_points}
                   </Text>
                 </View>
-                <Text style={[styles.rankState]}>{item.state.substring(0,2).toUpperCase()}</Text>
+                {item.state &&
+                  <Text style={[styles.rankState]}>{item.state.substring(0,2).toUpperCase()}</Text>
+                }
               </View>
             )
           })

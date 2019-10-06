@@ -1,6 +1,7 @@
 import React from 'react';
 import { ActivityIndicator, View } from 'react-native';
-import { LinearGradient, AppLoading } from 'expo';
+import { LinearGradient } from 'expo-linear-gradient';
+import { AppLoading } from 'expo';
 import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_categories_query';
 import graphql from '../components/hoc/graphql';
 import HeaderNavBar from '../components/shared/navBar/HeaderNavBar';
@@ -18,15 +19,13 @@ import { styles } from '../constants/Styles';
   },
 })
 class EnergyStackScreen extends React.Component {
-  constructor(props) {
-    super(props)
-    this.setState({
-      primary_image: '',
-      primary_video: '',
-      actions: []
-    })
-  }
+
   componentDidMount() {
+      this.setState({
+        primary_image: '',
+        primary_video: '',
+        actions: []
+      })
     // Analytics
   }
 

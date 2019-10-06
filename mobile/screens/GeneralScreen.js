@@ -7,7 +7,7 @@ import {
   Text,
   ScrollView,
 } from 'react-native';
-import { LinearGradient, } from 'expo';
+import { LinearGradient } from 'expo-linear-gradient';
 import { Image } from 'react-native-expo-image-cache';
 import navigationService from '../navigation/navigationService';
 import _fetchVideoUrl from '../services/fetchVideoUrl';

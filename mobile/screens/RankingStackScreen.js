@@ -1,5 +1,4 @@
 import React from 'react';
-//import { LinearGradient, AppLoading } from 'expo';
 
 import {
   TouchableOpacity,
@@ -19,6 +18,7 @@ import { STATE_RANKINGS } from '../components/graphql/queries/get_state_query';
 import { CREW_RANKINGS } from '../components/graphql/queries/crew_rankings_query';
 import { GET_USER } from '../components/graphql/queries/get_user';
 import { styles } from '../constants/Styles'
+import { _pageHit } from '../services/googleAnalytics'
 
 @graphql(ALL_MY_METRICS, {
   name: 'all_metrics',

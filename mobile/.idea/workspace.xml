@@ -2,25 +2,51 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0d598da4-876d-4763-b606-2ed0c004f80d" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/mobile.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/mobile.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/mobile.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.json" beforeDir="false" afterPath="$PROJECT_DIR$/app.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/game-stack/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/game-stack/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/shared/card/ActionDetails.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/shared/card/ActionDetails.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/shared/card/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/shared/card/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/shared/icons/TabBarIcon.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/shared/icons/TabBarIcon.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/shared/profile/BadgeComponent.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/shared/profile/BadgeComponent.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/shared/profile/GraphComponent.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/shared/profile/GraphComponent.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/shared/profile/ImpactComponent.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/shared/profile/ImpactComponent.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/shared/profile/PointsComponent.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/shared/profile/PointsComponent.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/shared/profile/ProfileComponent.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/shared/profile/ProfileComponent.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/shared/profile/RankingComponent.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/shared/profile/RankingComponent.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/shared/profile/ReachComponent.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/shared/profile/ReachComponent.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/signup/PhoneSignup.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/signup/PhoneSignup.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/CommunityStackScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/CommunityStackScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/CustomScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/CustomScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/EarthGuardiansInfoScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/EarthGuardiansInfoScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/EnergyStackScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/EnergyStackScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/FashionStackScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/FashionStackScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/FoodStackScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/FoodStackScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/GeneralScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/GeneralScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/ImpactStackScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/ImpactStackScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/LandStackScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/LandStackScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/NotificationStackScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/NotificationStackScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/PetitionScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/PetitionScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/PetitionTextScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/PetitionTextScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/ProfileStackScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/ProfileStackScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/RankingStackScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/RankingStackScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/ShoppingStackScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/ShoppingStackScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/TravelStackScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/TravelStackScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/VideoScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/VideoScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/WasteStackScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/WasteStackScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/WaterStackScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/WaterStackScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/WorldRankStackScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/WorldRankStackScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node_modules/.yarn-integrity" beforeDir="false" afterPath="$PROJECT_DIR$/../node_modules/.yarn-integrity" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
-  </component>
-  <component name="FUSProjectUsageTrigger">
-    <session id="1535734027">
-      <usages-collector id="statistics.lifecycle.project">
-        <counts>
-          <entry key="project.closed" value="1" />
-          <entry key="project.open.time.8" value="1" />
-          <entry key="project.opened" value="1" />
-        </counts>
-      </usages-collector>
-    </session>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -37,8 +63,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="PackagesPane" />
+      <pane id="AndroidView" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -50,9 +76,11 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="project.structure.last.edited" value="SDKs" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -86,27 +114,26 @@
     <frame x="16" y="23" width="1400" height="828" extended-state="0" />
     <layout>
       <window_info id="Captures" order="0" side_tool="true" weight="0.25" />
-      <window_info content_ui="combo" id="Project" order="1" visible="true" weight="0.33502537" />
+      <window_info content_ui="combo" id="Project" order="1" visible="true" weight="0.33431518" />
       <window_info id="Structure" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info id="Build Variants" order="4" side_tool="true" />
       <window_info id="Image Layers" order="5" />
       <window_info id="Designer" order="6" />
       <window_info id="Capture Tool" order="7" />
+      <window_info id="Resources Explorer" order="8" />
       <window_info anchor="bottom" id="Version Control" order="0" show_stripe_button="false" />
       <window_info anchor="bottom" id="Logcat" order="1" />
       <window_info anchor="bottom" id="TODO" order="2" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="3" sideWeight="0.49963742" visible="true" weight="0.32880434" />
-      <window_info anchor="bottom" id="Event Log" order="4" sideWeight="0.5003626" side_tool="true" visible="true" weight="0.32880434" />
+      <window_info anchor="bottom" id="Terminal" order="3" sideWeight="0.4970545" visible="true" weight="0.32880434" />
+      <window_info anchor="bottom" id="Event Log" order="4" sideWeight="0.5029455" side_tool="true" visible="true" weight="0.32880434" />
       <window_info anchor="bottom" id="Android Profiler" order="5" show_stripe_button="false" />
       <window_info anchor="right" id="Device File Explorer" order="0" side_tool="true" />
       <window_info anchor="right" id="Capture Analysis" order="1" />
       <window_info anchor="right" id="Theme Preview" order="2" />
       <window_info anchor="right" id="Palette&#9;" order="3" />
+      <window_info active="true" anchor="right" id="Assistant" order="4" visible="true" weight="0.33505154" />
     </layout>
-  </component>
-  <component name="VcsContentAnnotationSettings">
-    <option name="myLimit" value="2678400000" />
   </component>
   <component name="masterDetails">
     <states>

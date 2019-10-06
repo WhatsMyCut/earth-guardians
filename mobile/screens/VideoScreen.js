@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
   Text,
 } from 'react-native';
-//import { Video } from 'expo';
+//import { Video } from 'expo-av';
 import { Ionicons } from '@expo/vector-icons';
 import VideoPlayer from '@expo/videoplayer';
 import BaseScreen from './BaseScreen';

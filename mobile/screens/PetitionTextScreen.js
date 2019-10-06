@@ -12,7 +12,9 @@ import {
 } from 'react-native';
 import { Button, Searchbar } from 'react-native-paper';
 import { all } from 'rsvp';
-import { LinearGradient, Icon, WebBrowser } from 'expo';
+import { LinearGradient } from 'expo-linear-gradient';
+import { Icon } from '@expo/vector-icons';
+import { WebBrowser } from 'expo';
 import { AntDesign } from '@expo/vector-icons';
 import { styles, defaults } from '../constants/Styles'
 

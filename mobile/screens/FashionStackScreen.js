@@ -1,5 +1,6 @@
 import React from 'react';
-import { LinearGradient, AppLoading } from 'expo';
+import { LinearGradient } from 'expo-linear-gradient';
+import { AppLoading } from 'expo';
 import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_categories_query';
 import graphql from '../components/hoc/graphql';
 import HeaderNavBar from '../components/shared/navBar/HeaderNavBar';

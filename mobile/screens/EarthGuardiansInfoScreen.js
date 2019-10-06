@@ -7,7 +7,7 @@ import {
   Image,
   ScrollView,
 } from 'react-native';
-import { LinearGradient } from 'expo';
+import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import { styles, defaults } from '../constants/Styles'
 

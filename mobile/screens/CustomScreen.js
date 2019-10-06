@@ -11,7 +11,7 @@ import {
 import VideoPlayer from '@expo/videoplayer';
 import { Ionicons } from '@expo/vector-icons';
 import BaseScreen from './BaseScreen';
-import { Video } from 'expo';
+import { Video } from 'expo-av';
 
 import { ALL_ACTION_CATEGORIES } from '../components/graphql/queries/all_action_categories_query';
 import graphql from '../components/hoc/graphql';

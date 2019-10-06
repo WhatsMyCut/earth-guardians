@@ -1,7 +1,8 @@
 import React from 'react';
 import NavigationService from '../navigation/navigationService';
 import { SafeAreaView, View, Text, Switch, TouchableOpacity } from 'react-native';
-import { BlurView, AppLoading } from 'expo';
+import { BlurView } from 'expo-blur';
+import { AppLoading } from 'expo';
 import { GET_USER } from '../components/graphql/queries/get_user';
 import { UPDATE_PROFILE_SETTINGS } from '../components/graphql/mutations/update_profile_settings_mutations';
 import graphql from '../components/hoc/graphql';
@@ -83,13 +84,13 @@ class NotificationStackScreen extends React.Component {
           )}
           <View style={styles.notificationWraper}>
             <Text style={styles.notification}>Push Notification</Text>
-            
+
             <Switch
               value={my_user.me.push_notifications_enabled}
               onValueChange={value => this.toggle(value, 'push_notifications_enabled')}
             />
           </View>
-          
+
             <View>
           <View style={styles.notificationWraper}>
             <Text style={styles.notification}>Action Reminders</Text>

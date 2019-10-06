@@ -3,7 +3,7 @@
     "name": "EarthTracks",
     "slug": "earth-tracks",
     "privacy": "unlisted",
-    "sdkVersion": "31.0.0",
+    "sdkVersion": "33.0.0",
     "platforms": [
       "ios",
       "android"
@@ -28,14 +28,17 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.ofashandfire.earthguardians",
-      "icon":"./assets/eg_app_icon_ios_120_120.png",
-      "buildNumber":"34"
+      "icon": "./assets/eg_app_icon_ios_120_120.png",
+      "buildNumber": "34"
     },
     "android": {
       "package": "com.EG.EarthTracks",
       "versionCode": 1,
-      "permissions":["CAMERA"]
+      "permissions": [
+        "CAMERA"
+      ]
     },
-    "description": ""
+    "description": "",
+    "githubUrl": "https://github.com/WhatsMyCut/earth-guardians.git"
   }
 }

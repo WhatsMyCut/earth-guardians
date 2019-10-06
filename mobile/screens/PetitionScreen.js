@@ -9,7 +9,9 @@ import {
   Platform,
   Dimensions,
 } from 'react-native';
-import { LinearGradient, Icon, BlurView } from 'expo';
+import { LinearGradient } from 'expo-linear-gradient';
+import { Icon, MaterialCommunityIcons } from '@expo/vector-icons';
+import { BlurView } from 'expo-blur';
 import { AntDesign } from '@expo/vector-icons';
 import { _eventHit } from '../services/googleAnalytics';
 
@@ -195,7 +197,7 @@ class PetitionScreen extends React.Component {
             style={[styles.container, styles.coverScreen]}
           />
           <View style={[styles.container, styles.centeredRow, { position: 'absolute', top: 50, flexDirection: 'column' }]}>
-            <Icon.MaterialCommunityIcons
+            <MaterialCommunityIcons
               name={'gesture-swipe-down'}
               style={[styles.centerText, styles.textWhite, { fontSize: 30 }]}
             />
@@ -253,7 +255,7 @@ class PetitionScreen extends React.Component {
                   >
                     <View style={[styles.centeredRow]}>
                       <Text styles={[styles.detailCell, styles.centerText, { paddingHorizontal: defaults.paddingHorizontal}]}>{youinverbiage}</Text>
-                      <Icon.MaterialCommunityIcons
+                      <MaterialCommunityIcons
                         name={status_icon_name}
                         style={[{ textAlign: 'right', color: color, fontSize: 22 }]}
                       />

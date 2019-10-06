@@ -1,5 +1,4 @@
 import React from 'react';
-//import { LinearGradient, AppLoading } from 'expo';
 
 import {
   TouchableOpacity,

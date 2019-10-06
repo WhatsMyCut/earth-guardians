@@ -10,8 +10,9 @@ import {  SafeAreaView,
   Platform,
   KeyboardAvoidingView
 } from 'react-native';
-import { LinearGradient, Asset, BlurView, Video } from 'expo';
-
+import { LinearGradient } from 'expo-linear-gradient';
+import { BlurView } from 'expo-blur';
+import { Video } from 'expo-av';
 import Logo from '../../constants/Logo'
 import PhoneInputComp from '../shared/phone/PhoneInputComp';
 import TabBarIcon from '../shared/icons/TabBarIcon';

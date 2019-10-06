@@ -9,7 +9,9 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { Image } from 'react-native-expo-image-cache';
-import { LinearGradient, BlurView, Icon } from 'expo';
+import { LinearGradient } from 'expo-linear-gradient';
+import { BlurView } from 'expo-blur';
+import { Icon, MaterialCommunityIcons } from '@expo/vector-icons';
 import { ALL_PETITIONS } from '../components/graphql/queries/all_petitions';
 import graphql from '../components/hoc/graphql';
 import HeaderNavBar from '../components/shared/navBar/HeaderNavBar';
@@ -52,8 +54,11 @@ class CommunityStackScreen extends React.Component {
       }
     }
     if (all_available_petitions[0] !== null && all_available_petitions[0].video_url) {
-      _fetchVideoUrl(all_available_petitions[0].video_url)
-      .then(data => this._setInitialState(all_available_petitions, data.video_url))
+      await _fetchVideoUrl(all_available_petitions[0].video_url)
+      .then(data => {
+        console.log(data);
+        return this._setInitialState(all_available_petitions, data.video_url)
+      })
       .catch(e => console.error(e))
     } else {
       this._setInitialState(all_available_petitions, '')
@@ -276,7 +281,7 @@ class CommunityStackScreen extends React.Component {
           locations={[0.5, 1]}
           style={[styles.gradientContainer, styles.petitionDimensions ]}
         />
-        <Animated.View style={{ opacity: this.nextCardOpacity / 1 }}>
+        <Animated.View style={{opacity: 1 }}>
           <View style={[styles.petitionDetails ]}>
             <Text style={styles.title}>
               {petition.title}
@@ -289,7 +294,7 @@ class CommunityStackScreen extends React.Component {
 
         <View style={styles.videoPlayIcon}>
         <View style={[styles.container, styles.centeredRow, { position: 'absolute', top: 20, flexDirection: 'column' }]}>
-          <Icon.MaterialCommunityIcons
+          <MaterialCommunityIcons
             name={'gesture-swipe-vertical'}
             style={[styles.centerText, styles.textWhite, { fontSize: 30 }]}
           />

@@ -1,8 +1,9 @@
 import React from 'react';
 import { TouchableWithoutFeedback, Text } from 'react-native';
-import { BlurView, Notifications } from 'expo';
+import { BlurView } from 'expo-blur';
+import { Notifications } from 'expo';
 import { StoreProvider } from './store/Store';
-import { Font } from 'expo';
+import * as Font from 'expo-font';
 import AppNavigator from './navigation/AppNavigator';
 import NavigationService from './navigation/navigationService';
 import { ApolloProvider } from 'react-apollo';

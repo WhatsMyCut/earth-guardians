@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { View, Text, TouchableOpacity } from 'react-native';
-import { Icon } from 'expo';
+import { Icon, MaterialCommunityIcons } from '@expo/vector-icons';
 import PubSub from 'pubsub-js'
 import { styles } from '../../../constants/Styles'
 export default class ActionDetails extends React.Component {
@@ -110,7 +110,7 @@ export default class ActionDetails extends React.Component {
         >
           <Text style={[styles.actionCardSubHeader]}>{ yourverbiage }</Text>
           {(this.props.canGoThrough || !this.props.canDelete) &&
-            <Icon.MaterialCommunityIcons
+            <MaterialCommunityIcons
               name={status_icon_name}
               style={{ color: color, fontSize: 18, marginLeft: 10, }}
             />

@@ -9,7 +9,7 @@ import {
    PanResponder
 } from "react-native";
 
-import { LinearGradient } from 'expo';
+import { LinearGradient } from 'expo-linear-gradient';
 import { Image } from 'react-native-expo-image-cache'
 import { defaults } from "../../constants/Styles";
 import NavigationService from '../../navigation/navigationService';

@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   Image
 } from 'react-native';
-import { LinearGradient } from 'expo';
+import { LinearGradient } from 'expo-linear-gradient';
 import LinearGradientProps from '../../../constants/LinearGradientProps';
 import graphql from '../../hoc/graphql';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';

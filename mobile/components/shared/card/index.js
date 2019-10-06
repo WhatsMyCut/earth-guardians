@@ -6,7 +6,7 @@ import {
   Animated,
   View,
 } from 'react-native';
-import { LinearGradient, } from 'expo';
+import { LinearGradient } from 'expo-linear-gradient';
 import ActionDetails from './ActionDetails';
 import { defaults, styles } from '../../../constants/Styles';
 import NavigationService from '../../../navigation/navigationService';
@@ -356,7 +356,7 @@ class ActionCardSmall extends React.Component {
                 backAnimatedStyle,
                 styles.actionCard,
                 styles.actionCardBack,
-                { opacity: this.backOpacity, left: 10, }
+                { opacity: this.backOpacity || 1, left: 10, }
               ]}
             >
               <ActionDetails
